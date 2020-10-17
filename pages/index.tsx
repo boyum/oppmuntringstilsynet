@@ -17,7 +17,6 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
 
   const translations = useContext<Translations>(LanguageContext);
   const tempInput = useRef<HTMLInputElement>(null);
-  const [url, setUrl] = useState('');
   const [message, dispatch] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
@@ -38,14 +37,10 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
     const url = new URL(window.location.href)
     url.searchParams.set('m', encodedMessage);
 
-    setUrl(url.href);
-
-    requestAnimationFrame(() => {
-      tempInput.current.value = url.href;
-      tempInput.current.select();
-      tempInput.current.setSelectionRange(0, 99999);
-      document.execCommand("copy");
-    });
+    tempInput.current.value = url.href;
+    tempInput.current.select();
+    tempInput.current.setSelectionRange(0, 99999);
+    document.execCommand("copy");
   }
 
   function handleReset() {
@@ -67,7 +62,7 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
 
         <Form isDisabled={isDisabled}></Form>
         <Buttons handleReset={handleReset} handleCopy={handleCopy}></Buttons>
-        <input ref={tempInput} type="text" className={styles.hidden} value={url} onChange={() => {}} />
+        <input ref={tempInput} type="text" className={styles.hidden} onChange={() => {}} />
       </div>
     </>
   );
