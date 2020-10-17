@@ -1,22 +1,37 @@
 import Head from 'next/head';
-import React, { useContext, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Form from '../components/Form';
 import LanguageContext from '../contexts/LanguageContext';
-import styles from '../styles/Home.module.css';
 import Message from '../types/Message';
 import Translations from '../types/Translations';
 import { decode, encode } from './api/url';
-import { useRouter } from 'next/router';
+import Buttons from '../components/Buttons';
+import MessageContext from '../contexts/MessageContext';
+import { isEmpty } from '../utils/message-utils';
 
-export default function Home() {
-  const router = useRouter();
-  const messageFromUrl = decode<Message>(router.query.m as string);
+import styles from '../styles/Home.module.css';
+
+export default function Home({ encodedMessage }: { encodedMessage: string }) {
+  const messageFromUrl = decode<Message>(encodedMessage);
+
   const translations = useContext<Translations>(LanguageContext);
-  const [url, setUrl] = useState('');
-  const [message, setMessage] = useState(messageFromUrl);
   const tempInput = useRef<HTMLInputElement>(null);
+  const [url, setUrl] = useState('');
+  const [message, dispatch] = useContext(MessageContext);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const router = useRouter();
+  const [isResetting, setIsResetting] = useState(false);
 
-  console.log('message', message, messageFromUrl);
+  useEffect(() => {
+    const hasMessage = !!messageFromUrl;
+    const messageIsEmpty = isEmpty(message);
+
+    if (hasMessage && messageIsEmpty && !isResetting) {
+      dispatch({ type: 'setValue', payload: messageFromUrl });
+      setIsDisabled(true);
+    }
+  });
 
   function handleCopy() {
     const encodedMessage = encode(message);
@@ -32,6 +47,13 @@ export default function Home() {
     });
   }
 
+  function handleReset() {
+    router.push('/');
+    dispatch({ type: 'reset' });
+    setIsResetting(true);
+    setIsDisabled(false);
+  }
+
   return (
     <>
       <Head>
@@ -42,11 +64,18 @@ export default function Home() {
       <div className={styles.container}>
         <h1 className={styles.heading}>{translations.formHeading}</h1>
 
-        <Form message={message} setMessage={setMessage} handleCopy={handleCopy}></Form>
-
+        <Form isDisabled={isDisabled}></Form>
+        <Buttons handleReset={handleReset} handleCopy={handleCopy}></Buttons>
         <input ref={tempInput} type="text" className={styles.hidden} value={url} readOnly />
       </div>
     </>
   );
 }
 
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      encodedMessage: context.query.m ?? '',
+    },
+  }
+}

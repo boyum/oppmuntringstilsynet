@@ -11,3 +11,19 @@
 	width: 1px !important;
 	white-space: nowrap !important;  
 }
+
+.container {
+  background-color: #d4727e;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 32rem;
+  padding: 2rem 3rem;
+}
+
+.heading {
+  margin-top: 0;
+  text-align: center;
+}

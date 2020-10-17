@@ -1,0 +1,95 @@
+.date input,
+.name input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  margin-left: 0.5em;
+}
+
+.message {
+  display: block;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.message textarea {
+  --line-height: 1.625em;
+  background-attachment: local;
+  background-color: transparent;
+  background-image:
+    repeating-linear-gradient(transparent, transparent calc(var(--line-height) - 1px), white var(--line-height));
+  border: none;
+  display: block;
+  line-height: var(--line-height);
+  margin-top: 1rem;
+  resize: none;
+  width: 100%;
+}
+
+.message textarea::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.message textarea {
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  scrollbar-width: thin;
+}
+
+.message textarea::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+
+.message textarea::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+
+.checkboxContainer {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.checkboxLabel {
+  cursor: pointer;
+  display: flex;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.checkboxLabel::before {
+  border: 2px solid;
+  content: '';
+  flex-shrink: 0;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  text-align: center;
+  width: 1.5rem;
+}
+
+.checkbox {
+  border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important;
+	-webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;    
+}
+
+.checkbox:checked + .checkboxLabel::before {
+  content: '✓';
+}
+
+.checkbox:disabled + .checkboxLabel {
+  cursor: default;
+}
+
+.name {
+  display: block;
+  margin-top: 2rem;
+}
