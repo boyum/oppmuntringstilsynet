@@ -36,6 +36,7 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
           className={styles.checkbox}
           type="checkbox"
           checked={check}
+          value={check.toString()}
           disabled={isDisabled}
           onChange={(event) => handleCheckChange(event.currentTarget.value, index)} />
         <label className={styles.checkboxLabel} htmlFor={getCheckboxId(index)}>
