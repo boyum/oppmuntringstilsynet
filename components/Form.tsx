@@ -27,16 +27,34 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
     return `checkbox-${index}`;
   }
 
+  function renderCheckboxes(): JSX.Element[] {
+
+    return message.checks.map((check, index) => (
+      <div key={getCheckboxId(index)}>
+        <input
+          id={getCheckboxId(index)}
+          className={styles.checkbox}
+          type="checkbox"
+          checked={check}
+          disabled={isDisabled}
+          onChange={(event) => handleCheckChange(event.currentTarget.value, index)} />
+        <label className={styles.checkboxLabel} htmlFor={getCheckboxId(index)}>
+          {getCheckboxLabel(index)}
+        </label>
+      </div>
+    ));
+  }
+
   return (
     <>
       <form className={styles.form}>
         <label className={styles.date}>
           {translations.dateLabel}
           <input
-           type="text"
-           value={message.date}
-           disabled={isDisabled}
-           onChange={(event) => handleChange({ date: event.currentTarget.value })} />
+            type="text"
+            value={message.date}
+            disabled={isDisabled}
+            onChange={(event) => handleChange({ date: event.currentTarget.value })} />
         </label>
         <label className={styles.message}>
           {translations.messageLabel}
@@ -48,20 +66,7 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
         </label>
         <div className={styles.checkboxContainer}>
           {translations.checkboxHeading}
-          {message.checks.map((check, index) => (
-            <div key={getCheckboxId(index)}>
-              <input
-                id={getCheckboxId(index)}
-                className={styles.checkbox}
-                type="checkbox"
-                value={check.toString()}
-                disabled={isDisabled}
-                onChange={(event) => handleCheckChange(event.currentTarget.value, index)} />
-              <label className={styles.checkboxLabel} htmlFor={getCheckboxId(index)}>
-                {getCheckboxLabel(index)}
-              </label>
-            </div>
-          ))}
+          {renderCheckboxes()}
         </div>
         <label className={styles.name}>
           {translations.nameLabel}
