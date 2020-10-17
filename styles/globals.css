@@ -38,3 +38,10 @@ textarea {
   font-family: inherit;
   font-size: inherit;
 }
+
+input:disabled, 
+select:disabled,
+textarea:disabled {
+  color: currentColor;
+  opacity: 1;
+}
