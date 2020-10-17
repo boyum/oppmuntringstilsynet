@@ -41,6 +41,7 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
     setUrl(url.href);
 
     requestAnimationFrame(() => {
+      tempInput.current.value = url.href;
       tempInput.current.select();
       tempInput.current.setSelectionRange(0, 99999);
       document.execCommand("copy");
@@ -66,7 +67,7 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
 
         <Form isDisabled={isDisabled}></Form>
         <Buttons handleReset={handleReset} handleCopy={handleCopy}></Buttons>
-        <input ref={tempInput} type="text" className={styles.hidden} value={url} readOnly />
+        <input ref={tempInput} type="text" className={styles.hidden} value={url} onChange={() => {}} />
       </div>
     </>
   );
