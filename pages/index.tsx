@@ -62,7 +62,7 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
 
         <Form isDisabled={isDisabled}></Form>
         <Buttons handleReset={handleReset} handleCopy={handleCopy}></Buttons>
-        <input ref={tempInput} type="text" className={styles.hidden} onChange={() => {}} />
+        <input ref={tempInput} type="text" className={styles.hidden} readOnly />
       </div>
     </>
   );
