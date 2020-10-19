@@ -4,7 +4,7 @@ import languages from '../models/languages'
 import MessageStore from '../stores/MessageStore'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
+function Oppmuntringstilsynet({ Component, pageProps }) {
   return (
     <MessageStore>
       <LanguageContext.Provider value={languages.NorskBokmal}>
@@ -14,4 +14,4 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyApp
+export default Oppmuntringstilsynet
