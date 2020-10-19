@@ -1,13 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import LanguageContext from '../contexts/LanguageContext';
 import MessageContext from '../contexts/MessageContext';
-import Translations from '../types/Translations';
+import { getTranslations } from '../pages/api/translations';
+import { SetChecksPayload, SetValuePayload } from '../reducers/message.reducer';
 import styles from '../styles/Form.module.css';
-import { SetChecksPayload, SetValuePayload } from '../reducers/messageReducer';
 
 export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Element {
-  const translations = useContext<Translations>(LanguageContext);
   const [message, dispatch] = useContext(MessageContext);
+  const [language, _] = useContext(LanguageContext);
+  const translations = getTranslations(language);
 
   function handleChange(payload: SetValuePayload): void {
     dispatch({ type: 'setValue', payload });
