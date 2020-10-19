@@ -12,6 +12,7 @@ const TranslationsNb: Translations = {
   nameLabel: 'Hilsen',
   copyButtonText: 'Kopier lenken til kortet 🔗',
   resetButtonText: 'Lag et nytt kort ✨',
+  setLanguage: 'Velg språk',
 };
 
 export default TranslationsNb;

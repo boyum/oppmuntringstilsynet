@@ -10,6 +10,7 @@ type Translations = {
   nameLabel: string;
   copyButtonText: string;
   resetButtonText: string;
+  setLanguage: string;
 }
 
 export default Translations;

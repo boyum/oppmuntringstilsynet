@@ -12,6 +12,7 @@ const TranslationsEn: Translations = {
   nameLabel: 'Sincerely,',
   copyButtonText: 'Copy the link to this card 🔗',
   resetButtonText: 'Create a new card ✨',
+  setLanguage: 'Set language',
 };
 
 export default TranslationsEn;
