@@ -29,7 +29,6 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
     const messageIsEmpty = isEmpty(message);
 
     if (hasMessage && messageIsEmpty && !isResetting) {
-      console.log('message', messageFromUrl);
       dispatchMessageAction({ type: 'setValue', payload: messageFromUrl });
       dispatchLanguageAction({ type: 'setLanguage', payload: messageFromUrl.language });
       setIsDisabled(true);
