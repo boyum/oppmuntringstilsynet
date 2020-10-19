@@ -87,7 +87,7 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
 
         <Form isDisabled={isDisabled} />
         <Buttons handleReset={handleReset} handleCopy={handleCopy} />
-        <label aria-hidden="true" className="hidden">Hidden label used for copying<input ref={tempInput} type="text" readOnly tabIndex={-1} /></label>
+        <label className="hidden">Hidden label used for copying<input ref={tempInput} type="text" readOnly tabIndex={-1} /></label>
       </div>
     </>
   );
