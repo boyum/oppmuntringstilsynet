@@ -13,6 +13,7 @@ const TranslationsEn: Translations = {
   copyButtonText: 'Copy the link to this card 🔗',
   resetButtonText: 'Create a new card ✨',
   setLanguage: 'Set language',
+  footerHtml: 'Made with <a href="https://nextjs.org/">Next.js</a>. See the code on <a href="https://github.com/boyum/oppmuntringstilsynet">GitHub</a>.',
 };
 
 export default TranslationsEn;

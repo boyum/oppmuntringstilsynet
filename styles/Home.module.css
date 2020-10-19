@@ -1,8 +1,12 @@
+.main {
+	flex-grow: 1;
+}
+
 .container {
-  background-color: #d4727e;
+  background-color: var(--theme-primary);
   border-radius: 0.5rem;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-  color: white;
+  color: var(--theme-secondary);
   display: flex;
 	flex-direction: column;
   max-width: 32rem;

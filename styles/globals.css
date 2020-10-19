@@ -7,6 +7,10 @@
 :root {  
   --scrollbarBG: transparent;
   --thumbBG: white;
+
+  --theme-primary: #d4727e;
+  --theme-secondary: white;
+  --theme-tertiary: #665e7a;
 }
 
 html,

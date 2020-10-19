@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Buttons from '../components/Buttons';
+import Footer from '../components/Footer';
 import Form from '../components/Form';
 import LanguagePicker from '../components/LanguagePicker';
 import LanguageContext from '../contexts/LanguageContext';
@@ -77,18 +78,21 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
         <div dangerouslySetInnerHTML={{ __html: tagManagerHtml }}></div>
       </Head>
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
-      <div className={styles.container}>
-        <div className={styles.containerHeader}>
-          <h1 className={styles.heading}>{translations.formHeading}</h1>
-          <div className={styles.languagePickerContainer}>
-            <LanguagePicker handleChange={handleLanguageChange} />
+      <main className={styles.main}>
+        <div className={styles.container}>
+          <div className={styles.containerHeader}>
+            <h1 className={styles.heading}>{translations.formHeading}</h1>
+            <div className={styles.languagePickerContainer}>
+              <LanguagePicker handleChange={handleLanguageChange} />
+            </div>
           </div>
-        </div>
 
-        <Form isDisabled={isDisabled} />
-        <Buttons handleReset={handleReset} handleCopy={handleCopy} />
-        <label className="hidden">Hidden label used for copying<input ref={tempInput} type="text" readOnly tabIndex={-1} /></label>
-      </div>
+          <Form isDisabled={isDisabled} />
+          <Buttons handleReset={handleReset} handleCopy={handleCopy} />
+          <label className="hidden">Hidden label used for copying<input ref={tempInput} type="text" readOnly tabIndex={-1} /></label>
+        </div>
+      </main>
+      <Footer />
     </>
   );
 }
