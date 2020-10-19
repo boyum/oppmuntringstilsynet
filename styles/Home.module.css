@@ -20,7 +20,18 @@
   display: flex;
 	flex-direction: column;
   max-width: 32rem;
-	padding: 2rem 3rem;
+	padding: 3rem 3rem;
+}
+
+.containerHeader {
+	position: relative;
+}
+
+.languagePickerContainer {
+	font-size: 0.8125em;
+	position: absolute;
+	right: -2rem;
+	top: -2rem;
 }
 
 .heading {

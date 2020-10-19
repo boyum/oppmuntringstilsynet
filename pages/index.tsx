@@ -1,33 +1,37 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import Form from '../components/Form';
-import LanguageContext from '../contexts/LanguageContext';
-import Message from '../types/Message';
-import Translations from '../types/Translations';
-import { decode, encode } from './api/url';
 import Buttons from '../components/Buttons';
+import Form from '../components/Form';
+import LanguagePicker from '../components/LanguagePicker';
+import LanguageContext from '../contexts/LanguageContext';
 import MessageContext from '../contexts/MessageContext';
-import { isEmpty } from '../utils/message-utils';
-
+import LanguageEnum from '../enums/Language';
 import styles from '../styles/Home.module.css';
+import { isEmpty } from '../utils/message-utils';
+import { getTranslations } from './api/translations';
+import { decodeMessage, encode } from './api/url';
 
 export default function Home({ encodedMessage }: { encodedMessage: string }) {
-  const messageFromUrl = decode<Message>(encodedMessage);
-
-  const translations = useContext<Translations>(LanguageContext);
-  const tempInput = useRef<HTMLInputElement>(null);
-  const [message, dispatch] = useContext(MessageContext);
+  const [language, dispatchLanguageAction] = useContext(LanguageContext);
+  const [message, dispatchMessageAction] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
-  const router = useRouter();
   const [isResetting, setIsResetting] = useState(false);
+
+  const router = useRouter();
+  const tempInput = useRef<HTMLInputElement>(null);
+
+  const messageFromUrl = decodeMessage(encodedMessage);
+  const translations = getTranslations(language);
 
   useEffect(() => {
     const hasMessage = !!messageFromUrl;
     const messageIsEmpty = isEmpty(message);
 
     if (hasMessage && messageIsEmpty && !isResetting) {
-      dispatch({ type: 'setValue', payload: messageFromUrl });
+      console.log('message', messageFromUrl);
+      dispatchMessageAction({ type: 'setValue', payload: messageFromUrl });
+      dispatchLanguageAction({ type: 'setLanguage', payload: messageFromUrl.language });
       setIsDisabled(true);
     }
   });
@@ -51,9 +55,18 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
 
   function handleReset() {
     router.push('/');
-    dispatch({ type: 'reset' });
+    dispatchMessageAction({ type: 'reset' });
     setIsResetting(true);
     setIsDisabled(false);
+  }
+
+  function handleLanguageChange(newLanguage: LanguageEnum) {
+    dispatchMessageAction({
+      type: 'setValue',
+      payload: {
+        language: newLanguage,
+      },
+    });
   }
 
   return (
@@ -62,14 +75,19 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
         <title>{translations.pageTitle}</title>
         <link rel="icon" href="/favicon.ico" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet" />
-        <div dangerouslySetInnerHTML={{__html: tagManagerHtml}}></div>
+        <div dangerouslySetInnerHTML={{ __html: tagManagerHtml }}></div>
       </Head>
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{display:'none',visibility:'hidden'}}></iframe></noscript>
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
       <div className={styles.container}>
-        <h1 className={styles.heading}>{translations.formHeading}</h1>
+        <div className={styles.containerHeader}>
+          <h1 className={styles.heading}>{translations.formHeading}</h1>
+          <div className={styles.languagePickerContainer}>
+            <LanguagePicker handleChange={handleLanguageChange} />
+          </div>
+        </div>
 
-        <Form isDisabled={isDisabled}></Form>
-        <Buttons handleReset={handleReset} handleCopy={handleCopy}></Buttons>
+        <Form isDisabled={isDisabled} />
+        <Buttons handleReset={handleReset} handleCopy={handleCopy} />
         <input ref={tempInput} type="text" className={styles.hidden} readOnly />
       </div>
     </>

@@ -1,3 +1,4 @@
+import LanguageEnum from '../enums/Language';
 import Message from '../types/Message';
 
 export type SetValuePayload = {
@@ -5,6 +6,7 @@ export type SetValuePayload = {
   message?: string;
   checks?: boolean[];
   name?: string;
+  language?: LanguageEnum;
 }
 
 export type SetChecksPayload = {
@@ -25,7 +27,8 @@ export function getEmptyState(): Message {
     checks: [false, false, false],
     date: '',
     message: '',
-    name: ''
+    name: '',
+    language: LanguageEnum.NorskBokmal,
   }
 }
 

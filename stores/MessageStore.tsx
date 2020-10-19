@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { messageReducer, getEmptyState } from '../reducers/messageReducer';
+import { messageReducer, getEmptyState } from '../reducers/message.reducer';
 import MessageContext from '../contexts/MessageContext';
 
 export default function MessageStore({ children }: { children: JSX.Element | JSX.Element[] }): JSX.Element {

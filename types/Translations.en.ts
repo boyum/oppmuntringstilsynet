@@ -3,7 +3,7 @@ import Translations from './Translations';
 const TranslationsEn: Translations = {
   pageTitle: 'The National Encouragement Authority',
   formHeading: '✨ You are appreciated! ✨',
-  dateLabel: 'Your work performance/ Din jobbutførelse/behaviour was observed and rated on the',
+  dateLabel: 'Your work performance/behaviour was observed and rated on the',
   messageLabel: 'I express the following remark',
   checkboxHeading: 'Conclusion:',
   checkbox1Label: 'Highly approved – I\'m impressed!',
