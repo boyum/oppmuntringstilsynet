@@ -11,6 +11,7 @@ type Translations = {
   copyButtonText: string;
   resetButtonText: string;
   setLanguage: string;
+  footerHtml: string;
 }
 
 export default Translations;

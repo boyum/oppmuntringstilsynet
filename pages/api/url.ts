@@ -24,11 +24,11 @@ export function decodeMessage(encodedObj: string): Message {
   if (!hasObj) {
     return null;
   }
-  
+
   const defaultValuesForBackwardsCompatibility = {
     language: LanguageEnum.NorskBokmal,
   };
-  
+
   return {
     ...defaultValuesForBackwardsCompatibility,
     ...decode<Message>(encodedObj),

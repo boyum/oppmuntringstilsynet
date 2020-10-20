@@ -2,7 +2,7 @@
 .name input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--theme-secondary);
   margin-left: 0.5em;
 }
 
@@ -17,7 +17,7 @@
   background-attachment: local;
   background-color: transparent;
   background-image:
-    repeating-linear-gradient(transparent, transparent calc(var(--line-height) - 1px), white var(--line-height));
+    repeating-linear-gradient(transparent, transparent calc(var(--line-height) - 1px), var(--theme-secondary) var(--line-height));
   border: none;
   display: block;
   line-height: var(--line-height);
@@ -67,26 +67,17 @@
   width: 1.5rem;
 }
 
-.checkbox {
-  border: 0 !important;
-	clip: rect(1px, 1px, 1px, 1px) !important;
-	-webkit-clip-path: inset(50%) !important;
-  clip-path: inset(50%) !important;
-	height: 1px !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	padding: 0 !important;
-	position: absolute !important;
-	width: 1px !important;
-	white-space: nowrap !important;    
-}
-
 .checkbox:checked + .checkboxLabel::before {
   content: '✓';
 }
 
 .checkbox:disabled + .checkboxLabel {
   cursor: default;
+}
+
+.checkbox:focus:not(:active) + .checkboxLabel::before {
+  outline: 2px solid var(--theme-tertiary);
+  outline-offset: 2px;
 }
 
 .name {
