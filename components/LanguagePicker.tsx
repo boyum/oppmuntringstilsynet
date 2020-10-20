@@ -29,7 +29,7 @@ export default function LanguagePicker({ handleChange }: { handleChange: (newLan
       <span className="hidden">{translations.setLanguage}</span>
       <select className={styles.select} onChange={handleOnChange} value={language}>
         {languageArr.map(([languageName, languageTitle]) => (
-          <option key={languageName} value={languageName}>{languageTitle}</option>
+          <option key={languageName} className={styles.option} value={languageName}>{languageTitle}</option>
         ))}
       </select>
     </label>
