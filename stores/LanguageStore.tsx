@@ -8,16 +8,16 @@ export default function LanguageStore({ children }: { children: JSX.Element | JS
 
   const defaultLanguage = LanguageEnum.NorskBokmal;
   let cachedLanguage: LanguageEnum;
-  
+
   const isBrowser = process.browser;
   if (isBrowser) {
     cachedLanguage = LanguageEnum[localStorage.getItem(localStorageKey)];
-    
+
     useEffect(() => localStorage.setItem(localStorageKey, language));
   }
-  
+
   const [language, dispatch] = useReducer(languageReducer, cachedLanguage ?? defaultLanguage);
-  
+
   return (
     <LanguageContext.Provider value={[language, dispatch]}>
       {children}
