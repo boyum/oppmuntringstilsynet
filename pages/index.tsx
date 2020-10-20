@@ -30,6 +30,8 @@ export default function Home({ encodedMessage, currentUrl }: Props) {
   const messageFromUrl = decodeMessage(encodedMessage);
   const translations = getTranslations(language);
 
+  const ogImageUrl = `${currentUrl}/og-image.jpg`;
+
   useEffect(() => {
     const hasMessage = !!messageFromUrl;
     const messageIsEmpty = isEmpty(message);
@@ -84,7 +86,7 @@ export default function Home({ encodedMessage, currentUrl }: Props) {
 
         <meta property="og:title" content={translations.pageTitle} />
         <meta property="og:description" content={translations.pageDescription} />
-        <meta property="og:image" content="/og-image.jpg" />
+        <meta property="og:image" content={ogImageUrl} />
         <meta property="og:url" content={currentUrl} />
         <meta property="og:type" content="website" />
       </Head>
