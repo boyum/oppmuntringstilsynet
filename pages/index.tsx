@@ -12,8 +12,15 @@ import styles from '../styles/Home.module.css';
 import { isEmpty } from '../utils/message-utils';
 import { getTranslations } from './api/translations';
 import { decodeMessage, encode } from './api/url';
+import http from 'http';
 
-export default function Home({ encodedMessage }: { encodedMessage: string }) {
+type Props = {
+  currentUrl: string;
+  encodedMessage: string;
+  host: string;
+};
+
+export default function Home({ encodedMessage, currentUrl, host }: Props) {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [message, dispatchMessageAction] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -24,6 +31,8 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
 
   const messageFromUrl = decodeMessage(encodedMessage);
   const translations = getTranslations(language);
+
+  const ogImageUrl = `https://${host}/og-image.jpg`;
 
   useEffect(() => {
     const hasMessage = !!messageFromUrl;
@@ -76,7 +85,14 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>"></link>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet" />
         <div dangerouslySetInnerHTML={{ __html: tagManagerHtml }}></div>
+
+        <meta property="og:title" content={translations.pageTitle} />
+        <meta property="og:description" content={translations.pageDescription} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="website" />
       </Head>
+
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
       <main className={styles.main}>
         <div className={styles.container}>
@@ -97,10 +113,21 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
   );
 }
 
-export async function getServerSideProps(context) {
+type Context = {
+  req: http.IncomingMessage;
+  res: http.ServerResponse;
+  resolvedUrl: string;
+  query: {
+    [key: string]: string
+  };
+}
+
+export async function getServerSideProps(context: Context) {
   return {
     props: {
       encodedMessage: context.query.m ?? '',
-    },
+      currentUrl: context.req.headers.host + context.resolvedUrl,
+      host: context.req.headers.host
+    } as Props,
   }
 }
