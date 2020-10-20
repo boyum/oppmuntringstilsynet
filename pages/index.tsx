@@ -32,7 +32,7 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
   const messageFromUrl = decodeMessage(encodedMessage);
   const translations = getTranslations(language);
 
-  const ogImageUrl = `//${host}/og-image.jpg`;
+  const ogImageUrl = `https://${host}/og-image.jpg`;
 
   useEffect(() => {
     const hasMessage = !!messageFromUrl;
