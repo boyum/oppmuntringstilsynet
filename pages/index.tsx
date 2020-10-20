@@ -12,13 +12,15 @@ import styles from '../styles/Home.module.css';
 import { isEmpty } from '../utils/message-utils';
 import { getTranslations } from './api/translations';
 import { decodeMessage, encode } from './api/url';
+import http from 'http';
 
 type Props = {
   currentUrl: string;
   encodedMessage: string;
+  host: string;
 };
 
-export default function Home({ encodedMessage, currentUrl }: Props) {
+export default function Home({ encodedMessage, currentUrl, host }: Props) {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [message, dispatchMessageAction] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -30,7 +32,7 @@ export default function Home({ encodedMessage, currentUrl }: Props) {
   const messageFromUrl = decodeMessage(encodedMessage);
   const translations = getTranslations(language);
 
-  const ogImageUrl = `${currentUrl}/og-image.jpg`;
+  const ogImageUrl = `//${host}/og-image.jpg`;
 
   useEffect(() => {
     const hasMessage = !!messageFromUrl;
@@ -111,11 +113,21 @@ export default function Home({ encodedMessage, currentUrl }: Props) {
   );
 }
 
-export async function getServerSideProps(context: { pathName: string; query: { [key: string]: string }; asPath: string }) {
+type Context = {
+  req: http.IncomingMessage;
+  res: http.ServerResponse;
+  resolvedUrl: string;
+  query: {
+    [key: string]: string
+  };
+}
+
+export async function getServerSideProps(context: Context) {
   return {
     props: {
       encodedMessage: context.query.m ?? '',
-      currentUrl: context.asPath,
-    },
+      currentUrl: context.req.headers.host + context.resolvedUrl,
+      host: context.req.headers.host
+    } as Props,
   }
 }
