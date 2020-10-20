@@ -13,7 +13,12 @@ import { isEmpty } from '../utils/message-utils';
 import { getTranslations } from './api/translations';
 import { decodeMessage, encode } from './api/url';
 
-export default function Home({ encodedMessage }: { encodedMessage: string }) {
+type Props = {
+  currentUrl: string;
+  encodedMessage: string; 
+};
+
+export default function Home({ encodedMessage, currentUrl }: Props) {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [message, dispatchMessageAction] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -80,6 +85,8 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
         <meta property="og:title" content={translations.pageTitle} />
         <meta property="og:description" content={translations.pageDescription} />
         <meta property="og:image" content="/og-image.jpg" />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="website" />
       </Head>
 
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
@@ -102,10 +109,11 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: { pathName: string; query: { [key: string]: string }; asPath: string }) {
   return {
     props: {
       encodedMessage: context.query.m ?? '',
+      currentUrl: context.asPath,
     },
   }
 }
