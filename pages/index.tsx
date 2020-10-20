@@ -15,7 +15,7 @@ import { decodeMessage, encode } from './api/url';
 
 type Props = {
   currentUrl: string;
-  encodedMessage: string; 
+  encodedMessage: string;
 };
 
 export default function Home({ encodedMessage, currentUrl }: Props) {
