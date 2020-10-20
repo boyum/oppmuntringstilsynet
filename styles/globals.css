@@ -4,9 +4,13 @@
   box-sizing: border-box;
 }
 
-:root {  
+:root {
   --scrollbarBG: transparent;
   --thumbBG: white;
+
+  --theme-primary: #d4727e;
+  --theme-secondary: white;
+  --theme-tertiary: #665e7a;
 }
 
 html,
@@ -28,7 +32,7 @@ a {
 }
 
 button,
-input, 
+input,
 select,
 textarea {
   border: none;
@@ -38,7 +42,7 @@ textarea {
   font-size: inherit;
 }
 
-input:disabled, 
+input:disabled,
 select:disabled,
 textarea:disabled {
   color: currentColor;
@@ -56,5 +60,5 @@ textarea:disabled {
 	padding: 0 !important;
 	position: absolute !important;
 	width: 1px !important;
-	white-space: nowrap !important;  
+	white-space: nowrap !important;
 }

@@ -29,12 +29,13 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
   }
 
   function renderCheckboxes(): JSX.Element[] {
+    const checkboxClassName = `${styles.checkbox} hidden`;
 
     return message.checks.map((check, index) => (
       <div key={getCheckboxId(index)}>
         <input
           id={getCheckboxId(index)}
-          className={styles.checkbox}
+          className={checkboxClassName}
           type="checkbox"
           checked={check}
           value={check.toString()}
