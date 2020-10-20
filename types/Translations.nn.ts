@@ -2,6 +2,7 @@ import Translations from './Translations';
 
 const TranslationsNn: Translations = {
   pageTitle: 'Oppmuntringstilsynet',
+  pageDescription: 'Send ein helsing til nokon som har gjort det lille ekstra, eller gje oppmuntringskortet til nokon som treng ein liten oppmuntring ❤️',
   formHeading: '✨ Hei, du er god! ✨',
   dateLabel: 'Di jobbutføring/framtreden vart observert og vurdert den',
   messageLabel: 'Eg gjev deg følgjande kommentar',

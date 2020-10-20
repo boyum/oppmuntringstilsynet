@@ -76,7 +76,12 @@ export default function Home({ encodedMessage }: { encodedMessage: string }) {
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>"></link>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet" />
         <div dangerouslySetInnerHTML={{ __html: tagManagerHtml }}></div>
+
+        <meta property="og:title" content={translations.pageTitle} />
+        <meta property="og:description" content={translations.pageDescription} />
+        <meta property="og:image" content="/og-image.jpg" />
       </Head>
+
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
       <main className={styles.main}>
         <div className={styles.container}>

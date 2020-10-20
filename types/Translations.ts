@@ -1,5 +1,6 @@
 type Translations = {
   pageTitle: string;
+  pageDescription: string;
   formHeading: string;
   dateLabel: string;
   messageLabel: string;
