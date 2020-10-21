@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import LanguageContext from '../contexts/LanguageContext';
 import MessageContext from '../contexts/MessageContext';
-import { getTranslations } from '../pages/api/translations';
+import { getTranslations } from '../utils/language-utils';
 import { SetChecksPayload, SetValuePayload } from '../reducers/message.reducer';
 import styles from '../styles/Form.module.css';
 

@@ -3,7 +3,7 @@ import LanguageContext from '../contexts/LanguageContext';
 import LanguageEnum from '../enums/Language';
 import Language from '../models/Language';
 import languages from '../models/languages';
-import { getTranslations } from '../pages/api/translations';
+import { getTranslations } from '../utils/language-utils';
 import styles from '../styles/LanguagePicker.module.css';
 
 export default function LanguagePicker({ handleChange }: { handleChange: (newLanguage: LanguageEnum) => void }) {

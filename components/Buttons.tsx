@@ -1,7 +1,7 @@
 import { MouseEventHandler, useContext } from 'react';
 import LanguageContext from '../contexts/LanguageContext';
 import styles from '../styles/Buttons.module.css';
-import { getTranslations } from '../pages/api/translations';
+import { getTranslations } from '../utils/language-utils';
 
 type Props = {
   handleReset: MouseEventHandler<HTMLButtonElement>;

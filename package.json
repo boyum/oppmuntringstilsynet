@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/locale": "^0.1.0",
+    "locale": "^0.1.0",
     "lz-string": "^1.4.4",
     "next": "^9.5.5",
     "react": "16.14.0",

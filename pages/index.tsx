@@ -1,3 +1,5 @@
+import http from 'http';
+import { Locales } from 'locale';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -9,18 +11,18 @@ import LanguageContext from '../contexts/LanguageContext';
 import MessageContext from '../contexts/MessageContext';
 import LanguageEnum from '../enums/Language';
 import styles from '../styles/Home.module.css';
+import { getPreferredSupportedLanguage, getTranslations } from '../utils/language-utils';
 import { isEmpty } from '../utils/message-utils';
-import { getTranslations } from './api/translations';
 import { decodeMessage, encode } from './api/url';
-import http from 'http';
 
 type Props = {
   currentUrl: string;
   encodedMessage: string;
   host: string;
+  acceptLanguage: string;
 };
 
-export default function Home({ encodedMessage, currentUrl, host }: Props) {
+export default function Home({ encodedMessage, currentUrl, host, acceptLanguage }: Props) {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [message, dispatchMessageAction] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -31,6 +33,9 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
 
   const messageFromUrl = decodeMessage(encodedMessage);
   const translations = getTranslations(language);
+
+  const preferredLanguage = getPreferredSupportedLanguage(new Locales(acceptLanguage));
+  dispatchLanguageAction({ type: 'setLanguage', payload: preferredLanguage });
 
   const ogImageUrl = `https://${host}/og-image.jpg`;
 
@@ -122,12 +127,13 @@ type Context = {
   };
 }
 
-export async function getServerSideProps(context: Context) {
+export async function getServerSideProps(context: Context): Promise<{ props: Props }> {
   return {
     props: {
       encodedMessage: context.query.m ?? '',
       currentUrl: context.req.headers.host + context.resolvedUrl,
-      host: context.req.headers.host
+      host: context.req.headers.host,
+      acceptLanguage: context.req.headers['accept-language'],
     } as Props,
   }
 }
