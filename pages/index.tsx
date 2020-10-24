@@ -1,3 +1,4 @@
+import http from 'http';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -12,7 +13,6 @@ import styles from '../styles/Home.module.css';
 import { isEmpty } from '../utils/message-utils';
 import { getTranslations } from './api/translations';
 import { decodeMessage, encode } from './api/url';
-import http from 'http';
 
 type Props = {
   currentUrl: string;
@@ -42,7 +42,7 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
       dispatchMessageAction({ type: 'setValue', payload: messageFromUrl });
       dispatchLanguageAction({ type: 'setLanguage', payload: messageFromUrl.language });
       setIsDisabled(true);
-    }
+    } 
   });
 
   const tagManagerHtml = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -56,9 +56,11 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
     const url = new URL(window.location.href)
     url.searchParams.set('m', encodedMessage);
 
-    tempInput.current.value = url.href;
-    tempInput.current.select();
-    tempInput.current.setSelectionRange(0, 99999);
+    if (tempInput?.current) {
+      tempInput.current.value = url.href;
+      tempInput.current.select();
+      tempInput.current.setSelectionRange(0, 99999);
+    }
     document.execCommand("copy");
   }
 
