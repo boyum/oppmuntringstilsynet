@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function Buttons(props: Props): JSX.Element {
-  const [language, _] = useContext(LanguageContext);
+  const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
   return (

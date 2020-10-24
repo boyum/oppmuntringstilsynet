@@ -8,7 +8,7 @@ import styles from './Form.module.css';
 
 export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Element {
   const [message, dispatch] = useContext(MessageContext);
-  const [language, _] = useContext(LanguageContext);
+  const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
   function handleChange(payload: SetValuePayload): void {
