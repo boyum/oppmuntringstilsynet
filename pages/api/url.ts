@@ -1,36 +1,36 @@
-import LZString from 'lz-string';
-import LanguageEnum from '../../enums/Language';
-import Message from '../../types/Message';
+import {default as LZString} from "lz-string";
+import {default as LanguageEnum} from "../../enums/Language";
+import {default as Message} from "../../types/Message";
 
 export function encode(obj: object): string {
-  const json = JSON.stringify(obj);
+	const json = JSON.stringify(obj);
 
-  return LZString.compressToEncodedURIComponent(json);
+	return LZString.compressToEncodedURIComponent(json);
 }
 
 export function decode<Type>(encodedObj: string): Type {
-  const hasObj = !!encodedObj;
+	const hasObj = !!encodedObj;
 
-  if (!hasObj) {
-    return null;
-  }
+	if (!hasObj) {
+		return null;
+	}
 
-  return JSON.parse(LZString.decompressFromEncodedURIComponent(encodedObj));
+	return JSON.parse(LZString.decompressFromEncodedURIComponent(encodedObj));
 }
 
 export function decodeMessage(encodedObj: string): Message {
-  const hasObj = !!encodedObj;
+	const hasObj = !!encodedObj;
 
-  if (!hasObj) {
-    return null;
-  }
+	if (!hasObj) {
+		return null;
+	}
 
-  const defaultValuesForBackwardsCompatibility = {
-    language: LanguageEnum.NorskBokmal,
-  };
+	const defaultValuesForBackwardsCompatibility = {
+		language: LanguageEnum.NorskBokmal,
+	};
 
-  return {
-    ...defaultValuesForBackwardsCompatibility,
-    ...decode<Message>(encodedObj),
-  }
+	return {
+		...defaultValuesForBackwardsCompatibility,
+		...decode<Message>(encodedObj),
+	};
 }

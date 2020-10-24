@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check": "npx rome check"
   },
   "dependencies": {
+    "@types/lz-string": "^1.3.34",
     "lz-string": "^1.4.4",
     "next": "^9.5.5",
     "react": "16.14.0",

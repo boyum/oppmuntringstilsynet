@@ -1,0 +1,22 @@
+// For configuration documentation see http://romefrontend.dev/#project-configuration
+name: "oppmuntringstilsynet"
+lint: {
+	globals: [
+		"JSX"
+		"JSX"
+		"JSX"
+		"JSX"
+		"JSX"
+		"JSX"
+		"JSX"
+		"JSX"
+		"JSX"
+		"JSX"
+		"webpackHotUpdate_N_E"
+]
+	ignore: [
+		"node_modules"
+		".next"
+]
+}
+root: true
