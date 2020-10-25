@@ -27,16 +27,16 @@ describe(Page.name, () => {
   // });
 
   it('should render without accessibility errors when no message', async () => {
-    const encodedMessage = "";
-    const currentUrl = "https://example.com/";
-    const host = "https://example.com";
+    const encodedMessage = '';
+    const currentUrl = 'https://example.com/';
+    const host = 'https://example.com';
 
     const page = render(
       <MessageStore>
         <LanguageStore>
           <Page encodedMessage={encodedMessage} currentUrl={currentUrl} host={host} />
         </LanguageStore>
-      </MessageStore>
+      </MessageStore>,
     ).container;
 
     const results = await axe(page);

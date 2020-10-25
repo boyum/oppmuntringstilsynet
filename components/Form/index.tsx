@@ -42,7 +42,8 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
           checked={check}
           value={check.toString()}
           disabled={isDisabled}
-          onChange={(event) => handleCheckChange(event.currentTarget.value, index)} />
+          onChange={(event) => handleCheckChange(event.currentTarget.value, index)}
+        />
         <label className={styles.checkboxLabel} htmlFor={getCheckboxId(index)}>
           {getCheckboxLabel(index)}
         </label>
@@ -59,7 +60,8 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
             type="text"
             value={message.date}
             disabled={isDisabled}
-            onChange={(event) => handleChange({ date: event.currentTarget.value })} />
+            onChange={(event) => handleChange({ date: event.currentTarget.value })}
+          />
         </label>
         <label className={styles.message}>
           {translations.messageLabel}
@@ -67,7 +69,8 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
             rows={4}
             value={message.message}
             disabled={isDisabled}
-            onChange={(event) => handleChange({ message: event.currentTarget.value })}></textarea>
+            onChange={(event) => handleChange({ message: event.currentTarget.value })}
+          />
         </label>
         <div className={styles.checkboxContainer}>
           {translations.checkboxHeading}
@@ -79,7 +82,8 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
             type="text"
             value={message.name}
             disabled={isDisabled}
-            onChange={(event) => handleChange({ name: event.currentTarget.value })} />
+            onChange={(event) => handleChange({ name: event.currentTarget.value })}
+          />
         </label>
       </form>
     </>

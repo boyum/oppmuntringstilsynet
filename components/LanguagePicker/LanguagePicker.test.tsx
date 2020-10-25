@@ -10,7 +10,7 @@ describe(LanguagePicker.name, () => {
     const languagePicker = render(
       <main>
         <LanguagePicker handleChange={() => { }} />
-      </main>
+      </main>,
     ).container;
 
     const results = await axe(languagePicker);

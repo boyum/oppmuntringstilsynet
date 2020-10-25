@@ -6,14 +6,14 @@ import TranslationsNn from '../types/Translations.nn';
 export default {
   [LanguageEnum.NorskBokmal]: {
     title: 'Norsk bokmål',
-    translations: TranslationsNb
+    translations: TranslationsNb,
   },
   [LanguageEnum.NorskNynorsk]: {
     title: 'Norsk nynorsk',
-    translations: TranslationsNn
+    translations: TranslationsNn,
   },
   [LanguageEnum.English]: {
     title: 'English',
-    translations: TranslationsEn
+    translations: TranslationsEn,
   },
 };

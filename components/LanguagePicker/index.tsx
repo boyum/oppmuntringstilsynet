@@ -8,9 +8,8 @@ import styles from './LanguagePicker.module.css';
 
 export default function LanguagePicker({ handleChange }: { handleChange: (newLanguage: LanguageEnum) => void }) {
   const [language, setLanguage] = useContext(LanguageContext);
-  const languageArr =
-    Object.entries(languages)
-      .map(([languageName, language]: [string, Language]) => [languageName, language.title]);
+  const languageArr = Object.entries(languages)
+    .map(([languageName, language]: [string, Language]) => [languageName, language.title]);
 
   const translations = getTranslations(language);
 

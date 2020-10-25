@@ -32,5 +32,5 @@ export function decodeMessage(encodedObj: string): Message {
   return {
     ...defaultValuesForBackwardsCompatibility,
     ...decode<Message>(encodedObj),
-  }
+  };
 }

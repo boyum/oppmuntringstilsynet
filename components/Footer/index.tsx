@@ -8,6 +8,6 @@ export default function Footer(): JSX.Element {
   const translations = getTranslations(language);
 
   return (
-    <footer className={styles.footer} dangerouslySetInnerHTML={{ __html: translations.footerHtml }}></footer>
+    <footer className={styles.footer} dangerouslySetInnerHTML={{ __html: translations.footerHtml }} />
   );
 }

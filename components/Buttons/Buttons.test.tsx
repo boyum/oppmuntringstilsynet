@@ -13,7 +13,7 @@ describe(Buttons.name, () => {
         <main>
           <Buttons handleReset={() => { }} handleCopy={() => { }} />
         </main>
-      </LanguageStore>
+      </LanguageStore>,
     ).container;
 
     const results = await axe(buttons);

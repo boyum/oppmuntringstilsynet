@@ -6,7 +6,6 @@ export type LanguageAction = {
   payload: LanguageEnum;
 }
 
-
 export function languageReducer(state: LanguageEnum, action: LanguageAction): LanguageEnum {
   switch (action.type) {
     case 'setLanguage': {
