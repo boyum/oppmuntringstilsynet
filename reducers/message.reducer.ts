@@ -18,6 +18,7 @@ export type MessageAction = {
   | 'setValue'
   | 'setCheck'
   | 'reset';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any;
   checksIndex?: number;
 }
@@ -29,21 +30,23 @@ export function getEmptyState(): Message {
     message: '',
     name: '',
     language: LanguageEnum.NorskBokmal,
-  }
+  };
 }
 
 export function messageReducer(state: Message, action: MessageAction): Message {
   switch (action.type) {
     case 'setValue': {
-      const payload: SetValuePayload = action.payload;
+      const { payload } = action;
       return { ...state, ...payload };
     }
     case 'setCheck': {
-      const payload: SetChecksPayload = action.payload;
+      const { payload } = action;
 
       const newState = {
         ...state,
-        checks: state.checks.map((check, index) => index === action.checksIndex ? payload.check : check)
+        checks: state.checks.map(
+          (check, index) => (index === action.checksIndex ? payload.check : check),
+        ),
       };
 
       return newState;

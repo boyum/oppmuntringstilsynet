@@ -9,8 +9,8 @@ describe(LanguagePicker.name, () => {
   it('should render without accessibility errors', async () => {
     const languagePicker = render(
       <main>
-        <LanguagePicker handleChange={() => { }} />
-      </main>
+        <LanguagePicker handleChange={undefined} />
+      </main>,
     ).container;
 
     const results = await axe(languagePicker);

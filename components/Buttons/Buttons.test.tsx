@@ -11,9 +11,9 @@ describe(Buttons.name, () => {
     const buttons = render(
       <LanguageStore>
         <main>
-          <Buttons handleReset={() => { }} handleCopy={() => { }} />
+          <Buttons handleReset={undefined} handleCopy={undefined} />
         </main>
-      </LanguageStore>
+      </LanguageStore>,
     ).container;
 
     const results = await axe(buttons);

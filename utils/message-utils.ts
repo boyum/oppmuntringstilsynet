@@ -8,5 +8,5 @@ export function isEmpty(message: Message): boolean {
     && message.message === emptyMessage.message
     && message.name === emptyMessage.name
     && message.language === emptyMessage.language
-    && message.checks.every((check, index) => emptyMessage.checks[index] === check)
+    && message.checks.every((check, index) => emptyMessage.checks[index] === check);
 }

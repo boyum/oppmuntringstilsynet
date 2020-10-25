@@ -1,12 +1,15 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import React from 'react';
+import Document, {
+  Html, Head, Main, NextScript, DocumentInitialProps, DocumentContext,
+} from 'next/document';
 
 class CustomDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
+  static async getInitialProps(context: DocumentContext): Promise<DocumentInitialProps> {
+    const initialProps = await Document.getInitialProps(context);
     return { ...initialProps };
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Html lang="nb">
         <Head />

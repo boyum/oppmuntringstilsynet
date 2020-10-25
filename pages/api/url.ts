@@ -2,7 +2,7 @@ import LZString from 'lz-string';
 import LanguageEnum from '../../enums/Language';
 import Message from '../../types/Message';
 
-export function encode(obj: object): string {
+export function encode(obj: unknown): string {
   const json = JSON.stringify(obj);
 
   return LZString.compressToEncodedURIComponent(json);
@@ -32,5 +32,5 @@ export function decodeMessage(encodedObj: string): Message {
   return {
     ...defaultValuesForBackwardsCompatibility,
     ...decode<Message>(encodedObj),
-  }
+  };
 }

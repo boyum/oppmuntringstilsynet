@@ -13,10 +13,10 @@ describe(Form.name, () => {
       <MessageStore>
         <LanguageStore>
           <main>
-            <Form isDisabled={true} />
+            <Form isDisabled />
           </main>
         </LanguageStore>
-      </MessageStore>
+      </MessageStore>,
     ).container;
 
     const results = await axe(form);
@@ -29,10 +29,10 @@ describe(Form.name, () => {
       <MessageStore>
         <LanguageStore>
           <main>
-            <Form isDisabled={true} />
+            <Form isDisabled />
           </main>
         </LanguageStore>
-      </MessageStore>
+      </MessageStore>,
     ).container;
 
     const results = await axe(form);
