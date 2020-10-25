@@ -18,12 +18,12 @@ describe(Form.name, () => {
         </LanguageStore>
       </MessageStore>
     ).container;
-  
+
     const results = await axe(form);
-  
+
     expect(results).toHaveNoViolations();
   });
-  
+
   it('should render without accessibility errors when fields are not disabled', async () => {
     const form = render(
       <MessageStore>
@@ -34,9 +34,9 @@ describe(Form.name, () => {
         </LanguageStore>
       </MessageStore>
     ).container;
-  
+
     const results = await axe(form);
-  
+
     expect(results).toHaveNoViolations();
   });
 });

@@ -12,9 +12,9 @@ describe(LanguagePicker.name, () => {
         <LanguagePicker handleChange={() => { }} />
       </main>
     ).container;
-  
+
     const results = await axe(languagePicker);
-  
+
     expect(results).toHaveNoViolations();
   });
 });
