@@ -18,6 +18,7 @@ export type MessageAction = {
   | 'setValue'
   | 'setCheck'
   | 'reset';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any;
   checksIndex?: number;
 }
@@ -43,7 +44,9 @@ export function messageReducer(state: Message, action: MessageAction): Message {
 
       const newState = {
         ...state,
-        checks: state.checks.map((check, index) => (index === action.checksIndex ? payload.check : check)),
+        checks: state.checks.map(
+          (check, index) => (index === action.checksIndex ? payload.check : check),
+        ),
       };
 
       return newState;

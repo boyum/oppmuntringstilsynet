@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import React, { render } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import React from 'react';
 import Buttons from '.';
@@ -11,7 +11,7 @@ describe(Buttons.name, () => {
     const buttons = render(
       <LanguageStore>
         <main>
-          <Buttons handleReset={() => { }} handleCopy={() => { }} />
+          <Buttons handleReset={undefined} handleCopy={undefined} />
         </main>
       </LanguageStore>,
     ).container;

@@ -9,7 +9,9 @@ expect.extend(toHaveNoViolations);
 
 describe(Page.name, () => {
   // it('should render without accessibility errors when a message is set', async () => {
-  //   const encodedMessage = "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRABUp40RyBbZ%2BKgczqUbNW5AHZVO9JizYgANlRE8svfiAByAewzxYAIQ2x2VWSAC%2BQA";
+  //   const encodedMessage =
+  // eslint-disable-next-line max-len
+  //     "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRABUp40RyBbZ%2BKgczqUbNW5AHZVO9JizYgANlRE8svfiAByAewzxYAIQ2x2VWSAC%2BQA";
   //   const currentUrl = "https://example.com/";
   //   const host = "https://example.com";
 
@@ -34,7 +36,7 @@ describe(Page.name, () => {
     const page = render(
       <MessageStore>
         <LanguageStore>
-          <Page encodedMessage={encodedMessage} currentUrl={currentUrl} host={host} />
+          <Page encodedParamMessage={encodedMessage} currentUrl={currentUrl} host={host} />
         </LanguageStore>
       </MessageStore>,
     ).container;

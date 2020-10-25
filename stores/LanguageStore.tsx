@@ -1,9 +1,9 @@
-import { useReducer } from 'react';
+import React, { useReducer } from 'react';
 import LanguageContext from '../contexts/LanguageContext';
 import { languageReducer } from '../reducers/language.reducer';
 import LanguageEnum from '../enums/Language';
 
-export default function LanguageStore({ children }: { children: JSX.Element | JSX.Element[] }): JSX.Element {
+function LanguageStore({ children }: { children: JSX.Element | JSX.Element[] }): JSX.Element {
   const [language, dispatch] = useReducer(languageReducer, LanguageEnum.NorskBokmal);
 
   return (
@@ -12,3 +12,5 @@ export default function LanguageStore({ children }: { children: JSX.Element | JS
     </LanguageContext.Provider>
   );
 }
+
+export default LanguageStore;

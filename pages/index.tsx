@@ -18,11 +18,11 @@ import { decodeMessage, encode } from './api/url';
 
 type Props = {
   currentUrl: string;
-  encodedMessage: string;
+  encodedParamMessage: string;
   host: string;
 };
 
-export default function Home({ encodedMessage, currentUrl, host }: Props) {
+export default function Home({ encodedParamMessage, currentUrl, host }: Props): JSX.Element {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [message, dispatchMessageAction] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -31,7 +31,7 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
   const router = useRouter();
   const tempInput = useRef<HTMLInputElement>(null);
 
-  const messageFromUrl = decodeMessage(encodedMessage);
+  const messageFromUrl = decodeMessage(encodedParamMessage);
   const translations = getTranslations(language);
 
   const ogImageUrl = `https://${host}/og-image.jpg`;
@@ -88,6 +88,7 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
         <title>{translations.pageTitle}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet" />
+        {/* eslint-disable-next-line react/no-danger */}
         <div dangerouslySetInnerHTML={{ __html: tagManagerHtml }} />
 
         <meta property="og:title" content={translations.pageTitle} />
@@ -97,7 +98,7 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
         <meta property="og:type" content="website" />
       </Head>
 
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} /></noscript>
+      <noscript><iframe title="GTM iframe" src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} /></noscript>
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.containerHeader}>
@@ -129,10 +130,10 @@ type Context = {
   };
 }
 
-export async function getServerSideProps(context: Context) {
+export async function getServerSideProps(context: Context): Promise<{ props: Props}> {
   return {
     props: {
-      encodedMessage: context.query.m ?? '',
+      encodedParamMessage: context.query.m ?? '',
       currentUrl: context.req.headers.host + context.resolvedUrl,
       host: context.req.headers.host,
     } as Props,
