@@ -15,9 +15,9 @@ describe(Buttons.name, () => {
         </main>
       </LanguageStore>
     ).container;
-  
+
     const results = await axe(buttons);
-  
+
     expect(results).toHaveNoViolations();
   });
 });

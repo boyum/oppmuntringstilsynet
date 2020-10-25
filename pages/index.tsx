@@ -42,7 +42,7 @@ export default function Home({ encodedMessage, currentUrl, host }: Props) {
       dispatchMessageAction({ type: 'setValue', payload: messageFromUrl });
       dispatchLanguageAction({ type: 'setLanguage', payload: messageFromUrl.language });
       setIsDisabled(true);
-    } 
+    }
   });
 
   const tagManagerHtml = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
