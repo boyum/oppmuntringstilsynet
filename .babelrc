@@ -1,6 +1,3 @@
 {
-  "presets": ["next/babel"],
-  "plugins": [
-    ["css-modules-transform", {}]
-  ]
+  "presets": ["next/babel"]
 }
