@@ -1,13 +1,14 @@
-import { useContext, useState } from 'react';
-import LanguageContext from '../contexts/LanguageContext';
-import MessageContext from '../contexts/MessageContext';
-import { getTranslations } from '../pages/api/translations';
-import { SetChecksPayload, SetValuePayload } from '../reducers/message.reducer';
-import styles from '../styles/Form.module.css';
+import { useContext } from 'react';
+import LanguageContext from '../../contexts/LanguageContext';
+import MessageContext from '../../contexts/MessageContext';
+import { getTranslations } from '../../pages/api/translations';
+import { SetChecksPayload, SetValuePayload } from '../../reducers/message.reducer';
+import Translations from '../../types/Translations';
+import styles from './Form.module.css';
 
 export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Element {
   const [message, dispatch] = useContext(MessageContext);
-  const [language, _] = useContext(LanguageContext);
+  const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
   function handleChange(payload: SetValuePayload): void {
@@ -21,7 +22,8 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
   }
 
   function getCheckboxLabel(index: number): string {
-    return translations[`checkbox${index + 1}Label`];
+    const labelKey = `checkbox${index + 1}Label` as keyof Translations;
+    return translations[labelKey];
   }
 
   function getCheckboxId(index: number): string {
