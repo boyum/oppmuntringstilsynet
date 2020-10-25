@@ -1,6 +1,6 @@
-import React, { Dispatch } from 'react';
+import { createContext } from 'preact';
 import { MessageAction } from '../reducers/message.reducer';
 import Message from '../types/Message';
 
-const defaultState: [Message, Dispatch<MessageAction>] = [undefined, undefined];
-export default React.createContext(defaultState);
+const defaultState: [Message, (action: MessageAction) => void] = [undefined, undefined];
+export default createContext(defaultState);

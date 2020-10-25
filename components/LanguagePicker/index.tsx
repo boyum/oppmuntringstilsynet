@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useContext } from 'react';
+import { useContext } from 'preact/hooks';
 import LanguageContext from '../../contexts/LanguageContext';
 import LanguageEnum from '../../enums/Language';
 import Language from '../../models/Language';
@@ -17,7 +17,7 @@ export default function LanguagePicker({ handleChange }: Props): JSX.Element {
 
   const translations = getTranslations(language);
 
-  const handleOnChange: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget }) => {
+  const handleOnChange: any = ({ currentTarget }) => {
     const newLanguage = LanguageEnum[currentTarget.value as LanguageEnum];
     handleChange(newLanguage);
 

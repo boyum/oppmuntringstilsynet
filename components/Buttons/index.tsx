@@ -1,11 +1,11 @@
-import React, { MouseEventHandler, useContext } from 'react';
+import { useContext } from 'preact/hooks';
 import LanguageContext from '../../contexts/LanguageContext';
 import { getTranslations } from '../../pages/api/translations';
 import styles from './Buttons.module.css';
 
 type Props = {
-  handleReset: MouseEventHandler<HTMLButtonElement>;
-  handleCopy: MouseEventHandler<HTMLButtonElement>;
+  handleReset: any;
+  handleCopy: any;
 };
 
 export default function Buttons({ handleCopy, handleReset }: Props): JSX.Element {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'preact/hooks';
 import LanguageContext from '../../contexts/LanguageContext';
 import MessageContext from '../../contexts/MessageContext';
 import { getTranslations } from '../../pages/api/translations';

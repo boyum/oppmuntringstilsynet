@@ -16,12 +16,14 @@
     "jest-axe": "^4.0.0",
     "lz-string": "^1.4.4",
     "next": "^9.5.5",
+    "preact": "^10.5.5",
     "react": "16.14.0",
     "react-dom": "16.14.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
+    "@prefresh/next": "^1.3.1",
     "@types/jest": "^26.0.15",
     "@types/jest-axe": "^3.5.1",
     "@types/node": "^14.11.10",
@@ -38,6 +40,7 @@
     "jest": "^26.6.1",
     "jest-css-modules": "^2.1.0",
     "jest-css-modules-transform": "^4.0.1",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "webpack-modules": "^1.0.0"
   }
 }

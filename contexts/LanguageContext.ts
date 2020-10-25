@@ -1,9 +1,9 @@
-import React, { Dispatch } from 'react';
+import { createContext } from 'preact';
 import LanguageEnum from '../enums/Language';
 import { LanguageAction } from '../reducers/language.reducer';
 
 const defaultLanguage = LanguageEnum.NorskBokmal;
 
-const defaultState: [LanguageEnum, Dispatch<LanguageAction>] = [defaultLanguage, undefined];
+const defaultState: [LanguageEnum, (action: LanguageAction) => void] = [defaultLanguage, undefined];
 
-export default React.createContext(defaultState);
+export default createContext(defaultState);

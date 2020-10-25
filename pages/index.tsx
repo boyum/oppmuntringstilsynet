@@ -1,9 +1,9 @@
 import http from 'http';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, {
+import {
   useContext, useEffect, useRef, useState,
-} from 'react';
+} from 'preact/hooks';
 import Buttons from '../components/Buttons';
 import Footer from '../components/Footer';
 import Form from '../components/Form';
