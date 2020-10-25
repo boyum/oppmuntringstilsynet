@@ -1,18 +1,25 @@
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { render } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import React from 'react';
 import Footer from '.';
 
-configure({ adapter: new Adapter() });
-
 expect.extend(toHaveNoViolations);
 
-it('should render without accessibility errors', async () => {
-  const wrapper = mount(<Footer />);
-  const footer = wrapper.getDOMNode();
-
-  const results = await axe(footer);
-
-  expect(results).toHaveNoViolations();
+describe(Footer.name, () => {
+  it('should render without accessibility errors', async () => {
+    const footer = render(<Footer />).container;
+  
+    const results = await axe(footer);
+  
+    expect(results).toHaveNoViolations();
+  });
+  
+  it('should render with centered text', () => {
+    const footer = render(<Footer />).container;
+  
+    const textAlign = window.getComputedStyle(footer).textAlign;
+    console.log('styles', window.getComputedStyle(footer))
+  
+    expect(textAlign).toBe('center');
+  });
 });

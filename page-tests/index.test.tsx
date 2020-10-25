@@ -1,58 +1,46 @@
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { render } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import React from 'react';
 import Page from '../pages';
 import LanguageStore from '../stores/LanguageStore';
 import MessageStore from '../stores/MessageStore';
 
-configure({ adapter: new Adapter() });
-
 expect.extend(toHaveNoViolations);
 
-it('should render without accessibility errors when a message is set', async () => {
-  const encodedMessage = "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRABUp40RyBbZ%2BKgczqUbNW5AHZVO9JizYgANlRE8svfiAByAewzxYAIQ2x2VWSAC%2BQA";
-  const currentUrl = "https://example.com/";
-  const host = "https://example.com";
-
-  const wrapper = mount(
-    <MessageStore>
-      <LanguageStore>
-        <main>
-          <Page encodedMessage={encodedMessage} currentUrl={currentUrl} host={host} />
-        </main>
-      </LanguageStore>
-    </MessageStore>
-  );
-  const page = wrapper.getDOMNode();
-
-  const results = await axe(page);
-
-  console.log('yuipppipppii')
+describe(Page.name, () => {
+  // it('should render without accessibility errors when a message is set', async () => {
+  //   const encodedMessage = "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRABUp40RyBbZ%2BKgczqUbNW5AHZVO9JizYgANlRE8svfiAByAewzxYAIQ2x2VWSAC%2BQA";
+  //   const currentUrl = "https://example.com/";
+  //   const host = "https://example.com";
   
-  expect(results).toHaveNoViolations();
-});
-
-it('should render without accessibility errors when no message', async () => {
-  const encodedMessage = "";
-  const currentUrl = "https://example.com/";
-  const host = "https://example.com";
-
-  console.log('pokpok')
-
-  const wrapper = mount(
-    <MessageStore>
-      <LanguageStore>
-        <main>
+  //   const page = render(
+  //     <MessageStore>
+  //       <LanguageStore>
+  //         <Page encodedMessage={encodedMessage} currentUrl={currentUrl} host={host} />
+  //       </LanguageStore>
+  //     </MessageStore>
+  //   ).container;
+  
+  //   const results = await axe(page);
+  
+  //   expect(results).toHaveNoViolations();
+  // });
+  
+  it('should render without accessibility errors when no message', async () => {
+    const encodedMessage = "";
+    const currentUrl = "https://example.com/";
+    const host = "https://example.com";
+  
+    const page = render(
+      <MessageStore>
+        <LanguageStore>
           <Page encodedMessage={encodedMessage} currentUrl={currentUrl} host={host} />
-        </main>
-      </LanguageStore>
-    </MessageStore>);
-  const page = wrapper.getDOMNode();
-
-  const results = await axe(page);
-
-  console.log('wweee')
-
-  expect(results).toHaveNoViolations();
+        </LanguageStore>
+      </MessageStore>
+    ).container;
+  
+    const results = await axe(page);
+  
+    expect(results).toHaveNoViolations();
+  });
 });
