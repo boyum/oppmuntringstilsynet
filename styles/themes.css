@@ -1,0 +1,13 @@
+[data-theme="original"] {
+  --theme-1-background: #d4727e;
+  --theme-1-color: white;
+  --theme-2-background: #665e7a;
+  --theme-2-color: white;
+}
+
+[data-theme="eggs"] {
+  --theme-1-background: #26c6da;
+  --theme-1-color: white;
+  --theme-2-background: #191617;
+  --theme-2-color: white;
+}
