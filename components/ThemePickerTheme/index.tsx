@@ -11,7 +11,6 @@ type Props = {
 export function ThemePickerTheme(props: Props): JSX.Element {
   const { theme, isSelected, onClick } = props;
 
-
   return (
     <li
       className={isSelected ? styles.isSelected : ''}

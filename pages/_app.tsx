@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import LanguageStore from '../stores/LanguageStore';
 import MessageStore from '../stores/MessageStore';
 import '../styles/globals.css';
 import '../styles/themes.scss';
-import { themes } from '../types/Themes';
-import { getActiveTheme, setPageTheme } from './api/theme';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Oppmuntringstilsynet({ Component, pageProps }): JSX.Element {
