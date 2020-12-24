@@ -8,11 +8,6 @@ import { getActiveTheme, setPageTheme } from './api/theme';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Oppmuntringstilsynet({ Component, pageProps }): JSX.Element {
-  useEffect(() => {
-    const activeTheme = getActiveTheme(themes);
-    setPageTheme(activeTheme.name);
-  }, []);
-
   return (
     <MessageStore>
       <LanguageStore>

@@ -15,7 +15,7 @@ import LanguageEnum from '../enums/Language';
 import styles from '../styles/Home.module.css';
 import { themes } from '../types/Themes';
 import { isEmpty } from '../utils/message-utils';
-import { setActiveTheme, setPageTheme } from './api/theme';
+import { getActiveTheme, setActiveTheme, setPageTheme } from './api/theme';
 import { getTranslations } from './api/translations';
 import { decodeMessage, encode } from './api/url';
 
@@ -48,6 +48,14 @@ export default function Home({ encodedParamMessage, currentUrl, host }: Props): 
       dispatchMessageAction({ type: 'setValue', payload: messageFromUrl });
       dispatchLanguageAction({ type: 'setLanguage', payload: messageFromUrl.language });
       setIsDisabled(true);
+    }
+
+    if (messageFromUrl.themeName) {
+      setPageTheme(messageFromUrl.themeName);
+      setActiveTheme(messageFromUrl.themeName);
+    } else {
+      const activeTheme = getActiveTheme(themes);
+      setPageTheme(activeTheme.name);
     }
   }, []);
 
