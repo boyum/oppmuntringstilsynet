@@ -1,7 +1,7 @@
 [data-theme="original"] {
   $theme-1-background: hsl(353, 53%, 64%);
   $theme-1-offset: darken($theme-1-background, 10%);
-  
+
   --theme-1-background: #{$theme-1-background};
   --theme-1-color: white;
   --theme-1-offset: #{$theme-1-offset};
@@ -12,7 +12,7 @@
 [data-theme="eggs"] {
   $theme-1-background: hsl(187, 71%, 50%);
   $theme-1-offset: darken($theme-1-background, 10%);
-  
+
   --theme-1-background: #{$theme-1-background};
   --theme-1-color: white;
   --theme-1-offset: #{$theme-1-offset};
@@ -23,7 +23,7 @@
 [data-theme="moo-moo-farm"] {
   $theme-1-background: hsl(42, 93%, 95%);
   $theme-1-offset: hsl(20, 53%, 90%);
-  
+
   --theme-1-background: #{$theme-1-background};
   --theme-1-color: hsl(224, 63%, 25%);
   --theme-1-offset: #{$theme-1-offset};
