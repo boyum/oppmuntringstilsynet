@@ -18,7 +18,7 @@ body {
 
 body {
   --theme-picker-border-color: var(--theme-1-color);
-  
+
   align-items: center;
   display: flex;
   justify-content: center;
