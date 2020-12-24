@@ -1,5 +1,6 @@
 .main {
-	flex-grow: 1;
+  flex-grow: 1;
+  padding: 0 1rem;
 }
 
 .container {
@@ -27,4 +28,26 @@
 .heading {
   margin-top: 0;
   text-align: center;
+}
+
+.themePickerButtonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 2rem 1rem;
+}
+
+.themePickerButton {
+  background-color: var(--theme-2-background);
+  border: none;
+  border-radius: 50%;
+  color: var(--theme-2-color);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.65em;
+}
+
+.themePickerButton svg {
+  fill: currentColor;
+  height: 1em;
+  width: 1em;
 }

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import LanguageContext from '../../contexts/LanguageContext';
 import { getActiveTheme, getTheme } from '../../pages/api/theme';
+import { getTranslations } from '../../pages/api/translations';
 import { Theme } from '../../types/Theme';
 import { ThemePickerTheme } from '../ThemePickerTheme';
-import styles from './ThemePicker.module.css';
+import styles from './ThemePicker.module.scss';
 
 type Props = {
   isOpen: boolean;
@@ -12,11 +14,19 @@ type Props = {
 
 export function ThemePicker(props: Props): JSX.Element {
   const { isOpen, themes, setTheme } = props;
+
+  const [language] = useContext(LanguageContext);
   const [className, setClassName] = useState(styles.themePicker);
-  const [selectedTheme, setSelectedTheme] = useState(getActiveTheme(themes));
+  const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
+
+  const translations = getTranslations(language);
 
   useEffect(() => {
-    setClassName(isOpen ? styles.themePicker : `${styles.themePicker} ${styles.themePickerOpen}`)
+    setSelectedTheme(getActiveTheme(themes));
+  }, []);
+
+  useEffect(() => {
+    setClassName(isOpen ? styles.themePicker : `${styles.themePicker} ${styles.themePickerOpen}`);
   }, [isOpen]);
 
   const onClick = (themeName: string) => {
@@ -27,15 +37,18 @@ export function ThemePicker(props: Props): JSX.Element {
   };
 
   return (
-    <ol hidden={!isOpen} className={className}>
-      {themes.map((theme) => (
-        <ThemePickerTheme
-          isSelected={selectedTheme.name === theme.name}
-          onClick={onClick}
-          theme={theme}
-          key={theme.name}
-        />
-      ))}
-    </ol>
+    <div className={className}>
+      <h2 className={styles.heading}>{translations.themePickerHeading}</h2>
+      <ol hidden={!isOpen} className={styles.list}>
+        {themes.map((theme) => (
+          <ThemePickerTheme
+            isSelected={selectedTheme.name === theme.name}
+            onClick={onClick}
+            theme={theme}
+            key={theme.name}
+          />
+        ))}
+      </ol>
+    </div>
   );
 }

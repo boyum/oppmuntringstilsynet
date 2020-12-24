@@ -15,6 +15,9 @@ const TranslationsNn: Translations = {
   resetButtonText: 'Lag eit nytt kort ✨',
   setLanguage: 'Velg språk',
   footerHtml: 'Laga med <a href="https://nextjs.org/">Next.js</a>. Sjå koden på <a href="https://github.com/boyum/oppmuntringstilsynet">GitHub</a>.',
+  openThemePicker: 'Opne temavelgeren',
+  closeThemePicker: 'Lukk temavelgeren',
+  themePickerHeading: 'Velg eit fargetema',
 };
 
 export default TranslationsNn;

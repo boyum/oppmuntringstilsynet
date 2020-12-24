@@ -7,6 +7,7 @@
 :root {
   --scrollbarBG: transparent;
   --thumbBG: white;
+
 }
 
 html,
@@ -16,11 +17,12 @@ body {
 }
 
 body {
+  --theme-picker-border-color: var(--theme-1-color);
+  
   align-items: center;
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  padding: 1rem;
 }
 
 a {
