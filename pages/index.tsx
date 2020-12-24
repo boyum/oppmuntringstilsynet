@@ -50,7 +50,7 @@ export default function Home({ encodedParamMessage, currentUrl, host }: Props): 
       setIsDisabled(true);
     }
 
-    if (messageFromUrl.themeName) {
+    if (messageFromUrl?.themeName) {
       setPageTheme(messageFromUrl.themeName);
       setActiveTheme(messageFromUrl.themeName);
     } else {
