@@ -28,7 +28,7 @@ export function ThemePicker(props: Props): JSX.Element {
   }, []);
 
   useEffect(() => {
-    setClassName(isOpen ? styles.themePicker : `${styles.themePicker} ${styles.themePickerOpen}`);
+    setClassName(isOpen ? `${styles.themePicker} ${styles.themePickerOpen}` : styles.themePicker);
   }, [isOpen]);
 
   const onClick = (themeName: string) => {
