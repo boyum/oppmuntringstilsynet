@@ -49,7 +49,7 @@ export default function Home({ encodedParamMessage, currentUrl, host }: Props): 
       dispatchLanguageAction({ type: 'setLanguage', payload: messageFromUrl.language });
       setIsDisabled(true);
     }
-  });
+  }, []);
 
   const tagManagerHtml = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
