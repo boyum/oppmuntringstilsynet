@@ -18,6 +18,7 @@ body {
 
 body {
   --theme-picker-border-color: var(--theme-1-color);
+  background-color: var(--global-background, #fff);
 }
 
 #__next {

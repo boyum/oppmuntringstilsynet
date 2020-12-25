@@ -11,4 +11,9 @@ export const themes: Theme[] = [{
 {
   name: 'moo-moo-farm',
   label: 'Moo Moo Farm',
+},
+{
+  name: 'winter',
+  label: 'Winter',
+  customScriptUrl: '/snow.js',
 }];

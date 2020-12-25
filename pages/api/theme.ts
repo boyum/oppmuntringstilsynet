@@ -14,6 +14,14 @@ export function setActiveTheme(themeName: string): void {
   window.localStorage.setItem('active-theme', themeName);
 }
 
-export function setPageTheme(themeName: string): void {
-  document.body.dataset.theme = themeName;
+export function setPageTheme(theme: Theme): void {
+  document.body.dataset.theme = theme.name;
+
+  if (theme.customScriptUrl) {
+    const script = document.createElement('script');
+    script.src = theme.customScriptUrl;
+    script.async = true;
+
+    document.body.appendChild(script);
+  }
 }

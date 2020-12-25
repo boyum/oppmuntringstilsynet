@@ -15,7 +15,9 @@ import LanguageEnum from '../enums/Language';
 import styles from '../styles/Home.module.css';
 import { themes } from '../types/Themes';
 import { isEmpty } from '../utils/message-utils';
-import { getActiveTheme, setActiveTheme, setPageTheme } from './api/theme';
+import {
+  getActiveTheme, getTheme, setActiveTheme, setPageTheme,
+} from './api/theme';
 import { getTranslations } from './api/translations';
 import { decodeMessage, encode } from './api/url';
 
@@ -51,11 +53,12 @@ export default function Home({ encodedParamMessage, currentUrl, host }: Props): 
     }
 
     if (messageFromUrl?.themeName) {
-      setPageTheme(messageFromUrl.themeName);
-      setActiveTheme(messageFromUrl.themeName);
+      const theme = getTheme(messageFromUrl.themeName, themes);
+      setPageTheme(theme);
+      setActiveTheme(theme.name);
     } else {
       const activeTheme = getActiveTheme(themes);
-      setPageTheme(activeTheme.name);
+      setPageTheme(activeTheme);
     }
   }, []);
 
@@ -116,7 +119,7 @@ export default function Home({ encodedParamMessage, currentUrl, host }: Props): 
         themes={themes}
         isOpen={themePickerOpen}
         setTheme={(theme) => {
-          setPageTheme(theme.name);
+          setPageTheme(theme);
           setActiveTheme(theme.name);
         }}
       />
