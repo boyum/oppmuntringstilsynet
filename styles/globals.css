@@ -18,10 +18,11 @@ body {
 
 body {
   --theme-picker-border-color: var(--theme-1-color);
+}
 
-  align-items: center;
+#__next {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   min-height: 100vh;
 }
 
