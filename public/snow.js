@@ -1,7 +1,9 @@
 /* global window document */
 
 (function Snow() {
-  function randomBetween(min, max) { return min + Math.random() * (max - min); }
+  function randomBetween(min, max) {
+    return min + Math.random() * (max - min);
+  }
 
   class Snowflake {
     constructor() {
@@ -41,7 +43,7 @@
       snowflake.y += snowflake.vY;
 
       const outOfBounds =
-          snowflake.x < 0 || snowflake.x > width || snowflake.y > height;
+        snowflake.x < 0 || snowflake.x > width || snowflake.y > height;
 
       if (outOfBounds) {
         snowflake.x = randomBetween(0, window.innerWidth);
@@ -78,11 +80,11 @@
   }
 
   const snowflakes = createSnowflakes(
-      Math.floor((window.innerWidth * window.innerHeight) / 3000),
+    Math.floor((window.innerWidth * window.innerHeight) / 3000)
   );
 
   onResize();
   update();
 
   window.addEventListener('resize', onResize);
-}());
+})();
