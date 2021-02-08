@@ -1,9 +1,7 @@
 /* global window document */
 
 (function Snow() {
-  function randomBetween(min, max) {
-    return min + Math.random() * (max - min);
-  }
+  function randomBetween(min, max) { return min + Math.random() * (max - min); }
 
   class Snowflake {
     constructor() {
@@ -27,7 +25,8 @@
   function update() {
     ctx.clearRect(0, 0, width, height);
 
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define,no-restricted-syntax
+    // eslint-disable-next-line
+    // @typescript-eslint/no-use-before-define,no-restricted-syntax
     for (const snowflake of snowflakes) {
       ctx.save();
       ctx.globalAlpha = snowflake.alpha;
@@ -41,7 +40,8 @@
       snowflake.x += snowflake.vX;
       snowflake.y += snowflake.vY;
 
-      const outOfBounds = snowflake.x < 0 || snowflake.x > width || snowflake.y > height;
+      const outOfBounds =
+          snowflake.x < 0 || snowflake.x > width || snowflake.y > height;
 
       if (outOfBounds) {
         snowflake.x = randomBetween(0, window.innerWidth);
@@ -78,7 +78,7 @@
   }
 
   const snowflakes = createSnowflakes(
-    Math.floor((window.innerWidth * window.innerHeight) / 3000),
+      Math.floor((window.innerWidth * window.innerHeight) / 3000),
   );
 
   onResize();
