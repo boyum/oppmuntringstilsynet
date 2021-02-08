@@ -41,9 +41,9 @@ export function clearCustomThemeScript(): void {
 export function setPageTheme(theme: Theme): void {
   document.body.dataset.theme = theme.name;
 
-  // if (theme.customScriptUrl) {
-  //   setCustomThemeScript(theme.customScriptUrl);
-  // } else {
-  //   clearCustomThemeScript();
-  // }
+  if (theme.customScriptUrl) {
+    setCustomThemeScript(theme.customScriptUrl);
+  } else {
+    clearCustomThemeScript();
+  }
 }
