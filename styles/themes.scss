@@ -9,17 +9,6 @@
   --theme-2-color: white;
 }
 
-[data-theme="eggs"] {
-  $theme-1-background: hsl(187, 71%, 50%);
-  $theme-1-offset: darken($theme-1-background, 10%);
-
-  --theme-1-background: #{$theme-1-background};
-  --theme-1-color: white;
-  --theme-1-offset: #{$theme-1-offset};
-  --theme-2-background: hsl(340, 6%, 9%);
-  --theme-2-color: white;
-}
-
 [data-theme="moo-moo-farm"] {
   --theme-1-background: hsl(42, 93%, 95%);
   --theme-1-color: hsl(224, 63%, 25%);

@@ -5,10 +5,6 @@ export const themes: Theme[] = [{
   label: 'Original',
 },
 {
-  name: 'eggs',
-  label: 'EGGS Design',
-},
-{
   name: 'moo-moo-farm',
   label: 'Moo Moo Farm',
 },
