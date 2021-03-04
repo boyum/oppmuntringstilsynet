@@ -6,6 +6,7 @@ type Message = {
   checks: boolean[];
   name: string;
   language: LanguageEnum;
+  themeName: string;
 };
 
 export default Message;

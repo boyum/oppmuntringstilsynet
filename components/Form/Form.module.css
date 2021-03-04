@@ -2,7 +2,7 @@
 .name input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid var(--theme-secondary);
+  border-bottom: 1px solid var(--theme-1-color);
   margin-left: 0.5em;
 }
 
@@ -17,7 +17,7 @@
   background-attachment: local;
   background-color: transparent;
   background-image:
-    repeating-linear-gradient(transparent, transparent calc(var(--line-height) - 1px), var(--theme-secondary) var(--line-height));
+    repeating-linear-gradient(transparent, transparent calc(var(--line-height) - 1px), var(--theme-1-color) var(--line-height));
   border: none;
   display: block;
   line-height: var(--line-height);
@@ -76,7 +76,7 @@
 }
 
 .checkbox:focus:not(:active) + .checkboxLabel::before {
-  outline: 2px solid var(--theme-tertiary);
+  outline: 2px solid var(--theme-2-background);
   outline-offset: 2px;
 }
 

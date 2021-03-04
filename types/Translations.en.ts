@@ -15,6 +15,9 @@ const TranslationsEn: Translations = {
   resetButtonText: 'Create a new card ✨',
   setLanguage: 'Set language',
   footerHtml: 'Made with <a href="https://nextjs.org/">Next.js</a>. See the code on <a href="https://github.com/boyum/oppmuntringstilsynet">GitHub</a>.',
+  openThemePicker: 'Open theme picker',
+  closeThemePicker: 'Close theme picker',
+  themePickerHeading: 'Choose a color theme',
 };
 
 export default TranslationsEn;

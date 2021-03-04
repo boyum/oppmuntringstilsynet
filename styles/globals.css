@@ -8,9 +8,6 @@
   --scrollbarBG: transparent;
   --thumbBG: white;
 
-  --theme-primary: #d4727e;
-  --theme-secondary: white;
-  --theme-tertiary: #665e7a;
 }
 
 html,
@@ -20,11 +17,14 @@ body {
 }
 
 body {
-  align-items: center;
+  --theme-picker-border-color: var(--theme-1-color);
+  background-color: var(--global-background, #fff);
+}
+
+#__next {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   min-height: 100vh;
-  padding: 1rem;
 }
 
 a {

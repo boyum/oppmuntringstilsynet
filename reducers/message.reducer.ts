@@ -7,21 +7,22 @@ export type SetValuePayload = {
   checks?: boolean[];
   name?: string;
   language?: LanguageEnum;
-}
+};
 
 export type SetChecksPayload = {
   check: boolean;
-}
+};
 
 export type MessageAction = {
   type:
   | 'setValue'
   | 'setCheck'
+  | 'setTheme'
   | 'reset';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any;
   checksIndex?: number;
-}
+};
 
 export function getEmptyState(): Message {
   return {
@@ -30,6 +31,7 @@ export function getEmptyState(): Message {
     message: '',
     name: '',
     language: LanguageEnum.NorskBokmal,
+    themeName: null,
   };
 }
 
@@ -50,6 +52,14 @@ export function messageReducer(state: Message, action: MessageAction): Message {
       };
 
       return newState;
+    }
+    case 'setTheme': {
+      const { payload } = action;
+
+      return {
+        ...state,
+        themeName: payload,
+      };
     }
     case 'reset': return getEmptyState();
     default: throw new Error(`Invalid action type '${action.type}' in form reducer.`);
