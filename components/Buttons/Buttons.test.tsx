@@ -11,7 +11,11 @@ describe(Buttons.name, () => {
     const buttons = render(
       <LanguageStore>
         <main>
-          <Buttons handleReset={undefined} handleCopyLink={undefined} handleDownloadImage={undefined} />
+          <Buttons
+            handleReset={undefined}
+            handleCopyLink={undefined}
+            handleDownloadImage={undefined}
+          />
         </main>
       </LanguageStore>,
     ).container;

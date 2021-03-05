@@ -142,7 +142,7 @@ export default function Home({
   function download(url: string) {
     const dlAnchor = getDownloadAnchor();
     dlAnchor.href = url;
-    dlAnchor.download = `Oppmuntringstilsynet-${new Date().toLocaleDateString()}`
+    dlAnchor.download = `Oppmuntringstilsynet-${new Date().toLocaleDateString()}`;
     dlAnchor.click();
   }
 
