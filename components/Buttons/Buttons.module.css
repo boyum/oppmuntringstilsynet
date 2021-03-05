@@ -13,7 +13,8 @@
 
 .reset,
 .copyLink {
-  background-color: var(--theme-tertiary);
+  background-color: var(--theme-2-background);
+  color: var(--theme-2-color);
   border: none;
   cursor: pointer;
   display: inline-block;

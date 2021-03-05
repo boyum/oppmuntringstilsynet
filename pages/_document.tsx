@@ -1,10 +1,17 @@
-import React from 'react';
+import React from "react";
 import Document, {
-  Html, Head, Main, NextScript, DocumentInitialProps, DocumentContext,
-} from 'next/document';
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentInitialProps,
+  DocumentContext,
+} from "next/document";
 
 class CustomDocument extends Document {
-  static async getInitialProps(context: DocumentContext): Promise<DocumentInitialProps> {
+  static async getInitialProps(
+    context: DocumentContext,
+  ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(context);
     return { ...initialProps };
   }

@@ -1,0 +1,28 @@
+[data-theme="original"] {
+  $theme-1-background: hsl(353, 53%, 64%);
+  $theme-1-offset: darken($theme-1-background, 10%);
+
+  --theme-1-background: #{$theme-1-background};
+  --theme-1-color: white;
+  --theme-1-offset: #{$theme-1-offset};
+  --theme-2-background: #665e7a;
+  --theme-2-color: white;
+}
+
+[data-theme="moo-moo-farm"] {
+  --theme-1-background: hsl(42, 93%, 95%);
+  --theme-1-color: hsl(224, 63%, 25%);
+  --theme-1-offset: hsl(20, 53%, 90%);
+  --theme-2-color: hsl(224, 63%, 25%);
+  --theme-2-background: hsl(187, 55%, 71%);
+}
+
+[data-theme="winter"] {
+  --theme-1-background: #232946;
+  --theme-1-color: #fffffe;
+  --theme-1-offset: #2a325a;
+  --theme-2-color: #ffbd03;
+  --theme-2-background: hsl(230, 36%, 26%);
+
+  --global-background: hsl(230, 36%, 16%);
+}

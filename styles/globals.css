@@ -7,24 +7,23 @@
 :root {
   --scrollbarBG: transparent;
   --thumbBG: white;
-
-  --theme-primary: #d4727e;
-  --theme-secondary: white;
-  --theme-tertiary: #665e7a;
 }
 
 html,
 body {
   margin: 0;
-  font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
 }
 
 body {
-  align-items: center;
+  --theme-picker-border-color: var(--theme-1-color);
+  background-color: var(--global-background, #fff);
+}
+
+#__next {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   min-height: 100vh;
-  padding: 1rem;
 }
 
 a {
@@ -51,14 +50,14 @@ textarea:disabled {
 
 .hidden {
   border: 0 !important;
-	clip: rect(1px, 1px, 1px, 1px) !important;
-	-webkit-clip-path: inset(50%) !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
   clip-path: inset(50%) !important;
-	height: 1px !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	padding: 0 !important;
-	position: absolute !important;
-	width: 1px !important;
-	white-space: nowrap !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
 }

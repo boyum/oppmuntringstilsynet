@@ -1,7 +1,8 @@
-import React from 'react';
-import LanguageStore from '../stores/LanguageStore';
-import MessageStore from '../stores/MessageStore';
-import '../styles/globals.css';
+import React from "react";
+import LanguageStore from "../stores/LanguageStore";
+import MessageStore from "../stores/MessageStore";
+import "../styles/globals.css";
+import "../styles/themes.scss";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Oppmuntringstilsynet({ Component, pageProps }): JSX.Element {

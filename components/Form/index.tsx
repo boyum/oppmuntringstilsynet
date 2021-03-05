@@ -1,24 +1,31 @@
-import React, { useContext } from 'react';
-import LanguageContext from '../../contexts/LanguageContext';
-import MessageContext from '../../contexts/MessageContext';
-import { getTranslations } from '../../pages/api/translations';
-import { SetChecksPayload, SetValuePayload } from '../../reducers/message.reducer';
-import Translations from '../../types/Translations';
-import styles from './Form.module.css';
+import React, { useContext } from "react";
+import LanguageContext from "../../contexts/LanguageContext";
+import MessageContext from "../../contexts/MessageContext";
+import { getTranslations } from "../../pages/api/translations";
+import {
+  SetChecksPayload,
+  SetValuePayload,
+} from "../../reducers/message.reducer";
+import Translations from "../../types/Translations";
+import styles from "./Form.module.css";
 
-export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Element {
+export default function Form({
+  isDisabled,
+}: {
+  isDisabled: boolean;
+}): JSX.Element {
   const [message, dispatch] = useContext(MessageContext);
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
   function handleChange(payload: SetValuePayload): void {
-    dispatch({ type: 'setValue', payload });
+    dispatch({ type: "setValue", payload });
   }
 
   function handleCheckChange(payloadString: string, index: number): void {
-    const payload: SetChecksPayload = { check: payloadString === 'false' };
+    const payload: SetChecksPayload = { check: payloadString === "false" };
 
-    dispatch({ type: 'setCheck', payload, checksIndex: index });
+    dispatch({ type: "setCheck", payload, checksIndex: index });
   }
 
   function getCheckboxLabel(index: number): string {
@@ -42,7 +49,9 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
           checked={check}
           value={check.toString()}
           disabled={isDisabled}
-          onChange={(event) => handleCheckChange(event.currentTarget.value, index)}
+          onChange={event =>
+            handleCheckChange(event.currentTarget.value, index)
+          }
         />
         <label className={styles.checkboxLabel} htmlFor={getCheckboxId(index)}>
           {getCheckboxLabel(index)}
@@ -60,7 +69,9 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
             type="text"
             value={message.date}
             disabled={isDisabled}
-            onChange={(event) => handleChange({ date: event.currentTarget.value })}
+            onChange={event =>
+              handleChange({ date: event.currentTarget.value })
+            }
           />
         </label>
         <label className={styles.message}>
@@ -69,7 +80,9 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
             rows={4}
             value={message.message}
             disabled={isDisabled}
-            onChange={(event) => handleChange({ message: event.currentTarget.value })}
+            onChange={event =>
+              handleChange({ message: event.currentTarget.value })
+            }
           />
         </label>
         <div className={styles.checkboxContainer}>
@@ -82,7 +95,9 @@ export default function Form({ isDisabled }: { isDisabled: boolean }): JSX.Eleme
             type="text"
             value={message.name}
             disabled={isDisabled}
-            onChange={(event) => handleChange({ name: event.currentTarget.value })}
+            onChange={event =>
+              handleChange({ name: event.currentTarget.value })
+            }
           />
         </label>
       </form>

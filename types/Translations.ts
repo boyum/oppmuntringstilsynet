@@ -13,6 +13,9 @@ type Translations = {
   resetButtonText: string;
   setLanguage: string;
   footerHtml: string;
-}
+  openThemePicker: string;
+  closeThemePicker: string;
+  themePickerHeading: string;
+};
 
 export default Translations;

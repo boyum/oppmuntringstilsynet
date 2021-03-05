@@ -1,13 +1,13 @@
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import React from 'react';
-import Buttons from '.';
-import LanguageStore from '../../stores/LanguageStore';
+import { render } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import React from "react";
+import Buttons from ".";
+import LanguageStore from "../../stores/LanguageStore";
 
 expect.extend(toHaveNoViolations);
 
 describe(Buttons.name, () => {
-  it('should render without accessibility errors', async () => {
+  it("should render without accessibility errors", async () => {
     const buttons = render(
       <LanguageStore>
         <main>
