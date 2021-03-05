@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import React from 'react';
-import LanguagePicker from '.';
+import { render } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import React from "react";
+import LanguagePicker from ".";
 
 expect.extend(toHaveNoViolations);
 
 describe(LanguagePicker.name, () => {
-  it('should render without accessibility errors', async () => {
+  it("should render without accessibility errors", async () => {
     const languagePicker = render(
       <main>
         <LanguagePicker handleChange={undefined} />

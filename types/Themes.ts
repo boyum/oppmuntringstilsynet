@@ -1,14 +1,16 @@
-import { Theme } from './Theme';
+import { Theme } from "./Theme";
 
-export const themes: Theme[] = [{
-  name: 'original',
-  label: 'Original',
-},
-{
-  name: 'moo-moo-farm',
-  label: 'Moo Moo Farm',
-},
-{
-  name: 'winter',
-  label: 'Winter',
-}];
+export const themes: Theme[] = [
+  {
+    name: "original",
+    label: "Original",
+  },
+  {
+    name: "moo-moo-farm",
+    label: "Moo Moo Farm",
+  },
+  {
+    name: "winter",
+    label: "Winter",
+  },
+];

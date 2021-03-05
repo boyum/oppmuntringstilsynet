@@ -1,6 +1,6 @@
-import React from 'react';
-import { Theme } from '../../types/Theme';
-import styles from './ThemePickerTheme.module.scss';
+import React from "react";
+import { Theme } from "../../types/Theme";
+import styles from "./ThemePickerTheme.module.scss";
 
 type Props = {
   theme: Theme;
@@ -12,10 +12,7 @@ export function ThemePickerTheme(props: Props): JSX.Element {
   const { theme, isSelected, onClick } = props;
 
   return (
-    <li
-      className={isSelected ? styles.isSelected : ''}
-      data-theme={theme.name}
-    >
+    <li className={isSelected ? styles.isSelected : ""} data-theme={theme.name}>
       <button
         className={styles.button}
         type="button"
@@ -23,8 +20,12 @@ export function ThemePickerTheme(props: Props): JSX.Element {
       >
         {theme.label}
         <div className={styles.circles}>
-          {/* eslint-disable-next-line react/no-array-index-key */}
-          {Array(4).fill(0).map((_, index) => <span key={index} className={styles.circle} aria-hidden="true" />)}
+          {Array(4)
+            .fill(0)
+            .map((_, index) => (
+              /* eslint-disable-next-line react/no-array-index-key */
+              <span key={index} className={styles.circle} aria-hidden="true" />
+            ))}
         </div>
       </button>
     </li>
