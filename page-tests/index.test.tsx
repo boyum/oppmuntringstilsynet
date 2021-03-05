@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import React from 'react';
-import Page from '../pages';
-import LanguageStore from '../stores/LanguageStore';
-import MessageStore from '../stores/MessageStore';
+import { render } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import React from "react";
+import Page from "../pages";
+import LanguageStore from "../stores/LanguageStore";
+import MessageStore from "../stores/MessageStore";
 
 expect.extend(toHaveNoViolations);
 
@@ -28,15 +28,19 @@ describe(Page.name, () => {
   //   expect(results).toHaveNoViolations();
   // });
 
-  it('should render without accessibility errors when no message', async () => {
-    const encodedMessage = '';
-    const currentUrl = 'https://example.com/';
-    const host = 'https://example.com';
+  it("should render without accessibility errors when no message", async () => {
+    const encodedMessage = "";
+    const currentUrl = "https://example.com/";
+    const host = "https://example.com";
 
     const page = render(
       <MessageStore>
         <LanguageStore>
-          <Page encodedParamMessage={encodedMessage} currentUrl={currentUrl} host={host} />
+          <Page
+            encodedParamMessage={encodedMessage}
+            currentUrl={currentUrl}
+            host={host}
+          />
         </LanguageStore>
       </MessageStore>,
     ).container;

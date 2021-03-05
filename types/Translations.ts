@@ -16,6 +16,6 @@ type Translations = {
   openThemePicker: string;
   closeThemePicker: string;
   themePickerHeading: string;
-}
+};
 
 export default Translations;
