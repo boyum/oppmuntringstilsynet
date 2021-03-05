@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { RefObject, useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import MessageContext from "../../contexts/MessageContext";
 import { getTranslations } from "../../pages/api/translations";
@@ -9,11 +9,11 @@ import {
 import Translations from "../../types/Translations";
 import styles from "./Form.module.css";
 
-export default function Form({
-  isDisabled,
-}: {
+type Props = {
   isDisabled: boolean;
-}): JSX.Element {
+};
+
+export default function Form({ isDisabled }: Props): JSX.Element {
   const [message, dispatch] = useContext(MessageContext);
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);

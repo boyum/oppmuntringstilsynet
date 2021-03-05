@@ -13,7 +13,8 @@ const TranslationsEn: Translations = {
   checkbox3Label:
     "You contribute to a healthy environment - you make me happy!",
   nameLabel: "Sincerely,",
-  copyButtonText: "Copy the link to this card 🔗",
+  copyLinkButtonText: "Copy the link to this card 🔗",
+  downloadImageButtonText: "Download an image of the card 📸",
   resetButtonText: "Create a new card ✨",
   setLanguage: "Set language",
   footerHtml:

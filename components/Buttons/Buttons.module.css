@@ -12,7 +12,8 @@
 }
 
 .reset,
-.copyLink {
+.copyLink,
+.downloadImage {
   background-color: var(--theme-2-background);
   color: var(--theme-2-color);
   border: none;

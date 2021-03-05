@@ -1,3 +1,4 @@
+import html2canvas from "html2canvas";
 import http from "http";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -40,7 +41,8 @@ export default function Home({
   const [themePickerOpen, setThemePickerOpen] = useState(false);
 
   const router = useRouter();
-  const tempInput = useRef<HTMLInputElement>(null);
+  const copyInput = useRef<HTMLInputElement>(null);
+  const formContainer = useRef<HTMLDivElement>(null);
 
   const messageFromUrl = decodeMessage(encodedParamMessage);
   const translations = getTranslations(language);
@@ -76,17 +78,77 @@ export default function Home({
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-MPPJRMK');</script>`;
 
-  function handleCopy() {
+  function copy(text: string): void {
+    if (copyInput?.current) {
+      copyInput.current.value = text;
+      copyInput.current.select();
+      copyInput.current.setSelectionRange(0, 99999);
+    }
+    document.execCommand("copy");
+  }
+
+  function handleCopyLink(): void {
     const encodedMessage = encode(message);
     const url = new URL(window.location.href);
     url.searchParams.set("m", encodedMessage);
 
-    if (tempInput?.current) {
-      tempInput.current.value = url.href;
-      tempInput.current.select();
-      tempInput.current.setSelectionRange(0, 99999);
+    copy(url.href);
+  }
+
+  function getDownloadAnchor(): HTMLAnchorElement {
+    let anchor = document.querySelector(
+      ".download-anchor",
+    ) as HTMLAnchorElement;
+
+    const theDownloadAnchorHasNotBeenCreatedYet = !anchor;
+    if (theDownloadAnchorHasNotBeenCreatedYet) {
+      anchor = document.createElement("a");
+      anchor.classList.add("hidden", "download-anchor");
+      anchor.innerText = "Download screenshot";
+      document.body.appendChild(anchor); // Needs to be added to the DOM to work
     }
-    document.execCommand("copy");
+
+    return anchor;
+  }
+
+  async function createImage(): Promise<string> {
+    const hasForm = !!formContainer.current;
+    if (!hasForm) {
+      console.error("Form is not created", formContainer);
+      return null;
+    }
+
+    const screenshottedElement = formContainer.current;
+    const canvas = await html2canvas(screenshottedElement, {
+      scrollX: 0,
+      scrollY: -window.scrollY,
+    });
+    canvas.classList.add("hidden");
+
+    document.body.appendChild(canvas);
+
+    const url = canvas.toDataURL();
+
+    document.body.removeChild(canvas);
+
+    return url;
+  }
+
+  // async function handleCopyImage(): Promise<void> {
+  //   const imageDataUrl = await createImage();
+  //   copy(imageDataUrl);
+  // }
+
+  function download(url: string) {
+    const dlAnchor = getDownloadAnchor();
+    dlAnchor.href = url;
+    dlAnchor.download = `Oppmuntringstilsynet-${new Date().toLocaleDateString()}`
+    dlAnchor.click();
+  }
+
+  async function handleDownloadImage(): Promise<void> {
+    const imageDataUrl = await createImage();
+    download(imageDataUrl);
   }
 
   function handleReset() {
@@ -173,7 +235,7 @@ export default function Home({
       </div>
 
       <main className={styles.main}>
-        <div className={styles.container}>
+        <div className={styles.container} ref={formContainer}>
           <div className={styles.containerHeader}>
             <h1 className={styles.heading}>{translations.formHeading}</h1>
             <div className={styles.languagePickerContainer}>
@@ -182,10 +244,14 @@ export default function Home({
           </div>
 
           <Form isDisabled={isDisabled} />
-          <Buttons handleReset={handleReset} handleCopy={handleCopy} />
+          <Buttons
+            handleReset={handleReset}
+            handleCopyLink={handleCopyLink}
+            handleDownloadImage={handleDownloadImage}
+          />
           <label className="hidden">
             Hidden label used for copying
-            <input ref={tempInput} type="text" readOnly tabIndex={-1} />
+            <input ref={copyInput} type="text" readOnly tabIndex={-1} />
           </label>
         </div>
       </main>
