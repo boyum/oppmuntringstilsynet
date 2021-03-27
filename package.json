@@ -13,7 +13,7 @@
     "format-all-files": "npx prettier --write ."
   },
   "dependencies": {
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^11.2.5",
     "jest-axe": "^4.1.0",
     "lz-string": "^1.4.4",
     "next": "^10.0.0",
