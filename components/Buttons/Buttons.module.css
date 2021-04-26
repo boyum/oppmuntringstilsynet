@@ -14,6 +14,7 @@
 .reset,
 .copyLink {
   background-color: var(--theme-2-background);
+  box-shadow: 0.2rem 0.2rem
   color: var(--theme-2-color);
   border: none;
   cursor: pointer;
