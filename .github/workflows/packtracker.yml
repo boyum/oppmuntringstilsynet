@@ -1,0 +1,20 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+name: packtracker.io
+
+jobs:
+  report:
+    name: report webpack stats
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Run next.js build
+      env:
+        PT_PROJECT_TOKEN: ${{ secrets.PT_PROJECT_TOKEN }}
+      run: |
+        npm ci
+        npm run build
