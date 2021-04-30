@@ -1,0 +1,13 @@
+pull_request_rules:
+  - name: Automatic merge for Depfu patch pull requests
+    conditions:
+      - check-success=Vercel
+      - base=main
+      - label=depfu
+      - files~=package(-lock)?.json$
+      - "#files=2"
+      - author=depfu[bot]
+      - title~=\(patch\)$
+    actions:
+      merge:
+        method: merge
