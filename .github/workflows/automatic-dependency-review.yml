@@ -16,5 +16,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: github.actor
+          msg: ${{ github.actor }}
           check_for_duplicate_msg: false  # OPTIONAL 
