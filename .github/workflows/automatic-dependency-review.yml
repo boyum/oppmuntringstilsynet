@@ -5,9 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Approve pull request
-        if: github.actor == 'depfu[bot]'
+        if: github.actor == 'boyum'
         uses: andrewmusgrave/automatic-pull-request-review@0.0.2
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           event: APPROVE
           body: 'Thank you depfu 🎊'
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: ${{ github.actor }}
+          check_for_duplicate_msg: false  # OPTIONAL 
