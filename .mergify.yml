@@ -1,4 +1,12 @@
 pull_request_rules:
+  - name: automatic approval for depfu pull requests
+    conditions:
+      - author=depfu
+    actions:
+      review:
+        type: APPROVE
+        message: Automatically approving depfu
+
   - name: Automatic merge for Depfu patch pull requests
     conditions:
       - check-success=Vercel
