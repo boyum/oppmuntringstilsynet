@@ -1,7 +1,7 @@
 pull_request_rules:
   - name: automatic approval for depfu pull requests
     conditions:
-      - author=boyum
+      - author=depfu[bot]
     actions:
       review:
         type: APPROVE
