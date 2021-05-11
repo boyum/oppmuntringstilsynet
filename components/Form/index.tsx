@@ -1,4 +1,4 @@
-import React, { RefObject, useContext } from "react";
+import React, { useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import MessageContext from "../../contexts/MessageContext";
 import { getTranslations } from "../../pages/api/translations";
