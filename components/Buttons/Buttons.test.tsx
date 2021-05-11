@@ -15,12 +15,12 @@ describe(Buttons.name, () => {
             handleReset={() => {
               // Intentionally empty
             }}
-            handleCopy={() => {
+            handleCopyLink={() => {
               // Intentionally empty
             }}
             handleDownloadImage={() => {
               // Intentionally empty
-            }
+            }}
           />
         </main>
       </LanguageStore>,

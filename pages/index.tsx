@@ -94,9 +94,8 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
     return anchor;
   }
 
-  async function createImage(): Promise<string> {
-    const hasForm = !!formContainer.current;
-    if (!hasForm) {
+  async function createImage(): Promise<string | null> {
+    if (!formContainer.current) {
       console.error("Form is not created", formContainer);
       return null;
     }
@@ -131,7 +130,9 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
 
   async function handleDownloadImage(): Promise<void> {
     const imageDataUrl = await createImage();
-    download(imageDataUrl);
+    if (imageDataUrl) {
+      download(imageDataUrl);
+    }
   }
 
   function handleReset() {

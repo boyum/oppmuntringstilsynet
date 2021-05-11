@@ -30,17 +30,11 @@ describe(Page.name, () => {
 
   it("should render without accessibility errors when no message", async () => {
     const encodedMessage = "";
-    const currentUrl = "https://example.com/";
-    const host = "https://example.com";
 
     const page = render(
       <MessageStore>
         <LanguageStore>
-          <Page
-            encodedParamMessage={encodedMessage}
-            currentUrl={currentUrl}
-            host={host}
-          />
+          <Page encodedParamMessage={encodedMessage} />
         </LanguageStore>
       </MessageStore>,
     ).container;
