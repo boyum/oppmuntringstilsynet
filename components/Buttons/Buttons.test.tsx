@@ -12,9 +12,15 @@ describe(Buttons.name, () => {
       <LanguageStore>
         <main>
           <Buttons
-            handleReset={undefined}
-            handleCopyLink={undefined}
-            handleDownloadImage={undefined}
+            handleReset={() => {
+              // Intentionally empty
+            }}
+            handleCopy={() => {
+              // Intentionally empty
+            }}
+            handleDownloadImage={() => {
+              // Intentionally empty
+            }
           />
         </main>
       </LanguageStore>,

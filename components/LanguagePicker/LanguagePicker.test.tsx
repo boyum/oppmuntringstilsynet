@@ -9,7 +9,11 @@ describe(LanguagePicker.name, () => {
   it("should render without accessibility errors", async () => {
     const languagePicker = render(
       <main>
-        <LanguagePicker handleChange={undefined} />
+        <LanguagePicker
+          handleChange={() => {
+            // Intentionally empty
+          }}
+        />
       </main>,
     ).container;
 
