@@ -12,12 +12,9 @@ type Props = {
 
 export default function LanguagePicker({ handleChange }: Props): JSX.Element {
   const [language, setLanguage] = useContext(LanguageContext);
-  const languageArr = Object.entries(
-    languages,
-  ).map(([languageName, lang]: [string, Language]) => [
-    languageName,
-    lang.title,
-  ]);
+  const languageArr = Object.entries(languages).map(
+    ([languageName, lang]: [string, Language]) => [languageName, lang.title],
+  );
 
   const translations = getTranslations(language);
 
@@ -27,7 +24,7 @@ export default function LanguagePicker({ handleChange }: Props): JSX.Element {
     const newLanguage = LanguageEnum[currentTarget.value as LanguageEnum];
     handleChange(newLanguage);
 
-    setLanguage({
+    setLanguage?.({
       type: "setLanguage",
       payload: newLanguage,
     });

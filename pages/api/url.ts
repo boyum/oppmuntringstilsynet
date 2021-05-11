@@ -8,17 +8,23 @@ export function encode(obj: unknown): string {
   return LZString.compressToEncodedURIComponent(json);
 }
 
-export function decode<Type>(encodedObj: string): Type {
+export function decode<Type>(encodedObj: string): Type | null {
   const hasObj = !!encodedObj;
 
   if (!hasObj) {
     return null;
   }
 
-  return JSON.parse(LZString.decompressFromEncodedURIComponent(encodedObj));
+  const decoded = LZString.decompressFromEncodedURIComponent(encodedObj);
+  if (!decoded) {
+    console.error(`Invalid encoded object ${encodedObj}`);
+    return null;
+  }
+
+  return JSON.parse(decoded);
 }
 
-export function decodeMessage(encodedObj: string): Message {
+export function decodeMessage(encodedObj: string): Message | null {
   const hasObj = !!encodedObj;
 
   if (!hasObj) {
@@ -29,8 +35,13 @@ export function decodeMessage(encodedObj: string): Message {
     language: LanguageEnum.NorskBokmal,
   };
 
+  const decodedMessage = decode<Message>(encodedObj);
+  if (!decodedMessage) {
+    return null;
+  }
+
   return {
     ...defaultValuesForBackwardsCompatibility,
-    ...decode<Message>(encodedObj),
+    ...decodedMessage,
   };
 }
