@@ -4,9 +4,9 @@ import { LanguageAction } from "../reducers/language.reducer";
 
 const defaultLanguage = LanguageEnum.NorskBokmal;
 
-const defaultState: [LanguageEnum, Dispatch<LanguageAction>] = [
+const defaultState: [LanguageEnum, Dispatch<LanguageAction> | null] = [
   defaultLanguage,
-  undefined,
+  null,
 ];
 
 export default React.createContext(defaultState);
