@@ -12,3 +12,9 @@ export function isEmpty(message: Message): boolean {
     message.checks.every((check, index) => emptyMessage.checks[index] === check)
   );
 }
+
+export function createEmptyMessage(): Message {
+  return {
+    ...getEmptyState(),
+  };
+}

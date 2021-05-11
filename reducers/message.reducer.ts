@@ -27,7 +27,7 @@ export function getEmptyState(): Message {
     message: "",
     name: "",
     language: LanguageEnum.NorskBokmal,
-    themeName: null,
+    themeName: "",
   };
 }
 

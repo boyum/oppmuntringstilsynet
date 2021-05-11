@@ -11,7 +11,14 @@ describe(Buttons.name, () => {
     const buttons = render(
       <LanguageStore>
         <main>
-          <Buttons handleReset={undefined} handleCopy={undefined} />
+          <Buttons
+            handleReset={() => {
+              // Intentionally empty
+            }}
+            handleCopy={() => {
+              // Intentionally empty
+            }}
+          />
         </main>
       </LanguageStore>,
     ).container;

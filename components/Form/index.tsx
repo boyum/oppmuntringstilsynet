@@ -19,13 +19,13 @@ export default function Form({
   const translations = getTranslations(language);
 
   function handleChange(payload: SetValuePayload): void {
-    dispatch({ type: "setValue", payload });
+    dispatch?.({ type: "setValue", payload });
   }
 
   function handleCheckChange(payloadString: string, index: number): void {
     const payload: SetChecksPayload = { check: payloadString === "false" };
 
-    dispatch({ type: "setCheck", payload, checksIndex: index });
+    dispatch?.({ type: "setCheck", payload, checksIndex: index });
   }
 
   function getCheckboxLabel(index: number): string {
