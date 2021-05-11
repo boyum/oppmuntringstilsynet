@@ -1,5 +1,4 @@
 import http from "http";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Buttons from "../components/Buttons";
@@ -23,16 +22,10 @@ import { getTranslations } from "./api/translations";
 import { decodeMessage, encode } from "./api/url";
 
 type Props = {
-  currentUrl: string;
   encodedParamMessage: string;
-  host: string;
 };
 
-export default function Home({
-  encodedParamMessage,
-  currentUrl,
-  host,
-}: Props): JSX.Element {
+export default function Home({ encodedParamMessage }: Props): JSX.Element {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [message, dispatchMessageAction] = useContext(MessageContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -45,18 +38,14 @@ export default function Home({
   const messageFromUrl = decodeMessage(encodedParamMessage);
   const translations = getTranslations(language);
 
-  const ogImageUrl = `https://${host}/og-image.jpg`;
-
   useEffect(() => {
-    const hasMessage = !!messageFromUrl;
-    const messageIsEmpty = isEmpty(message);
-
-    if (hasMessage && messageIsEmpty && !isResetting) {
-      dispatchMessageAction({ type: "setValue", payload: messageFromUrl });
-      dispatchLanguageAction({
+    if (!!messageFromUrl && isEmpty(message) && !isResetting) {
+      dispatchMessageAction?.({ type: "setValue", payload: messageFromUrl });
+      dispatchLanguageAction?.({
         type: "setLanguage",
         payload: messageFromUrl.language,
       });
+
       setIsDisabled(true);
     }
 
@@ -69,12 +58,6 @@ export default function Home({
       setPageTheme(activeTheme);
     }
   }, []);
-
-  const tagManagerHtml = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-MPPJRMK');</script>`;
 
   function handleCopy() {
     const encodedMessage = encode(message);
@@ -91,13 +74,15 @@ export default function Home({
 
   function handleReset() {
     router.push("/");
-    dispatchMessageAction({ type: "reset" });
+
+    dispatchMessageAction?.({ type: "reset" });
+
     setIsResetting(true);
     setIsDisabled(false);
   }
 
   function handleLanguageChange(newLanguage: LanguageEnum) {
-    dispatchMessageAction({
+    dispatchMessageAction?.({
       type: "setValue",
       payload: {
         language: newLanguage,
@@ -107,39 +92,6 @@ export default function Home({
 
   return (
     <>
-      <Head>
-        <title>{translations.pageTitle}</title>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
-          rel="stylesheet"
-        />
-        {/* eslint-disable-next-line react/no-danger */}
-        <div dangerouslySetInnerHTML={{ __html: tagManagerHtml }} />
-
-        <meta property="og:title" content={translations.pageTitle} />
-        <meta
-          property="og:description"
-          content={translations.pageDescription}
-        />
-        <meta property="og:image" content={ogImageUrl} />
-        <meta property="og:url" content={currentUrl} />
-        <meta property="og:type" content="website" />
-      </Head>
-
-      <noscript>
-        <iframe
-          title="GTM iframe"
-          src="https://www.googletagmanager.com/ns.html?id=GTM-MPPJRMK"
-          height="0"
-          width="0"
-          style={{ display: "none", visibility: "hidden" }}
-        />
-      </noscript>
-
       <ThemePicker
         themes={themes}
         isOpen={themePickerOpen}
@@ -209,8 +161,6 @@ export async function getServerSideProps(
   return {
     props: {
       encodedParamMessage: context.query.m ?? "",
-      currentUrl: context.req.headers.host + context.resolvedUrl,
-      host: context.req.headers.host,
     } as Props,
   };
 }
