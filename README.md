@@ -1,6 +1,6 @@
 # Oppmuntringstilsynet
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![codebeat badge](https://codebeat.co/badges/c213cf8a-a3b8-42c9-8513-ab3008fd10a1)](https://codebeat.co/projects/github-com-boyum-oppmuntringstilsynet-main)
 
 With Oppmuntringskortet, you can write a short note and copy the link to that
 exact note. Send the link to the receiver and they can read the note today and
