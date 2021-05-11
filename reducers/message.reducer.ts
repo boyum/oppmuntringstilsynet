@@ -44,7 +44,7 @@ export function messageReducer(state: Message, action: MessageAction): Message {
         ...state,
         checks: state.checks.map((check, index) =>
           index === action.checksIndex ? payload.check : check,
-        ),
+        ) as [boolean, boolean, boolean],
       };
 
       return newState;
