@@ -1,13 +1,29 @@
 .themePicker {
   background-color: var(--theme-1-offset);
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease-in-out;
-  width: 100vw;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  position: absolute;
+  right: 3.5rem;
+  transition: opacity 0.15s ease-in-out;
+  z-index: 1;
+
+  &::before {
+    background-color: var(--theme-1-offset);
+    content: "";
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    font-size: 0.75rem;
+    height: 2em;
+    position: absolute;
+    right: 0;
+    top: 0.35rem;
+    transform: translateX(100%);
+    width: 1em;
+  }
 }
 
 .themePickerOpen {
-  max-height: 8.9375rem;
+  opacity: 1;
 }
 
 .heading {
@@ -18,12 +34,13 @@
 
 .list {
   display: flex;
+  flex-direction: column;
   list-style: none;
   margin: 0;
   overflow-y: auto;
   padding: 0.25rem 1.5rem 1rem;
 
   > * + * {
-    margin-left: 1rem;
+    margin-top: 1rem;
   }
 }

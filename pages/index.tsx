@@ -9,7 +9,7 @@ import { ThemePicker } from "../components/ThemePicker";
 import LanguageContext from "../contexts/LanguageContext";
 import MessageContext from "../contexts/MessageContext";
 import LanguageEnum from "../enums/Language";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.scss";
 import { themes } from "../types/Themes";
 import { isEmpty } from "../utils/message-utils";
 import {
@@ -92,15 +92,6 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
 
   return (
     <>
-      <ThemePicker
-        themes={themes}
-        isOpen={themePickerOpen}
-        setTheme={theme => {
-          setPageTheme(theme);
-          setActiveTheme(theme.name);
-        }}
-      />
-
       <div className={styles.themePickerButtonWrapper}>
         <button
           type="button"
@@ -122,6 +113,16 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
             <path d="M256.742 268.354l.997-2.178V74.77c-10.8 12.609-30.518 22.151-58.741 26.918 1.604.67 2.516 2.046 3.148 4.298 2.421 8.591 3.676 17.355 5.4 26.099.152.794.152 1.534.068 2.236 3.111 8.688 4.714 18.589 4.672 29.257-.026 7.15-8.827 8.633-12.577 3.406-6.186-8.638-12.281-19.029-19.865-27.49-3.902-2.426-7.783-3.607-10.805-1.967-.797 11.881-.854 23.582.521 35.326 2.142 9.303 4.198 18.589 5.527 27.87 1.682 11.755 7.287 33.144-3.48 42.319-35.391 30.186-40.353-51.479-41.305-66.287-.846-13.226-6.035-25.471-12.105-37.214.588 10.373 1.577 24.337-5.58 31.488-9.239 9.239-30.282 7.398-36.476-4.619-12.01-23.288-7.61-53.7-8.3-78.988-6.384-3.736-9.904-7.981-15.304-12.651v192.547l.886 1.038c4.644 23.51 49.352 41.924 101.487 41.924 52.136-.002 97.187-18.416 101.832-41.926zm-47.603-70.125c-10.8 0-10.8-13.5 0-13.5 5.4 0 5.4 13.5 0 13.5z" />
           </svg>
         </button>
+
+        <ThemePicker
+          themes={themes}
+          isOpen={themePickerOpen}
+          setTheme={theme => {
+            setPageTheme(theme);
+            setActiveTheme(theme.name);
+            setThemePickerOpen(false);
+          }}
+        />
       </div>
 
       <main className={styles.main}>

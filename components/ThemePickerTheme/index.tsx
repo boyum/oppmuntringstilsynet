@@ -11,8 +11,10 @@ type Props = {
 export function ThemePickerTheme(props: Props): JSX.Element {
   const { theme, isSelected, onClick } = props;
 
+  const classNames = [isSelected ? styles.isSelected : ""].join(" ");
+
   return (
-    <li className={isSelected ? styles.isSelected : ""} data-theme={theme.name}>
+    <li className={classNames} data-theme={theme.name}>
       <button
         className={styles.button}
         type="button"

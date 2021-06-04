@@ -40,7 +40,7 @@ export function ThemePicker(props: Props): JSX.Element {
 
     setSelectedTheme(newSelectedTheme);
     setTheme(newSelectedTheme);
-
+    
     dispatchMessageAction?.({ type: "setTheme", payload: themeName });
   };
 
