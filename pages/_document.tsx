@@ -45,14 +45,12 @@ class CustomDocument extends Document {
     pageTitle: string,
     pageDescription: string,
   ): JSX.Element {
-    const { host, currentUrl } = CustomDocument;
-    const ogImageUrl = `https://${host}/og-image.jpg`;
+    const { currentUrl } = CustomDocument;
 
     return (
       <>
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={ogImageUrl} />
         <meta property="og:url" content={currentUrl} />
         <meta property="og:type" content="website" />
       </>
