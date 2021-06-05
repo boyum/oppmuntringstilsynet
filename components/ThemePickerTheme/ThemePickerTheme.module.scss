@@ -8,7 +8,10 @@
   border: 0.125rem solid var(--theme-picker-border-color);
   color: var(--theme-1-color);
   cursor: pointer;
+  display: block;
   padding: 0.5rem 0.75rem;
+  text-align: left;
+  width: 100%;
 }
 
 .circles {
