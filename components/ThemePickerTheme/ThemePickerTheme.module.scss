@@ -4,7 +4,9 @@
 }
 
 .button {
-  background-color: var(--theme-1-background);
+  background-color: var(--theme-1-background-color);
+  background-image: var(--theme-1-background-image, "none");
+  background-repeat: no-repeat;
   border: 0.125rem solid var(--theme-picker-border-color);
   color: var(--theme-1-color);
   cursor: pointer;
@@ -31,13 +33,17 @@
 }
 
 .circle:nth-of-type(1) {
-  background-color: var(--theme-1-background);
+  background-color: var(--theme-1-background-color);
+  background-image: var(--theme-1-background-image, "none");
+  background-repeat: no-repeat;
 }
 .circle:nth-of-type(2) {
   background-color: var(--theme-1-color);
 }
 .circle:nth-of-type(3) {
-  background-color: var(--theme-2-background);
+  background-color: var(--theme-2-background-color);
+  background-image: var(--theme-2-background-image, "none");
+  background-repeat: no-repeat;
 }
 .circle:nth-of-type(4) {
   background-color: var(--theme-2-color);
