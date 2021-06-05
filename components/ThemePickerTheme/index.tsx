@@ -16,6 +16,7 @@ export function ThemePickerTheme(props: Props): JSX.Element {
   return (
     <li className={classNames} data-theme={theme.name}>
       <button
+        id={`theme-${theme.name}`}
         className={styles.button}
         type="button"
         onClick={() => onClick(theme.name)}
