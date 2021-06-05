@@ -15,7 +15,7 @@ pull_request_rules:
       - files~=package(-lock)?.json$
       - "#files=2"
       - author=depfu[bot]
-      - title~=\(patch\)$
+      - title~=(\(minor\)|\(patch\))$
     actions:
       merge:
         method: merge
