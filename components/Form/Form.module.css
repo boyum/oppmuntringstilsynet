@@ -2,7 +2,7 @@
 .name input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid var(--theme-secondary);
+  border-bottom: 1px solid var(--theme-1-color);
   margin-left: 0.5em;
 }
 
@@ -16,8 +16,11 @@
   --line-height: 1.625em;
   background-attachment: local;
   background-color: transparent;
-  background-image:
-    repeating-linear-gradient(transparent, transparent calc(var(--line-height) - 1px), var(--theme-secondary) var(--line-height));
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent calc(var(--line-height) - 1px),
+    var(--theme-1-color) var(--line-height)
+  );
   border: none;
   display: block;
   line-height: var(--line-height);
@@ -40,7 +43,7 @@
 }
 
 .message textarea::-webkit-scrollbar-thumb {
-  background-color: var(--thumbBG) ;
+  background-color: var(--thumbBG);
   border-radius: 6px;
   border: 3px solid var(--scrollbarBG);
 }
@@ -59,7 +62,7 @@
 
 .checkboxLabel::before {
   border: 2px solid;
-  content: '';
+  content: "";
   flex-shrink: 0;
   height: 1.5rem;
   margin-right: 0.5rem;
@@ -68,7 +71,7 @@
 }
 
 .checkbox:checked + .checkboxLabel::before {
-  content: '✓';
+  content: "✓";
 }
 
 .checkbox:disabled + .checkboxLabel {
@@ -76,7 +79,7 @@
 }
 
 .checkbox:focus:not(:active) + .checkboxLabel::before {
-  outline: 2px solid var(--theme-tertiary);
+  outline: 2px solid var(--theme-2-background);
   outline-offset: 2px;
 }
 

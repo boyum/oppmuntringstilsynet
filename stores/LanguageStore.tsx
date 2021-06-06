@@ -1,7 +1,7 @@
-import { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import LanguageContext from '../contexts/LanguageContext';
-import LanguageEnum from '../enums/Language';
 import { languageReducer } from '../reducers/language.reducer';
+import LanguageEnum from '../enums/Language';
 
 export default function LanguageStore({ children }: { children: JSX.Element | JSX.Element[] }): JSX.Element {
   const localStorageKey = 'language';
@@ -24,3 +24,5 @@ export default function LanguageStore({ children }: { children: JSX.Element | JS
     </LanguageContext.Provider>
   );
 }
+
+export default LanguageStore;

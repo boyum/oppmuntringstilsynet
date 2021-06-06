@@ -1,0 +1,24 @@
+[data-theme="original"] {
+  --theme-1-background: hsl(353, 53%, 54%);
+  --theme-1-color: white;
+  --theme-2-background: hsl(257, 13%, 32%);
+  --theme-2-color: white;
+}
+
+[data-theme="moo-moo-farm"] {
+  --theme-1-background: hsl(42, 93%, 95%);
+  --theme-1-color: hsl(224, 63%, 25%);
+  --theme-2-color: hsl(224, 63%, 25%);
+  --theme-2-background: hsl(187, 55%, 71%);
+}
+
+[data-theme="winter"] {
+  --theme-1-background: #232946;
+  --theme-1-color: #fffffe;
+  --theme-2-color: #ffbd03;
+  --theme-2-background: hsl(230, 36%, 26%);
+
+  --global-background: hsl(230, 36%, 16%);
+  --footer-color: #fffffe;
+  --footer-link-color: #fffffe;
+}

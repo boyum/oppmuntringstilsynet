@@ -1,0 +1,54 @@
+.themePicker {
+  background-color: var(--theme-1-background);
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 3.5rem;
+  transform: scale(0.98);
+  transition: opacity 0.15s ease-in-out, transform 0.25s ease-in-out;
+  z-index: 1;
+}
+
+.themePickerOpen {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.heading {
+  color: var(--theme-2-color);
+  margin-top: 0;
+  padding: 1rem 1.5rem 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  overflow-y: auto;
+  padding: 0.25rem 1.5rem 1rem;
+
+  > * + * {
+    margin-top: 1rem;
+  }
+}
+
+.themePickerButton {
+  background-color: var(--theme-2-background);
+  border: none;
+  border-radius: 50%;
+  color: var(--theme-2-color);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.65em 0.7em;
+}
+
+.themePickerButton svg {
+  fill: currentColor;
+  height: 1em;
+  width: 1em;
+}
