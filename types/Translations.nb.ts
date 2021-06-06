@@ -20,7 +20,7 @@ const TranslationsNb: Translations = {
     'Laget med <a href="https://nextjs.org/">Next.js</a>. Se koden på <a href="https://github.com/boyum/oppmuntringstilsynet">GitHub</a>.',
   openThemePicker: "Åpne temavelgeren",
   closeThemePicker: "Lukk temavelgeren",
-  themePickerHeading: "Velg et fargetema",
+  themePickerHeading: "Velg fargetema",
 };
 
 export default TranslationsNb;
