@@ -6,22 +6,26 @@
   width="6450"
   height="5850"
 >
-  <style>[href="#heart"] { transform-origin: 50% 50% }</style>
+  <style>
+    [href="#heart"] {
+      transform-origin: 50% 50%;
+    }
+  </style>
   <defs>
     <linearGradient id="rainbow-gradient" x1="0" x2="0" y1="0" y2="1">
-      <stop stop-color="hsla(0,100%,75%,1)" offset="14.2857142857%" />
-      <stop stop-color="rgba(255,176,128,1)" offset="0" />
-      <stop stop-color="rgba(255,176,128,1)" offset="28.5714285714%" />
-      <stop stop-color="rgba(255,255,128,1)" offset="0" />
-      <stop stop-color="rgba(255,255,128,1)" offset="42.8571428571%" />
-      <stop stop-color="rgba(51,255,51,1)" offset="0" />
-      <stop stop-color="rgba(51,255,51,1)" offset="57.1428571429%" />
-      <stop stop-color="rgba(128,128,255,1)" offset="0" />
-      <stop stop-color="rgba(128,128,255,1)" offset="71.4285714286%" />
-      <stop stop-color="rgba(170,51,255,1)" offset="0" />
-      <stop stop-color="rgba(170,51,255,1)" offset="85.7142857143%" />
-      <stop stop-color="rgba(231,179,255,1)" offset="0" />
-      <stop stop-color="rgba(231,179,255,1)" offset="100%" />
+      <stop stop-color="hsl(0, 100%, 65%)" offset="14.2857142857%" />
+      <stop stop-color="hsl(23, 100%, 65%)" offset="0" />
+      <stop stop-color="hsl(23, 100%, 65%)" offset="28.5714285714%" />
+      <stop stop-color="hsl(60, 100%, 65%)" offset="0" />
+      <stop stop-color="hsl(60, 100%, 65%)" offset="42.8571428571%" />
+      <stop stop-color="hsl(120, 100%, 60%)" offset="0" />
+      <stop stop-color="hsl(120, 100%, 60%)" offset="57.1428571429%" />
+      <stop stop-color="hsl(240, 100%, 75%)" offset="0" />
+      <stop stop-color="hsl(240, 100%, 75%)" offset="71.4285714286%" />
+      <stop stop-color="hsl(275, 100%, 60%)" offset="0" />
+      <stop stop-color="hsl(275, 100%, 60%)" offset="85.7142857143%" />
+      <stop stop-color="hsl(281, 100%, 85%)" offset="0" />
+      <stop stop-color="hsl(281, 100%, 85%)" offset="100%" />
     </linearGradient>
     <g id="heart">
       <path
@@ -31,7 +35,7 @@
     </g>
   </defs>
 
-  <use href="#heart" x="5500" y="2500" style="transform: rotate(0deg)"/>
+  <use href="#heart" x="5500" y="2500" style="transform: rotate(0deg)" />
   <use href="#heart" x="500" y="2000" style="transform: rotate(350deg)" />
   <use href="#heart" x="1750" y="200" style="transform: rotate(30deg)" />
   <use href="#heart" x="1000" y="500" style="transform: rotate(0deg)" />
