@@ -30,42 +30,12 @@
 }
 
 [data-theme="pride"] {
-  --theme-1-background-color: hsl(42, 93%, 95%);
-  --theme-1-background-image: linear-gradient(
-    to bottom,
-    hsla(0, 100%, 75%, 0.5) #{math.div(100%, 7)},
-    hsla(23, 100%, 75%, 0.5) #{math.div(100%, 7)},
-    hsla(23, 100%, 75%, 0.5) #{math.div(200%, 7)},
-    hsla(60, 100%, 75%, 0.5) #{math.div(200%, 7)},
-    hsla(60, 100%, 75%, 0.5) #{math.div(300%, 7)},
-    hsla(120, 100%, 60%, 0.5) #{math.div(300%, 7)},
-    hsla(120, 100%, 60%, 0.5) #{math.div(400%, 7)},
-    hsla(240, 100%, 75%, 0.5) #{math.div(400%, 7)},
-    hsla(240, 100%, 75%, 0.5) #{math.div(500%, 7)},
-    hsla(275, 100%, 60%, 0.5) #{math.div(500%, 7)},
-    hsla(275, 100%, 60%, 0.5) #{math.div(600%, 7)},
-    hsla(281, 100%, 85%, 0.5) #{math.div(600%, 7)},
-    hsla(281, 100%, 85%, 0.5) #{math.div(700%, 7)}
-  );
+  --theme-1-background-color: hsl(340, 87%, 94%);
   --theme-1-color: hsl(224, 63%, 25%);
 
   --theme-2-color: hsl(224, 63%, 25%);
-  --theme-2-background-color: hsl(187, 55%, 71%);
+  --theme-2-background-color: hsl(340, 87%, 70%);
 
-  --global-background-image: radial-gradient(
-    circle at -50% 150%,
-    hsl(281, 100%, 60%) #{math.div(100%, 7)},
-    hsl(281, 100%, 60%) #{math.div(200%, 7)},
-    hsl(275, 100%, 25%) #{math.div(200%, 7)},
-    hsl(275, 100%, 25%) #{math.div(300%, 7)},
-    hsl(240, 100%, 50%) #{math.div(300%, 7)},
-    hsl(240, 100%, 50%) #{math.div(400%, 7)},
-    hsl(120, 100%, 25%) #{math.div(400%, 7)},
-    hsl(120, 100%, 25%) #{math.div(500%, 7)},
-    hsl(60, 100%, 50%) #{math.div(500%, 7)},
-    hsl(60, 100%, 50%) #{math.div(600%, 7)},
-    hsl(23, 100%, 50%) #{math.div(600%, 7)},
-    hsl(23, 100%, 50%) #{math.div(700%, 7)},
-    hsl(0, 100%, 50%) #{math.div(700%, 7)}
-    );
+  --global-background-color: hsl(340, 87%, 76%);
+  --global-background-image: url("/pride-hearts.svg");
 }
