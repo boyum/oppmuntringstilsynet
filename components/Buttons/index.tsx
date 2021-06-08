@@ -18,14 +18,10 @@ export default function Buttons({
   return (
     <div className={styles.buttons}>
       <button type="button" className={styles.copyLink} onClick={handleCopy}>
-        <div className={styles.buttonInner}>
-          {translations.copyButtonText}
-        </div>
+        <div className={styles.buttonInner}>{translations.copyButtonText}</div>
       </button>
       <button type="button" className={styles.reset} onClick={handleReset}>
-        <div className={styles.buttonInner}>
-          {translations.resetButtonText}
-        </div>
+        <div className={styles.buttonInner}>{translations.resetButtonText}</div>
       </button>
     </div>
   );
