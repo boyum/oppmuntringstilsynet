@@ -13,4 +13,8 @@ export const themes: Theme[] = [
     name: "winter",
     label: "Winter",
   },
+  {
+    name: "pride",
+    label: "Pride",
+  },
 ];

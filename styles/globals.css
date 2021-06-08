@@ -17,7 +17,11 @@ body {
 
 body {
   --theme-picker-border-color: var(--theme-1-color);
-  background-color: var(--global-background, #fff);
+  background-color: var(--global-background-color, #fff);
+  background-image: var(--global-background-image, none);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #__next {
