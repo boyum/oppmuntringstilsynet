@@ -17,14 +17,14 @@
 }
 
 [data-theme="winter"] {
-  --theme-1-background-color: #232946;
+  --theme-1-background-color: hsl(230deg 33% 36%);
   --theme-1-background-image: none;
 
   --theme-1-color: #fffffe;
   --theme-2-color: #ffbd03;
   --theme-2-background-color: hsl(230, 36%, 26%);
 
-  --global-background-color: hsl(230, 36%, 16%);
+  --global-background-color: hsl(230deg 36% 6%);
   --footer-color: #fffffe;
   --footer-link-color: #fffffe;
 }
