@@ -18,6 +18,7 @@
   outline-color: currentColor;
   padding: 0;
   position: relative;
+  user-select: none;
 
   &:hover,
   &:focus {
@@ -42,7 +43,6 @@
     left: 0;
     position: absolute;
     top: 0;
-    user-select: none;
     width: 100%;
   }
 }
