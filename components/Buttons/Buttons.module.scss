@@ -18,6 +18,8 @@
   outline-color: currentColor;
   padding: 0;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 
   &:hover,
   &:focus {
