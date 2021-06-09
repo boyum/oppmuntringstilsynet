@@ -36,58 +36,18 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      # - name: Set Vercel env vars
-      #   env:
-      #     VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
-
-      # - name: Wait on Vercel deploy
-      #   uses: lewagon/wait-on-check-action@v0.2
-      #   with:
-      #     ref: ${{ github.ref }}
-      #     check-name: Vercel
-      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-      #     wait-interval: 10 # seconds
-
-      # - name: Find Vercel deploy comment
-      #   uses: peter-evans/find-comment@v1
-      #   id: vercel_comment
-      #   with:
-      #     issue-number: ${{github.event.number}}
-      #     comment-author: vercel[bot]
-
-      # - name: Find Vercel deploy URL
-      #   id: vercel_deploy_url
-      #   uses: AsasInnab/regex-action@v1
-      #   with:
-      #     regex_pattern: https://.+?\.app
-      #     regex_flags: 'ig'
-      #     search_string: ${{steps.vercel_comment.outputs.comment-body}}
-    
-
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20.0.0
         id: vercel-deployment
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-project-id: QmPhCGZLU74MUeTX6xmTLU8hScHGYvQzFpvytdvzf6ZDHz
-          vercel-org-id: x7U2U5Q6C3LWtf2RineZZdbu
-    
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+
       - name: Lighthouse Check
         id: lighthouse-check
         uses: foo-software/lighthouse-check-action@v3.0.0
         with:
+          prCommentEnabled: true
           urls: |
             ${{steps.vercel-deployment.outputs.preview-url}}
-
-      - name: Handle Lighthouse Check results
-        uses: foo-software/lighthouse-check-status-action@master
-        with:
-          lighthouseCheckResults: ${{ steps.lighthouse-check.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "90"
-          minBestPracticesScore: "90"
-          minPerformanceScore: "90"
-          minSeoScore: "90"
-
-
-
-
