@@ -66,4 +66,4 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           github-comment: true
           prCommentEnabled: true
-          urls: ${{ needs.deploy.outputs.preview-url }}
+          urls: https://oppmuntring.sindre.is,${{ needs.deploy.outputs.preview-url }}
