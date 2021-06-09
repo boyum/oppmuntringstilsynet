@@ -1,5 +1,6 @@
 .select {
   background-color: transparent;
+  outline-color: var(--theme-2-background-color);
 }
 
 .option {

@@ -7,7 +7,9 @@
 }
 
 .container {
-  background-color: var(--theme-1-background);
+  background-color: var(--theme-1-background-color);
+  background-image: var(--theme-1-background-image, "none");
+  background-repeat: no-repeat;
   border-radius: 0.5rem;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   color: var(--theme-1-color);
