@@ -12,7 +12,8 @@ export function getTheme(themeName: string, themes: Theme[]): Theme {
 
 export function getActiveTheme(themes: Theme[]): Theme {
   const activeThemeName = window.localStorage.getItem("active-theme");
-  const fallbackTheme = themes[0];
+  const fallbackTheme =
+    themes.find(theme => theme.name === "pride") ?? themes[0];
 
   return activeThemeName ? getTheme(activeThemeName, themes) : fallbackTheme;
 }

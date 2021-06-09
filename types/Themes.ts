@@ -2,6 +2,10 @@ import { Theme } from "./Theme";
 
 export const themes: Theme[] = [
   {
+    name: "pride",
+    label: "Pride",
+  },
+  {
     name: "original",
     label: "Original",
   },
@@ -12,9 +16,5 @@ export const themes: Theme[] = [
   {
     name: "winter",
     label: "Winter",
-  },
-  {
-    name: "pride",
-    label: "Pride",
   },
 ];
