@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
 
     strategy:
@@ -30,3 +31,39 @@ jobs:
       - name: Codecov
         uses: codecov/codecov-action@v1.5.0
 
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20.0.0
+        id: vercel-deployment
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+
+    outputs:
+      preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
+
+  e2e:
+    name: Test deployment
+    runs-on: ubuntu-latest
+
+    needs:
+      - build
+      - deploy
+
+    steps:
+      - name: Lighthouse Check
+        id: lighthouse-check
+        uses: foo-software/lighthouse-check-action@v3.0.0
+        with:
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          github-comment: true
+          prCommentEnabled: true
+          urls: ${{ needs.deploy.outputs.preview-url }}
