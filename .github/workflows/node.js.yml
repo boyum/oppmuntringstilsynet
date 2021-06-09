@@ -30,3 +30,51 @@ jobs:
       - name: Codecov
         uses: codecov/codecov-action@v1.5.0
 
+  lighthouse-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Wait on Vercel deploy
+        uses: lewagon/wait-on-check-action@v0.2
+        with:
+          ref: ${{ github.ref }}
+          check-name: vercel
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10 # seconds
+
+      - name: Find Vercel deploy comment
+        uses: peter-evans/find-comment@v1
+        id: vercel_comment
+        with:
+          issue-number: ${{github.event.number}}
+          comment-author: vercel[bot]
+
+      - name: Find Vercel deploy URL
+        id: vercel_deploy_url
+        uses: AsasInnab/regex-action@v1
+        with:
+          regex_pattern: https://.+?\.app
+          regex_flags: 'ig'
+          search_string: ${{steps.vercel_comment.outputs.comment-body}}
+    
+      - name: Lighthouse Check
+        id: lighthouse-check
+        uses: foo-software/lighthouse-check-action@v3.0.0
+        with:
+          urls: |
+            ${{steps.vercel_deploy_url.outputs.first_match}}
+
+      - name: Handle Lighthouse Check results
+        uses: foo-software/lighthouse-check-status-action@master
+        with:
+          lighthouseCheckResults: ${{ steps.lighthouse-check.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "90"
+          minBestPracticesScore: "90"
+          minPerformanceScore: "90"
+          minSeoScore: "90"
+
+
+
+
