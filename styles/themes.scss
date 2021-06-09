@@ -33,9 +33,11 @@
   --theme-1-background-color: hsl(340, 87%, 94%);
   --theme-1-color: hsl(224, 63%, 25%);
 
-  --theme-2-color: hsl(224, 63%, 25%);
+  --theme-2-color: var(var(--theme-1-color));
   --theme-2-background-color: hsl(340, 87%, 70%);
 
   --global-background-color: hsl(340, 87%, 76%);
   --global-background-image: url("/pride-hearts.svg");
+
+  --footer-link-color: var(--theme-1-color);
 }

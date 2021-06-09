@@ -4,6 +4,7 @@
   border: none;
   border-bottom: 1px solid var(--theme-1-color);
   margin-left: 0.5em;
+  outline-color: var(--theme-2-background-color);
 }
 
 .message {
@@ -25,6 +26,7 @@
   display: block;
   line-height: var(--line-height);
   margin-top: 1rem;
+  outline-color: var(--theme-2-background-color);
   resize: none;
   width: 100%;
 }
@@ -79,7 +81,7 @@
 }
 
 .checkbox:focus:not(:active) + .checkboxLabel::before {
-  outline: 2px solid var(--theme-2-background);
+  outline: 2px solid var(--theme-2-background-color);
   outline-offset: 2px;
 }
 

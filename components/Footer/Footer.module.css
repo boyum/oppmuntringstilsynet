@@ -6,5 +6,5 @@
 }
 
 .footer a {
-  color: var(--footer-link-color, var(--theme-2-background));
+  color: var(--footer-link-color, var(--theme-2-background-color));
 }
