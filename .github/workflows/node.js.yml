@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
 
     strategy:
@@ -30,7 +31,8 @@ jobs:
       - name: Codecov
         uses: codecov/codecov-action@v1.5.0
 
-  lighthouse-check:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
