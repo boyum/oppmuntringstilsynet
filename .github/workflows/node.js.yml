@@ -62,5 +62,7 @@ jobs:
         id: lighthouse-check
         uses: foo-software/lighthouse-check-action@v3.0.0
         with:
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          github-comment: true
           prCommentEnabled: true
           urls: ${{ needs.deploy.outputs.preview-url }}
