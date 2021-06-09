@@ -46,6 +46,9 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
 
+    outputs:
+      preview-url: ${{steps.vercel-deployment.outputs.preview-url}}
+
   e2e:
     name: Test deployment
     runs-on: ubuntu-latest
@@ -60,5 +63,4 @@ jobs:
         uses: foo-software/lighthouse-check-action@v3.0.0
         with:
           prCommentEnabled: true
-          urls: |
-            ${{steps.vercel-deployment.outputs.preview-url}}
+          urls: ${{jobs.deploy.outputs.preview-url}}
