@@ -21,4 +21,18 @@ describe(languageReducer.name, () => {
       expect(newState).toBe(newLanguage);
     });
   });
+
+  describe(LanguageActionType.NoOp, () => {
+    it("should return the current state", () => {
+      const state = LanguageEnum.English;
+
+      const action: LanguageAction = {
+        type: LanguageActionType.NoOp,
+      };
+
+      const newState = languageReducer(state, action);
+
+      expect(newState).toBe(state);
+    });
+  });
 });
