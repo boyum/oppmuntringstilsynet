@@ -67,8 +67,5 @@ export function messageReducer(state: Message, action: MessageAction): Message {
 
     case MessageActionType.Reset:
       return getEmptyState();
-
-    default:
-      throw new Error(`Invalid action type in form reducer.`);
   }
 }
