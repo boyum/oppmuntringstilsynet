@@ -45,7 +45,7 @@ describe(messageReducer.name, () => {
     defaultState = getEmptyState();
   });
 
-  describe("SetMessage", () => {
+  describe(MessageActionType.SetMessage, () => {
     it("should set message value", () => {
       const message: Message = {
         date: "date",
@@ -67,7 +67,7 @@ describe(messageReducer.name, () => {
     });
   });
 
-  describe("SetCheck", () => {
+  describe(MessageActionType.SetCheck, () => {
     it("should set the check with the given index", () => {
       const index = 0;
       const checkValue = true;
@@ -83,7 +83,7 @@ describe(messageReducer.name, () => {
     });
   });
 
-  describe("SetTheme", () => {
+  describe(MessageActionType.SetTheme, () => {
     it("should set the message's theme", () => {
       const theme = "my-theme";
 

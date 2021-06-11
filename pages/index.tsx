@@ -9,6 +9,7 @@ import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import LanguageContext from "../contexts/LanguageContext";
 import MessageContext from "../contexts/MessageContext";
 import LanguageEnum from "../enums/Language";
+import { LanguageActionType } from '../reducers/language.reducer';
 import { MessageActionType } from "../reducers/message.reducer";
 import styles from "../styles/Home.module.scss";
 import { themes } from "../types/Themes";
@@ -45,8 +46,8 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
         message: messageFromUrl,
       });
       dispatchLanguageAction?.({
-        type: "setLanguage",
-        payload: messageFromUrl.language,
+        type: LanguageActionType.SetLanguage,
+        language: messageFromUrl.language,
       });
 
       setIsDisabled(true);

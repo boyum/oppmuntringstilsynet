@@ -1,8 +1,12 @@
 import LanguageEnum from "../enums/Language";
 
+export enum LanguageActionType {
+  SetLanguage = "setLanguage",
+}
+
 export type LanguageAction = {
-  type: "setLanguage";
-  payload: LanguageEnum;
+  type: LanguageActionType.SetLanguage;
+  language: LanguageEnum;
 };
 
 export function languageReducer(
@@ -10,8 +14,8 @@ export function languageReducer(
   action: LanguageAction,
 ): LanguageEnum {
   switch (action.type) {
-    case "setLanguage": {
-      return action.payload;
+    case LanguageActionType.SetLanguage: {
+      return action.language;
     }
     default:
       throw new Error(
