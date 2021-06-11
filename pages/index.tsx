@@ -9,6 +9,7 @@ import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import LanguageContext from "../contexts/LanguageContext";
 import MessageContext from "../contexts/MessageContext";
 import LanguageEnum from "../enums/Language";
+import { MessageActionType } from "../reducers/message.reducer";
 import styles from "../styles/Home.module.scss";
 import { themes } from "../types/Themes";
 import { isEmpty } from "../utils/message-utils";
@@ -39,7 +40,10 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
 
   useEffect(() => {
     if (!!messageFromUrl && isEmpty(message) && !isResetting) {
-      dispatchMessageAction?.({ type: "setValue", payload: messageFromUrl });
+      dispatchMessageAction?.({
+        type: MessageActionType.SetMessage,
+        message: messageFromUrl,
+      });
       dispatchLanguageAction?.({
         type: "setLanguage",
         payload: messageFromUrl.language,
@@ -74,7 +78,7 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
   function handleReset() {
     router.push("/");
 
-    dispatchMessageAction?.({ type: "reset" });
+    dispatchMessageAction?.({ type: MessageActionType.Reset });
 
     setIsResetting(true);
     setIsDisabled(false);
@@ -82,8 +86,8 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
 
   function handleLanguageChange(newLanguage: LanguageEnum) {
     dispatchMessageAction?.({
-      type: "setValue",
-      payload: {
+      type: MessageActionType.SetMessage,
+      message: {
         language: newLanguage,
       },
     });

@@ -1,6 +1,6 @@
 import { Theme } from "./Theme";
 
-export const themes: Theme[] = [
+export const themes: readonly Theme[] = [
   {
     name: "pride",
     label: "Pride",
@@ -17,4 +17,4 @@ export const themes: Theme[] = [
     name: "winter",
     label: "Winter",
   },
-];
+] as const;

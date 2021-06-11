@@ -3,18 +3,17 @@ import LanguageContext from "../../contexts/LanguageContext";
 import MessageContext from "../../contexts/MessageContext";
 import { getActiveTheme, getTheme } from "../../pages/api/theme";
 import { getTranslations } from "../../pages/api/translations";
+import { MessageActionType } from "../../reducers/message.reducer";
 import { Theme } from "../../types/Theme";
 import { ThemePickerTheme } from "../ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
 
 type Props = {
-  themes: Theme[];
+  themes: readonly Theme[];
   setTheme: (theme: Theme) => void;
 };
 
-export function ThemePicker(props: Props): JSX.Element {
-  const { themes, setTheme } = props;
-
+export function ThemePicker({ themes, setTheme }: Props): JSX.Element {
   const [, dispatchMessageAction] = useContext(MessageContext);
   const [language] = useContext(LanguageContext);
   const [className, setClassName] = useState(styles.themePicker);
@@ -42,7 +41,7 @@ export function ThemePicker(props: Props): JSX.Element {
     setTheme(newSelectedTheme);
     setIsOpen(false);
 
-    dispatchMessageAction?.({ type: "setTheme", payload: themeName });
+    dispatchMessageAction?.({ type: MessageActionType.SetTheme, themeName });
   };
 
   return (
