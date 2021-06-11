@@ -2,10 +2,8 @@ import React, { useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import MessageContext from "../../contexts/MessageContext";
 import { getTranslations } from "../../pages/api/translations";
-import {
-  SetChecksPayload,
-  SetValuePayload,
-} from "../../reducers/message.reducer";
+import { MessageActionType } from "../../reducers/message.reducer";
+import Message from "../../types/Message";
 import Translations from "../../types/Translations";
 import styles from "./Form.module.css";
 
@@ -18,14 +16,18 @@ export default function Form({
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
-  function handleChange(payload: SetValuePayload): void {
-    dispatch?.({ type: "setValue", payload });
+  function handleChange(newMessage: Partial<Message>): void {
+    dispatch?.({ type: MessageActionType.SetMessage, message: newMessage });
   }
 
   function handleCheckChange(payloadString: string, index: number): void {
-    const payload: SetChecksPayload = { check: payloadString === "false" };
+    const check = payloadString === "false";
 
-    dispatch?.({ type: "setCheck", payload, checksIndex: index });
+    dispatch?.({
+      type: MessageActionType.SetCheck,
+      check,
+      checkIndex: index,
+    });
   }
 
   function getCheckboxLabel(index: number): string {

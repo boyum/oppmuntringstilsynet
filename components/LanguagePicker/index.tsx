@@ -4,6 +4,7 @@ import LanguageEnum from "../../enums/Language";
 import Language from "../../models/Language";
 import languages from "../../models/languages";
 import { getTranslations } from "../../pages/api/translations";
+import { LanguageActionType } from "../../reducers/language.reducer";
 import styles from "./LanguagePicker.module.css";
 
 type Props = {
@@ -25,8 +26,8 @@ export default function LanguagePicker({ handleChange }: Props): JSX.Element {
     handleChange(newLanguage);
 
     setLanguage?.({
-      type: "setLanguage",
-      payload: newLanguage,
+      type: LanguageActionType.SetLanguage,
+      language: newLanguage,
     });
   };
 

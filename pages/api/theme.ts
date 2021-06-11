@@ -1,6 +1,6 @@
 import { Theme } from "../../types/Theme";
 
-export function getTheme(themeName: string, themes: Theme[]): Theme {
+export function getTheme(themeName: string, themes: readonly Theme[]): Theme {
   const theme = themes.find(t => t.name === themeName);
 
   if (!theme) {
@@ -10,7 +10,7 @@ export function getTheme(themeName: string, themes: Theme[]): Theme {
   return theme;
 }
 
-export function getActiveTheme(themes: Theme[]): Theme {
+export function getActiveTheme(themes: readonly Theme[]): Theme {
   const activeThemeName = window.localStorage.getItem("active-theme");
   const fallbackTheme =
     themes.find(theme => theme.name === "pride") ?? themes[0];
