@@ -12,7 +12,8 @@ const TranslationsNn: Translations = {
   checkbox2Label: "Du inspirerer meg – og gjev meg energi!",
   checkbox3Label: "Du bidreg til eit godt miljø – du gjer meg glad!",
   nameLabel: "Helsing",
-  copyButtonText: "Kopier lenka til kortet 🔗",
+  copyLinkButtonText: "Kopier lenka til kortet 🔗",
+  downloadImageButtonText: "Last ned eit bilete av kortet 📸",
   resetButtonText: "Lag eit nytt kort ✨",
   setLanguage: "Velg språk",
   footerHtml:

@@ -34,9 +34,7 @@ describe(Page.name, () => {
     const page = render(
       <MessageStore>
         <LanguageStore>
-          <Page
-            encodedParamMessage={encodedMessage}
-          />
+          <Page encodedParamMessage={encodedMessage} />
         </LanguageStore>
       </MessageStore>,
     ).container;

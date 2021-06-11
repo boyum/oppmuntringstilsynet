@@ -9,7 +9,8 @@ type Translations = {
   checkbox2Label: string;
   checkbox3Label: string;
   nameLabel: string;
-  copyButtonText: string;
+  copyLinkButtonText: string;
+  downloadImageButtonText: string;
   resetButtonText: string;
   setLanguage: string;
   footerHtml: string;

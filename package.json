@@ -16,6 +16,7 @@
   "dependencies": {
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
+    "html2canvas": "^1.0.0-rc.7",
     "jest-axe": "^4.1.0",
     "lz-string": "^1.4.4",
     "next": "^10.2.3",
