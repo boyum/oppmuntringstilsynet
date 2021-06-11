@@ -11,11 +11,13 @@
     "lint": "eslint '**/!(node_modules)/*.+(js|jsx|ts|tsx)' -c '.eslintrc.json'",
     "fix-lint": "npm run lint -- --fix",
     "format-all-files": "npx prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
+    "cypress": "^7.5.0",
     "jest-axe": "^4.1.0",
     "lz-string": "^1.4.4",
     "next": "^10.2.3",
