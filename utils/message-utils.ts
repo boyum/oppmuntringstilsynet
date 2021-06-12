@@ -19,3 +19,4 @@ export function createEmptyMessage(): Message {
     ...getEmptyState(),
   };
 }
+
