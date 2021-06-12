@@ -9,10 +9,11 @@ import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import LanguageContext from "../contexts/LanguageContext";
 import MessageContext from "../contexts/MessageContext";
 import LanguageEnum from "../enums/Language";
-import { LanguageActionType } from '../reducers/language.reducer';
+import { LanguageActionType } from "../reducers/language.reducer";
 import { MessageActionType } from "../reducers/message.reducer";
 import styles from "../styles/Home.module.scss";
 import { themes } from "../types/Themes";
+import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import { isEmpty } from "../utils/message-utils";
 import {
   getActiveTheme,
@@ -21,7 +22,7 @@ import {
   setPageTheme,
 } from "./api/theme";
 import { getTranslations } from "./api/translations";
-import { decodeMessage, encode } from "./api/url";
+import { decodeMessage } from "./api/url";
 
 type Props = {
   encodedParamMessage: string;
@@ -64,16 +65,9 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
   }, []);
 
   function handleCopy() {
-    const encodedMessage = encode(message);
-    const url = new URL(window.location.href);
-    url.searchParams.set("m", encodedMessage);
-
-    if (tempInput?.current) {
-      tempInput.current.value = url.href;
-      tempInput.current.select();
-      tempInput.current.setSelectionRange(0, 99999);
+    if (tempInput.current) {
+      encodeAndCopyMessage(message, tempInput.current);
     }
-    document.execCommand("copy");
   }
 
   function handleReset() {
