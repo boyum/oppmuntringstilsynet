@@ -67,3 +67,4 @@ jobs:
           github-comment: true
           prCommentEnabled: true
           urls: https://oppmuntring.sindre.is,${{ needs.deploy.outputs.preview-url }}
+          prCommentSaveOld: true
