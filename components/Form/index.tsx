@@ -69,6 +69,7 @@ export default function Form({
           {translations.dateLabel}
           <input
             type="text"
+            id="date-field"
             value={message.date}
             disabled={isDisabled}
             onChange={event =>
