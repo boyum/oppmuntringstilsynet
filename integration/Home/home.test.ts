@@ -1,7 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { AxePuppeteer } from "@axe-core/puppeteer";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from "dotenv";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import puppeteer from "puppeteer";
+import { themes } from "../../types/Themes";
 
 dotenv.config();
 
@@ -10,6 +13,7 @@ const deployUrl = process.env.DEPLOY_URL ?? "http://localhost:3000";
 describe("Home", () => {
   beforeEach(async () => {
     await page.goto(deployUrl);
+    await page.evaluate(() => localStorage.clear());
   });
 
   it("should be titled 'Oppmuntringstilsynet'", async () => {
@@ -184,5 +188,21 @@ describe("Home", () => {
     expect(actualTheme).toBe(expectedTheme);
 
     incognitoBrowser.close();
+  });
+
+  themes.forEach(({ name: themeName }) => {
+    it(`should not break any accessibility tests if using ${themeName} theme`, async () => {
+      await page.setBypassCSP(true);
+      await page.click("#theme-picker-button");
+      await page.click(`#theme-${themeName}`);
+
+      const { incomplete } = await new AxePuppeteer(page)
+        .exclude("#buttons")
+        .exclude("footer")
+        .exclude("#message-body-field")
+        .analyze();
+
+      expect(incomplete).toHaveLength(0);
+    });
   });
 });

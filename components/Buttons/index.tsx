@@ -16,7 +16,7 @@ export default function Buttons({
   const translations = getTranslations(language);
 
   return (
-    <div className={styles.buttons}>
+    <div className={styles.buttons} id="buttons">
       <button
         type="button"
         id="copy-button"
