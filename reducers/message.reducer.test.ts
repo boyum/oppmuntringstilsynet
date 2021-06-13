@@ -97,24 +97,29 @@ describe(messageReducer.name, () => {
     });
   });
 
-  describe("Reset", () => {
-    it("should reset the message and return an empty state", () => {
+  describe("Reset everything but theme", () => {
+    it("should reset the message and return an empty state, and keep the current theme", () => {
+      const themeName = "themeName";
       const state: Message = {
         date: "date",
         language: LanguageEnum.NorskNynorsk,
         message: "message",
         name: "name",
-        themeName: "themeName",
+        themeName,
         checks: [true, false, true],
       };
 
       const action: MessageAction = {
-        type: MessageActionType.Reset,
+        type: MessageActionType.ResetEverythingButTheme,
       };
 
       const newState = messageReducer(state, action);
+      const expectedState = {
+        ...getEmptyState(),
+        themeName,
+      };
 
-      expect(newState).toEqual(getEmptyState());
+      expect(newState).toEqual(expectedState);
     });
   });
 });

@@ -80,6 +80,7 @@ export default function Form({
         <label className={styles.message}>
           {translations.messageLabel}
           <textarea
+            id="message-body-field"
             rows={4}
             value={message.message}
             disabled={isDisabled}
@@ -95,6 +96,7 @@ export default function Form({
         <label className={styles.name}>
           {translations.nameLabel}
           <input
+            id="name-field"
             type="text"
             value={message.name}
             disabled={isDisabled}
