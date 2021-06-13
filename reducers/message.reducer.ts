@@ -5,7 +5,7 @@ export enum MessageActionType {
   SetMessage = "setMessage",
   SetCheck = "setCheck",
   SetTheme = "setTheme",
-  Reset = "reset",
+  ResetEverythingButTheme = "reset",
 }
 
 export type MessageAction =
@@ -23,7 +23,7 @@ export type MessageAction =
       check: boolean;
     }
   | {
-      type: MessageActionType.Reset;
+      type: MessageActionType.ResetEverythingButTheme;
     };
 
 export function getEmptyState(): Message {
@@ -65,7 +65,10 @@ export function messageReducer(state: Message, action: MessageAction): Message {
       };
     }
 
-    case MessageActionType.Reset:
-      return getEmptyState();
+    case MessageActionType.ResetEverythingButTheme:
+      return {
+        ...getEmptyState(),
+        themeName: state.themeName,
+      };
   }
 }

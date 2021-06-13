@@ -61,6 +61,11 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
     } else {
       const activeTheme = getActiveTheme(themes);
       setPageTheme(activeTheme);
+
+      dispatchMessageAction?.({
+        type: MessageActionType.SetTheme,
+        themeName: activeTheme.name,
+      });
     }
   }, []);
 
@@ -73,7 +78,9 @@ export default function Home({ encodedParamMessage }: Props): JSX.Element {
   function handleReset() {
     router.push("/");
 
-    dispatchMessageAction?.({ type: MessageActionType.Reset });
+    dispatchMessageAction?.({
+      type: MessageActionType.ResetEverythingButTheme,
+    });
 
     setIsResetting(true);
     setIsDisabled(false);
