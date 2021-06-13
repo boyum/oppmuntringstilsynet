@@ -79,6 +79,9 @@ jobs:
         with:
           node-version: 16.1
 
+      - uses: actions/checkout@v2
+      - run: npm ci
+
       - name: Store DEPLOY_URL in env file
         run: |
           touch .env
