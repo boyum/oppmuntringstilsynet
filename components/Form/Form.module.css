@@ -16,7 +16,7 @@
 .message textarea {
   --line-height: 1.625em;
   background-attachment: local;
-  background-color: transparent;
+  background-color: inherit;
   background-image: repeating-linear-gradient(
     transparent,
     transparent calc(var(--line-height) - 1px),
