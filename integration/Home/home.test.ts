@@ -66,7 +66,7 @@ describe("Home", () => {
     const checkbox1Value = await page.evaluate(() => document.querySelector<HTMLInputElement>("#checkbox-1")?.value);
     const checkbox2Value = await page.evaluate(() => document.querySelector<HTMLInputElement>("#checkbox-2")?.value);
     const nameText = await page.evaluate(() => document.querySelector<HTMLInputElement>("#name-field")?.value);
-    
+
     expect(dateText).toBe("date");
     expect(messageText).toBe("message");
     expect(checkbox0Value).toBe("true");
