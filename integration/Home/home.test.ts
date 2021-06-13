@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { AxePuppeteer } from "@axe-core/puppeteer";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from "dotenv";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import puppeteer from "puppeteer";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { AxePuppeteer } from "@axe-core/puppeteer";
+import { themes } from "../../types/Themes";
 
 dotenv.config();
 
@@ -189,59 +190,19 @@ describe("Home", () => {
     incognitoBrowser.close();
   });
 
-  it("should not break any accessibility tests if using pride theme", async () => {
-    await page.setBypassCSP(true);
-    await page.click("#theme-picker-button");
-    await page.click(`#theme-pride`);
+  themes.forEach(({ name: themeName }) => {
+    it(`should not break any accessibility tests if using ${themeName} theme`, async () => {
+      await page.setBypassCSP(true);
+      await page.click("#theme-picker-button");
+      await page.click(`#theme-${themeName}`);
 
-    const { incomplete } = await new AxePuppeteer(page)
-      .exclude("#buttons")
-      .exclude("footer")
-      .exclude("#message-body-field")
-      .analyze();
+      const { incomplete } = await new AxePuppeteer(page)
+        .exclude("#buttons")
+        .exclude("footer")
+        .exclude("#message-body-field")
+        .analyze();
 
-    expect(incomplete).toHaveLength(0);
-  });
-
-  it("should not break any accessibility tests if using original theme", async () => {
-    await page.setBypassCSP(true);
-    await page.click("#theme-picker-button");
-    await page.click(`#theme-original`);
-
-    const { incomplete } = await new AxePuppeteer(page)
-      .exclude("#buttons")
-      .exclude("footer")
-      .exclude("#message-body-field")
-      .analyze();
-
-    expect(incomplete).toHaveLength(0);
-  });
-
-  it("should not break any accessibility tests if using moo-moo-farm theme", async () => {
-    await page.setBypassCSP(true);
-    await page.click("#theme-picker-button");
-    await page.click(`#theme-moo-moo-farm`);
-
-    const { incomplete } = await new AxePuppeteer(page)
-      .exclude("#buttons")
-      .exclude("footer")
-      .exclude("#message-body-field")
-      .analyze();
-
-    expect(incomplete).toHaveLength(0);
-  });
-
-  it("should not break any accessibility tests if using winter theme", async () => {
-    await page.setBypassCSP(true);
-    await page.click("#theme-picker-button");
-    await page.click(`#theme-winter`);
-
-    const { incomplete } = await new AxePuppeteer(page)
-      .exclude("#buttons")
-      .exclude("footer")
-      .exclude("#message-body-field")
-      .analyze();
-
-    expect(incomplete).toHaveLength(0);
+      expect(incomplete).toHaveLength(0);
+    });
   });
 });
