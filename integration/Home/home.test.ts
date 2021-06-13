@@ -192,6 +192,7 @@ describe("Home", () => {
     incognitoBrowser.close();
   });
 
+  // Commented out because of false positives
   // it("should not break any accessibility tests, regardless of theme", async () => {
   //   const browser = await puppeteer.launch({
   //     args: ["--disable-dev-shm-usage"],
