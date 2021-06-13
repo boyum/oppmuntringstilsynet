@@ -67,6 +67,16 @@ jobs:
           prCommentEnabled: true
           urls: https://oppmuntring.sindre.is,${{ needs.deploy.outputs.preview-url }}
 
+      - name: Handle Lighthouse Check results
+        uses: foo-software/lighthouse-check-status-action@master
+        with:
+          lighthouseCheckResults: ${{ steps.lighthouse-check.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "100"
+          minBestPracticesScore: "95"
+          minPerformanceScore: "70"
+          minProgressiveWebAppScore: "25"
+          minSeoScore: "55"
+
   integration:
     name: Run integration tests
     runs-on: ubuntu-latest
