@@ -2,11 +2,8 @@
 import dotenv from "dotenv";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import puppeteer from "puppeteer";
-// // eslint-disable-next-line import/no-extraneous-dependencies
-// import { AxePuppeteer } from "@axe-core/puppeteer";
-
-// // eslint-disable-next-line import/no-extraneous-dependencies
-// import { run } from "@axe-core/puppeteer/node_modules/axe-core";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AxePuppeteer } from "@axe-core/puppeteer";
 
 dotenv.config();
 
@@ -192,36 +189,59 @@ describe("Home", () => {
     incognitoBrowser.close();
   });
 
-  // Commented out because of false positives
-  // it("should not break any accessibility tests, regardless of theme", async () => {
-  //   const browser = await puppeteer.launch({
-  //     args: ["--disable-dev-shm-usage"],
-  //   });
-  //   const page = await browser.newPage();
+  it("should not break any accessibility tests if using pride theme", async () => {
+    await page.setBypassCSP(true);
+    await page.click("#theme-picker-button");
+    await page.click(`#theme-pride`);
 
-  //   await page.setBypassCSP(true);
-  //   const themes = await page.evaluate(
-  //     () =>
-  //       Array.from(document.querySelectorAll<HTMLLIElement>("li[data-theme]"))
-  //         .map(element => element.dataset.theme)
-  //         .filter(theme => theme != null) as string[],
-  //   );
+    const { incomplete } = await new AxePuppeteer(page)
+      .exclude("#buttons")
+      .exclude("footer")
+      .exclude("#message-body-field")
+      .analyze();
 
-  //   const incompletes = themes.map(async themeName => {
-  //     await page.click("#theme-picker-button");
-  //     await page.click(`#theme-${themeName}`);
+    expect(incomplete).toHaveLength(0);
+  });
 
-  //     const { incomplete } = await new AxePuppeteer(page)
-  //       .exclude("#buttons")
-  //       .exclude("footer")
-  //       .exclude("#message-body-field")
-  //       .analyze();
+  it("should not break any accessibility tests if using original theme", async () => {
+    await page.setBypassCSP(true);
+    await page.click("#theme-picker-button");
+    await page.click(`#theme-original`);
 
-  //     return incomplete;
-  //   });
+    const { incomplete } = await new AxePuppeteer(page)
+      .exclude("#buttons")
+      .exclude("footer")
+      .exclude("#message-body-field")
+      .analyze();
 
-  //   incompletes.forEach(incomplete =>
-  //     expect(incomplete).resolves.toHaveLength(0),
-  //   );
-  // });
+    expect(incomplete).toHaveLength(0);
+  });
+
+  it("should not break any accessibility tests if using moo-moo-farm theme", async () => {
+    await page.setBypassCSP(true);
+    await page.click("#theme-picker-button");
+    await page.click(`#theme-moo-moo-farm`);
+
+    const { incomplete } = await new AxePuppeteer(page)
+      .exclude("#buttons")
+      .exclude("footer")
+      .exclude("#message-body-field")
+      .analyze();
+
+    expect(incomplete).toHaveLength(0);
+  });
+
+  it("should not break any accessibility tests if using winter theme", async () => {
+    await page.setBypassCSP(true);
+    await page.click("#theme-picker-button");
+    await page.click(`#theme-winter`);
+
+    const { incomplete } = await new AxePuppeteer(page)
+      .exclude("#buttons")
+      .exclude("footer")
+      .exclude("#message-body-field")
+      .analyze();
+
+    expect(incomplete).toHaveLength(0);
+  });
 });
