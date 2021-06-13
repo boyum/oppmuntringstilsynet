@@ -50,8 +50,8 @@ jobs:
     outputs:
       preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
 
-  e2e:
-    name: Test deployment
+  lighthouse:
+    name: Run Lighthouse checks
     runs-on: ubuntu-latest
 
     needs:
@@ -67,3 +67,25 @@ jobs:
           github-comment: true
           prCommentEnabled: true
           urls: https://oppmuntring.sindre.is,${{ needs.deploy.outputs.preview-url }}
+
+  integration:
+    name: Run integration tests
+    runs-on: ubuntu-latest
+
+    needs:
+      - build
+      - deploy
+
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16.1
+
+      - name: Store DEPLOY_URL in env file
+        run: |
+          touch .env
+          echo DEPLOY_URL=${{ needs.deploy.outputs.preview-url }} >> .env
+      
+      - name: Run integration tests
+        run: |
+          npm run ci-test:integration
