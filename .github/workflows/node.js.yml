@@ -47,6 +47,36 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
 
+      - id: vercel-status
+        run: |
+          echo ::set-output name=success::${{ success() }}
+
+      - name: Deployment Action
+        uses: chrnorm/deployment-action@v1.2.0
+        id: deployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target_url: ${{ github.ref == "refs/heads/main" && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
+          environment: ${{ github.ref == "refs/heads/main" && "production" || "development" }}
+          
+      - name: Update deployment status (success)
+        if: steps.vercel-status.outputs.success == true
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: "${{ github.GITHUB_TOKEN }}"
+          target_url: ${{ github.ref == "refs/heads/main" && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
+          state: "success"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+      - name: Update deployment status (failure)
+        if: steps.vercel-status.outputs.success == false
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: "${{ github.GITHUB_TOKEN }}"
+          target_url: ${{ github.ref == "refs/heads/main" && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
+          state: "failure"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
     outputs:
       preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
 
