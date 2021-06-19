@@ -46,6 +46,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || ''}}
 
       - id: vercel-status
         run: |
