@@ -7,9 +7,8 @@ pull_request_rules:
         type: APPROVE
         message: Automatically approving depfu
 
-  - name: Automatic merge for Depfu patch pull requests
+  - name: Automatic merge for Depfu minor and patch pull requests
     conditions:
-      - check-success=Vercel
       - base=main
       - label=depfu
       - files~=package(-lock)?.json$
