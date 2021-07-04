@@ -6,6 +6,10 @@ export const themes: readonly Theme[] = [
     label: "Pride",
   },
   {
+    name: "kk",
+    label: "KK",
+  },
+  {
     name: "original",
     label: "Original",
   },

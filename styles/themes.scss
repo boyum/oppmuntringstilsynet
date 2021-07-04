@@ -41,3 +41,22 @@
 
   --footer-link-color: var(--theme-1-color);
 }
+
+[data-theme="kk"] {
+  --theme-1-background-color: #e3f6f5;
+  --theme-1-background-image: none;
+  --theme-1-color: #272343;
+  --theme-2-background-color: #2d334a;
+  // --theme-2-color: #ff9d00;
+  --theme-2-color: #272343;
+  --global-background-color: #fffffe;
+  
+  // --color-bg: #fffffe;
+  // --color-bg-offset: #e3f6f5;
+  // --color-text: #272343;
+  // --color-text-offset: #2d334a;
+  // --color-border: #e3f6f5;
+  // --color-primary: #ff9d00;
+  // --color-primary-offset: #ffca00;
+  // --color-secondary: #bae8e8;
+}
