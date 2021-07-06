@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
   },
   testPathIgnorePatterns: [
     ...defaults.testPathIgnorePatterns,
-    "integration",
+    "e2e",
   ],
 };
 
