@@ -4,7 +4,7 @@ import { ThemeAction } from "../reducers/theme.reducer";
 import { Theme } from "../types/Theme";
 import { themes } from "../types/Themes";
 
-const isClient = typeof window === "object";  
+const isClient = typeof window === "object";
 
 const defaultState: [Theme, Dispatch<ThemeAction>] = [
   isClient ? getActiveTheme(themes) : themes[0],
