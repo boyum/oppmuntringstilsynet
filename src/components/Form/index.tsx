@@ -1,33 +1,34 @@
 import { useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
-import MessageContext from "../../contexts/MessageContext";
 import { getTranslations } from "../../pages/api/translations";
-import { MessageActionType } from "../../reducers/message.reducer";
 import Message from "../../types/Message";
 import Translations from "../../types/Translations";
 import styles from "./Form.module.css";
 
+type Props = {
+  isDisabled: boolean;
+  message: Message;
+  setMessage: (message: Partial<Message>) => void;
+  setCheck: (checkValue: boolean, checkIndex: number) => void;
+};
+
 export default function Form({
   isDisabled,
-}: {
-  isDisabled: boolean;
-}): JSX.Element {
-  const [message, dispatch] = useContext(MessageContext);
+  message,
+  setMessage,
+  setCheck,
+}: Props): JSX.Element {
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
   function handleChange(newMessage: Partial<Message>): void {
-    dispatch?.({ type: MessageActionType.SetMessage, message: newMessage });
+    setMessage(newMessage);
   }
 
-  function handleCheckChange(payloadString: string, index: number): void {
-    const check = payloadString === "false";
+  function handleCheckChange(payloadString: string, checkIndex: number): void {
+    const checkValue = payloadString === "false";
 
-    dispatch?.({
-      type: MessageActionType.SetCheck,
-      check,
-      checkIndex: index,
-    });
+    setCheck(checkValue, checkIndex);
   }
 
   function getCheckboxLabel(index: number): string {

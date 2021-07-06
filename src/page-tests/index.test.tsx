@@ -4,20 +4,20 @@ import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
 import Home from "../pages";
 import LanguageStore from "../stores/LanguageStore";
-import MessageStore from "../stores/MessageStore";
+import ThemeStore from "../stores/ThemeStore";
+import Message from "../types/Message";
 
 expect.extend(toHaveNoViolations);
 
 describe(Home.name, () => {
   it("should render without accessibility errors when no message", async () => {
-    const encodedMessage = "";
-
+    const messageFromUrl: Message | null = null;
     const page = render(
-      <MessageStore>
+      <ThemeStore>
         <LanguageStore>
-          <Home encodedParamMessage={encodedMessage} />
+          <Home messageFromUrl={messageFromUrl} resolvedUrl="" />
         </LanguageStore>
-      </MessageStore>,
+      </ThemeStore>,
     ).container;
 
     const results = await axe(page);
@@ -27,14 +27,14 @@ describe(Home.name, () => {
 
   describe("Copy button", () => {
     it("should copy a link to the card on click", () => {
-      const encodedMessage = "";
+      const messageFromUrl: Message | null = null;
 
       const page = render(
-        <MessageStore>
+        <ThemeStore>
           <LanguageStore>
-            <Home encodedParamMessage={encodedMessage} />
+            <Home messageFromUrl={messageFromUrl} resolvedUrl="" />
           </LanguageStore>
-        </MessageStore>,
+        </ThemeStore>,
       ).container;
 
       document.execCommand = jest.fn();
@@ -78,15 +78,15 @@ describe(Home.name, () => {
         isPreview: false,
       };
 
-      const encodedMessage = "";
+      const messageFromUrl: Message | null = null;
 
       const page = render(
         <RouterContext.Provider value={{ ...mockRouter }}>
-          <MessageStore>
+          <ThemeStore>
             <LanguageStore>
-              <Home encodedParamMessage={encodedMessage} />
+              <Home messageFromUrl={messageFromUrl} resolvedUrl="" />
             </LanguageStore>
-          </MessageStore>
+          </ThemeStore>
         </RouterContext.Provider>,
       ).container;
 

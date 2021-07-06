@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
-import MessageContext from "../../contexts/MessageContext";
 import { getActiveTheme, getTheme } from "../../pages/api/theme";
 import { getTranslations } from "../../pages/api/translations";
-import { MessageActionType } from "../../reducers/message.reducer";
 import { Theme } from "../../types/Theme";
 import { ThemePickerTheme } from "../ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
@@ -14,7 +12,6 @@ type Props = {
 };
 
 export function ThemePicker({ themes, setTheme }: Props): JSX.Element {
-  const [, dispatchMessageAction] = useContext(MessageContext);
   const [language] = useContext(LanguageContext);
   const [className, setClassName] = useState(styles.themePicker);
   const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
@@ -40,8 +37,6 @@ export function ThemePicker({ themes, setTheme }: Props): JSX.Element {
     setSelectedTheme(newSelectedTheme);
     setTheme(newSelectedTheme);
     setIsOpen(false);
-
-    dispatchMessageAction?.({ type: MessageActionType.SetTheme, themeName });
   };
 
   return (

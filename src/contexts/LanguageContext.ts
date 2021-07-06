@@ -4,9 +4,11 @@ import { LanguageAction } from "../reducers/language.reducer";
 
 const defaultLanguage = LanguageEnum.NorskBokmal;
 
-const defaultState: [LanguageEnum, Dispatch<LanguageAction> | null] = [
+const defaultState: [LanguageEnum, Dispatch<LanguageAction>] = [
   defaultLanguage,
-  null,
+  () => {
+    /* Intentionally empty */
+  },
 ];
 
 export default createContext(defaultState);
