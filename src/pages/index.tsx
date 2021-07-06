@@ -1,3 +1,4 @@
+import deepEqual from "deep-equal";
 import http from "http";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,15 +9,17 @@ import Form from "../components/Form";
 import LanguagePicker from "../components/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import LanguageContext from "../contexts/LanguageContext";
-import MessageContext from "../contexts/MessageContext";
+import ThemeContext from "../contexts/ThemeContext";
 import LanguageEnum from "../enums/Language";
-import {
-  HtmlHeadActionType,
-  htmlHeadReducer,
-} from "../reducers/html-head.reducer";
 import { LanguageActionType } from "../reducers/language.reducer";
-import { MessageActionType } from "../reducers/message.reducer";
+import {
+  getEmptyState,
+  MessageActionType,
+  messageReducer,
+} from "../reducers/message.reducer";
+import { ThemeActionType } from "../reducers/theme.reducer";
 import styles from "../styles/Home.module.scss";
+import Message from "../types/Message";
 import { themes } from "../types/Themes";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import {
@@ -24,78 +27,83 @@ import {
   renderHtmlHead,
 } from "../utils/html-head-utils";
 import { isEmpty } from "../utils/message-utils";
-import {
-  getActiveTheme,
-  getTheme,
-  setActiveTheme,
-  setPageTheme,
-} from "./api/theme";
+import { getTheme, setActiveTheme, setPageTheme } from "./api/theme";
 import { getTranslations } from "./api/translations";
 import { decodeMessage } from "./api/url";
 
 type Props = {
-  encodedParamMessage: string;
+  messageFromUrl: Message | null;
   resolvedUrl: string;
 };
 
 export default function Home({
-  encodedParamMessage,
+  messageFromUrl,
   resolvedUrl,
 }: Props): JSX.Element {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
-  const [message, dispatchMessageAction] = useContext(MessageContext);
+  const [theme, dispatchThemeAction] = useContext(ThemeContext);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const [htmlHeadData, dispatchHtmlHeadAction] = useReducer(
-    htmlHeadReducer,
-    getDefaultHtmlHeadData(language, resolvedUrl),
+  const [message, dispatchMessageAction] = useReducer(
+    messageReducer,
+    messageFromUrl ?? getEmptyState(),
   );
+
+  const translations = getTranslations(language);
+
+  const htmlHeadData = getDefaultHtmlHeadData(
+    messageFromUrl?.language ?? language,
+    resolvedUrl,
+  );
+  if (messageFromUrl) {
+    htmlHeadData.ogTitle = translations.pageTitleWithMessage.replace(
+      /\{name\}/g,
+      messageFromUrl.name,
+    );
+  }
 
   const router = useRouter();
   const tempInput = useRef<HTMLInputElement>(null);
 
-  const messageFromUrl = decodeMessage(encodedParamMessage);
-  const translations = getTranslations(language);
+  const shouldSetMessage =
+    isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
 
   useEffect(() => {
-    if (!!messageFromUrl && isEmpty(message) && !isResetting) {
-      dispatchMessageAction?.({
+    if (!!messageFromUrl && shouldSetMessage) {
+      dispatchMessageAction({
         type: MessageActionType.SetMessage,
         message: messageFromUrl,
       });
 
-      dispatchLanguageAction?.({
+      dispatchLanguageAction({
         type: LanguageActionType.SetLanguage,
         language: messageFromUrl.language,
       });
 
-      dispatchHtmlHeadAction({
-        type: HtmlHeadActionType.SetHtmlHeadData,
-        data: {
-          ...getDefaultHtmlHeadData(messageFromUrl.language, resolvedUrl),
-          ogTitle: translations.pageTitleWithMessage.replace(
-            /\{name\}/g,
-            messageFromUrl.name,
-          ),
-        },
-      });
-
       setIsDisabled(true);
     }
+  }, [messageFromUrl]);
+
+  useEffect(() => {
+    const activeTheme = messageFromUrl?.themeName
+      ? getTheme(messageFromUrl.themeName, themes)
+      : theme;
 
     if (messageFromUrl?.themeName) {
-      const theme = getTheme(messageFromUrl.themeName, themes);
-      setPageTheme(theme);
-      setActiveTheme(theme.name);
+      setActiveTheme(activeTheme.name);
     } else {
-      const activeTheme = getActiveTheme(themes);
-      setPageTheme(activeTheme);
-
-      dispatchMessageAction?.({
+      dispatchMessageAction({
         type: MessageActionType.SetTheme,
         themeName: activeTheme.name,
       });
     }
+
+    setPageTheme(activeTheme);
+
+    dispatchThemeAction({
+      type: ThemeActionType.SetTheme,
+      themeName: activeTheme.name,
+    });
   }, []);
 
   function handleCopy() {
@@ -124,15 +132,34 @@ export default function Home({
     });
   }
 
+  function handleSetMessage(newMessage: Partial<Message>): void {
+    dispatchMessageAction({
+      type: MessageActionType.SetMessage,
+      message: newMessage,
+    });
+  }
+
+  function handleSetCheck(checkValue: boolean, checkIndex: number): void {
+    dispatchMessageAction({
+      type: MessageActionType.SetCheck,
+      check: checkValue,
+      checkIndex,
+    });
+  }
+
   return (
     <>
       <Head>{renderHtmlHead(htmlHeadData)}</Head>
       <div className={styles.themePickerButtonWrapper}>
         <ThemePicker
           themes={themes}
-          setTheme={theme => {
-            setPageTheme(theme);
-            setActiveTheme(theme.name);
+          setTheme={newTheme => {
+            setPageTheme(newTheme);
+            setActiveTheme(newTheme.name);
+            dispatchMessageAction({
+              type: MessageActionType.SetTheme,
+              themeName: newTheme.name,
+            });
           }}
         />
       </div>
@@ -146,7 +173,12 @@ export default function Home({
             </div>
           </div>
 
-          <Form isDisabled={isDisabled} />
+          <Form
+            isDisabled={isDisabled}
+            message={message}
+            setMessage={handleSetMessage}
+            setCheck={handleSetCheck}
+          />
           <Buttons handleReset={handleReset} handleCopy={handleCopy} />
           <label className="hidden">
             Hidden label used for copying
@@ -171,10 +203,12 @@ type Context = {
 export async function getServerSideProps(
   context: Context,
 ): Promise<{ props: Props }> {
+  const messageFromUrl = decodeMessage(context.query.m ?? "");
+
   const serverSideProps: { props: Props } = {
     props: {
+      messageFromUrl,
       resolvedUrl: context.resolvedUrl,
-      encodedParamMessage: context.query.m ?? "",
     },
   };
 

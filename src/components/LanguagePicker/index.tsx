@@ -25,7 +25,7 @@ export default function LanguagePicker({ handleChange }: Props): JSX.Element {
     const newLanguage = LanguageEnum[currentTarget.value as LanguageEnum];
     handleChange(newLanguage);
 
-    setLanguage?.({
+    setLanguage({
       type: LanguageActionType.SetLanguage,
       language: newLanguage,
     });

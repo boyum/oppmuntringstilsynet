@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import LanguageStore from "../stores/LanguageStore";
-import MessageStore from "../stores/MessageStore";
+import ThemeStore from "../stores/ThemeStore";
 import "../styles/globals.css";
 import "../styles/themes.scss";
 
@@ -13,12 +13,12 @@ function Oppmuntringstilsynet({
   pageProps: Record<string, unknown>;
 }): JSX.Element {
   return (
-    <MessageStore>
+    <ThemeStore>
       <LanguageStore>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
       </LanguageStore>
-    </MessageStore>
+    </ThemeStore>
   );
 }
 
