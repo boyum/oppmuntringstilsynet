@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import { createContext, Dispatch } from "react";
 import LanguageEnum from "../enums/Language";
 import { LanguageAction } from "../reducers/language.reducer";
 
@@ -9,4 +9,4 @@ const defaultState: [LanguageEnum, Dispatch<LanguageAction> | null] = [
   null,
 ];
 
-export default React.createContext(defaultState);
+export default createContext(defaultState);

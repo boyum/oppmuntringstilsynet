@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import { getTranslations } from "../../pages/api/translations";
 import styles from "./Footer.module.css";

@@ -2,7 +2,6 @@ import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
-import React from "react";
 import Home from "../pages";
 import LanguageStore from "../stores/LanguageStore";
 import MessageStore from "../stores/MessageStore";

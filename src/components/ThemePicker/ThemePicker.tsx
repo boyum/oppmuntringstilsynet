@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import MessageContext from "../../contexts/MessageContext";
 import { getActiveTheme, getTheme } from "../../pages/api/theme";

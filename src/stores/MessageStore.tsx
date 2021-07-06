@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 import { messageReducer, getEmptyState } from "../reducers/message.reducer";
 import MessageContext from "../contexts/MessageContext";
 
