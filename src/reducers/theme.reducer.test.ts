@@ -1,25 +1,5 @@
-import { getTheme } from "../pages/api/theme";
-import { Theme } from "../types/Theme";
 import { themes } from "../types/Themes";
-
-export enum ThemeActionType {
-  SetTheme = "SetTheme",
-}
-
-export type ThemeAction = {
-  type: ThemeActionType.SetTheme;
-  themeName: typeof themes[number]["name"];
-};
-
-export function themeReducer(state: Theme, action: ThemeAction): Theme {
-  switch (action.type) {
-    case ThemeActionType.SetTheme: {
-      const { themeName } = action;
-
-      return getTheme(themeName, themes);
-    }
-  }
-}
+import { ThemeAction, ThemeActionType, themeReducer } from "./theme.reducer";
 
 describe(themeReducer.name, () => {
   it("should set a new theme", () => {
