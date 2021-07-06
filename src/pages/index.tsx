@@ -72,7 +72,10 @@ export default function Home({
         type: HtmlHeadActionType.SetHtmlHeadData,
         data: {
           ...getDefaultHtmlHeadData(messageFromUrl.language, resolvedUrl),
-          title: translations.pageTitleWithMessage,
+          ogTitle: translations.pageTitleWithMessage.replace(
+            /\{name\}/g,
+            messageFromUrl.name,
+          ),
         },
       });
 

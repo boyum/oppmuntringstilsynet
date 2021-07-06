@@ -46,7 +46,7 @@ class CustomDocument extends Document {
   }
 
   private static renderHead(): JSX.Element {
-    const tagManagerHtml = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MPPJRMK');</script>`;
+    const tagManagerScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MPPJRMK');`;
 
     return (
       <>
@@ -59,7 +59,7 @@ class CustomDocument extends Document {
           rel="stylesheet"
         />
         {/* eslint-disable-next-line react/no-danger */}
-        <div dangerouslySetInnerHTML={{ __html: tagManagerHtml }} />
+        <script dangerouslySetInnerHTML={{ __html: tagManagerScript }} />
 
         {CustomDocument.renderMetaTags()}
       </>
@@ -71,7 +71,7 @@ class CustomDocument extends Document {
       <Html lang="nb">
         <Head>{CustomDocument.renderHead()}</Head>
         <body>
-          {CustomDocument.renderGTM()}
+          {process.env.NODE_ENV === "production" && CustomDocument.renderGTM()}
           <Main />
           <NextScript />
         </body>
