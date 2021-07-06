@@ -49,6 +49,8 @@ class CustomDocument extends Document {
 
     return (
       <>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content={pageDescription} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:url" content={currentUrl} />
