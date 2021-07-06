@@ -1,7 +1,8 @@
 import Translations from "./Translations";
 
 const TranslationsNn: Translations = {
-  pageTitle: "Oppmuntringstilsynet",
+  pageTitleEmptyMessage: "Oppmuntringstilsynet",
+  pageTitleWithMessage: "{name} set pris på deg!",
   pageDescription:
     "Send ein helsing til nokon som har gjort det lille ekstra, eller gje oppmuntringskortet til nokon som treng ein liten oppmuntring ❤️",
   formHeading: "✨ Hei, du er god! ✨",

@@ -1,5 +1,7 @@
 type Translations = {
-  pageTitle: string;
+  pageTitleEmptyMessage: string;
+  /** `{name}` will be replaced with the name on the card */
+  pageTitleWithMessage: string;
   pageDescription: string;
   formHeading: string;
   dateLabel: string;

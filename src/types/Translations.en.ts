@@ -1,7 +1,8 @@
 import Translations from "./Translations";
 
 const TranslationsEn: Translations = {
-  pageTitle: "The National Encouragement Authority",
+  pageTitleEmptyMessage: "The National Encouragement Authority",
+  pageTitleWithMessage: "{name} appreciates you!",
   pageDescription:
     "Show your appreciation and send this card of encouragement to someone who has done something special, or give it to someone who needs a little encouragement ❤️",
   formHeading: "✨ You are appreciated! ✨",
