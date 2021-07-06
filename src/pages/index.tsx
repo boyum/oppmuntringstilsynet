@@ -63,6 +63,7 @@ export default function Home({
         type: MessageActionType.SetMessage,
         message: messageFromUrl,
       });
+
       dispatchLanguageAction?.({
         type: LanguageActionType.SetLanguage,
         language: messageFromUrl.language,
