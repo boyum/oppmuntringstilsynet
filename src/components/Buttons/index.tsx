@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useContext } from "react";
+import { MouseEventHandler, useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import { getTranslations } from "../../pages/api/translations";
 import styles from "./Buttons.module.scss";
