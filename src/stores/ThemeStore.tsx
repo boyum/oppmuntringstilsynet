@@ -9,7 +9,11 @@ function MessageStore({
 }: {
   children: JSX.Element | JSX.Element[];
 }): JSX.Element {
-  const [theme, dispatch] = useReducer(themeReducer, getActiveTheme(themes));
+  const isClient = typeof window === "object";
+  const [theme, dispatch] = useReducer(
+    themeReducer,
+    isClient ? getActiveTheme(themes) : themes[0],
+  );
 
   return (
     <ThemeContext.Provider value={[theme, dispatch]}>

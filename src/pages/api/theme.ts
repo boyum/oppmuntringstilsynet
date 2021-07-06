@@ -15,9 +15,7 @@ export function getTheme(themeName: string, themes: readonly Theme[]): Theme {
 }
 
 export function getActiveTheme(themes: readonly Theme[]): Theme {
-  const isClient = typeof window === "object";
-  const activeThemeName =
-    isClient && window.localStorage.getItem("active-theme");
+  const activeThemeName = window.localStorage.getItem("active-theme");
 
   const fallbackTheme =
     themes.find(theme => theme.name === "pride") ?? themes[0];
