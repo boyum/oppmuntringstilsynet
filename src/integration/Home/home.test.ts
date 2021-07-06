@@ -196,11 +196,35 @@ describe("Home", () => {
       await page.click("#theme-picker-button");
       await page.click(`#theme-${themeName}`);
 
-      const { incomplete } = await new AxePuppeteer(page)
-        .exclude("#buttons")
-        .exclude("footer")
-        .exclude("#message-body-field")
-        .analyze();
+      const axePuppeteer = new AxePuppeteer(page);
+
+      // The message body field uses a background image
+      // to create the lines. This makes Axe trigger on
+      // a false positive. The styles are tested in the
+      // other text fields.
+      axePuppeteer.exclude("#message-body-field");
+
+      // Button styles are tested on the theme picker
+      // button. The form buttons are excluded because Axe
+      // triggers on a false positive because of pseudo
+      // elements.
+      axePuppeteer.exclude("#buttons");
+
+      const globalBackgroundImage = await page.evaluate(() =>
+        window
+          .getComputedStyle(document.body)
+          .getPropertyValue("--global-background-image")
+          .trim(),
+      );
+      const themeSetsGlobalBackgroundImage = globalBackgroundImage !== "none";
+      if (themeSetsGlobalBackgroundImage) {
+        // Axe cannot determine whether or not the footer text
+        // has the correct syntax if its on top of an image.
+        // In that case, we'll have to check manually.
+        axePuppeteer.exclude("footer");
+      }
+
+      const { incomplete } = await axePuppeteer.analyze();
 
       expect(incomplete).toHaveLength(0);
     });

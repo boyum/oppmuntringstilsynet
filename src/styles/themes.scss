@@ -1,8 +1,13 @@
 @use "sass:math";
 
+:root {
+  --theme-1-background-image: none;
+  --theme-2-background-image: none;
+  --global-background-image: none;
+}
+
 [data-theme="original"] {
   --theme-1-background-color: hsl(353, 53%, 54%);
-  --theme-1-background-image: none;
   --theme-1-color: white;
   --theme-2-background-color: hsl(257, 13%, 32%);
   --theme-2-color: white;
@@ -10,7 +15,6 @@
 
 [data-theme="moo-moo-farm"] {
   --theme-1-background-color: hsl(42, 93%, 95%);
-  --theme-1-background-image: none;
   --theme-1-color: hsl(224, 63%, 25%);
   --theme-2-color: hsl(224, 63%, 25%);
   --theme-2-background-color: hsl(187, 55%, 71%);
@@ -18,8 +22,6 @@
 
 [data-theme="winter"] {
   --theme-1-background-color: hsl(230deg 33% 36%);
-  --theme-1-background-image: none;
-
   --theme-1-color: #fffffe;
   --theme-2-color: #ffbd03;
   --theme-2-background-color: hsl(230, 36%, 26%);
@@ -33,7 +35,7 @@
   --theme-1-background-color: hsl(340, 87%, 94%);
   --theme-1-color: hsl(224, 63%, 25%);
 
-  --theme-2-color: var(var(--theme-1-color));
+  --theme-2-color: var(--theme-1-color);
   --theme-2-background-color: hsl(340, 87%, 70%);
 
   --global-background-color: hsl(340, 87%, 76%);

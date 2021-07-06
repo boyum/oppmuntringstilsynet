@@ -4,7 +4,11 @@ export function getTheme(themeName: string, themes: readonly Theme[]): Theme {
   const theme = themes.find(t => t.name === themeName);
 
   if (!theme) {
-    throw new Error(`Invalid theme ${themeName}`);
+    // This might happen if the last theme the user used –
+    // or the theme of the opened card – was deleted.
+    // Instead of throwing an error,
+    // we'll just return the default theme.
+    return themes[0];
   }
 
   return theme;
