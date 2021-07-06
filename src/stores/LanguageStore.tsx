@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 import LanguageContext from "../contexts/LanguageContext";
 import { languageReducer } from "../reducers/language.reducer";
 import LanguageEnum from "../enums/Language";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Theme } from "../../types/Theme";
 import styles from "./ThemePickerTheme.module.scss";
 
