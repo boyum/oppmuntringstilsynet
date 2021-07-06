@@ -21,7 +21,7 @@ describe(getTheme.name, () => {
     expect(actualTheme).toEqual(expectedTheme);
   });
 
-  it("should throw if the given theme name doesn't match any themes", () => {
+  it("should return the first theme if the given theme name doesn't match any themes", () => {
     const themeName = "theme-3";
     const themes: Theme[] = [
       {
@@ -34,7 +34,10 @@ describe(getTheme.name, () => {
       },
     ];
 
-    expect(() => getTheme(themeName, themes)).toThrowError();
+    const expectedTheme = themes[0];
+    const actualTheme = getTheme(themeName, themes);
+
+    expect(actualTheme).toEqual(expectedTheme);
   });
 });
 
