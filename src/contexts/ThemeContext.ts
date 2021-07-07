@@ -8,8 +8,8 @@ const isClient = typeof window === "object";
 
 const defaultState: [Theme, Dispatch<ThemeAction>] = [
   isClient ? getActiveTheme(themes) : themes[0],
-  () => {
-    /* Intentionally empty */
-  },
+  // @ts-expect-error this is `null` at first,
+  // then React updates it behind the scenes.
+  null,
 ];
 export default createContext(defaultState);
