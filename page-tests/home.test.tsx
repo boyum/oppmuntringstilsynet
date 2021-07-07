@@ -2,11 +2,11 @@ import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
-import LanguageEnum from "../enums/Language";
-import Home from ".";
-import LanguageStore from "../stores/LanguageStore";
-import ThemeStore from "../stores/ThemeStore";
-import Message from "../types/Message";
+import LanguageEnum from "../src/enums/Language";
+import Home from "../src/pages";
+import LanguageStore from "../src/stores/LanguageStore";
+import ThemeStore from "../src/stores/ThemeStore";
+import Message from "../src/types/Message";
 
 expect.extend(toHaveNoViolations);
 
