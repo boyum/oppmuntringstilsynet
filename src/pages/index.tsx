@@ -210,12 +210,14 @@ export async function getServerSideProps(
   const localUrl = "http://localhost:3000";
   const deployUrl = process.env.DEPLOY_URL ?? localUrl;
 
+  const { host } = context.req.headers;
+
   const serverSideProps: { props: Props } = {
     props: {
       encodedMessage: context.query.m || null,
       messageFromUrl,
       resolvedUrl: context.resolvedUrl,
-      deployUrl,
+      deployUrl: host ? `//${host}` : deployUrl,
     },
   };
 
