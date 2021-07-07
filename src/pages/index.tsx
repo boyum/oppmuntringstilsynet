@@ -1,4 +1,5 @@
 import deepEqual from "deep-equal";
+import dotenv from "dotenv";
 import http from "http";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -27,18 +28,22 @@ import {
   renderHtmlHead,
 } from "../utils/html-head-utils";
 import { isEmpty } from "../utils/message-utils";
-import { getTheme, setActiveTheme, setPageTheme } from "./api/theme";
-import { getTranslations } from "./api/translations";
-import { decodeMessage } from "./api/url";
+import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
+import { getTranslations } from "../utils/translations-utils";
+import { decodeMessage } from "../utils/url-utils";
 
 type Props = {
+  encodedMessage: string | null;
   messageFromUrl: Message | null;
   resolvedUrl: string;
+  deployUrl: string;
 };
 
 export default function Home({
+  encodedMessage,
   messageFromUrl,
   resolvedUrl,
+  deployUrl,
 }: Props): JSX.Element {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
@@ -49,18 +54,14 @@ export default function Home({
     messageFromUrl ?? getEmptyState(),
   );
 
-  const translations = getTranslations(language);
+  const translations = getTranslations(messageFromUrl?.language ?? language);
 
   const htmlHeadData = getDefaultHtmlHeadData(
     messageFromUrl?.language ?? language,
-    resolvedUrl,
+    `${deployUrl}${resolvedUrl}`,
+    encodedMessage,
+    deployUrl,
   );
-  if (messageFromUrl) {
-    htmlHeadData.ogTitle = translations.pageTitleWithMessage.replace(
-      /\{name\}/g,
-      messageFromUrl.name,
-    );
-  }
 
   const router = useRouter();
   const tempInput = useRef<HTMLInputElement>(null);
@@ -204,11 +205,19 @@ export async function getServerSideProps(
   context: Context,
 ): Promise<{ props: Props }> {
   const messageFromUrl = decodeMessage(context.query.m ?? "");
+  dotenv.config();
+
+  const localUrl = "http://localhost:3000";
+  const deployUrl = process.env.DEPLOY_URL ?? localUrl;
+
+  const { host } = context.req.headers;
 
   const serverSideProps: { props: Props } = {
     props: {
+      encodedMessage: context.query.m || null,
       messageFromUrl,
       resolvedUrl: context.resolvedUrl,
+      deployUrl: host ? `//${host}` : deployUrl,
     },
   };
 

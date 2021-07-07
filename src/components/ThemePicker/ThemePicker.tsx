@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
-import { getActiveTheme, getTheme } from "../../pages/api/theme";
-import { getTranslations } from "../../pages/api/translations";
+import { getActiveTheme, getTheme } from "../../utils/theme-utils";
+import { getTranslations } from "../../utils/translations-utils";
 import { Theme } from "../../types/Theme";
 import { ThemePickerTheme } from "../ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";

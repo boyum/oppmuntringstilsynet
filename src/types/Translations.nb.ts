@@ -1,8 +1,8 @@
 import Translations from "./Translations";
 
 const TranslationsNb: Translations = {
-  pageTitleEmptyMessage: "Oppmuntringstilsynet",
-  pageTitleWithMessage: "{name} setter pris på deg!",
+  pageTitle: "Oppmuntringstilsynet",
+  pageOgTitle: "Oppmuntringstilsynet",
   pageDescription:
     "Send en liten hilsen til noen som har gjort det lille ekstra, eller gi oppmuntringskortet til noen som trenger en liten oppmuntring ❤️",
   formHeading: "✨ Hei, du er god! ✨",
@@ -21,6 +21,9 @@ const TranslationsNb: Translations = {
   openThemePicker: "Åpne temavelgeren",
   closeThemePicker: "Lukk temavelgeren",
   themePickerHeading: "Velg fargetema",
+  someone: "Noen",
+  previewTitleWithMessage: "{name} setter pris på deg!",
+  previewTitleWithoutMessage: "Oppmuntringstilsynet",
 };
 
 export default TranslationsNb;

@@ -1,5 +1,5 @@
-import { Theme } from "../../types/Theme";
-import { getActiveTheme, getTheme, setActiveTheme } from "./theme";
+import { Theme } from "../types/Theme";
+import { getActiveTheme, getTheme, setActiveTheme } from "./theme-utils";
 
 describe(getTheme.name, () => {
   it("should return the theme with the given themeName", () => {

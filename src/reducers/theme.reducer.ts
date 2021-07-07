@@ -1,4 +1,4 @@
-import { getTheme } from "../pages/api/theme";
+import { getTheme } from "../utils/theme-utils";
 import { Theme } from "../types/Theme";
 import { themes } from "../types/Themes";
 

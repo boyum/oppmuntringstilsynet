@@ -7,16 +7,10 @@ export enum HtmlHeadActionType {
   SetOgUrl = "SetOgUrl",
 }
 
-export type HtmlHeadAction =
-  | {
-      type: HtmlHeadActionType.SetHtmlHeadData;
-      data: Partial<HtmlHeadData>;
-    }
-  | { type: HtmlHeadActionType.SetTitle; title: string }
-  | { type: HtmlHeadActionType.SetDescription; description: string }
-  | { type: HtmlHeadActionType.SetOgTitle; ogTitle: string }
-  | { type: HtmlHeadActionType.SetOgDescription; ogDescription: string }
-  | { type: HtmlHeadActionType.SetOgUrl; ogUrl: string };
+export type HtmlHeadAction = {
+  type: HtmlHeadActionType.SetHtmlHeadData;
+  data: Partial<HtmlHeadData>;
+};
 
 export type HtmlHeadData = {
   title: string;
@@ -24,6 +18,8 @@ export type HtmlHeadData = {
   ogTitle: string;
   ogDescription: string;
   ogUrl: string;
+  encodedMessage: string | null;
+  deployUrl: string;
 };
 
 export function htmlHeadReducer(
@@ -34,31 +30,6 @@ export function htmlHeadReducer(
     case HtmlHeadActionType.SetHtmlHeadData: {
       const { data } = action;
       return { ...state, ...data };
-    }
-
-    case HtmlHeadActionType.SetTitle: {
-      const { title } = action;
-      return { ...state, title };
-    }
-
-    case HtmlHeadActionType.SetDescription: {
-      const { description } = action;
-      return { ...state, description };
-    }
-
-    case HtmlHeadActionType.SetOgTitle: {
-      const { ogTitle } = action;
-      return { ...state, ogTitle };
-    }
-
-    case HtmlHeadActionType.SetOgDescription: {
-      const { ogDescription } = action;
-      return { ...state, ogDescription };
-    }
-
-    case HtmlHeadActionType.SetOgUrl: {
-      const { ogUrl } = action;
-      return { ...state, ogUrl };
     }
   }
 }
