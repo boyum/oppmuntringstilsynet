@@ -20,6 +20,7 @@ describe(Home.name, () => {
             encodedMessage=""
             messageFromUrl={messageFromUrl}
             resolvedUrl=""
+            deployUrl=""
           />
         </LanguageStore>
       </ThemeStore>,
@@ -49,6 +50,7 @@ describe(Home.name, () => {
             encodedMessage={encodedMessage}
             messageFromUrl={messageFromUrl}
             resolvedUrl=""
+            deployUrl=""
           />
         </LanguageStore>
       </ThemeStore>,
@@ -70,6 +72,7 @@ describe(Home.name, () => {
               encodedMessage=""
               messageFromUrl={messageFromUrl}
               resolvedUrl=""
+              deployUrl=""
             />
           </LanguageStore>
         </ThemeStore>,
@@ -126,6 +129,7 @@ describe(Home.name, () => {
                 encodedMessage=""
                 messageFromUrl={messageFromUrl}
                 resolvedUrl=""
+                deployUrl=""
               />
             </LanguageStore>
           </ThemeStore>
