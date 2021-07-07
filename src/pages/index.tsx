@@ -1,3 +1,4 @@
+import parser from "accept-language-parser";
 import deepEqual from "deep-equal";
 import dotenv from "dotenv";
 import http from "http";
@@ -27,6 +28,7 @@ import {
   getDefaultHtmlHeadData,
   renderHtmlHead,
 } from "../utils/html-head-utils";
+import { getPreferredLanguage } from "../utils/language-utils";
 import { isEmpty } from "../utils/message-utils";
 import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
@@ -37,6 +39,7 @@ type Props = {
   messageFromUrl: Message | null;
   resolvedUrl: string;
   deployUrl: string;
+  preferredLanguage: LanguageEnum;
 };
 
 export default function Home({
@@ -44,6 +47,7 @@ export default function Home({
   messageFromUrl,
   resolvedUrl,
   deployUrl,
+  preferredLanguage,
 }: Props): JSX.Element {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
@@ -76,11 +80,6 @@ export default function Home({
         message: messageFromUrl,
       });
 
-      dispatchLanguageAction({
-        type: LanguageActionType.SetLanguage,
-        language: messageFromUrl.language,
-      });
-
       setIsDisabled(true);
     }
   }, [messageFromUrl]);
@@ -104,6 +103,11 @@ export default function Home({
     dispatchThemeAction({
       type: ThemeActionType.SetTheme,
       themeName: activeTheme.name,
+    });
+
+    dispatchLanguageAction({
+      type: LanguageActionType.SetLanguage,
+      language: messageFromUrl?.language ?? preferredLanguage,
     });
   }, []);
 
@@ -211,6 +215,11 @@ export async function getServerSideProps(
   const deployUrl = process.env.DEPLOY_URL ?? localUrl;
 
   const { host } = context.req.headers;
+  const acceptLanguage = context.req.headers["accept-language"] ?? "";
+  const acceptedLanguages = parser
+    .parse(acceptLanguage)
+    .map(language => language.code);
+  const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
   const serverSideProps: { props: Props } = {
     props: {
@@ -218,6 +227,7 @@ export async function getServerSideProps(
       messageFromUrl,
       resolvedUrl: context.resolvedUrl,
       deployUrl: host ? `//${host}` : deployUrl,
+      preferredLanguage,
     },
   };
 
