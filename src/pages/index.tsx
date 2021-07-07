@@ -1,4 +1,5 @@
 import deepEqual from "deep-equal";
+import dotenv from "dotenv";
 import http from "http";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -15,7 +16,7 @@ import { LanguageActionType } from "../reducers/language.reducer";
 import {
   getEmptyState,
   MessageActionType,
-  messageReducer
+  messageReducer,
 } from "../reducers/message.reducer";
 import { ThemeActionType } from "../reducers/theme.reducer";
 import styles from "../styles/Home.module.scss";
@@ -24,7 +25,7 @@ import { themes } from "../types/Themes";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import {
   getDefaultHtmlHeadData,
-  renderHtmlHead
+  renderHtmlHead,
 } from "../utils/html-head-utils";
 import { isEmpty } from "../utils/message-utils";
 import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
@@ -32,15 +33,17 @@ import { getTranslations } from "../utils/translations-utils";
 import { decodeMessage } from "../utils/url-utils";
 
 type Props = {
-  encodedMessage: string | null,
+  encodedMessage: string | null;
   messageFromUrl: Message | null;
   resolvedUrl: string;
+  deployUrl: string;
 };
 
 export default function Home({
   encodedMessage,
   messageFromUrl,
   resolvedUrl,
+  deployUrl,
 }: Props): JSX.Element {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
@@ -55,8 +58,9 @@ export default function Home({
 
   const htmlHeadData = getDefaultHtmlHeadData(
     messageFromUrl?.language ?? language,
-    resolvedUrl,
-    encodedMessage
+    `${deployUrl}${resolvedUrl}`,
+    encodedMessage,
+    deployUrl,
   );
 
   const router = useRouter();
@@ -201,12 +205,17 @@ export async function getServerSideProps(
   context: Context,
 ): Promise<{ props: Props }> {
   const messageFromUrl = decodeMessage(context.query.m ?? "");
+  dotenv.config();
+
+  const localUrl = "http://localhost:3000";
+  const deployUrl = process.env.DEPLOY_URL ?? localUrl;
 
   const serverSideProps: { props: Props } = {
     props: {
       encodedMessage: context.query.m || null,
       messageFromUrl,
       resolvedUrl: context.resolvedUrl,
+      deployUrl,
     },
   };
 

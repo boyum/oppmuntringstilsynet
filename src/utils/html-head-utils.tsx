@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import LanguageEnum from "../enums/Language";
 import { HtmlHeadData } from "../reducers/html-head.reducer";
 import { getTranslations } from "./translations-utils";
@@ -7,6 +6,7 @@ export function getDefaultHtmlHeadData(
   language: LanguageEnum,
   url: string,
   encodedMessage: string | null,
+  deployUrl: string,
 ): HtmlHeadData {
   const { pageTitle, pageOgTitle, pageDescription } = getTranslations(language);
 
@@ -17,6 +17,7 @@ export function getDefaultHtmlHeadData(
     ogDescription: pageDescription,
     ogUrl: url,
     encodedMessage,
+    deployUrl,
   };
 }
 
@@ -27,20 +28,9 @@ export function renderHtmlHead({
   ogDescription,
   ogUrl,
   encodedMessage,
+  deployUrl,
 }: HtmlHeadData): JSX.Element {
-  let url;
-
-  const isClient = typeof window === "object";
-  if (isClient) {
-    url = window.location.origin;
-  } else {
-    dotenv.config();
-
-    const localUrl = "http://localhost:3000";
-    url = process.env.DEPLOY_URL ?? localUrl;
-  }
-
-  const previewImageUrl = `${url}/api/get-social-media-preview-image${
+  const previewImageUrl = `${deployUrl}/api/get-social-media-preview-image${
     encodedMessage ? `?m=${encodedMessage}` : ""
   }`;
 
