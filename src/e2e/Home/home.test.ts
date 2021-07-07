@@ -27,6 +27,11 @@ describe("Home", () => {
 
   Object.entries(languages).forEach(([languageName, languageRecord]) => {
     it(`should be titled ${languageRecord.translations.pageTitle} when the Accept-Language is ${languageName}`, async () => {
+      await page.setExtraHTTPHeaders({
+        "Accept-Language": languageRecord.codes[0],
+      });
+      await page.goto(deployUrl);
+
       await expect(page.title()).resolves.toMatch(
         languageRecord.translations.pageTitle,
       );
