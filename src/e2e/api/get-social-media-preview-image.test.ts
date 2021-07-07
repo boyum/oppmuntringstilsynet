@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from "dotenv";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import getSocialMediaPreviewImage from "../../../api/get-social-media-preview-image";
 
 dotenv.config();

@@ -1,6 +1,7 @@
+import dotenv from "dotenv";
 import LanguageEnum from "../enums/Language";
-import { getTranslations } from "./translations-utils";
 import { HtmlHeadData } from "../reducers/html-head.reducer";
+import { getTranslations } from "./translations-utils";
 
 export function getDefaultHtmlHeadData(
   language: LanguageEnum,
@@ -27,7 +28,12 @@ export function renderHtmlHead({
   ogUrl,
   encodedMessage,
 }: HtmlHeadData): JSX.Element {
-  const previewImageUrl = `/api/get-social-media-preview-image${
+  dotenv.config();
+
+  const localUrl = "http://localhost:3000";
+  const deployUrl = process.env.DEPLOY_URL ?? localUrl;
+
+  const previewImageUrl = `${deployUrl}/api/get-social-media-preview-image${
     encodedMessage ? `?m=${encodedMessage}` : ""
   }`;
 
