@@ -28,12 +28,19 @@ export function renderHtmlHead({
   ogUrl,
   encodedMessage,
 }: HtmlHeadData): JSX.Element {
-  dotenv.config();
+  let url;
 
-  const localUrl = "http://localhost:3000";
-  const deployUrl = process.env.DEPLOY_URL ?? localUrl;
+  const isClient = typeof window === "object";
+  if (isClient) {
+    url = window.location.origin;
+  } else {
+    dotenv.config();
 
-  const previewImageUrl = `${deployUrl}/api/get-social-media-preview-image${
+    const localUrl = "http://localhost:3000";
+    url = process.env.DEPLOY_URL ?? localUrl;
+  }
+
+  const previewImageUrl = `${url}/api/get-social-media-preview-image${
     encodedMessage ? `?m=${encodedMessage}` : ""
   }`;
 
