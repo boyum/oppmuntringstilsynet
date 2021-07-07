@@ -16,10 +16,10 @@ describe(getDefaultHtmlHeadData.name, () => {
       description: TranslationsNb.pageDescription,
       ogDescription: TranslationsNb.pageDescription,
       ogUrl: url,
-      encodedMessage: null,
+      encodedMessage: "encodedMessage",
     };
 
-    const actualData = getDefaultHtmlHeadData(language, url);
+    const actualData = getDefaultHtmlHeadData(language, url, "encodedMessage");
 
     expect(actualData).toEqual(expectedData);
   });

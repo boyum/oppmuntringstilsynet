@@ -32,11 +32,13 @@ import { getTranslations } from "../utils/translations-utils";
 import { decodeMessage } from "../utils/url-utils";
 
 type Props = {
+  encodedMessage: string | null,
   messageFromUrl: Message | null;
   resolvedUrl: string;
 };
 
 export default function Home({
+  encodedMessage,
   messageFromUrl,
   resolvedUrl,
 }: Props): JSX.Element {
@@ -54,6 +56,7 @@ export default function Home({
   const htmlHeadData = getDefaultHtmlHeadData(
     messageFromUrl?.language ?? language,
     resolvedUrl,
+    encodedMessage
   );
 
   const router = useRouter();
@@ -201,6 +204,7 @@ export async function getServerSideProps(
 
   const serverSideProps: { props: Props } = {
     props: {
+      encodedMessage: context.query.m || null,
       messageFromUrl,
       resolvedUrl: context.resolvedUrl,
     },

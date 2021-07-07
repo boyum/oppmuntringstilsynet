@@ -5,6 +5,7 @@ import { HtmlHeadData } from "../reducers/html-head.reducer";
 export function getDefaultHtmlHeadData(
   language: LanguageEnum,
   url: string,
+  encodedMessage: string | null,
 ): HtmlHeadData {
   const { pageTitle, pageOgTitle, pageDescription } = getTranslations(language);
 
@@ -14,7 +15,7 @@ export function getDefaultHtmlHeadData(
     ogTitle: pageOgTitle,
     ogDescription: pageDescription,
     ogUrl: url,
-    encodedMessage: null,
+    encodedMessage,
   };
 }
 
