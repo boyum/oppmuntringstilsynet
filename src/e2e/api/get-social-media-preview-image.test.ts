@@ -24,7 +24,7 @@ describe(getSocialMediaPreviewImage.name, () => {
     }
 
     expect(result.status()).toBe(200);
-    expect(result.headers()["Content-Type"]).toBe("image/png");
+    expect(result.headers()["content-type"]).toBe("image/png");
   });
 
   it("should return an image when an encoded message is provided", async () => {
@@ -42,6 +42,6 @@ describe(getSocialMediaPreviewImage.name, () => {
     }
 
     expect(result.status()).toBe(200);
-    expect(result.headers()["Content-Type"]).toBe("image/png");
+    expect(result.headers()["content-type"]).toBe("image/png");
   });
 });
