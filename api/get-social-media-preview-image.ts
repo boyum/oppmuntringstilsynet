@@ -1,6 +1,7 @@
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import chrome from "chrome-aws-lambda";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import puppeteer from "puppeteer";
 
 function getExecutablePath(): string {
   let exePath = "";
@@ -23,9 +24,9 @@ function getExecutablePath(): string {
 async function getOptions(
   isDev: boolean,
 ): Promise<
-  puppeteer.LaunchOptions &
-    puppeteer.BrowserLaunchArgumentOptions &
-    puppeteer.BrowserConnectOptions
+  puppeteerCore.LaunchOptions &
+    puppeteerCore.BrowserLaunchArgumentOptions &
+    puppeteerCore.BrowserConnectOptions
 > {
   let options;
   if (isDev) {
@@ -49,9 +50,14 @@ export default async function getSocialMediaPreviewImage(
   response: VercelResponse,
 ): Promise<void> {
   const isDev = request.query.isDev === "true";
-  const options = await getOptions(isDev);
+  let browser;
+  if (isDev) {
+    browser = await puppeteer.launch();
+  } else {
+    const options = await getOptions(isDev);
 
-  const browser = await puppeteer.launch(options);
+    browser = await puppeteerCore.launch(options);
+  }
   const page = await browser.newPage();
 
   // Set viewport to preferred Open Graph image size
