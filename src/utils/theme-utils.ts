@@ -1,4 +1,4 @@
-import { Theme } from "../../types/Theme";
+import { Theme } from "../types/Theme";
 
 export function getTheme(themeName: string, themes: readonly Theme[]): Theme {
   const theme = themes.find(t => t.name === themeName);
