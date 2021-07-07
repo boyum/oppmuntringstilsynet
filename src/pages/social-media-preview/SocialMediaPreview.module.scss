@@ -6,14 +6,9 @@
   padding: 0 1rem;
 }
 
-/**
- * {1} This makes the preview image
- *     grow a bit outside of the box
- */
 .previewContainer {
   background-color: var(--theme-1-background-color);
   color: var(--theme-1-color);
-  margin: 2rem; /* {1} */
   padding: 4rem 6rem;
 }
 
