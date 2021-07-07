@@ -4,11 +4,11 @@ import { getActiveTheme } from "../utils/theme-utils";
 import { themeReducer } from "../reducers/theme.reducer";
 import { themes } from "../types/Themes";
 
-function ThemeStore({
-  children,
-}: {
+type Props = {
   children: JSX.Element | JSX.Element[];
-}): JSX.Element {
+};
+
+function ThemeStore({ children }: Props): JSX.Element {
   const isClient = typeof window === "object";
   const [theme, dispatch] = useReducer(
     themeReducer,
