@@ -2,7 +2,8 @@ import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
-import Home from "../pages";
+import LanguageEnum from "../enums/Language";
+import Home from ".";
 import LanguageStore from "../stores/LanguageStore";
 import ThemeStore from "../stores/ThemeStore";
 import Message from "../types/Message";
@@ -15,7 +16,40 @@ describe(Home.name, () => {
     const page = render(
       <ThemeStore>
         <LanguageStore>
-          <Home messageFromUrl={messageFromUrl} resolvedUrl="" />
+          <Home
+            encodedMessage=""
+            messageFromUrl={messageFromUrl}
+            resolvedUrl=""
+          />
+        </LanguageStore>
+      </ThemeStore>,
+    ).container;
+
+    const results = await axe(page);
+
+    expect(results).toHaveNoViolations();
+  });
+
+  it("should render without accessibility errors when there is a message", async () => {
+    const messageFromUrl: Message = {
+      date: "1st of January",
+      message: "Hi, tester! 🌸",
+      checks: [true, true, true],
+      name: "Sindre",
+      language: LanguageEnum.English,
+      themeName: "pride",
+    };
+    const encodedMessage =
+      "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
+
+    const page = render(
+      <ThemeStore>
+        <LanguageStore>
+          <Home
+            encodedMessage={encodedMessage}
+            messageFromUrl={messageFromUrl}
+            resolvedUrl=""
+          />
         </LanguageStore>
       </ThemeStore>,
     ).container;
@@ -32,7 +66,11 @@ describe(Home.name, () => {
       const page = render(
         <ThemeStore>
           <LanguageStore>
-            <Home messageFromUrl={messageFromUrl} resolvedUrl="" />
+            <Home
+              encodedMessage=""
+              messageFromUrl={messageFromUrl}
+              resolvedUrl=""
+            />
           </LanguageStore>
         </ThemeStore>,
       ).container;
@@ -84,7 +122,11 @@ describe(Home.name, () => {
         <RouterContext.Provider value={{ ...mockRouter }}>
           <ThemeStore>
             <LanguageStore>
-              <Home messageFromUrl={messageFromUrl} resolvedUrl="" />
+              <Home
+                encodedMessage=""
+                messageFromUrl={messageFromUrl}
+                resolvedUrl=""
+              />
             </LanguageStore>
           </ThemeStore>
         </RouterContext.Provider>,
