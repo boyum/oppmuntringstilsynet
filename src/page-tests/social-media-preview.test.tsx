@@ -15,7 +15,10 @@ describe(SocialMediaPreview.name, () => {
     const page = render(
       <ThemeStore>
         <LanguageStore>
-          <SocialMediaPreview message={message} />
+          <SocialMediaPreview
+            message={message}
+            preferredLanguage={LanguageEnum.English}
+          />
         </LanguageStore>
       </ThemeStore>,
     ).container;
@@ -38,7 +41,10 @@ describe(SocialMediaPreview.name, () => {
     const page = render(
       <ThemeStore>
         <LanguageStore>
-          <SocialMediaPreview message={message} />
+          <SocialMediaPreview
+            message={message}
+            preferredLanguage={LanguageEnum.English}
+          />
         </LanguageStore>
       </ThemeStore>,
     ).container;
