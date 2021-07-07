@@ -15,12 +15,18 @@ export default async function getSocialMediaPreviewImage(
     deviceScaleFactor: 1,
   });
 
-  await page.goto(
+  const url =
     request.url?.replace(
       "api/get-social-media-preview-image",
       "social-media-preview",
-    ) ?? "/social-media-preview",
-  );
+    ) ?? "/social-media-preview";
+  const hosts = request.headers["x-forwarded-host"] ?? "";
+  const host = Array.isArray(hosts) ? hosts[0] : hosts;
+
+  const protocols = request.headers["x-forwarded-proto"] ?? "";
+  const protocol = Array.isArray(protocols) ? protocols[0] : protocols;
+
+  await page.goto(`${protocol}://${host}${url}`);
 
   const file = await page.screenshot({
     type: "png",
