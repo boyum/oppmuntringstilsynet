@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AxePuppeteer } from "@axe-core/puppeteer";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from "dotenv";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import puppeteer from "puppeteer";
 import { themes } from "../../types/Themes";
 
