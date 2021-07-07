@@ -1,11 +1,11 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import React from "react";
 import { render } from "@testing-library/react";
-import SocialMediaPreview from "../src/pages/social-media-preview";
-import Message from "../src/types/Message";
-import ThemeStore from "../src/stores/ThemeStore";
-import LanguageStore from "../src/stores/LanguageStore";
-import LanguageEnum from "../src/enums/Language";
+import SocialMediaPreview from "../pages/social-media-preview";
+import Message from "../types/Message";
+import ThemeStore from "../stores/ThemeStore";
+import LanguageStore from "../stores/LanguageStore";
+import LanguageEnum from "../enums/Language";
 
 expect.extend(toHaveNoViolations);
 

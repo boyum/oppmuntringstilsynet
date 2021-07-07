@@ -2,15 +2,60 @@ import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
-import LanguageEnum from "../src/enums/Language";
-import Home from "../src/pages";
-import LanguageStore from "../src/stores/LanguageStore";
-import ThemeStore from "../src/stores/ThemeStore";
-import Message from "../src/types/Message";
+import LanguageEnum from "../enums/Language";
+import Home from "../pages";
+import LanguageStore from "../stores/LanguageStore";
+import ThemeStore from "../stores/ThemeStore";
+import Message from "../types/Message";
 
 expect.extend(toHaveNoViolations);
 
 describe(Home.name, () => {
+  it("should render with a message", () => {
+    const message: Message = {
+      date: "1st of January",
+      message: "Hi, tester! 🌸",
+      checks: [true, true, true],
+      name: "Sindre",
+      language: LanguageEnum.English,
+      themeName: "pride",
+    };
+    const encodedMessage =
+      "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
+
+    const page = render(
+      <ThemeStore>
+        <LanguageStore>
+          <Home
+            encodedMessage={encodedMessage}
+            messageFromUrl={message}
+            resolvedUrl=""
+            deployUrl=""
+          />
+        </LanguageStore>
+      </ThemeStore>,
+    ).container;
+
+    const dateText = page.querySelector<HTMLInputElement>("#date-field")?.value;
+    const messageText = page.querySelector<HTMLTextAreaElement>(
+      "#message-body-field",
+    )?.value;
+    const checkbox0Value =
+      page.querySelector<HTMLInputElement>("#checkbox-0")?.value;
+    const checkbox1Value =
+      page.querySelector<HTMLInputElement>("#checkbox-1")?.value;
+    const checkbox2Value =
+      page.querySelector<HTMLInputElement>("#checkbox-2")?.value;
+    const nameText = page.querySelector<HTMLInputElement>("#name-field")?.value;
+
+    expect(dateText).toBe("1st of January");
+    expect(messageText).toBe("Hi, tester! 🌸");
+    expect(checkbox0Value).toBe("true");
+    expect(checkbox1Value).toBe("true");
+    expect(checkbox2Value).toBe("true");
+    expect(nameText).toBe("Sindre");
+  });
+
   it("should render without accessibility errors when no message", async () => {
     const messageFromUrl: Message | null = null;
     const page = render(
