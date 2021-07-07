@@ -4,14 +4,12 @@ import ThemeStore from "../stores/ThemeStore";
 import "../styles/globals.css";
 import "../styles/themes.scss";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Oppmuntringstilsynet({
-  Component,
-  pageProps,
-}: {
+type Props = {
   Component: FunctionComponent<unknown>;
   pageProps: Record<string, unknown>;
-}): JSX.Element {
+};
+
+function Oppmuntringstilsynet({ Component, pageProps }: Props): JSX.Element {
   return (
     <ThemeStore>
       <LanguageStore>

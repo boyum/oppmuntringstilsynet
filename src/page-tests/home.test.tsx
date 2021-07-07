@@ -31,6 +31,7 @@ describe(Home.name, () => {
             messageFromUrl={message}
             resolvedUrl=""
             deployUrl=""
+            preferredLanguage={LanguageEnum.English}
           />
         </LanguageStore>
       </ThemeStore>,
@@ -66,6 +67,7 @@ describe(Home.name, () => {
             messageFromUrl={messageFromUrl}
             resolvedUrl=""
             deployUrl=""
+            preferredLanguage={LanguageEnum.English}
           />
         </LanguageStore>
       </ThemeStore>,
@@ -96,6 +98,7 @@ describe(Home.name, () => {
             messageFromUrl={messageFromUrl}
             resolvedUrl=""
             deployUrl=""
+            preferredLanguage={LanguageEnum.English}
           />
         </LanguageStore>
       </ThemeStore>,
@@ -118,6 +121,7 @@ describe(Home.name, () => {
               messageFromUrl={messageFromUrl}
               resolvedUrl=""
               deployUrl=""
+              preferredLanguage={LanguageEnum.English}
             />
           </LanguageStore>
         </ThemeStore>,
@@ -175,6 +179,7 @@ describe(Home.name, () => {
                 messageFromUrl={messageFromUrl}
                 resolvedUrl=""
                 deployUrl=""
+                preferredLanguage={LanguageEnum.English}
               />
             </LanguageStore>
           </ThemeStore>
