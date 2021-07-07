@@ -15,7 +15,7 @@ import { LanguageActionType } from "../reducers/language.reducer";
 import {
   getEmptyState,
   MessageActionType,
-  messageReducer,
+  messageReducer
 } from "../reducers/message.reducer";
 import { ThemeActionType } from "../reducers/theme.reducer";
 import styles from "../styles/Home.module.scss";
@@ -24,12 +24,12 @@ import { themes } from "../types/Themes";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import {
   getDefaultHtmlHeadData,
-  renderHtmlHead,
+  renderHtmlHead
 } from "../utils/html-head-utils";
 import { isEmpty } from "../utils/message-utils";
-import { getTheme, setActiveTheme, setPageTheme } from "./api/theme";
-import { getTranslations } from "./api/translations";
-import { decodeMessage } from "./api/url";
+import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
+import { getTranslations } from "../utils/translations-utils";
+import { decodeMessage } from "../utils/url-utils";
 
 type Props = {
   messageFromUrl: Message | null;
@@ -49,18 +49,12 @@ export default function Home({
     messageFromUrl ?? getEmptyState(),
   );
 
-  const translations = getTranslations(language);
+  const translations = getTranslations(messageFromUrl?.language ?? language);
 
   const htmlHeadData = getDefaultHtmlHeadData(
     messageFromUrl?.language ?? language,
     resolvedUrl,
   );
-  if (messageFromUrl) {
-    htmlHeadData.ogTitle = translations.pageTitleWithMessage.replace(
-      /\{name\}/g,
-      messageFromUrl.name,
-    );
-  }
 
   const router = useRouter();
   const tempInput = useRef<HTMLInputElement>(null);

@@ -24,6 +24,7 @@ export type HtmlHeadData = {
   ogTitle: string;
   ogDescription: string;
   ogUrl: string;
+  encodedMessage: string | null;
 };
 
 export function htmlHeadReducer(

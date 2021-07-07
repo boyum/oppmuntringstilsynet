@@ -9,8 +9,7 @@ export type LanguageAction =
   | {
       type: LanguageActionType.SetLanguage;
       language: LanguageEnum;
-    }
-  | { type: LanguageActionType.NoOp };
+    };
 
 export function languageReducer(
   state: LanguageEnum,
@@ -19,8 +18,5 @@ export function languageReducer(
   switch (action.type) {
     case LanguageActionType.SetLanguage:
       return action.language;
-
-    case LanguageActionType.NoOp:
-      return state;
   }
 }

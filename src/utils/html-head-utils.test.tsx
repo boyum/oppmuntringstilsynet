@@ -11,11 +11,12 @@ describe(getDefaultHtmlHeadData.name, () => {
     const language = LanguageEnum.NorskBokmal;
 
     const expectedData: HtmlHeadData = {
-      title: TranslationsNb.pageTitleEmptyMessage,
-      ogTitle: TranslationsNb.pageTitleEmptyMessage,
+      title: TranslationsNb.pageTitle,
+      ogTitle: TranslationsNb.pageOgTitle,
       description: TranslationsNb.pageDescription,
       ogDescription: TranslationsNb.pageDescription,
       ogUrl: url,
+      encodedMessage: null,
     };
 
     const actualData = getDefaultHtmlHeadData(language, url);
@@ -32,6 +33,7 @@ describe(renderHtmlHead.name, () => {
       description: "description",
       ogDescription: "ogDescription",
       ogUrl: "url",
+      encodedMessage: "encodedMessage"
     };
 
     const container = document.createElement("div");

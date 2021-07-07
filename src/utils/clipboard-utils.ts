@@ -1,4 +1,4 @@
-import { encode } from "../pages/api/url";
+import { encode } from "./url-utils";
 import Message from "../types/Message";
 
 export function copyToClipboard(

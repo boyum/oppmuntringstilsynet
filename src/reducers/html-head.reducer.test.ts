@@ -14,6 +14,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const action: HtmlHeadAction = {
@@ -24,6 +25,7 @@ describe(htmlHeadReducer.name, () => {
           ogTitle: "newOgTitle",
           ogDescription: "ogDescription",
           ogUrl: "newOgUrl",
+          encodedMessage: "encodedMessage",
         },
       };
 
@@ -38,6 +40,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const action: HtmlHeadAction = {
@@ -54,6 +57,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "newOgTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const newState = htmlHeadReducer(state, action);
@@ -69,6 +73,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const newTitle = "newTitle";
@@ -86,6 +91,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       expect(newState).toEqual(expectedState);
@@ -100,6 +106,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const newDescription = "newDescription";
@@ -117,6 +124,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       expect(newState).toEqual(expectedState);
@@ -131,6 +139,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const newOgTitle = "newOgTitle";
@@ -148,6 +157,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "newOgTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       expect(newState).toEqual(expectedState);
@@ -162,6 +172,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const newOgDescription = "newOgDescription";
@@ -179,6 +190,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "newOgDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       expect(newState).toEqual(expectedState);
@@ -193,6 +205,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "ogUrl",
+        encodedMessage: null,
       };
 
       const newOgUrl = "newOgUrl";
@@ -210,6 +223,7 @@ describe(htmlHeadReducer.name, () => {
         ogTitle: "ogTitle",
         ogDescription: "ogDescription",
         ogUrl: "newOgUrl",
+        encodedMessage: null,
       };
 
       expect(newState).toEqual(expectedState);

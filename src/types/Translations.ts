@@ -1,7 +1,6 @@
 type Translations = {
-  pageTitleEmptyMessage: string;
-  /** `{name}` will be replaced with the name on the card */
-  pageTitleWithMessage: string;
+  pageTitle: string;
+  pageOgTitle: string;
   pageDescription: string;
   formHeading: string;
   dateLabel: string;
@@ -18,6 +17,10 @@ type Translations = {
   openThemePicker: string;
   closeThemePicker: string;
   themePickerHeading: string;
+  previewTitleWithMessage: string;
+  someone: string;
+  /** `{name}` will be replaced with the name on the card, or the translation of `someone` */
+  previewTitleWithoutMessage: string;
 };
 
 export default Translations;

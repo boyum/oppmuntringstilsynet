@@ -1,8 +1,8 @@
 import Translations from "./Translations";
 
 const TranslationsEn: Translations = {
-  pageTitleEmptyMessage: "The National Encouragement Authority",
-  pageTitleWithMessage: "{name} appreciates you!",
+  pageTitle: "The National Encouragement Authority",
+  pageOgTitle: "The National Encouragement Authority",
   pageDescription:
     "Show your appreciation and send this card of encouragement to someone who has done something special, or give it to someone who needs a little encouragement ❤️",
   formHeading: "✨ You are appreciated! ✨",
@@ -22,6 +22,9 @@ const TranslationsEn: Translations = {
   openThemePicker: "Open theme picker",
   closeThemePicker: "Close theme picker",
   themePickerHeading: "Choose a color theme",
+  someone: "Someone",
+  previewTitleWithMessage: "{name} appreciates you!",
+  previewTitleWithoutMessage: "You are appreciated!",
 };
 
 export default TranslationsEn;

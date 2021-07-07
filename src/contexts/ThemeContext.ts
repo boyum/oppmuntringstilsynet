@@ -1,5 +1,5 @@
 import { createContext, Dispatch } from "react";
-import { getActiveTheme } from "../pages/api/theme";
+import { getActiveTheme } from "../utils/theme-utils";
 import { ThemeAction } from "../reducers/theme.reducer";
 import { Theme } from "../types/Theme";
 import { themes } from "../types/Themes";

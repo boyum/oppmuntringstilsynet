@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
-import { getTranslations } from "../../pages/api/translations";
+import { getTranslations } from "../../utils/translations-utils";
 import Message from "../../types/Message";
 import Translations from "../../types/Translations";
 import styles from "./Form.module.css";
