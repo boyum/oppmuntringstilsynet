@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import type { Page } from "puppeteer";
 import getSocialMediaPreviewImage from "../../../api/get-social-media-preview-image";
 
 dotenv.config();
@@ -8,16 +9,27 @@ const deployUrl = process.env.DEPLOY_URL ?? localUrl;
 const endpointUrl = `${deployUrl}/api/get-social-media-preview-image`;
 
 describe(getSocialMediaPreviewImage.name, () => {
+  let page: Page;
+
+  beforeEach(async () => {
+    page = await browser.newPage();
+  });
+
+  afterEach(async () => {
+    await page.close();
+  });
+
   it("should return an image when no encoded message is provided", async () => {
     const isLocal = localUrl === deployUrl;
 
-    const result = await page.goto(`${endpointUrl}?isDev=${isLocal.toString()}`);
+    const result = await page.goto(
+      `${endpointUrl}?isDev=${isLocal.toString()}`,
+    );
 
     const pageDoesNotExist = result.status() === 404;
     if (pageDoesNotExist && isLocal) {
-      throw new Error(
-        `Page '${endpointUrl}' does not exist.
-        Did you start the vercel dev server? If not, run \`npm run dev:api\` and try again.`,
+      console.error(
+        `Page '${endpointUrl}' does not exist.\nDid you start the vercel dev server? If not, run \`npm run dev:api\` and try again.`,
       );
     }
 
@@ -33,7 +45,7 @@ describe(getSocialMediaPreviewImage.name, () => {
 
     const pageDoesNotExist = result.status() === 404;
     if (pageDoesNotExist && isLocal) {
-      throw new Error(
+      console.error(
         `Page '${endpointUrl}' does not exist.
         Did you start the vercel dev server? If not, run \`npm run dev:api\` and try again.`,
       );

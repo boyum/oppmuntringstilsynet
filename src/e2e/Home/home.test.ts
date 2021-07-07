@@ -2,6 +2,7 @@
 import { AxePuppeteer } from "@axe-core/puppeteer";
 import dotenv from "dotenv";
 import puppeteer from "puppeteer";
+import type { Page } from "puppeteer";
 import { themes } from "../../types/Themes";
 
 dotenv.config();
@@ -9,9 +10,16 @@ dotenv.config();
 const deployUrl = process.env.DEPLOY_URL ?? "http://localhost:3000";
 
 describe("Home", () => {
+  let page: Page;
+
   beforeEach(async () => {
+    page = await browser.newPage();
     await page.goto(deployUrl);
     await page.evaluate(() => localStorage.clear());
+  });
+
+  afterEach(async () => {
+    await page.close();
   });
 
   it("should be titled 'Oppmuntringstilsynet'", async () => {
