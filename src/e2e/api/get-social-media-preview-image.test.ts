@@ -13,7 +13,7 @@ describe(getSocialMediaPreviewImage.name, () => {
   it("should return an image when no encoded message is provided", async () => {
     const isLocal = localUrl === deployUrl;
 
-    const result = await page.goto(endpointUrl);
+    const result = await page.goto(`${endpointUrl}?isDev=${isLocal.toString()}`);
 
     const pageDoesNotExist = result.status() === 404;
     if (pageDoesNotExist && isLocal) {
@@ -29,7 +29,7 @@ describe(getSocialMediaPreviewImage.name, () => {
 
   it("should return an image when an encoded message is provided", async () => {
     const isLocal = localUrl === deployUrl;
-    const url = `${endpointUrl}/?m=N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmUprvIFsp54qBzOpEV9rkxAA7Kq3qjx5ADZVhnLIPoA5APYZ4sAEKrYzKtJDk00VsrE8QABwwBLCnQC%2BQA`;
+    const url = `${endpointUrl}/?isDev=${isLocal.toString()}&m=N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmUprvIFsp54qBzOpEV9rkxAA7Kq3qjx5ADZVhnLIPoA5APYZ4sAEKrYzKtJDk00VsrE8QABwwBLCnQC%2BQA`;
 
     const result = await page.goto(url);
 
