@@ -17,8 +17,8 @@ describe("Message encoder/decoder", () => {
     const actualMessage = decodeMessage(encodedMessage);
 
     expect(actualMessage).toEqual(expectedMessage);
-  });  
-  
+  });
+
   it("should return null if an empty encoded string is provided", () => {
     const expectedMessage: Message | null = null;
 
@@ -26,7 +26,7 @@ describe("Message encoder/decoder", () => {
     const actualMessage = decodeMessage(encodedMessage);
 
     expect(actualMessage).toBe(expectedMessage);
-  });  
+  });
 
   it("should return null if a malformed encoded string is provided", () => {
     const expectedMessage: Message | null = null;
