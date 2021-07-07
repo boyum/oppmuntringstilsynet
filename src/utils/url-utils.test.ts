@@ -17,5 +17,23 @@ describe("Message encoder/decoder", () => {
     const actualMessage = decodeMessage(encodedMessage);
 
     expect(actualMessage).toEqual(expectedMessage);
+  });  
+  
+  it("should return null if an empty encoded string is provided", () => {
+    const expectedMessage: Message | null = null;
+
+    const encodedMessage = "";
+    const actualMessage = decodeMessage(encodedMessage);
+
+    expect(actualMessage).toBe(expectedMessage);
+  });  
+
+  it("should return null if a malformed encoded string is provided", () => {
+    const expectedMessage: Message | null = null;
+
+    const encodedMessage = "I won't work";
+    const actualMessage = decodeMessage(encodedMessage);
+
+    expect(actualMessage).toBe(expectedMessage);
   });
 });
