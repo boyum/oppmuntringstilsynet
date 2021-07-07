@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:api": "npx vercel dev",
     "build": "next build",
     "start": "next start",
     "test:unit": "jest --watch",
