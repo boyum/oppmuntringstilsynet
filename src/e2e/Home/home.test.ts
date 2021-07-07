@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import puppeteer from "puppeteer";
 import type { Page } from "puppeteer";
 import { themes } from "../../types/Themes";
+import languages from "../../models/languages";
+import { getPreferredLanguage } from "../../utils/language-utils";
+import { getTranslations } from "../../utils/translations-utils";
 
 dotenv.config();
 
@@ -22,8 +25,19 @@ describe("Home", () => {
     await page.close();
   });
 
-  it("should be titled 'Oppmuntringstilsynet'", async () => {
-    await expect(page.title()).resolves.toMatch("Oppmuntringstilsynet");
+  Object.entries(languages).forEach(([languageName, languageRecord]) => {
+    it(`should be titled ${languageRecord.translations.pageTitle} when the Accept-Language is ${languageName}`, async () => {
+      await expect(page.title()).resolves.toMatch(
+        languageRecord.translations.pageTitle,
+      );
+    });
+  });
+
+  it(`should have the default language's title if the Accept-Language is not supported`, async () => {
+    const defaultLanguage = getPreferredLanguage(["unknown", "language"]);
+    const translations = getTranslations(defaultLanguage);
+
+    await expect(page.title()).resolves.toMatch(translations.pageTitle);
   });
 
   it("should copy a link to the card", async () => {
