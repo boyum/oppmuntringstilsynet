@@ -1,11 +1,57 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chrome from "chrome-aws-lambda";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+
+function getExecutablePath(): string {
+  let exePath = "";
+  switch (process.platform) {
+    case "win32":
+      exePath =
+        "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
+      break;
+    case "linux":
+      exePath = "/usr/bin/google-chrome";
+      break;
+    default:
+      exePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+      break;
+  }
+
+  return exePath;
+}
+
+async function getOptions(
+  isDev: boolean,
+): Promise<
+  puppeteer.LaunchOptions &
+    puppeteer.BrowserLaunchArgumentOptions &
+    puppeteer.BrowserConnectOptions
+> {
+  let options;
+  if (isDev) {
+    options = {
+      args: [],
+      executablePath: getExecutablePath(),
+      headless: true,
+    };
+  } else {
+    options = {
+      args: chrome.args,
+      executablePath: await chrome.executablePath,
+      headless: chrome.headless,
+    };
+  }
+  return options;
+}
 
 export default async function getSocialMediaPreviewImage(
   request: VercelRequest,
   response: VercelResponse,
 ): Promise<void> {
-  const browser = await puppeteer.launch();
+  const isDev = request.query.isDev === "true";
+  const options = await getOptions(isDev);
+
+  const browser = await puppeteer.launch(options);
   const page = await browser.newPage();
 
   // Set viewport to preferred Open Graph image size
