@@ -15,6 +15,7 @@
     "import/prefer-default-export": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
     "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/no-shadow": ["error"],
@@ -24,7 +25,7 @@
     "no-console": [
       "error",
       {
-        "allow": ["warn", "error"]
+        "allow": ["warn", "error", "info"]
       }
     ],
     "jsx-a11y/label-has-associated-control": [
