@@ -1,5 +1,6 @@
 import parser from "accept-language-parser";
-import http from "http";
+import first from "lodash.first";
+import { GetServerSidePropsContext } from "next";
 import { useContext, useEffect } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import ThemeContext from "../../contexts/ThemeContext";
@@ -66,19 +67,13 @@ export default function SocialMediaPreview({
   );
 }
 
-type Context = {
-  req: http.IncomingMessage;
-  res: http.ServerResponse;
-  resolvedUrl: string;
-  query: {
-    [key: string]: string;
-  };
-};
-
 export async function getServerSideProps(
-  context: Context,
+  context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  const message = decodeMessage(context.query.m ?? "");
+  const encodedMessage = Array.isArray(context.query.m)
+    ? first(context.query.m)
+    : context.query.m;
+  const message = decodeMessage(encodedMessage ?? "");
 
   const acceptLanguage = context.req.headers["accept-language"] ?? "";
   const acceptedLanguages = parser
