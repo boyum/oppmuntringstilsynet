@@ -3,7 +3,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
 import LanguageEnum from "../enums/Language";
-import Home from "../pages";
+import Home, { getServerSideProps } from "../pages";
 import LanguageStore from "../stores/LanguageStore";
 import ThemeStore from "../stores/ThemeStore";
 import Message from "../types/Message";
@@ -205,3 +205,11 @@ describe(Home.name, () => {
     });
   });
 });
+
+describe(getServerSideProps.name, () => {
+  it("should return the correct props in a happy path", () => {
+    const context = {
+      // req
+    }
+  })
+})
