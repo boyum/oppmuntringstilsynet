@@ -1,11 +1,13 @@
 import Document, {
-  Html,
+  DocumentContext,
+  DocumentInitialProps,
   Head,
+  Html,
   Main,
   NextScript,
-  DocumentInitialProps,
-  DocumentContext,
 } from "next/document";
+import { themes } from "../types/Themes";
+import { getFallbackTheme } from "../utils/theme-utils";
 
 class CustomDocument extends Document {
   static host: string;
@@ -70,7 +72,7 @@ class CustomDocument extends Document {
     return (
       <Html lang="nb">
         <Head>{CustomDocument.renderHead()}</Head>
-        <body>
+        <body data-theme={getFallbackTheme(themes)}>
           {process.env.NODE_ENV === "production" && CustomDocument.renderGTM()}
           <Main />
           <NextScript />
