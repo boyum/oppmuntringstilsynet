@@ -1,7 +1,8 @@
 import parser from "accept-language-parser";
 import deepEqual from "deep-equal";
 import dotenv from "dotenv";
-import http from "http";
+import first from "lodash.first";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useReducer, useRef, useState } from "react";
@@ -57,6 +58,8 @@ export default function Home({
     messageReducer,
     messageFromUrl ?? getEmptyState(),
   );
+  const router = useRouter();
+  const tempInput = useRef<HTMLInputElement>(null);
 
   const translations = getTranslations(messageFromUrl?.language ?? language);
 
@@ -67,13 +70,10 @@ export default function Home({
     deployUrl,
   );
 
-  const router = useRouter();
-  const tempInput = useRef<HTMLInputElement>(null);
-
-  const shouldSetMessage =
-    isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
-
   useEffect(() => {
+    const shouldSetMessage =
+      isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
+
     if (!!messageFromUrl && shouldSetMessage) {
       dispatchMessageAction({
         type: MessageActionType.SetMessage,
@@ -196,19 +196,13 @@ export default function Home({
   );
 }
 
-type Context = {
-  req: http.IncomingMessage;
-  res: http.ServerResponse;
-  resolvedUrl: string;
-  query: {
-    [key: string]: string;
-  };
-};
-
 export async function getServerSideProps(
-  context: Context,
+  context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  const messageFromUrl = decodeMessage(context.query.m ?? "");
+  const encodedMessage = Array.isArray(context.query.m)
+    ? first(context.query.m)
+    : context.query.m;
+  const messageFromUrl = decodeMessage(encodedMessage ?? "");
   dotenv.config();
 
   const localUrl = "http://localhost:3000";
@@ -223,7 +217,7 @@ export async function getServerSideProps(
 
   const serverSideProps: { props: Props } = {
     props: {
-      encodedMessage: context.query.m || null,
+      encodedMessage: encodedMessage ?? null,
       messageFromUrl,
       resolvedUrl: context.resolvedUrl,
       deployUrl: host ? `//${host}` : deployUrl,
