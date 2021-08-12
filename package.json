@@ -27,7 +27,7 @@
     "dotenv": "^10.0.0",
     "jest-axe": "^4.1.0",
     "lz-string": "^1.4.4",
-    "next": "^11.0.1",
+    "next": "^11.1.0",
     "puppeteer": "^10.1.0",
     "puppeteer-core": "^10.2.0",
     "react": "^17.0.2",
