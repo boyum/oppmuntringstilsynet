@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { RouterContext } from "next/dist/next-server/lib/router-context";
+import { RouterContext } from "next/dist/shared/lib/router-context";
 import { NextRouter } from "next/router";
 import LanguageEnum from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
