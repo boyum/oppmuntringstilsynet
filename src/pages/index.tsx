@@ -82,7 +82,7 @@ export default function Home({
 
       setIsDisabled(true);
     }
-  }, [messageFromUrl]);
+  }, [isResetting, message, messageFromUrl]);
 
   useEffect(() => {
     const activeTheme = messageFromUrl?.themeName
@@ -109,7 +109,14 @@ export default function Home({
       type: LanguageActionType.SetLanguage,
       language: messageFromUrl?.language ?? preferredLanguage,
     });
-  }, []);
+  }, [
+    dispatchLanguageAction,
+    dispatchThemeAction,
+    messageFromUrl?.language,
+    messageFromUrl?.themeName,
+    preferredLanguage,
+    theme,
+  ]);
 
   function handleCopy() {
     if (tempInput.current) {

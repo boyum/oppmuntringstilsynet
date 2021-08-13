@@ -56,7 +56,7 @@ export default function SocialMediaPreview({
       type: ThemeActionType.SetTheme,
       themeName: activeTheme.name,
     });
-  }, [message]);
+  }, [message, dispatchThemeAction, theme]);
 
   return (
     <main className={styles.main}>

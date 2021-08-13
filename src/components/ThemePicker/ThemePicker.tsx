@@ -21,7 +21,7 @@ export function ThemePicker({ themes, setTheme }: Props): JSX.Element {
 
   useEffect(() => {
     setSelectedTheme(getActiveTheme(themes));
-  }, []);
+  }, [themes]);
 
   useEffect(() => {
     setClassName(
