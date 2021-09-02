@@ -1,3 +1,4 @@
+import * as fc from "fast-check";
 import LanguageEnum from "../enums/Language";
 import { getLanguage, getPreferredLanguage } from "./language-utils";
 
@@ -20,14 +21,15 @@ describe(getLanguage.name, () => {
     expect(actualLanguage).toEqual(expectedLanguage);
   });
 
-  it("should return null if the locale code is not supported", () => {
-    const localeCode = "unsupported language";
+  it("should return null if the locale code is not supported", () =>
+    fc.assert(
+      fc.property(fc.string(), localeCode => {
+        const expectedLanguage: LanguageEnum | null = null;
+        const actualLanguage = getLanguage(localeCode);
 
-    const expectedLanguage: LanguageEnum | null = null;
-    const actualLanguage = getLanguage(localeCode);
-
-    expect(actualLanguage).toEqual(expectedLanguage);
-  });
+        return actualLanguage === expectedLanguage;
+      }),
+    ));
 });
 
 describe(getPreferredLanguage.name, () => {
