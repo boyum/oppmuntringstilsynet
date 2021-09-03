@@ -1,3 +1,4 @@
+import * as fc from "fast-check";
 import LanguageEnum from "../enums/Language";
 import Message from "../types/Message";
 import { decode, decodeMessage, encode } from "./url-utils";
@@ -37,12 +38,14 @@ describe("Message encoder/decoder", () => {
     expect(actualMessage).toBe(expectedMessage);
   });
 
-  it("should return null if a malformed encoded string is provided", () => {
-    const expectedMessage: Message | null = null;
+  it("should return null if a malformed encoded string is provided", () =>
+    fc.assert(
+      fc.property(fc.string(), encodedMessage => {
+        const expectedMessage: Message | null = null;
 
-    const encodedMessage = "I won't work";
-    const actualMessage = decodeMessage(encodedMessage);
+        const actualMessage = decodeMessage(encodedMessage);
 
-    expect(actualMessage).toBe(expectedMessage);
-  });
+        expect(actualMessage).toBe(expectedMessage);
+      }),
+    ));
 });
