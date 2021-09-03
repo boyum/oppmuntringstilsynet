@@ -5,7 +5,14 @@ import first from "lodash.first";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useReducer, useRef, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import Buttons from "../components/Buttons";
 import Footer from "../components/Footer";
 import Form from "../components/Form";
@@ -118,46 +125,52 @@ export default function Home({
     theme,
   ]);
 
-  function handleCopy() {
+  const handleCopy = useCallback((): void => {
     if (tempInput.current) {
       encodeAndCopyMessage(message, tempInput.current);
     }
-  }
+  }, [message]);
 
-  function handleReset() {
+  const handleReset = useCallback((): void => {
     router.push("/");
 
-    dispatchMessageAction?.({
+    dispatchMessageAction({
       type: MessageActionType.ResetEverythingButTheme,
     });
 
     setIsResetting(true);
     setIsDisabled(false);
-  }
+  }, [router]);
 
-  function handleLanguageChange(newLanguage: LanguageEnum) {
-    dispatchMessageAction?.({
-      type: MessageActionType.SetMessage,
-      message: {
-        language: newLanguage,
-      },
-    });
-  }
+  const handleLanguageChange = useCallback(
+    (newLanguage: LanguageEnum): void =>
+      dispatchMessageAction({
+        type: MessageActionType.SetMessage,
+        message: {
+          language: newLanguage,
+        },
+      }),
+    [],
+  );
 
-  function handleSetMessage(newMessage: Partial<Message>): void {
-    dispatchMessageAction({
-      type: MessageActionType.SetMessage,
-      message: newMessage,
-    });
-  }
+  const handleSetMessage = useCallback(
+    (newMessage: Partial<Message>): void =>
+      dispatchMessageAction({
+        type: MessageActionType.SetMessage,
+        message: newMessage,
+      }),
+    [],
+  );
 
-  function handleSetCheck(checkValue: boolean, checkIndex: number): void {
-    dispatchMessageAction({
-      type: MessageActionType.SetCheck,
-      check: checkValue,
-      checkIndex,
-    });
-  }
+  const handleSetCheck = useCallback(
+    (checkValue: boolean, checkIndex: number) =>
+      dispatchMessageAction({
+        type: MessageActionType.SetCheck,
+        check: checkValue,
+        checkIndex,
+      }),
+    [],
+  );
 
   return (
     <>
