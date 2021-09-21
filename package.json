@@ -36,7 +36,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@axe-core/puppeteer": "^4.2.2",
+    "@axe-core/puppeteer": "^4.3.1",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-typescript": "^7.15.0",
     "@types/deep-equal": "^1.0.1",
