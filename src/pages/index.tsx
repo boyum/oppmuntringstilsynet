@@ -1,10 +1,18 @@
 import parser from "accept-language-parser";
 import deepEqual from "deep-equal";
 import dotenv from "dotenv";
-import http from "http";
+import first from "lodash.first";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useReducer, useRef, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import Buttons from "../components/Buttons";
 import Footer from "../components/Footer";
 import Form from "../components/Form";
@@ -57,6 +65,8 @@ export default function Home({
     messageReducer,
     messageFromUrl ?? getEmptyState(),
   );
+  const router = useRouter();
+  const tempInput = useRef<HTMLInputElement>(null);
 
   const translations = getTranslations(messageFromUrl?.language ?? language);
 
@@ -67,13 +77,10 @@ export default function Home({
     deployUrl,
   );
 
-  const router = useRouter();
-  const tempInput = useRef<HTMLInputElement>(null);
-
-  const shouldSetMessage =
-    isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
-
   useEffect(() => {
+    const shouldSetMessage =
+      isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
+
     if (!!messageFromUrl && shouldSetMessage) {
       dispatchMessageAction({
         type: MessageActionType.SetMessage,
@@ -82,7 +89,7 @@ export default function Home({
 
       setIsDisabled(true);
     }
-  }, [messageFromUrl]);
+  }, [isResetting, message, messageFromUrl]);
 
   useEffect(() => {
     const activeTheme = messageFromUrl?.themeName
@@ -109,48 +116,61 @@ export default function Home({
       type: LanguageActionType.SetLanguage,
       language: messageFromUrl?.language ?? preferredLanguage,
     });
-  }, []);
+  }, [
+    dispatchLanguageAction,
+    dispatchThemeAction,
+    messageFromUrl?.language,
+    messageFromUrl?.themeName,
+    preferredLanguage,
+    theme,
+  ]);
 
-  function handleCopy() {
+  const handleCopy = useCallback((): void => {
     if (tempInput.current) {
       encodeAndCopyMessage(message, tempInput.current);
     }
-  }
+  }, [message]);
 
-  function handleReset() {
+  const handleReset = useCallback((): void => {
     router.push("/");
 
-    dispatchMessageAction?.({
+    dispatchMessageAction({
       type: MessageActionType.ResetEverythingButTheme,
     });
 
     setIsResetting(true);
     setIsDisabled(false);
-  }
+  }, [router]);
 
-  function handleLanguageChange(newLanguage: LanguageEnum) {
-    dispatchMessageAction?.({
-      type: MessageActionType.SetMessage,
-      message: {
-        language: newLanguage,
-      },
-    });
-  }
+  const handleLanguageChange = useCallback(
+    (newLanguage: LanguageEnum): void =>
+      dispatchMessageAction({
+        type: MessageActionType.SetMessage,
+        message: {
+          language: newLanguage,
+        },
+      }),
+    [],
+  );
 
-  function handleSetMessage(newMessage: Partial<Message>): void {
-    dispatchMessageAction({
-      type: MessageActionType.SetMessage,
-      message: newMessage,
-    });
-  }
+  const handleSetMessage = useCallback(
+    (newMessage: Partial<Message>): void =>
+      dispatchMessageAction({
+        type: MessageActionType.SetMessage,
+        message: newMessage,
+      }),
+    [],
+  );
 
-  function handleSetCheck(checkValue: boolean, checkIndex: number): void {
-    dispatchMessageAction({
-      type: MessageActionType.SetCheck,
-      check: checkValue,
-      checkIndex,
-    });
-  }
+  const handleSetCheck = useCallback(
+    (checkValue: boolean, checkIndex: number) =>
+      dispatchMessageAction({
+        type: MessageActionType.SetCheck,
+        check: checkValue,
+        checkIndex,
+      }),
+    [],
+  );
 
   return (
     <>
@@ -196,19 +216,13 @@ export default function Home({
   );
 }
 
-type Context = {
-  req: http.IncomingMessage;
-  res: http.ServerResponse;
-  resolvedUrl: string;
-  query: {
-    [key: string]: string;
-  };
-};
-
 export async function getServerSideProps(
-  context: Context,
+  context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  const messageFromUrl = decodeMessage(context.query.m ?? "");
+  const encodedMessage = Array.isArray(context.query.m)
+    ? first(context.query.m)
+    : context.query.m;
+  const messageFromUrl = decodeMessage(encodedMessage ?? "");
   dotenv.config();
 
   const localUrl = "http://localhost:3000";
@@ -223,7 +237,7 @@ export async function getServerSideProps(
 
   const serverSideProps: { props: Props } = {
     props: {
-      encodedMessage: context.query.m || null,
+      encodedMessage: encodedMessage ?? null,
       messageFromUrl,
       resolvedUrl: context.resolvedUrl,
       deployUrl: host ? `//${host}` : deployUrl,

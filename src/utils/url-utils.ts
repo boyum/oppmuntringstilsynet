@@ -15,13 +15,31 @@ export function decode<Type>(encodedObj: string): Type | null {
     return null;
   }
 
-  const decoded = LZString.decompressFromEncodedURIComponent(encodedObj);
+  let decoded: string | null = null;
+
+  try {
+    decoded = LZString.decompressFromEncodedURIComponent(encodedObj);
+  } catch (error: unknown) {
+    if (error instanceof TypeError) {
+      console.error(error.message);
+      return null;
+    }
+  }
+
   if (!decoded) {
     console.error(`Invalid encoded object ${encodedObj}`);
     return null;
   }
 
-  return JSON.parse(decoded);
+  let parsed: Type | null = null;
+
+  try {
+    parsed = JSON.parse(decoded);
+  } catch (error) {
+    console.error(error);
+  }
+
+  return parsed;
 }
 
 export function decodeMessage(encodedObj: string): Message | null {
@@ -36,7 +54,11 @@ export function decodeMessage(encodedObj: string): Message | null {
   };
 
   const decodedMessage = decode<Message>(encodedObj);
-  if (!decodedMessage) {
+
+  const decodedMessageIsEmpty =
+    JSON.stringify(decodedMessage) === JSON.stringify({});
+
+  if (!decodedMessage || decodedMessageIsEmpty) {
     return null;
   }
 

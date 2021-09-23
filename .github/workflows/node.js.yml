@@ -25,11 +25,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      - run: npm run format:check
       - run: npm run lint
       - run: npm run build --if-present
       - run: npm run ci-test:unit
       - name: Codecov
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v2 # https://github.com/codecov/codecov-action
 
   deploy:
     name: Deploy
@@ -126,7 +127,7 @@ jobs:
         run: |
           touch .env
           echo DEPLOY_URL=${{ needs.deploy.outputs.preview-url }} >> .env
-      
+
       - name: Run e2e tests
         run: |
           npm run ci-test:e2e

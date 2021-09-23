@@ -1,6 +1,7 @@
+import * as fc from "fast-check";
 import LanguageEnum from "../enums/Language";
 import Message from "../types/Message";
-import { decodeMessage, encode } from "./url-utils";
+import { decode, decodeMessage, encode } from "./url-utils";
 
 describe("Message encoder/decoder", () => {
   it("should encode and decode a Message such that it stays the same", () => {
@@ -19,7 +20,7 @@ describe("Message encoder/decoder", () => {
     expect(actualMessage).toEqual(expectedMessage);
   });
 
-  it("should return null if an empty encoded string is provided", () => {
+  it("should return null if an empty encoded string is provided (decodeMessage)", () => {
     const expectedMessage: Message | null = null;
 
     const encodedMessage = "";
@@ -28,12 +29,23 @@ describe("Message encoder/decoder", () => {
     expect(actualMessage).toBe(expectedMessage);
   });
 
-  it("should return null if a malformed encoded string is provided", () => {
+  it("should return null if an empty encoded string is provided (decode)", () => {
     const expectedMessage: Message | null = null;
 
-    const encodedMessage = "I won't work";
-    const actualMessage = decodeMessage(encodedMessage);
+    const encodedMessage = "";
+    const actualMessage = decode<unknown>(encodedMessage);
 
     expect(actualMessage).toBe(expectedMessage);
   });
+
+  it("should return null if a malformed encoded string is provided", () =>
+    fc.assert(
+      fc.property(fc.string(), encodedMessage => {
+        const expectedMessage: Message | null = null;
+
+        const actualMessage = decodeMessage(encodedMessage);
+
+        expect(actualMessage).toBe(expectedMessage);
+      }),
+    ));
 });

@@ -5,11 +5,10 @@ export enum LanguageActionType {
   NoOp = "noOp",
 }
 
-export type LanguageAction =
-  | {
-      type: LanguageActionType.SetLanguage;
-      language: LanguageEnum;
-    };
+export type LanguageAction = {
+  type: LanguageActionType.SetLanguage;
+  language: LanguageEnum;
+};
 
 export function languageReducer(
   state: LanguageEnum,

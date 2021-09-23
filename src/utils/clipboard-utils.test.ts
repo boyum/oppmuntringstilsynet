@@ -16,7 +16,7 @@ describe(copyToClipboard.name, () => {
 });
 
 describe(createMessageUrl.name, () => {
-  it("should create an url with the encoded message as a get parameter", () => {
+  it("should create a url with the encoded message as a get parameter", () => {
     const message: Message = {
       date: "date",
       message: "message",
