@@ -8,10 +8,7 @@ const config: Config.InitialOptions = {
       "<rootDir>/__mocks__/fileMock.js",
     "\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
   },
-  testPathIgnorePatterns: [
-    ...defaults.testPathIgnorePatterns,
-    "e2e",
-  ],
+  testPathIgnorePatterns: [...defaults.testPathIgnorePatterns, "e2e"],
 };
 
 export default config;

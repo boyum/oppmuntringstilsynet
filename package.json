@@ -13,7 +13,8 @@
     "ci-test:e2e": "jest --coverage --config jest.config.e2e.ts",
     "lint": "eslint '**/!(node_modules)/*.+(js|jsx|ts|tsx)' -c '.eslintrc.json'",
     "lint:fix": "npm run lint -- --fix",
-    "format-all-files": "npx prettier --write .",
+    "format:check": "prettier --check .",
+    "format-all-files": "prettier --write .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -67,6 +68,7 @@
     "jest-css-modules": "^2.1.0",
     "jest-css-modules-transform": "^4.3.0",
     "jest-puppeteer": "^5.0.4",
+    "prettier": "^2.4.1",
     "sass": "^1.42.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"

@@ -7,7 +7,7 @@ const config: Config.InitialOptions = {
     "\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
   },
   preset: "jest-puppeteer",
-  roots: ["src/e2e"]
+  roots: ["src/e2e"],
 };
 
 export default config;

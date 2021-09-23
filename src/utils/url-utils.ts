@@ -25,7 +25,7 @@ export function decode<Type>(encodedObj: string): Type | null {
       return null;
     }
   }
-  
+
   if (!decoded) {
     console.error(`Invalid encoded object ${encodedObj}`);
     return null;
@@ -35,10 +35,10 @@ export function decode<Type>(encodedObj: string): Type | null {
 
   try {
     parsed = JSON.parse(decoded);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
   }
-  
+
   return parsed;
 }
 
