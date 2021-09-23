@@ -31,7 +31,7 @@
     "lodash.first": "^3.0.0",
     "lz-string": "^1.4.4",
     "next": "^11.1.2",
-    "puppeteer": "^10.1.0",
+    "puppeteer": "^10.4.0",
     "puppeteer-core": "^10.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
@@ -40,6 +40,7 @@
     "@axe-core/puppeteer": "^4.3.1",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-typescript": "^7.15.0",
+    "@testing-library/dom": "^8.6.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@types/deep-equal": "^1.0.1",
     "@types/expect-puppeteer": "^4.4.7",
