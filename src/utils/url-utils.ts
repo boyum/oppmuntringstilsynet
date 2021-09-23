@@ -54,7 +54,11 @@ export function decodeMessage(encodedObj: string): Message | null {
   };
 
   const decodedMessage = decode<Message>(encodedObj);
-  if (!decodedMessage) {
+
+  const decodedMessageIsEmpty =
+    JSON.stringify(decodedMessage) === JSON.stringify({});
+
+  if (!decodedMessage || decodedMessageIsEmpty) {
     return null;
   }
 
