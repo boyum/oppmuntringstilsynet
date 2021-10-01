@@ -27,7 +27,6 @@ jobs:
       - run: npm ci
       - run: npm run format:check
       - run: npm run lint
-      - run: npm run build --if-present
       - run: npm run ci-test:unit
       - name: Codecov
         uses: codecov/codecov-action@v2 # https://github.com/codecov/codecov-action
@@ -39,11 +38,14 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
+      - run: SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
+
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20.0.0
+        uses: amondnet/vercel-action@v20.0.0 # https://github.com/amondnet/vercel-action
         id: vercel-deployment
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          zeit-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
