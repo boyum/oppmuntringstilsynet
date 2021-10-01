@@ -18,6 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@sentry/nextjs": "^6.13.2",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.2.1",
     "@types/accept-language-parser": "^1.5.2",
