@@ -9,6 +9,7 @@ const config: Config.InitialOptions = {
     "\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
   },
   testPathIgnorePatterns: [...defaults.testPathIgnorePatterns, "e2e"],
+  testEnvironment: "jsdom",
 };
 
 export default config;
