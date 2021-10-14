@@ -2,8 +2,8 @@
   "extends": [
     "airbnb",
     "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier",
-    "eslint-config-next"
+    "prettier",
+    "next/core-web-vitals"
   ],
   "env": {
     "jest": true,
