@@ -38,9 +38,18 @@ describe("Message encoder/decoder", () => {
     expect(actualMessage).toBe(expectedMessage);
   });
 
+  it("should return null if the string decodes to something that's not an object", () => {
+    const expectedMessage: Message | null = null;
+
+    const encodedMessage = "Ix";
+    const actualMessage = decode<unknown>(encodedMessage);
+
+    expect(actualMessage).toBe(expectedMessage);
+  });
+
   it("should return null if a malformed encoded string is provided", () =>
     fc.assert(
-      fc.property(fc.string(), encodedMessage => {
+      fc.property(fc.string({ minLength: 5 }), encodedMessage => {
         const expectedMessage: Message | null = null;
 
         const actualMessage = decodeMessage(encodedMessage);
