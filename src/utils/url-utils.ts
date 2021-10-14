@@ -33,6 +33,11 @@ export function decode<Type>(encodedObj: string): Type | null {
 
   let parsed: Type | null = null;
 
+  const isJSON = decoded.includes("{") && decoded.includes("}");
+  if (!isJSON) {
+    return null;
+  }
+
   try {
     parsed = JSON.parse(decoded);
   } catch (error) {
