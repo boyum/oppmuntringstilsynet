@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.4.1",
+    "@testing-library/user-event": "^13.5.0",
     "@types/accept-language-parser": "^1.5.2",
     "@types/lodash.first": "^3.0.6",
     "@vercel/node": "^1.12.1",
