@@ -38,8 +38,8 @@
   },
   "devDependencies": {
     "@axe-core/puppeteer": "^4.3.1",
-    "@babel/preset-env": "^7.15.8",
-    "@babel/preset-typescript": "^7.15.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
     "@testing-library/dom": "^8.10.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@types/deep-equal": "^1.0.1",
