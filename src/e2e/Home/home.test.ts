@@ -289,13 +289,13 @@ describe("Home", () => {
         // eslint-disable-next-line no-underscore-dangle
         const isDisabled = (await element.getProperty("disabled"))
           ?._remoteObject.value;
- 
+
         expect(isDisabled).toBe(true);
       }),
     );
   });
 
-  it("should mark not mark any fields in an empty card as readonly", async () => {  
+  it("should mark not mark any fields in an empty card as readonly", async () => {
     const form = await page.$("form");
 
     if (!form) {
@@ -304,11 +304,11 @@ describe("Home", () => {
 
     const disabledFields = await form.$$("input, textarea");
     await Promise.all(
-      disabledFields.map(async element => {        
+      disabledFields.map(async element => {
         // eslint-disable-next-line no-underscore-dangle
         const isDisabled = (await element.getProperty("disabled"))
           ?._remoteObject.value;
- 
+
         expect(isDisabled).toBe(false);
       }),
     );
