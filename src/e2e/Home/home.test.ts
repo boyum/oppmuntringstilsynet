@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AxePuppeteer } from "@axe-core/puppeteer";
 import dotenv from "dotenv";
-import puppeteer from "puppeteer";
 import type { Page } from "puppeteer";
-import { themes } from "../../types/Themes";
+import puppeteer from "puppeteer";
 import languages from "../../models/languages";
+import { themes } from "../../types/Themes";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 
@@ -253,5 +253,64 @@ describe("Home", () => {
 
       expect(incomplete).toHaveLength(0);
     });
+  });
+
+  it("should mark all fields in an opened card as readonly", async () => {
+    const context = browser.defaultBrowserContext();
+    await context.overridePermissions(deployUrl, ["clipboard-read"]);
+
+    await page.type("#date-field", "date");
+    await page.type("#message-body-field", "message");
+    await page.click(`[for="checkbox-0"]`);
+    await page.click(`[for="checkbox-1"]`);
+    await page.click(`[for="checkbox-2"]`);
+    await page.type("#name-field", "name");
+
+    await page.click("#copy-button");
+
+    const copiedUrl = await page.evaluate(() =>
+      navigator.clipboard.readText(),
+    );
+
+    await page.goto(copiedUrl);
+
+    const form = await page.$("form");
+
+    if (!form) {
+      throw new Error("Form did not render");
+    }
+
+    const disabledFields = await form.$$("input, textarea");
+    await Promise.all(
+      disabledFields.map(async element => {
+        // If the `_remoteObject` property is ever changed or removed,
+        // this can also be done by running everything inside `page.$$eval`
+
+        // eslint-disable-next-line no-underscore-dangle
+        const isDisabled = (await element.getProperty("disabled"))
+          ?._remoteObject.value;
+ 
+        expect(isDisabled).toBe(true);
+      }),
+    );
+  });
+
+  it("should mark not mark any fields in an empty card as readonly", async () => {  
+    const form = await page.$("form");
+
+    if (!form) {
+      throw new Error("Form did not render");
+    }
+
+    const disabledFields = await form.$$("input, textarea");
+    await Promise.all(
+      disabledFields.map(async element => {        
+        // eslint-disable-next-line no-underscore-dangle
+        const isDisabled = (await element.getProperty("disabled"))
+          ?._remoteObject.value;
+ 
+        expect(isDisabled).toBe(false);
+      }),
+    );
   });
 });

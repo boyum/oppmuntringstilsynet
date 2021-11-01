@@ -86,10 +86,14 @@ export default function Home({
         type: MessageActionType.SetMessage,
         message: messageFromUrl,
       });
-
-      setIsDisabled(true);
     }
   }, [isResetting, message, messageFromUrl]);
+
+  useEffect(() => {
+    if (messageFromUrl) {
+      setIsDisabled(true);
+    }
+  }, [messageFromUrl]);
 
   useEffect(() => {
     const activeTheme = messageFromUrl?.themeName
