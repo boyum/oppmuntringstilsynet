@@ -268,9 +268,7 @@ describe("Home", () => {
 
     await page.click("#copy-button");
 
-    const copiedUrl = await page.evaluate(() =>
-      navigator.clipboard.readText(),
-    );
+    const copiedUrl = await page.evaluate(() => navigator.clipboard.readText());
 
     await page.goto(copiedUrl);
 
