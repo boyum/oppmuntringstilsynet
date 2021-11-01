@@ -282,7 +282,7 @@ describe("Home", () => {
     await Promise.all(
       disabledFields.map(async element => {
         // If the `_remoteObject` property is ever changed or removed,
-        // this can also be done by running everything inside `page.$$eval`
+        // this can also be done by running everything inside `page.evaluate`
 
         // eslint-disable-next-line no-underscore-dangle
         const isDisabled = (await element.getProperty("disabled"))
