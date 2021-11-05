@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import Buttons from ".";
+import Buttons from "./Buttons";
 import LanguageStore from "../../stores/LanguageStore";
 
 expect.extend(toHaveNoViolations);
