@@ -1,5 +1,5 @@
 // import dotenv from "dotenv";
-// import type { Page } from "puppeteer";
+import { test, expect } from "@playwright/test";
 import getSocialMediaPreviewImage from "../../../api/get-social-media-preview-image";
 
 // dotenv.config();
@@ -8,8 +8,8 @@ import getSocialMediaPreviewImage from "../../../api/get-social-media-preview-im
 // const deployUrl = process.env.DEPLOY_URL ?? localUrl;
 // const endpointUrl = `${deployUrl}/api/get-social-media-preview-image`;
 
-describe(getSocialMediaPreviewImage.name, () => {
-  it("should contain at least one test", () => {
+test.describe(getSocialMediaPreviewImage.name, () => {
+  test("should contain at least one test", () => {
     /* This is used to silence jest */
     expect(true).toBe(true);
   });

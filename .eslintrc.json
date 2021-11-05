@@ -27,7 +27,8 @@
           "**/*.test.ts",
           "**/*.test.tsx",
           "**/*.spec.ts",
-          "**/*.spec.tsx"
+          "**/*.spec.tsx",
+          "playwright.config.ts"
         ]
       }
     ],
