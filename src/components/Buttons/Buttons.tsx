@@ -1,6 +1,7 @@
 import { MouseEventHandler, useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import { getTranslations } from "../../utils/translations-utils";
+import { Button } from "../Button/Button";
 import styles from "./Buttons.module.scss";
 
 type Props = {
@@ -17,22 +18,17 @@ export default function Buttons({
 
   return (
     <div className={styles.buttons} id="buttons">
-      <button
-        type="button"
+      <Button
         id="copy-button"
-        className={styles.copyLink}
         onClick={handleCopy}
-      >
-        <div className={styles.buttonInner}>{translations.copyButtonText}</div>
-      </button>
-      <button
-        type="button"
+        labelText={translations.copyButtonText}
+      />
+
+      <Button
         id="reset-button"
-        className={styles.reset}
         onClick={handleReset}
-      >
-        <div className={styles.buttonInner}>{translations.resetButtonText}</div>
-      </button>
+        labelText={translations.resetButtonText}
+      />
     </div>
   );
 }
