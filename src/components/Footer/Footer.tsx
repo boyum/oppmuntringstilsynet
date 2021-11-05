@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import LanguageContext from "../../contexts/LanguageContext";
 import { getTranslations } from "../../utils/translations-utils";
-import styles from "./Footer.module.css";
+import styles from "./Footer.module.scss";
 
 export default function Footer(): JSX.Element {
   const [language] = useContext(LanguageContext);

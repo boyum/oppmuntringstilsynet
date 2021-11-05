@@ -5,7 +5,7 @@ import Language from "../../models/Language";
 import languages from "../../models/languages";
 import { getTranslations } from "../../utils/translations-utils";
 import { LanguageActionType } from "../../reducers/language.reducer";
-import styles from "./LanguagePicker.module.css";
+import styles from "./LanguagePicker.module.scss";
 
 type Props = {
   handleChange: (newLanguage: LanguageEnum) => void;

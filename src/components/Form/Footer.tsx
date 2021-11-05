@@ -3,7 +3,7 @@ import LanguageContext from "../../contexts/LanguageContext";
 import { getTranslations } from "../../utils/translations-utils";
 import Message from "../../types/Message";
 import Translations from "../../types/Translations";
-import styles from "./Form.module.css";
+import styles from "./Form.module.scss";
 
 type Props = {
   isDisabled: boolean;
