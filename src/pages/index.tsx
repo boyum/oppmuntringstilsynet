@@ -13,10 +13,10 @@ import {
   useRef,
   useState,
 } from "react";
-import Buttons from "../components/Buttons";
-import Footer from "../components/Footer";
-import Form from "../components/Form";
-import LanguagePicker from "../components/LanguagePicker";
+import Buttons from "../components/Buttons/Buttons";
+import Footer from "../components/Footer/Footer";
+import Form from "../components/Form/Footer";
+import LanguagePicker from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import LanguageContext from "../contexts/LanguageContext";
 import ThemeContext from "../contexts/ThemeContext";
