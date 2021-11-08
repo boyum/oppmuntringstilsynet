@@ -20,11 +20,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
+
+      - name: Install npm packages
+        uses: bahmutov/npm-install@v1
+
       - run: npm run format:check
       - run: npm run lint
 
@@ -38,13 +42,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
+
+      - name: Install npm packages
+        uses: bahmutov/npm-install@v1
+
       - run: npm run build --if-present
       - run: npm run ci-test:unit
+
       - name: Codecov
         uses: codecov/codecov-action@v2 # https://github.com/codecov/codecov-action
 
@@ -107,7 +116,9 @@ jobs:
           node-version: 16.1
 
       - uses: actions/checkout@v2
-      - run: npm ci
+
+      - name: Install npm packages
+        uses: bahmutov/npm-install@v1
 
       - name: Store DEPLOY_URL in env file
         run: |
