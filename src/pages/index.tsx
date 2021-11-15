@@ -11,7 +11,7 @@ import {
   useEffect,
   useReducer,
   useRef,
-  useState
+  useState,
 } from "react";
 import { Buttons } from "../components/Buttons/Buttons";
 import { Footer } from "../components/Footer/Footer";
@@ -25,7 +25,7 @@ import { LanguageActionType } from "../reducers/language.reducer";
 import {
   getEmptyState,
   MessageActionType,
-  messageReducer
+  messageReducer,
 } from "../reducers/message.reducer";
 import { ThemeActionType } from "../reducers/theme.reducer";
 import styles from "../styles/Home.module.scss";
@@ -34,7 +34,7 @@ import { themes } from "../types/Themes";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import {
   getDefaultHtmlHeadData,
-  renderHtmlHead
+  renderHtmlHead,
 } from "../utils/html-head-utils";
 import { getPreferredLanguage } from "../utils/language-utils";
 import { isEmpty } from "../utils/message-utils";

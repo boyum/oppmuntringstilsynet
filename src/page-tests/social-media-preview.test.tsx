@@ -4,7 +4,7 @@ import type { GetServerSidePropsContext } from "next";
 import React from "react";
 import { LanguageEnum } from "../enums/Language";
 import SocialMediaPreview, {
-  getServerSideProps
+  getServerSideProps,
 } from "../pages/social-media-preview";
 import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
