@@ -10,16 +10,14 @@ type Props = {
 
 const ThemeStore = ({ children }: Props): JSX.Element => {
   const isClient = typeof window === "object";
-  const [theme, dispatch] = useReducer(
+  const reducer = useReducer(
     themeReducer,
     isClient ? getActiveTheme(themes) : themes[0],
   );
 
   return (
-    <ThemeContext.Provider value={[theme, dispatch]}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={reducer}>{children}</ThemeContext.Provider>
   );
-}
+};
 
 export default ThemeStore;

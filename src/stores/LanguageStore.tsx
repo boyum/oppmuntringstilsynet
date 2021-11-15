@@ -8,16 +8,13 @@ type Props = {
 };
 
 const LanguageStore = ({ children }: Props): JSX.Element => {
-  const [language, dispatch] = useReducer(
-    languageReducer,
-    LanguageEnum.English,
-  );
+  const langReducer = useReducer(languageReducer, LanguageEnum.English);
 
   return (
-    <LanguageContext.Provider value={[language, dispatch]}>
+    <LanguageContext.Provider value={langReducer}>
       {children}
     </LanguageContext.Provider>
   );
-}
+};
 
 export default LanguageStore;
