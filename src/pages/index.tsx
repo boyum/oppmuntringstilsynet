@@ -15,7 +15,7 @@ import {
 } from "react";
 import Buttons from "../components/Buttons/Buttons";
 import Footer from "../components/Footer/Footer";
-import Form from "../components/Form/Footer";
+import Form from "../components/Form/Form";
 import LanguagePicker from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import LanguageContext from "../contexts/LanguageContext";
@@ -50,13 +50,13 @@ type Props = {
   preferredLanguage: LanguageEnum;
 };
 
-export default function Home({
+const Home = ({
   encodedMessage,
   messageFromUrl,
   resolvedUrl,
   deployUrl,
   preferredLanguage,
-}: Props): JSX.Element {
+}: Props): JSX.Element => {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -218,7 +218,7 @@ export default function Home({
       <Footer />
     </>
   );
-}
+};
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
@@ -251,3 +251,5 @@ export async function getServerSideProps(
 
   return serverSideProps;
 }
+
+export default Home;

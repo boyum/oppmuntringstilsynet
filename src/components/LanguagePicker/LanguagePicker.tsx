@@ -11,7 +11,7 @@ type Props = {
   handleChange: (newLanguage: LanguageEnum) => void;
 };
 
-export default function LanguagePicker({ handleChange }: Props): JSX.Element {
+const LanguagePicker = ({ handleChange }: Props): JSX.Element => {
   const [language, setLanguage] = useContext(LanguageContext);
   const languageArr = Object.entries(languages).map(
     ([languageName, lang]: [string, Language]) => [languageName, lang.title],
@@ -51,4 +51,6 @@ export default function LanguagePicker({ handleChange }: Props): JSX.Element {
       </select>
     </label>
   );
-}
+};
+
+export default LanguagePicker;
