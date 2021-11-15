@@ -1,11 +1,11 @@
 import { LanguageEnum } from "../enums/Language";
-import translations from "../models/languages";
+import { languages } from "../models/languages";
 
 export function getLanguage(localeCode: string): LanguageEnum | null {
   const languageCode = localeCode.slice(0, 2);
 
   const [language] =
-    Object.entries(translations).find(([, languageRecord]) =>
+    Object.entries(languages).find(([, languageRecord]) =>
       languageRecord.codes.includes(languageCode),
     ) ?? [];
 
