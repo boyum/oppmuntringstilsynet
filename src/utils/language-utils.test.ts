@@ -1,5 +1,5 @@
 import * as fc from "fast-check";
-import LanguageEnum from "../enums/Language";
+import { LanguageEnum } from "../enums/Language";
 import { getLanguage, getPreferredLanguage } from "./language-utils";
 
 describe(getLanguage.name, () => {

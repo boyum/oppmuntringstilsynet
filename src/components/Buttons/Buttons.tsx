@@ -1,15 +1,18 @@
 import { MouseEventHandler, useContext } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
+import { LanguageContext } from "../../contexts/LanguageContext";
 import { getTranslations } from "../../utils/translations-utils";
 import { Button } from "../Button/Button";
 import styles from "./Buttons.module.scss";
 
-type Props = {
+export type ButtonsProps = {
   handleReset: MouseEventHandler<HTMLButtonElement>;
   handleCopy: MouseEventHandler<HTMLButtonElement>;
 };
 
-const Buttons: React.FC<Props> = ({ handleCopy, handleReset }) => {
+export const Buttons: React.FC<ButtonsProps> = ({
+  handleCopy,
+  handleReset,
+}) => {
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
@@ -29,5 +32,3 @@ const Buttons: React.FC<Props> = ({ handleCopy, handleReset }) => {
     </div>
   );
 };
-
-export default Buttons;

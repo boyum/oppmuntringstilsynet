@@ -1,6 +1,6 @@
 import deepEqual from "deep-equal";
 import { getEmptyState } from "../reducers/message.reducer";
-import Message from "../types/Message";
+import { Message } from "../types/Message";
 
 export function isEmpty(message: Message): boolean {
   const emptyMessage = getEmptyState();

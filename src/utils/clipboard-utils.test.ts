@@ -1,5 +1,5 @@
-import LanguageEnum from "../enums/Language";
-import Message from "../types/Message";
+import { LanguageEnum } from "../enums/Language";
+import { Message } from "../types/Message";
 import { copyToClipboard, createMessageUrl } from "./clipboard-utils";
 
 describe(copyToClipboard.name, () => {

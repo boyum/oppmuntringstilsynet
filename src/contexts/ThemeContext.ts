@@ -12,4 +12,5 @@ const defaultState: [Theme, Dispatch<ThemeAction>] = [
   // then React updates it behind the scenes.
   null,
 ];
-export default createContext(defaultState);
+
+export const ThemeContext = createContext(defaultState);

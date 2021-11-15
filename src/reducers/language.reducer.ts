@@ -1,4 +1,4 @@
-import LanguageEnum from "../enums/Language";
+import { LanguageEnum } from "../enums/Language";
 
 export enum LanguageActionType {
   SetLanguage = "setLanguage",

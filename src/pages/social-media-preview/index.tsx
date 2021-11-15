@@ -2,11 +2,11 @@ import parser from "accept-language-parser";
 import first from "lodash.first";
 import { GetServerSidePropsContext } from "next";
 import { useContext, useEffect } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
-import ThemeContext from "../../contexts/ThemeContext";
-import LanguageEnum from "../../enums/Language";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { LanguageEnum } from "../../enums/Language";
 import { ThemeActionType } from "../../reducers/theme.reducer";
-import Message from "../../types/Message";
+import { Message } from "../../types/Message";
 import { themes } from "../../types/Themes";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import {
@@ -18,15 +18,15 @@ import { getTranslations } from "../../utils/translations-utils";
 import { decodeMessage } from "../../utils/url-utils";
 import styles from "./SocialMediaPreview.module.scss";
 
-type Props = {
+export type SocialMediaPreviewProps = {
   message: Message | null;
   preferredLanguage: LanguageEnum;
 };
 
-const SocialMediaPreview: React.FC<Props> = ({
+const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   message,
   preferredLanguage,
-}: Props) => {
+}) => {
   const [language] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
 
@@ -69,7 +69,7 @@ const SocialMediaPreview: React.FC<Props> = ({
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
-): Promise<{ props: Props }> {
+): Promise<{ props: SocialMediaPreviewProps }> {
   const encodedMessage = Array.isArray(context.query.m)
     ? first(context.query.m)
     : context.query.m;
@@ -81,7 +81,7 @@ export async function getServerSideProps(
     .map(language => language.code);
   const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
-  const serverSideProps: { props: Props } = {
+  const serverSideProps: { props: SocialMediaPreviewProps } = {
     props: {
       message,
       preferredLanguage,
@@ -91,4 +91,5 @@ export async function getServerSideProps(
   return serverSideProps;
 }
 
+// eslint-disable-next-line import/no-default-export
 export default SocialMediaPreview;

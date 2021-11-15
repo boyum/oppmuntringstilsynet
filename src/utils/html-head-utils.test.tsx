@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import LanguageEnum from "../enums/Language";
+import { LanguageEnum } from "../enums/Language";
 import { HtmlHeadData } from "../reducers/html-head.reducer";
-import TranslationsNb from "../types/Translations.nb";
+import { TranslationsNb } from "../types/Translations.nb";
 import { getDefaultHtmlHeadData, renderHtmlHead } from "./html-head-utils";
 
 describe(getDefaultHtmlHeadData.name, () => {
