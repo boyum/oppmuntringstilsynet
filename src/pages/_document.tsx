@@ -20,7 +20,7 @@ class CustomDocument extends Document {
     const initialProps = await Document.getInitialProps(context);
 
     CustomDocument.host = context?.req?.headers.host ?? "";
-    CustomDocument.currentUrl = CustomDocument.host + context?.pathname;
+    CustomDocument.currentUrl = `${CustomDocument.host}${context?.pathname}`;
 
     return { ...initialProps };
   }
