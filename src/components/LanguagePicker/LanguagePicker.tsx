@@ -3,8 +3,8 @@ import { LanguageContext } from "../../contexts/LanguageContext";
 import { LanguageEnum } from "../../enums/Language";
 import { Language } from "../../models/Language";
 import { languages } from "../../models/languages";
-import { getTranslations } from "../../utils/translations-utils";
 import { LanguageActionType } from "../../reducers/language.reducer";
+import { getTranslations } from "../../utils/translations-utils";
 import styles from "./LanguagePicker.module.scss";
 
 export type LanguagePickerProps = {

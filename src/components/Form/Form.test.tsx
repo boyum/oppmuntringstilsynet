@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { Form } from "./Form";
 import { LanguageEnum } from "../../enums/Language";
 import { getEmptyState } from "../../reducers/message.reducer";
 import { LanguageStore } from "../../stores/LanguageStore";
 import { Message } from "../../types/Message";
+import { Form } from "./Form";
 
 expect.extend(toHaveNoViolations);
 

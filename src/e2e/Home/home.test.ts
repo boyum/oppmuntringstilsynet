@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { AxePuppeteer } from "@axe-core/puppeteer";
 import dotenv from "dotenv";
 import type { Page } from "puppeteer";

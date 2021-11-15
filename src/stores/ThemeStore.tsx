@@ -1,8 +1,8 @@
 import { useReducer } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { getActiveTheme } from "../utils/theme-utils";
 import { themeReducer } from "../reducers/theme.reducer";
 import { themes } from "../types/Themes";
+import { getActiveTheme } from "../utils/theme-utils";
 
 export type Props = {
   children: JSX.Element | JSX.Element[];
