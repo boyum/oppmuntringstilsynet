@@ -9,15 +9,13 @@ type Props = {
   pageProps: Record<string, unknown>;
 };
 
-function Oppmuntringstilsynet({ Component, pageProps }: Props): JSX.Element {
-  return (
+const Oppmuntringstilsynet = ({ Component, pageProps }: Props): JSX.Element => (
     <ThemeStore>
       <LanguageStore>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
       </LanguageStore>
     </ThemeStore>
-  );
-}
+  )
 
 export default Oppmuntringstilsynet;
