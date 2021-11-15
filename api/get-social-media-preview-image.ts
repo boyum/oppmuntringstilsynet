@@ -1,7 +1,7 @@
-import puppeteerCore from "puppeteer-core";
-import chrome from "chrome-aws-lambda";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import chrome from "chrome-aws-lambda";
 import puppeteer from "puppeteer";
+import puppeteerCore from "puppeteer-core";
 
 function getExecutablePath(): string {
   let exePath = "";

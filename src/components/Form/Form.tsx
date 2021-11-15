@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
-import { getTranslations } from "../../utils/translations-utils";
 import { Message } from "../../types/Message";
 import { Translations } from "../../types/Translations";
+import { getTranslations } from "../../utils/translations-utils";
 import styles from "./Form.module.scss";
 
 export type FormProps = {

@@ -4,7 +4,7 @@ import Document, {
   Head,
   Html,
   Main,
-  NextScript,
+  NextScript
 } from "next/document";
 import { themes } from "../types/Themes";
 import { getFallbackTheme } from "../utils/theme-utils";

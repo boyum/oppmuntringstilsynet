@@ -1,8 +1,8 @@
 import { createContext, Dispatch } from "react";
-import { getActiveTheme } from "../utils/theme-utils";
 import { ThemeAction } from "../reducers/theme.reducer";
 import { Theme } from "../types/Theme";
 import { themes } from "../types/Themes";
+import { getActiveTheme } from "../utils/theme-utils";
 
 const isClient = typeof window === "object";
 

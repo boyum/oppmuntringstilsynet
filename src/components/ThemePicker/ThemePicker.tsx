@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
+import { Theme } from "../../types/Theme";
 import { getActiveTheme, getTheme } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
-import { Theme } from "../../types/Theme";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
 
