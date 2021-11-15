@@ -9,10 +9,7 @@ type Props = {
   handleCopy: MouseEventHandler<HTMLButtonElement>;
 };
 
-export default function Buttons({
-  handleCopy,
-  handleReset,
-}: Props): JSX.Element {
+const Buttons = ({ handleCopy, handleReset }: Props): JSX.Element => {
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
@@ -31,4 +28,6 @@ export default function Buttons({
       />
     </div>
   );
-}
+};
+
+export default Buttons;
