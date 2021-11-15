@@ -1,14 +1,14 @@
 import { useReducer } from "react";
-import ThemeContext from "../contexts/ThemeContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 import { getActiveTheme } from "../utils/theme-utils";
 import { themeReducer } from "../reducers/theme.reducer";
 import { themes } from "../types/Themes";
 
-type Props = {
+export type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-const ThemeStore: React.FC<Props> = ({ children }) => {
+export const ThemeStore: React.FC<Props> = ({ children }) => {
   const isClient = typeof window === "object";
   const reducer = useReducer(
     themeReducer,
@@ -19,5 +19,3 @@ const ThemeStore: React.FC<Props> = ({ children }) => {
     <ThemeContext.Provider value={reducer}>{children}</ThemeContext.Provider>
   );
 };
-
-export default ThemeStore;

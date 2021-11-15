@@ -1,5 +1,5 @@
-import LanguageEnum from "../enums/Language";
-import Message from "../types/Message";
+import { LanguageEnum } from "../enums/Language";
+import { Message } from "../types/Message";
 
 export enum MessageActionType {
   SetMessage = "setMessage",

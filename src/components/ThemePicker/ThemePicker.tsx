@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
+import { LanguageContext } from "../../contexts/LanguageContext";
 import { getActiveTheme, getTheme } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { Theme } from "../../types/Theme";

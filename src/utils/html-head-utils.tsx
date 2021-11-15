@@ -1,4 +1,4 @@
-import LanguageEnum from "../enums/Language";
+import { LanguageEnum } from "../enums/Language";
 import { HtmlHeadData } from "../reducers/html-head.reducer";
 import { getTranslations } from "./translations-utils";
 

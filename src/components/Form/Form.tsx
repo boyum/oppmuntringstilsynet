@@ -1,18 +1,18 @@
 import { useContext } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
+import { LanguageContext } from "../../contexts/LanguageContext";
 import { getTranslations } from "../../utils/translations-utils";
-import Message from "../../types/Message";
-import Translations from "../../types/Translations";
+import { Message } from "../../types/Message";
+import { Translations } from "../../types/Translations";
 import styles from "./Form.module.scss";
 
-type Props = {
+export type FormProps = {
   isDisabled: boolean;
   message: Message;
   setMessage: (message: Partial<Message>) => void;
   setCheck: (checkValue: boolean, checkIndex: number) => void;
 };
 
-const Form: React.FC<Props> = ({
+export const Form: React.FC<FormProps> = ({
   isDisabled,
   message,
   setMessage,
@@ -104,5 +104,3 @@ const Form: React.FC<Props> = ({
     </form>
   );
 };
-
-export default Form;

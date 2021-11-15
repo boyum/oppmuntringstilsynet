@@ -1,4 +1,4 @@
-import LanguageEnum from "../enums/Language";
+import { LanguageEnum } from "../enums/Language";
 import translations from "../models/languages";
 
 export function getLanguage(localeCode: string): LanguageEnum | null {

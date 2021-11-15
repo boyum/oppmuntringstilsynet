@@ -45,7 +45,7 @@ async function getOptions(
   return options;
 }
 
-export default async function getSocialMediaPreviewImage(
+async function getSocialMediaPreviewImage(
   request: VercelRequest,
   response: VercelResponse,
 ): Promise<void> {
@@ -95,3 +95,6 @@ export default async function getSocialMediaPreviewImage(
 
   response.end(file);
 }
+
+// eslint-disable-next-line import/no-default-export
+export default getSocialMediaPreviewImage;
