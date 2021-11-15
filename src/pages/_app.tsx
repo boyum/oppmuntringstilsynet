@@ -9,13 +9,13 @@ type Props = {
   pageProps: Record<string, unknown>;
 };
 
-const Oppmuntringstilsynet = ({ Component, pageProps }: Props): JSX.Element => (
-    <ThemeStore>
-      <LanguageStore>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
-      </LanguageStore>
-    </ThemeStore>
-  )
+const Oppmuntringstilsynet: React.FC<Props> = ({ Component, pageProps }) => (
+  <ThemeStore>
+    <LanguageStore>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} />
+    </LanguageStore>
+  </ThemeStore>
+);
 
 export default Oppmuntringstilsynet;

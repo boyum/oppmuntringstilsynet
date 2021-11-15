@@ -23,10 +23,10 @@ type Props = {
   preferredLanguage: LanguageEnum;
 };
 
-export default function SocialMediaPreview({
+const SocialMediaPreview: React.FC<Props> = ({
   message,
   preferredLanguage,
-}: Props): JSX.Element {
+}: Props) => {
   const [language] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
 
@@ -65,7 +65,7 @@ export default function SocialMediaPreview({
       </div>
     </main>
   );
-}
+};
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
@@ -90,3 +90,5 @@ export async function getServerSideProps(
 
   return serverSideProps;
 }
+
+export default SocialMediaPreview;

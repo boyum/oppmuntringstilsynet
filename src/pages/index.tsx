@@ -50,13 +50,13 @@ type Props = {
   preferredLanguage: LanguageEnum;
 };
 
-const Home = ({
+const Home: React.FC<Props> = ({
   encodedMessage,
   messageFromUrl,
   resolvedUrl,
   deployUrl,
   preferredLanguage,
-}: Props): JSX.Element => {
+}) => {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
   const [isDisabled, setIsDisabled] = useState(false);

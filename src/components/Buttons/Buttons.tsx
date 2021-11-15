@@ -9,7 +9,7 @@ type Props = {
   handleCopy: MouseEventHandler<HTMLButtonElement>;
 };
 
-const Buttons = ({ handleCopy, handleReset }: Props): JSX.Element => {
+const Buttons: React.FC<Props> = ({ handleCopy, handleReset }) => {
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 

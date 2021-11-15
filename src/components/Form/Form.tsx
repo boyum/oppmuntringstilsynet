@@ -12,12 +12,12 @@ type Props = {
   setCheck: (checkValue: boolean, checkIndex: number) => void;
 };
 
-const Form = ({
+const Form: React.FC<Props> = ({
   isDisabled,
   message,
   setMessage,
   setCheck,
-}: Props): JSX.Element => {
+}) => {
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
