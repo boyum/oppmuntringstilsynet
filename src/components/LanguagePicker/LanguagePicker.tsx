@@ -11,7 +11,7 @@ type Props = {
   handleChange: (newLanguage: LanguageEnum) => void;
 };
 
-const LanguagePicker = ({ handleChange }: Props): JSX.Element => {
+const LanguagePicker: React.FC<Props> = ({ handleChange }) => {
   const [language, setLanguage] = useContext(LanguageContext);
   const languageArr = Object.entries(languages).map(
     ([languageName, lang]: [string, Language]) => [languageName, lang.title],

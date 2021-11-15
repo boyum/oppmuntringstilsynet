@@ -11,7 +11,7 @@ type Props = {
   setTheme: (theme: Theme) => void;
 };
 
-export const ThemePicker = ({ themes, setTheme }: Props): JSX.Element => {
+export const ThemePicker: React.FC<Props> = ({ themes, setTheme }) => {
   const [language] = useContext(LanguageContext);
   const [className, setClassName] = useState(styles.themePicker);
   const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
@@ -77,4 +77,4 @@ export const ThemePicker = ({ themes, setTheme }: Props): JSX.Element => {
       </div>
     </>
   );
-}
+};

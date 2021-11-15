@@ -8,7 +8,7 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-const ThemeStore = ({ children }: Props): JSX.Element => {
+const ThemeStore: React.FC<Props> = ({ children }) => {
   const isClient = typeof window === "object";
   const reducer = useReducer(
     themeReducer,

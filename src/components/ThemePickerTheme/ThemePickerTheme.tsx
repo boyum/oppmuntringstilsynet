@@ -7,9 +7,11 @@ type Props = {
   onClick: (themeName: string) => void;
 };
 
-export const ThemePickerTheme = (props: Props): JSX.Element => {
-  const { theme, isSelected, onClick } = props;
-
+export const ThemePickerTheme: React.FC<Props> = ({
+  theme,
+  isSelected,
+  onClick,
+}) => {
   const classNames = [isSelected ? styles.isSelected : ""].join(" ");
 
   return (
@@ -32,4 +34,4 @@ export const ThemePickerTheme = (props: Props): JSX.Element => {
       </button>
     </li>
   );
-}
+};
