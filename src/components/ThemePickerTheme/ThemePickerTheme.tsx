@@ -7,7 +7,7 @@ type Props = {
   onClick: (themeName: string) => void;
 };
 
-export function ThemePickerTheme(props: Props): JSX.Element {
+export const ThemePickerTheme = (props: Props): JSX.Element => {
   const { theme, isSelected, onClick } = props;
 
   const classNames = [isSelected ? styles.isSelected : ""].join(" ");

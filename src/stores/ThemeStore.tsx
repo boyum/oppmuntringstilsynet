@@ -8,7 +8,7 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-function ThemeStore({ children }: Props): JSX.Element {
+const ThemeStore = ({ children }: Props): JSX.Element => {
   const isClient = typeof window === "object";
   const [theme, dispatch] = useReducer(
     themeReducer,

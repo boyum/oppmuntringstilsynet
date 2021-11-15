@@ -7,7 +7,7 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-function LanguageStore({ children }: Props): JSX.Element {
+const LanguageStore = ({ children }: Props): JSX.Element => {
   const [language, dispatch] = useReducer(
     languageReducer,
     LanguageEnum.English,

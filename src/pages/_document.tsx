@@ -40,11 +40,7 @@ class CustomDocument extends Document {
   }
 
   private static renderMetaTags(): JSX.Element {
-    return (
-      <>
-        <meta property="og:type" content="website" />
-      </>
-    );
+    return <meta property="og:type" content="website" />;
   }
 
   private static renderHead(): JSX.Element {

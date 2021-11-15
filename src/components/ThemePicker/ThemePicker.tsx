@@ -11,7 +11,7 @@ type Props = {
   setTheme: (theme: Theme) => void;
 };
 
-export function ThemePicker({ themes, setTheme }: Props): JSX.Element {
+export const ThemePicker = ({ themes, setTheme }: Props): JSX.Element => {
   const [language] = useContext(LanguageContext);
   const [className, setClassName] = useState(styles.themePicker);
   const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
