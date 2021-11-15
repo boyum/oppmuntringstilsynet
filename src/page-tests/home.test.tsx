@@ -172,6 +172,7 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
+        // eslint-disable-next-line react/jsx-no-constructed-context-values
         <RouterContext.Provider value={{ ...mockRouter }}>
           <ThemeStore>
             <LanguageStore>
