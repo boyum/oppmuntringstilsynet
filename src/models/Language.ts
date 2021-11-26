@@ -1,8 +1,6 @@
-import Translations from "../types/Translations";
+import { Translations } from "../types/Translations";
 
-type Language = {
+export type Language = {
   title: string;
   translations: Translations;
 };
-
-export default Language;

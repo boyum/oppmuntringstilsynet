@@ -1,8 +1,7 @@
-import { render, fireEvent } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-
-import LanguagePicker from "./LanguagePicker";
-import LanguageEnum from "../../enums/Language";
+import { LanguageEnum } from "../../enums/Language";
+import { LanguagePicker } from "./LanguagePicker";
 
 expect.extend(toHaveNoViolations);
 

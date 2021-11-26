@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
+import { LanguageContext } from "../../contexts/LanguageContext";
 import { getTranslations } from "../../utils/translations-utils";
 import styles from "./Footer.module.scss";
 
-export default function Footer(): JSX.Element {
+export const Footer: React.FC = () => {
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
@@ -14,4 +14,4 @@ export default function Footer(): JSX.Element {
       dangerouslySetInnerHTML={{ __html: translations.footerHtml }}
     />
   );
-}
+};

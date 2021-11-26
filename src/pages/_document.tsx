@@ -20,7 +20,7 @@ class CustomDocument extends Document {
     const initialProps = await Document.getInitialProps(context);
 
     CustomDocument.host = context?.req?.headers.host ?? "";
-    CustomDocument.currentUrl = CustomDocument.host + context?.pathname;
+    CustomDocument.currentUrl = `${CustomDocument.host}${context?.pathname}`;
 
     return { ...initialProps };
   }
@@ -40,11 +40,7 @@ class CustomDocument extends Document {
   }
 
   private static renderMetaTags(): JSX.Element {
-    return (
-      <>
-        <meta property="og:type" content="website" />
-      </>
-    );
+    return <meta property="og:type" content="website" />;
   }
 
   private static renderHead(): JSX.Element {
@@ -82,4 +78,5 @@ class CustomDocument extends Document {
   }
 }
 
+// eslint-disable-next-line import/no-default-export
 export default CustomDocument;

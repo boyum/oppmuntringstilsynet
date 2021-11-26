@@ -1,9 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { AxePuppeteer } from "@axe-core/puppeteer";
 import dotenv from "dotenv";
 import type { Page } from "puppeteer";
 import puppeteer from "puppeteer";
-import languages from "../../models/languages";
+import { languages } from "../../models/languages";
 import { themes } from "../../types/Themes";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";

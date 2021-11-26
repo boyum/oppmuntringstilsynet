@@ -13,14 +13,14 @@ import {
   useRef,
   useState,
 } from "react";
-import Buttons from "../components/Buttons/Buttons";
-import Footer from "../components/Footer/Footer";
-import Form from "../components/Form/Footer";
-import LanguagePicker from "../components/LanguagePicker/LanguagePicker";
+import { Buttons } from "../components/Buttons/Buttons";
+import { Footer } from "../components/Footer/Footer";
+import { Form } from "../components/Form/Form";
+import { LanguagePicker } from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
-import LanguageContext from "../contexts/LanguageContext";
-import ThemeContext from "../contexts/ThemeContext";
-import LanguageEnum from "../enums/Language";
+import { LanguageContext } from "../contexts/LanguageContext";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { LanguageEnum } from "../enums/Language";
 import { LanguageActionType } from "../reducers/language.reducer";
 import {
   getEmptyState,
@@ -29,7 +29,7 @@ import {
 } from "../reducers/message.reducer";
 import { ThemeActionType } from "../reducers/theme.reducer";
 import styles from "../styles/Home.module.scss";
-import Message from "../types/Message";
+import { Message } from "../types/Message";
 import { themes } from "../types/Themes";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import {
@@ -42,7 +42,7 @@ import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
 import { decodeMessage } from "../utils/url-utils";
 
-type Props = {
+export type HomeProps = {
   encodedMessage: string | null;
   messageFromUrl: Message | null;
   resolvedUrl: string;
@@ -50,13 +50,13 @@ type Props = {
   preferredLanguage: LanguageEnum;
 };
 
-export default function Home({
+const Home: React.FC<HomeProps> = ({
   encodedMessage,
   messageFromUrl,
   resolvedUrl,
   deployUrl,
   preferredLanguage,
-}: Props): JSX.Element {
+}) => {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -218,11 +218,11 @@ export default function Home({
       <Footer />
     </>
   );
-}
+};
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
-): Promise<{ props: Props }> {
+): Promise<{ props: HomeProps }> {
   const encodedMessage = Array.isArray(context.query.m)
     ? first(context.query.m)
     : context.query.m;
@@ -239,7 +239,7 @@ export async function getServerSideProps(
     .map(language => language.code);
   const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
-  const serverSideProps: { props: Props } = {
+  const serverSideProps: { props: HomeProps } = {
     props: {
       encodedMessage: encodedMessage ?? null,
       messageFromUrl,
@@ -251,3 +251,6 @@ export async function getServerSideProps(
 
   return serverSideProps;
 }
+
+// eslint-disable-next-line import/no-default-export
+export default Home;

@@ -1,8 +1,5 @@
-// eslint-disable-next-line no-shadow
-enum LanguageEnum {
+export enum LanguageEnum {
   NorskBokmal = "NorskBokmal",
   NorskNynorsk = "NorskNynorsk",
   English = "English",
 }
-
-export default LanguageEnum;

@@ -1,8 +1,8 @@
-import LanguageEnum from "../enums/Language";
-import Translations from "../types/Translations";
-import TranslationsEn from "../types/Translations.en";
-import TranslationsNb from "../types/Translations.nb";
-import TranslationsNn from "../types/Translations.nn";
+import { LanguageEnum } from "../enums/Language";
+import { Translations } from "../types/Translations";
+import { TranslationsEn } from "../types/Translations.en";
+import { TranslationsNb } from "../types/Translations.nb";
+import { TranslationsNn } from "../types/Translations.nn";
 
 export type LanguageRecord = {
   title: string;
@@ -10,7 +10,7 @@ export type LanguageRecord = {
   codes: Array<string>;
 };
 
-const translations: { [languageName in LanguageEnum]: LanguageRecord } = {
+export const languages: { [languageName in LanguageEnum]: LanguageRecord } = {
   [LanguageEnum.NorskBokmal]: {
     title: "Norsk bokmål",
     translations: TranslationsNb,
@@ -27,5 +27,3 @@ const translations: { [languageName in LanguageEnum]: LanguageRecord } = {
     codes: ["en"],
   },
 };
-
-export default translations;

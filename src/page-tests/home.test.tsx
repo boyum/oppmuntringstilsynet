@@ -3,11 +3,11 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { NextRouter } from "next/router";
-import LanguageEnum from "../enums/Language";
+import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
-import LanguageStore from "../stores/LanguageStore";
-import ThemeStore from "../stores/ThemeStore";
-import type Message from "../types/Message";
+import { LanguageStore } from "../stores/LanguageStore";
+import { ThemeStore } from "../stores/ThemeStore";
+import type { Message } from "../types/Message";
 
 expect.extend(toHaveNoViolations);
 
@@ -172,6 +172,7 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
+        // eslint-disable-next-line react/jsx-no-constructed-context-values
         <RouterContext.Provider value={{ ...mockRouter }}>
           <ThemeStore>
             <LanguageStore>

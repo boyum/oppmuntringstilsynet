@@ -1,6 +1,6 @@
-import { getTheme } from "../utils/theme-utils";
 import { Theme } from "../types/Theme";
 import { themes } from "../types/Themes";
+import { getTheme } from "../utils/theme-utils";
 
 export enum ThemeActionType {
   SetTheme = "SetTheme",

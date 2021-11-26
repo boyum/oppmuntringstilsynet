@@ -1,6 +1,6 @@
 import * as fc from "fast-check";
-import LanguageEnum from "../enums/Language";
-import Message from "../types/Message";
+import { LanguageEnum } from "../enums/Language";
+import { Message } from "../types/Message";
 import { decode, decodeMessage, encode } from "./url-utils";
 
 describe("Message encoder/decoder", () => {

@@ -1,17 +1,19 @@
 import { ChangeEventHandler, useContext } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
-import LanguageEnum from "../../enums/Language";
-import Language from "../../models/Language";
-import languages from "../../models/languages";
-import { getTranslations } from "../../utils/translations-utils";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { LanguageEnum } from "../../enums/Language";
+import { Language } from "../../models/Language";
+import { languages } from "../../models/languages";
 import { LanguageActionType } from "../../reducers/language.reducer";
+import { getTranslations } from "../../utils/translations-utils";
 import styles from "./LanguagePicker.module.scss";
 
-type Props = {
+export type LanguagePickerProps = {
   handleChange: (newLanguage: LanguageEnum) => void;
 };
 
-export default function LanguagePicker({ handleChange }: Props): JSX.Element {
+export const LanguagePicker: React.FC<LanguagePickerProps> = ({
+  handleChange,
+}) => {
   const [language, setLanguage] = useContext(LanguageContext);
   const languageArr = Object.entries(languages).map(
     ([languageName, lang]: [string, Language]) => [languageName, lang.title],
@@ -51,4 +53,4 @@ export default function LanguagePicker({ handleChange }: Props): JSX.Element {
       </select>
     </label>
   );
-}
+};

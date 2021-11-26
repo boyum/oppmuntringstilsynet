@@ -1,4 +1,4 @@
-type Translations = {
+export type Translations = {
   pageTitle: string;
   pageOgTitle: string;
   pageDescription: string;
@@ -22,5 +22,3 @@ type Translations = {
   /** `{name}` will be replaced with the name on the card, or the translation of `someone` */
   previewTitleWithoutMessage: string;
 };
-
-export default Translations;

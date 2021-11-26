@@ -1,23 +1,23 @@
 import { useContext } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { Message } from "../../types/Message";
+import { Translations } from "../../types/Translations";
 import { getTranslations } from "../../utils/translations-utils";
-import Message from "../../types/Message";
-import Translations from "../../types/Translations";
 import styles from "./Form.module.scss";
 
-type Props = {
+export type FormProps = {
   isDisabled: boolean;
   message: Message;
   setMessage: (message: Partial<Message>) => void;
   setCheck: (checkValue: boolean, checkIndex: number) => void;
 };
 
-export default function Form({
+export const Form: React.FC<FormProps> = ({
   isDisabled,
   message,
   setMessage,
   setCheck,
-}: Props): JSX.Element {
+}) => {
   const [language] = useContext(LanguageContext);
   const translations = getTranslations(language);
 
@@ -64,49 +64,43 @@ export default function Form({
   }
 
   return (
-    <>
-      <form className={styles.form}>
-        <label className={styles.date}>
-          {translations.dateLabel}
-          <input
-            type="text"
-            id="date-field"
-            value={message.date}
-            disabled={isDisabled}
-            onChange={event =>
-              handleChange({ date: event.currentTarget.value })
-            }
-          />
-        </label>
-        <label className={styles.message}>
-          {translations.messageLabel}
-          <textarea
-            id="message-body-field"
-            rows={4}
-            value={message.message}
-            disabled={isDisabled}
-            onChange={event =>
-              handleChange({ message: event.currentTarget.value })
-            }
-          />
-        </label>
-        <div className={styles.checkboxContainer}>
-          {translations.checkboxHeading}
-          {renderCheckboxes()}
-        </div>
-        <label className={styles.name}>
-          {translations.nameLabel}
-          <input
-            id="name-field"
-            type="text"
-            value={message.name}
-            disabled={isDisabled}
-            onChange={event =>
-              handleChange({ name: event.currentTarget.value })
-            }
-          />
-        </label>
-      </form>
-    </>
+    <form className={styles.form}>
+      <label className={styles.date}>
+        {translations.dateLabel}
+        <input
+          type="text"
+          id="date-field"
+          value={message.date}
+          disabled={isDisabled}
+          onChange={event => handleChange({ date: event.currentTarget.value })}
+        />
+      </label>
+      <label className={styles.message}>
+        {translations.messageLabel}
+        <textarea
+          id="message-body-field"
+          rows={4}
+          value={message.message}
+          disabled={isDisabled}
+          onChange={event =>
+            handleChange({ message: event.currentTarget.value })
+          }
+        />
+      </label>
+      <div className={styles.checkboxContainer}>
+        {translations.checkboxHeading}
+        {renderCheckboxes()}
+      </div>
+      <label className={styles.name}>
+        {translations.nameLabel}
+        <input
+          id="name-field"
+          type="text"
+          value={message.name}
+          disabled={isDisabled}
+          onChange={event => handleChange({ name: event.currentTarget.value })}
+        />
+      </label>
+    </form>
   );
-}
+};

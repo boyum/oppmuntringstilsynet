@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import LanguageContext from "../../contexts/LanguageContext";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { Theme } from "../../types/Theme";
 import { getActiveTheme, getTheme } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
-import { Theme } from "../../types/Theme";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
 
@@ -11,7 +11,7 @@ type Props = {
   setTheme: (theme: Theme) => void;
 };
 
-export function ThemePicker({ themes, setTheme }: Props): JSX.Element {
+export const ThemePicker: React.FC<Props> = ({ themes, setTheme }) => {
   const [language] = useContext(LanguageContext);
   const [className, setClassName] = useState(styles.themePicker);
   const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
@@ -77,4 +77,4 @@ export function ThemePicker({ themes, setTheme }: Props): JSX.Element {
       </div>
     </>
   );
-}
+};

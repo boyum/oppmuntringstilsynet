@@ -1,7 +1,7 @@
-import puppeteerCore from "puppeteer-core";
-import chrome from "chrome-aws-lambda";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import chrome from "chrome-aws-lambda";
 import puppeteer from "puppeteer";
+import puppeteerCore from "puppeteer-core";
 
 function getExecutablePath(): string {
   let exePath = "";
@@ -45,7 +45,7 @@ async function getOptions(
   return options;
 }
 
-export default async function getSocialMediaPreviewImage(
+async function getSocialMediaPreviewImage(
   request: VercelRequest,
   response: VercelResponse,
 ): Promise<void> {
@@ -95,3 +95,6 @@ export default async function getSocialMediaPreviewImage(
 
   response.end(file);
 }
+
+// eslint-disable-next-line import/no-default-export
+export default getSocialMediaPreviewImage;

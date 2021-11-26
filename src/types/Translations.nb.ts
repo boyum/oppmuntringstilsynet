@@ -1,6 +1,6 @@
-import Translations from "./Translations";
+import { Translations } from "./Translations";
 
-const TranslationsNb: Translations = {
+export const TranslationsNb: Translations = {
   pageTitle: "Oppmuntringstilsynet",
   pageOgTitle: "Oppmuntringstilsynet",
   pageDescription:
@@ -25,5 +25,3 @@ const TranslationsNb: Translations = {
   previewTitleWithMessage: "{name} setter pris på deg!",
   previewTitleWithoutMessage: "Oppmuntringstilsynet",
 };
-
-export default TranslationsNb;
