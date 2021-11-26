@@ -15,7 +15,7 @@ export function getTheme(themeName: string, themes: readonly Theme[]): Theme {
 }
 
 export function getFallbackTheme(themes: ReadonlyArray<Theme>): Theme {
-  return themes.find(theme => theme.name === "original") ?? themes[0];
+  return themes.find(theme => theme.name === "pride") ?? themes[0];
 }
 
 export function getActiveTheme(themes: ReadonlyArray<Theme>): Theme {
