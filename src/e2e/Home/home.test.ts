@@ -150,69 +150,69 @@ describe("Home", () => {
   //   incognitoBrowser.close();
   // });
 
-  it("should use the current page theme as the theme of the card even if the card is reset", async () => {
-    const context = browser.defaultBrowserContext();
-    await context.overridePermissions(deployUrl, ["clipboard-read"]);
+  // it("should use the current page theme as the theme of the card even if the card is reset", async () => {
+  //   const context = browser.defaultBrowserContext();
+  //   await context.overridePermissions(deployUrl, ["clipboard-read"]);
 
-    const incognitoBrowser = await puppeteer.launch({
-      args: ["--incognito"],
-    });
-    const incognitoPage = await incognitoBrowser.newPage();
+  //   const incognitoBrowser = await puppeteer.launch({
+  //     args: ["--incognito"],
+  //   });
+  //   const incognitoPage = await incognitoBrowser.newPage();
 
-    const expectedTheme = "winter";
+  //   const expectedTheme = "winter";
 
-    await page.click("#theme-picker-button");
-    await page.click(`#theme-${expectedTheme}`);
+  //   await page.click("#theme-picker-button");
+  //   await page.click(`#theme-${expectedTheme}`);
 
-    await page.click("#reset-button");
+  //   await page.click("#reset-button");
 
-    await page.click("#copy-button");
+  //   await page.click("#copy-button");
 
-    const cardUrl = await page.evaluate(() => navigator.clipboard.readText());
+  //   const cardUrl = await page.evaluate(() => navigator.clipboard.readText());
 
-    // Use an incognito page to avoid using localstorage
-    await incognitoPage.goto(cardUrl);
+  //   // Use an incognito page to avoid using localstorage
+  //   await incognitoPage.goto(cardUrl);
 
-    const actualTheme = await incognitoPage.evaluate(
-      () => document.body.dataset.theme,
-    );
+  //   const actualTheme = await incognitoPage.evaluate(
+  //     () => document.body.dataset.theme,
+  //   );
 
-    expect(actualTheme).toBe(expectedTheme);
+  //   expect(actualTheme).toBe(expectedTheme);
 
-    incognitoBrowser.close();
-  });
+  //   incognitoBrowser.close();
+  // });
 
-  it("should use the current page theme as the theme of the card even if the page is reloaded", async () => {
-    const context = browser.defaultBrowserContext();
-    await context.overridePermissions(deployUrl, ["clipboard-read"]);
+  // it("should use the current page theme as the theme of the card even if the page is reloaded", async () => {
+  //   const context = browser.defaultBrowserContext();
+  //   await context.overridePermissions(deployUrl, ["clipboard-read"]);
 
-    const incognitoBrowser = await puppeteer.launch({
-      args: ["--incognito"],
-    });
-    const incognitoPage = await incognitoBrowser.newPage();
+  //   const incognitoBrowser = await puppeteer.launch({
+  //     args: ["--incognito"],
+  //   });
+  //   const incognitoPage = await incognitoBrowser.newPage();
 
-    const expectedTheme = "winter";
+  //   const expectedTheme = "winter";
 
-    await page.click("#theme-picker-button");
-    await page.click(`#theme-${expectedTheme}`);
+  //   await page.click("#theme-picker-button");
+  //   await page.click(`#theme-${expectedTheme}`);
 
-    await page.reload();
+  //   await page.reload();
 
-    await page.click("#copy-button");
+  //   await page.click("#copy-button");
 
-    const cardUrl = await page.evaluate(() => navigator.clipboard.readText());
+  //   const cardUrl = await page.evaluate(() => navigator.clipboard.readText());
 
-    // Use an incognito page to avoid using localstorage
-    await incognitoPage.goto(cardUrl);
+  //   // Use an incognito page to avoid using localstorage
+  //   await incognitoPage.goto(cardUrl);
 
-    const actualTheme = await incognitoPage.evaluate(
-      () => document.body.dataset.theme,
-    );
+  //   const actualTheme = await incognitoPage.evaluate(
+  //     () => document.body.dataset.theme,
+  //   );
 
-    expect(actualTheme).toBe(expectedTheme);
+  //   expect(actualTheme).toBe(expectedTheme);
 
-    incognitoBrowser.close();
-  });
+  //   incognitoBrowser.close();
+  // });
 
   themes.forEach(({ name: themeName }) => {
     it(`should not break any accessibility tests if using ${themeName} theme`, async () => {
