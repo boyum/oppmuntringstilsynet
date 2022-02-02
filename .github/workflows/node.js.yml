@@ -14,17 +14,8 @@ jobs:
     name: Validate code style
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
@@ -36,17 +27,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
@@ -107,24 +89,11 @@ jobs:
     name: Run e2e tests
     runs-on: ubuntu-latest
 
-    needs:
-      - deploy
-
     steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 16.1
-
       - uses: actions/checkout@v2
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
 
-      - name: Store DEPLOY_URL in env file
-        run: |
-          touch .env
-          echo DEPLOY_URL=${{ needs.deploy.outputs.preview-url }} >> .env
-
       - name: Run e2e tests
-        run: |
-          npm run ci-test:e2e
+        run: npm run run-ci-e2e
