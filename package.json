@@ -7,10 +7,12 @@
     "dev:api": "npx vercel dev",
     "build": "next build",
     "start": "next start",
+    "start-server": "npm run build && npm run start",
     "test:unit": "jest --watch",
     "ci-test:unit": "jest --coverage",
     "test:e2e": "jest --watch --config jest.config.e2e.ts",
     "ci-test:e2e": "jest --coverage --config jest.config.e2e.ts",
+    "run-ci-e2e": "start-server-and-test start-server http://localhost:3000 ci-test:e2e",
     "lint": "eslint '**/!(node_modules)/*.+(js|jsx|ts|tsx)' -c '.eslintrc.json'",
     "lint:fix": "npm run lint -- --fix",
     "format:check": "prettier --check .",
@@ -71,6 +73,7 @@
     "jest-puppeteer": "^6.0.3",
     "prettier": "^2.5.1",
     "sass": "^1.49.0",
+    "start-server-and-test": "^1.14.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5"
   }
