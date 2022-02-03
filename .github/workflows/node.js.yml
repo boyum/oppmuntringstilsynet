@@ -52,7 +52,7 @@ jobs:
         with:
           token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
           initial_status: in_progress
-          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development'}}
+          environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20.0.0
