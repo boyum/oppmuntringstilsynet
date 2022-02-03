@@ -51,10 +51,20 @@ jobs:
         id: vercel-deployment
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          zeit-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || ''}}
+
+      - uses: chrnorm/deployment-action@releases/v1
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: "${{ github.token }}"
+          target_url: ${{ github.ref == 'refs/heads/main' && 'https://oppmuntring.sindre.is' || steps.vercel-deployment.outputs.preview-url }}
+          initial_status: success
+          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development'}}
 
     outputs:
       preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
