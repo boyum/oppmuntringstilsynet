@@ -68,7 +68,7 @@
     "jest-config": "^27.4.6",
     "jest-css-modules": "^2.1.0",
     "jest-css-modules-transform": "^4.3.0",
-    "jest-puppeteer": "^6.0.3",
+    "jest-puppeteer": "^6.1.0",
     "prettier": "^2.5.1",
     "sass": "^1.49.7",
     "start-server-and-test": "^1.14.0",
