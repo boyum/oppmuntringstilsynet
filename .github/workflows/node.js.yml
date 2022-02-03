@@ -59,12 +59,11 @@ jobs:
 
       - uses: chrnorm/deployment-action@releases/v1
         name: Create GitHub deployment
-        id: deployment
         with:
           token: "${{ github.token }}"
           target_url: ${{ github.ref == 'refs/heads/main' && 'https://oppmuntring.sindre.is' || steps.vercel-deployment.outputs.preview-url }}
           initial_status: success
-          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development'}}
+          environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
 
     outputs:
       preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
