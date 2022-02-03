@@ -46,17 +46,13 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Update deployment status to in progress
-        uses: octokit/request-action@v2.x
+      - uses: chrnorm/deployment-action@releases/v1
+        name: Create GitHub deployment
+        id: deployment
         with:
-          route: POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
-          owner: ${{ github.event.repository.owner.login }}
-          repo: ${{ github.event.repository.name }}
-          environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
-          deployment_id: ${{ github.event.client_payload.deployment_id }}
-          state: in_progress
-        env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          initial_status: in_progress
+          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development'}}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20.0.0
@@ -69,33 +65,23 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || ''}}
 
-      - if: success()
-        name: Update deployment status to success
-        uses: octokit/request-action@v2.x
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
         with:
-          route: POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
-          owner: ${{ github.event.repository.owner.login }}
-          repo: ${{ github.event.repository.name }}
-          deployment_id: ${{ github.event.client_payload.deployment_id }}
+          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          target_url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
           state: success
-          environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
-          environment_url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
-      - if: failure()
-        name: Update deployment status to failure
-        uses: octokit/request-action@v2.x
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@releases/v1
         with:
-          route: POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
-          owner: ${{ github.event.repository.owner.login }}
-          repo: ${{ github.event.repository.name }}
-          environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
-          environment_url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
-          deployment_id: ${{ github.event.client_payload.deployment_id }}
+          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          target_url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
           state: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
     outputs:
       preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
