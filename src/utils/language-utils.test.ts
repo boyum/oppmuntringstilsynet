@@ -1,5 +1,6 @@
 import * as fc from "fast-check";
 import { LanguageEnum } from "../enums/Language";
+import { languages } from "../models/languages";
 import { getLanguage, getPreferredLanguage } from "./language-utils";
 
 describe(getLanguage.name, () => {
@@ -26,6 +27,13 @@ describe(getLanguage.name, () => {
       fc.property(fc.string(), localeCode => {
         const expectedLanguage: LanguageEnum | null = null;
         const actualLanguage = getLanguage(localeCode);
+
+        const isSupportedCode = Object.values(languages)
+          .flatMap(language => language.codes)
+          .includes(localeCode);
+        if (isSupportedCode) {
+          return true;
+        }
 
         return actualLanguage === expectedLanguage;
       }),
