@@ -9,6 +9,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -65,17 +66,13 @@ const Home: React.FC<HomeProps> = ({
     messageReducer,
     messageFromUrl ?? getEmptyState(),
   );
+  const [forcedLanguage, setForcedLanguage] = useState<LanguageEnum | null>(
+    null,
+  );
   const router = useRouter();
   const tempInput = useRef<HTMLInputElement>(null);
 
   const translations = getTranslations(messageFromUrl?.language ?? language);
-
-  const htmlHeadData = getDefaultHtmlHeadData(
-    messageFromUrl?.language ?? language,
-    `${deployUrl}${resolvedUrl}`,
-    encodedMessage,
-    deployUrl,
-  );
 
   useEffect(() => {
     const shouldSetMessage =
@@ -147,13 +144,15 @@ const Home: React.FC<HomeProps> = ({
   }, [router]);
 
   const handleLanguageChange = useCallback(
-    (newLanguage: LanguageEnum): void =>
-      dispatchMessageAction({
+    (newLanguage: LanguageEnum): void => {
+      setForcedLanguage(newLanguage);
+      return dispatchMessageAction({
         type: MessageActionType.SetMessage,
         message: {
           language: newLanguage,
         },
-      }),
+      });
+    },
     [],
   );
 
@@ -176,9 +175,27 @@ const Home: React.FC<HomeProps> = ({
     [],
   );
 
+  const headData = useMemo(() => {
+    const htmlHeadData = getDefaultHtmlHeadData(
+      forcedLanguage ?? messageFromUrl?.language ?? language,
+      `${deployUrl}${resolvedUrl}`,
+      encodedMessage,
+      deployUrl,
+    );
+
+    return renderHtmlHead(htmlHeadData);
+  }, [
+    deployUrl,
+    encodedMessage,
+    language,
+    messageFromUrl?.language,
+    resolvedUrl,
+    forcedLanguage,
+  ]);
+
   return (
     <>
-      <Head>{renderHtmlHead(htmlHeadData)}</Head>
+      <Head>{headData}</Head>
       <div className={styles.themePickerButtonWrapper}>
         <ThemePicker
           themes={themes}

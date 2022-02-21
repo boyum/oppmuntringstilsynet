@@ -329,20 +329,8 @@ describe("Home", () => {
   it("should update the page title when the language changes", async () => {
     const newLanguage = languages.NorskBokmal;
 
-    await page.$eval("[data-test-id=language-select]", selectElement => {
-      if (!selectElement) {
-        throw new Error("Language selector not found");
-      }
-
-      const isSelect = selectElement.tagName.toUpperCase() === "SELECT";
-      if (!isSelect) {
-        throw new Error("Element is not of type select");
-      }
-
-      // eslint-disable-next-line no-param-reassign
-      (selectElement as HTMLSelectElement).value = "Norsk bokmål";
-    });
-
+    await page.select("[data-test-id=language-select]", "NorskBokmal")
+    
     const title = await page.$eval("title", titleElement => {
       if (!titleElement) {
         throw new Error("Title element not found");
@@ -378,20 +366,7 @@ describe("Home", () => {
     const copiedUrl = await page.evaluate(() => navigator.clipboard.readText());
 
     await page.goto(copiedUrl);
-
-    await page.$eval("[data-test-id=language-select]", selectElement => {
-      if (!selectElement) {
-        throw new Error("Language selector not found");
-      }
-
-      const isSelect = selectElement.tagName.toUpperCase() === "SELECT";
-      if (!isSelect) {
-        throw new Error("Element is not of type select");
-      }
-
-      // eslint-disable-next-line no-param-reassign
-      (selectElement as HTMLSelectElement).value = "Norsk bokmål";
-    });
+    await page.select("[data-test-id=language-select]", "NorskBokmal")
 
     const newTitle = await page.$eval("title", titleElement => {
       if (!titleElement) {
