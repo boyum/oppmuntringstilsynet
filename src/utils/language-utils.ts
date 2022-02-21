@@ -17,7 +17,6 @@ export function getPreferredLanguage(
 ): LanguageEnum {
   const defaultLanguage = LanguageEnum.English;
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const localeCode of preferredLanguages) {
     const language = getLanguage(localeCode);
 
