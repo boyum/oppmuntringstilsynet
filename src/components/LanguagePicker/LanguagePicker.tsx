@@ -37,6 +37,7 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
     <label>
       <span className="hidden">{translations.setLanguage}</span>
       <select
+        data-test-id="language-select"
         className={styles.select}
         onChange={handleOnChange}
         value={language}

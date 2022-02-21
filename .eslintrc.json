@@ -12,6 +12,7 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "no-restricted-syntax": "off",
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",

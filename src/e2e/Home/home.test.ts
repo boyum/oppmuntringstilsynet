@@ -1,7 +1,6 @@
 import { AxePuppeteer } from "@axe-core/puppeteer";
 import dotenv from "dotenv";
 import type { Page } from "puppeteer";
-import puppeteer from "puppeteer";
 import { languages } from "../../models/languages";
 import { themes } from "../../types/Themes";
 import { getPreferredLanguage } from "../../utils/language-utils";
@@ -309,5 +308,103 @@ describe("Home", () => {
         expect(isDisabled).toBe(false);
       }),
     );
+  });
+
+  it("should use the default language's pageTitle property as title", async () => {
+    const language = languages.English;
+
+    const title = await page.$eval("title", titleElement => {
+      if (!titleElement) {
+        throw new Error("Title element not found");
+      }
+
+      return titleElement.innerHTML;
+    });
+
+    const expectedTitle = language.translations.pageTitle;
+
+    expect(title).toBe(expectedTitle);
+  });
+
+  it("should update the page title when the language changes", async () => {
+    const newLanguage = languages.NorskBokmal;
+
+    await page.$eval("[data-test-id=language-select]", selectElement => {
+      if (!selectElement) {
+        throw new Error("Language selector not found");
+      }
+
+      const isSelect = selectElement.tagName.toUpperCase() === "SELECT";
+      if (!isSelect) {
+        throw new Error("Element is not of type select");
+      }
+
+      // eslint-disable-next-line no-param-reassign
+      (selectElement as HTMLSelectElement).value = "Norsk bokmål";
+    });
+
+    const title = await page.$eval("title", titleElement => {
+      if (!titleElement) {
+        throw new Error("Title element not found");
+      }
+
+      return titleElement.innerHTML;
+    });
+
+    const expectedTitle = newLanguage.translations.pageTitle;
+
+    expect(title).toBe(expectedTitle);
+  });
+
+  it("should update the page title when the language changes also on opened cards", async () => {
+    const context = browser.defaultBrowserContext();
+    await context.overridePermissions(deployUrl, ["clipboard-read"]);
+
+    const oldLanguage = languages.English;
+    const newLanguage = languages.NorskBokmal;
+
+    const oldTitle = await page.$eval("title", titleElement => {
+      if (!titleElement) {
+        throw new Error("Title element not found");
+      }
+
+      return titleElement.innerHTML;
+    });
+
+    await page.type("#date-field", "date");
+
+    await page.click("#copy-button");
+
+    const copiedUrl = await page.evaluate(() => navigator.clipboard.readText());
+
+    await page.goto(copiedUrl);
+
+    await page.$eval("[data-test-id=language-select]", selectElement => {
+      if (!selectElement) {
+        throw new Error("Language selector not found");
+      }
+
+      const isSelect = selectElement.tagName.toUpperCase() === "SELECT";
+      if (!isSelect) {
+        throw new Error("Element is not of type select");
+      }
+
+      // eslint-disable-next-line no-param-reassign
+      (selectElement as HTMLSelectElement).value = "Norsk bokmål";
+    });
+
+    const newTitle = await page.$eval("title", titleElement => {
+      if (!titleElement) {
+        throw new Error("Title element not found");
+      }
+
+      return titleElement.innerHTML;
+    });
+
+    const expectedOldTitle = oldLanguage.translations.pageTitle;
+    const expectedNewTitle = newLanguage.translations.pageTitle;
+
+    expect(oldTitle).toBe(expectedOldTitle);
+    expect(newTitle).toBe(expectedNewTitle);
   });
 });
