@@ -329,8 +329,8 @@ describe("Home", () => {
   it("should update the page title when the language changes", async () => {
     const newLanguage = languages.NorskBokmal;
 
-    await page.select("[data-test-id=language-select]", "NorskBokmal")
-    
+    await page.select("[data-test-id=language-select]", "NorskBokmal");
+
     const title = await page.$eval("title", titleElement => {
       if (!titleElement) {
         throw new Error("Title element not found");
@@ -366,7 +366,7 @@ describe("Home", () => {
     const copiedUrl = await page.evaluate(() => navigator.clipboard.readText());
 
     await page.goto(copiedUrl);
-    await page.select("[data-test-id=language-select]", "NorskBokmal")
+    await page.select("[data-test-id=language-select]", "NorskBokmal");
 
     const newTitle = await page.$eval("title", titleElement => {
       if (!titleElement) {
