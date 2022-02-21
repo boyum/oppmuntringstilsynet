@@ -330,7 +330,7 @@ describe("Home", () => {
     const newLanguage = languages.NorskBokmal;
 
     await page.select("[data-test-id=language-select]", "NorskBokmal")
-    
+
     const title = await page.$eval("title", titleElement => {
       if (!titleElement) {
         throw new Error("Title element not found");
