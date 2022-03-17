@@ -69,7 +69,7 @@
     "jest-css-modules": "^2.1.0",
     "jest-css-modules-transform": "^4.3.0",
     "jest-puppeteer": "^6.1.0",
-    "prettier": "^2.5.1",
+    "prettier": "^2.6.0",
     "sass": "^1.49.9",
     "start-server-and-test": "^1.14.0",
     "ts-node": "^10.7.0",
