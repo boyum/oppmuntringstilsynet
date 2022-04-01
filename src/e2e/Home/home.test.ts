@@ -30,6 +30,8 @@ describe("Home", () => {
       });
       await page.goto(deployUrl);
 
+      await page.waitForSelector("[data-theme]");
+
       await expect(page.title()).resolves.toMatch(
         languageRecord.translations.pageTitle,
       );
