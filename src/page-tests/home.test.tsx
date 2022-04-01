@@ -3,6 +3,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { NextRouter } from "next/router";
+import { act } from "react-dom/test-utils";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
 import { LanguageStore } from "../stores/LanguageStore";
@@ -137,7 +138,10 @@ describe(Home.name, () => {
         throw new Error("Copy button or date field not rendered");
       }
 
-      dateField.value = "date";
+      act(() => {
+        dateField.value = "date";
+      });
+
       copyButton.click();
 
       expect(document.execCommand).toHaveBeenCalledWith("copy");
@@ -198,10 +202,14 @@ describe(Home.name, () => {
         throw new Error("Reset button or date field not rendered");
       }
 
-      dateField.value = "date";
+      act(() => {
+        dateField.value = "date";
+      });
       expect(dateField.value).toBe("date");
 
-      resetButton.click();
+      act(() => {
+        resetButton.click();
+      });
 
       expect(dateField.value).toBe("");
     });
