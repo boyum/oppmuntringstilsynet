@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { LanguageEnum } from "../../enums/Language";
@@ -94,7 +94,9 @@ describe(Form.name, () => {
 
     const newDateValue = "new date value";
 
-    userEvent.type(dateInput, newDateValue);
+    act(() => {
+      userEvent.type(dateInput, newDateValue);
+    });
   });
 
   it("should handle checkbox changes", async () => {
@@ -132,6 +134,8 @@ describe(Form.name, () => {
       throw new Error("No checkboxes found");
     }
 
-    userEvent.click(checkbox);
+    act(() => {
+      checkbox.click();
+    });
   });
 });

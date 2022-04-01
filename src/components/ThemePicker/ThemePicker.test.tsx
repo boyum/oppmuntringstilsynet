@@ -1,5 +1,4 @@
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { act, render } from "@testing-library/react";
 import { Theme } from "../../types/Theme";
 import { ThemePicker } from "./ThemePicker";
 
@@ -25,7 +24,9 @@ describe(ThemePicker.name, () => {
     }
 
     expect(themePicker.dataset.isOpen).toBe("false");
-    userEvent.click(themePickerButton);
+    act(() => {
+      themePickerButton.click();
+    });
     expect(themePicker.dataset.isOpen).toBe("true");
   });
 
@@ -50,9 +51,14 @@ describe(ThemePicker.name, () => {
     }
 
     expect(themePicker.dataset.isOpen).toBe("false");
-    userEvent.click(themePickerButton);
+
+    act(() => {
+      themePickerButton.click();
+    });
     expect(themePicker.dataset.isOpen).toBe("true");
-    userEvent.click(themePickerButton);
+    act(() => {
+      themePickerButton.click();
+    });
     expect(themePicker.dataset.isOpen).toBe("false");
   });
 
@@ -83,9 +89,13 @@ describe(ThemePicker.name, () => {
       throw new Error("Theme picker not rendered");
     }
 
-    userEvent.click(themePickerButton);
+    act(() => {
+      themePickerButton.click();
+    });
     expect(themePicker.dataset.isOpen).toBe("true");
-    userEvent.click(themeButton);
+    act(() => {
+      themeButton.click();
+    });
     expect(themePicker.dataset.isOpen).toBe("false");
   });
 });
