@@ -56,7 +56,10 @@ export const Form: React.FC<FormProps> = ({
             handleCheckChange(event.currentTarget.value, index)
           }
         />
-        <label className={styles["checkbox-label"]} htmlFor={getCheckboxId(index)}>
+        <label
+          className={styles["checkbox-label"]}
+          htmlFor={getCheckboxId(index)}
+        >
           {getCheckboxLabel(index)}
         </label>
       </div>
