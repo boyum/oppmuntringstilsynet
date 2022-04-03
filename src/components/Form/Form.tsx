@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
-import { Message } from "../../types/Message";
-import { Translations } from "../../types/Translations";
+import type { Message } from "../../types/Message";
+import type { Translations } from "../../types/Translations";
 import { getTranslations } from "../../utils/translations-utils";
 import styles from "./Form.module.scss";
 
@@ -41,7 +41,7 @@ export const Form: React.FC<FormProps> = ({
   }
 
   function renderCheckboxes(): JSX.Element[] {
-    const checkboxClassName = `${styles.checkbox} hidden`;
+    const checkboxClassName = `${styles["checkbox"]} hidden`;
 
     return message.checks.map((check, index) => (
       <div key={getCheckboxId(index)}>
@@ -56,7 +56,7 @@ export const Form: React.FC<FormProps> = ({
             handleCheckChange(event.currentTarget.value, index)
           }
         />
-        <label className={styles.checkboxLabel} htmlFor={getCheckboxId(index)}>
+        <label className={styles["checkbox-label"]} htmlFor={getCheckboxId(index)}>
           {getCheckboxLabel(index)}
         </label>
       </div>
@@ -64,8 +64,8 @@ export const Form: React.FC<FormProps> = ({
   }
 
   return (
-    <form className={styles.form}>
-      <label className={styles.date}>
+    <form className={styles["form"]}>
+      <label className={styles["date"]}>
         {translations.dateLabel}
         <input
           type="text"
@@ -75,7 +75,7 @@ export const Form: React.FC<FormProps> = ({
           onChange={event => handleChange({ date: event.currentTarget.value })}
         />
       </label>
-      <label className={styles.message}>
+      <label className={styles["message"]}>
         {translations.messageLabel}
         <textarea
           id="message-body-field"
@@ -87,11 +87,11 @@ export const Form: React.FC<FormProps> = ({
           }
         />
       </label>
-      <div className={styles.checkboxContainer}>
+      <div className={styles["checkbox-container"]}>
         {translations.checkboxHeading}
         {renderCheckboxes()}
       </div>
-      <label className={styles.name}>
+      <label className={styles["name"]}>
         {translations.nameLabel}
         <input
           id="name-field"

@@ -1,6 +1,7 @@
 import * as fc from "fast-check";
 import { LanguageEnum } from "../enums/Language";
 import { languages } from "../models/languages";
+import type { LocaleCode } from "../types/LocaleCode";
 import { getLanguage, getPreferredLanguage } from "./language-utils";
 
 describe(getLanguage.name, () => {
@@ -30,7 +31,7 @@ describe(getLanguage.name, () => {
 
         const isSupportedCode = Object.values(languages)
           .flatMap(language => language.codes)
-          .includes(localeCode);
+          .includes(localeCode as LocaleCode);
         if (isSupportedCode) {
           return true;
         }

@@ -1,4 +1,6 @@
+import type { ThemeName } from "./ThemeName";
+
 export type Theme = {
-  name: string;
+  name: ThemeName;
   label: string;
 };

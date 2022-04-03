@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../enums/Language";
+import type { LanguageEnum } from "../enums/Language";
 
 export enum LanguageActionType {
   SetLanguage = "setLanguage",
@@ -11,7 +11,7 @@ export type LanguageAction = {
 };
 
 export function languageReducer(
-  state: LanguageEnum,
+  _state: LanguageEnum,
   action: LanguageAction,
 ): LanguageEnum {
   switch (action.type) {

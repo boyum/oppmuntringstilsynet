@@ -2,13 +2,14 @@ import { AxePuppeteer } from "@axe-core/puppeteer";
 import dotenv from "dotenv";
 import type { Page } from "puppeteer";
 import { languages } from "../../models/languages";
+import type { LocaleCode } from "../../types/LocaleCode";
 import { themes } from "../../types/Themes";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 
 dotenv.config();
 
-const deployUrl = process.env.DEPLOY_URL ?? "http://localhost:3000";
+const deployUrl = process.env["DEPLOY_URL"] ?? "http://localhost:3000";
 
 describe("Home", () => {
   let page: Page;
@@ -39,7 +40,10 @@ describe("Home", () => {
   });
 
   it(`should have the default language's title if the Accept-Language is not supported`, async () => {
-    const defaultLanguage = getPreferredLanguage(["unknown", "language"]);
+    const defaultLanguage = getPreferredLanguage([
+      "unknown",
+      "language",
+    ] as unknown as Array<LocaleCode>);
     const translations = getTranslations(defaultLanguage);
 
     await expect(page.title()).resolves.toMatch(translations.pageTitle);

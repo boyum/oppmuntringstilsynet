@@ -1,5 +1,5 @@
 import { act, render } from "@testing-library/react";
-import { Theme } from "../../types/Theme";
+import type { Theme } from "../../types/Theme";
 import { ThemePicker } from "./ThemePicker";
 
 describe(ThemePicker.name, () => {
@@ -23,11 +23,11 @@ describe(ThemePicker.name, () => {
       throw new Error("Theme picker not rendered");
     }
 
-    expect(themePicker.dataset.isOpen).toBe("false");
+    expect(themePicker.dataset["isOpen"]).toBe("false");
     act(() => {
       themePickerButton.click();
     });
-    expect(themePicker.dataset.isOpen).toBe("true");
+    expect(themePicker.dataset["isOpen"]).toBe("true");
   });
 
   it("should close theme picker on theme picker button click, if open", () => {
@@ -50,23 +50,25 @@ describe(ThemePicker.name, () => {
       throw new Error("Theme picker not rendered");
     }
 
-    expect(themePicker.dataset.isOpen).toBe("false");
+    expect(themePicker.dataset["isOpen"]).toBe("false");
 
     act(() => {
       themePickerButton.click();
     });
-    expect(themePicker.dataset.isOpen).toBe("true");
+    expect(themePicker.dataset["isOpen"]).toBe("true");
     act(() => {
       themePickerButton.click();
     });
-    expect(themePicker.dataset.isOpen).toBe("false");
+    expect(themePicker.dataset["isOpen"]).toBe("false");
   });
 
   it("should close theme picker on theme click", () => {
+    const themeName = "winter";
+
     const themes: Array<Theme> = [
       {
-        label: "Test",
-        name: "test",
+        label: "Winter",
+        name: themeName,
       },
     ];
     const setTheme = () => {
@@ -82,8 +84,9 @@ describe(ThemePicker.name, () => {
     const themePickerButton = container.querySelector<HTMLButtonElement>(
       "#theme-picker-button",
     );
-    const themeButton =
-      container.querySelector<HTMLButtonElement>("#theme-test");
+    const themeButton = container.querySelector<HTMLButtonElement>(
+      `#theme-${themeName}`,
+    );
 
     if (!themePicker || !themePickerButton || !themeButton) {
       throw new Error("Theme picker not rendered");
@@ -92,10 +95,10 @@ describe(ThemePicker.name, () => {
     act(() => {
       themePickerButton.click();
     });
-    expect(themePicker.dataset.isOpen).toBe("true");
+    expect(themePicker.dataset["isOpen"]).toBe("true");
     act(() => {
       themeButton.click();
     });
-    expect(themePicker.dataset.isOpen).toBe("false");
+    expect(themePicker.dataset["isOpen"]).toBe("false");
   });
 });

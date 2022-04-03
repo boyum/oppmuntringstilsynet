@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
-import { Theme } from "../../types/Theme";
+import type { Theme } from "../../types/Theme";
+import type { ThemeName } from "../../types/ThemeName";
 import { getActiveTheme, getTheme } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
@@ -13,26 +14,26 @@ type Props = {
 
 export const ThemePicker: React.FC<Props> = ({ themes, setTheme }) => {
   const [language] = useContext(LanguageContext);
-  const [className, setClassName] = useState(styles.themePicker);
+  const [className, setClassName] = useState(styles["theme-picker"]);
   const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
   const [isOpen, setIsOpen] = useState(false);
 
   const translations = getTranslations(language);
 
   useEffect(() => {
-    setSelectedTheme(getActiveTheme(themes));
+    setSelectedTheme(getActiveTheme());
   }, [themes]);
 
   useEffect(() => {
     setClassName(
       isOpen
-        ? `${styles.themePicker} ${styles.themePickerOpen}`
-        : styles.themePicker,
+        ? `${styles["theme-picker"]} ${styles["theme-picker-open"]}`
+        : styles["theme-picker"],
     );
   }, [isOpen]);
 
-  const onClick = (themeName: string) => {
-    const newSelectedTheme = getTheme(themeName, themes);
+  const onClick = (themeName: ThemeName) => {
+    const newSelectedTheme = getTheme(themeName);
 
     setSelectedTheme(newSelectedTheme);
     setTheme(newSelectedTheme);
@@ -45,7 +46,7 @@ export const ThemePicker: React.FC<Props> = ({ themes, setTheme }) => {
         id="theme-picker-button"
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={styles.themePickerButton}
+        className={styles["theme-picker-button"]}
       >
         <span className="hidden">
           {isOpen
@@ -63,8 +64,8 @@ export const ThemePicker: React.FC<Props> = ({ themes, setTheme }) => {
         </svg>
       </button>
       <div id="theme-picker" data-is-open={isOpen} className={className}>
-        <h2 className={styles.heading}>{translations.themePickerHeading}</h2>
-        <ol hidden={!isOpen} className={styles.list}>
+        <h2 className={styles["heading"]}>{translations.themePickerHeading}</h2>
+        <ol hidden={!isOpen} className={styles["list"]}>
           {themes.map(theme => (
             <ThemePickerTheme
               isSelected={selectedTheme.name === theme.name}

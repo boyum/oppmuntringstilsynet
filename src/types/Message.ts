@@ -1,4 +1,5 @@
-import { LanguageEnum } from "../enums/Language";
+import type { LanguageEnum } from "../enums/Language";
+import type { ThemeName } from "./ThemeName";
 
 export type Message = {
   date: string;
@@ -6,5 +7,5 @@ export type Message = {
   checks: [boolean, boolean, boolean];
   name: string;
   language: LanguageEnum;
-  themeName: string;
+  themeName: ThemeName;
 };

@@ -1,6 +1,6 @@
 import * as fc from "fast-check";
 import { LanguageEnum } from "../enums/Language";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 import { decode, decodeMessage, encode } from "./url-utils";
 
 describe("Message encoder/decoder", () => {
@@ -11,7 +11,7 @@ describe("Message encoder/decoder", () => {
       name: "name",
       checks: [false, true, false],
       language: LanguageEnum.English,
-      themeName: "themeName",
+      themeName: "winter",
     };
 
     const encodedMessage = encode(expectedMessage);

@@ -6,7 +6,6 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
-import { themes } from "../types/Themes";
 import { getFallbackTheme } from "../utils/theme-utils";
 
 class CustomDocument extends Document {
@@ -14,7 +13,7 @@ class CustomDocument extends Document {
 
   static currentUrl: string;
 
-  static async getInitialProps(
+  static override async getInitialProps(
     context: DocumentContext,
   ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(context);
@@ -64,11 +63,11 @@ class CustomDocument extends Document {
     );
   }
 
-  render(): JSX.Element {
+  override render(): JSX.Element {
     return (
       <Html lang="nb">
         <Head>{CustomDocument.renderHead()}</Head>
-        <body data-theme={getFallbackTheme(themes)}>
+        <body data-theme={getFallbackTheme()}>
           {process.env.NODE_ENV === "production" && CustomDocument.renderGTM()}
           <Main />
           <NextScript />

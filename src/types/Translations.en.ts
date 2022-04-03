@@ -1,4 +1,4 @@
-import { Translations } from "./Translations";
+import type { Translations } from "./Translations";
 
 export const TranslationsEn: Translations = {
   pageTitle: "The National Encouragement Authority",

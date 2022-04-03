@@ -8,7 +8,7 @@ import SocialMediaPreview, {
 } from "../pages/social-media-preview";
 import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 
 expect.extend(toHaveNoViolations);
 

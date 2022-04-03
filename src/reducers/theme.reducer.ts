@@ -1,5 +1,5 @@
-import { Theme } from "../types/Theme";
-import { themes } from "../types/Themes";
+import type { Theme } from "../types/Theme";
+import type { ThemeName } from "../types/ThemeName";
 import { getTheme } from "../utils/theme-utils";
 
 export enum ThemeActionType {
@@ -8,15 +8,15 @@ export enum ThemeActionType {
 
 export type ThemeAction = {
   type: ThemeActionType.SetTheme;
-  themeName: string;
+  themeName: ThemeName;
 };
 
-export function themeReducer(state: Theme, action: ThemeAction): Theme {
+export function themeReducer(_state: Theme, action: ThemeAction): Theme {
   switch (action.type) {
     case ThemeActionType.SetTheme: {
       const { themeName } = action;
 
-      return getTheme(themeName, themes);
+      return getTheme(themeName);
     }
   }
 }

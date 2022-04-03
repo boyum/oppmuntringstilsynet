@@ -17,7 +17,7 @@ export const Buttons: React.FC<ButtonsProps> = ({
   const translations = getTranslations(language);
 
   return (
-    <div className={styles.buttons} id="buttons">
+    <div className={styles["buttons"]} id="buttons">
       <Button
         id="copy-button"
         onClick={handleCopy}

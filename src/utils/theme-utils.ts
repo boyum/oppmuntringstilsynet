@@ -1,6 +1,8 @@
-import { Theme } from "../types/Theme";
+import type { Theme } from "../types/Theme";
+import type { ThemeName } from "../types/ThemeName";
+import { themes } from "../types/Themes";
 
-export function getTheme(themeName: string, themes: readonly Theme[]): Theme {
+export function getTheme(themeName: ThemeName): Theme {
   const theme = themes.find(t => t.name === themeName);
 
   if (!theme) {
@@ -14,22 +16,31 @@ export function getTheme(themeName: string, themes: readonly Theme[]): Theme {
   return theme;
 }
 
-export function getFallbackTheme(themes: ReadonlyArray<Theme>): Theme {
-  return themes.find(theme => theme.name === "pride") ?? themes[0];
+export function getFallbackTheme(): Theme {
+  const fallbackTheme =
+    themes.find(theme => theme.name === "pride") ?? themes[0];
+  return fallbackTheme;
 }
 
-export function getActiveTheme(themes: ReadonlyArray<Theme>): Theme {
+export function isThemeName(name: string): name is ThemeName {
+  return (themes.map(theme => theme.name) as Array<string>).includes(name);
+}
+
+export function getActiveTheme(): Theme {
   const activeThemeName = window.localStorage.getItem("active-theme");
 
-  const fallbackTheme = getFallbackTheme(themes);
+  const themeExists = activeThemeName && isThemeName(activeThemeName);
+  if (themeExists) {
+    return getTheme(activeThemeName);
+  }
 
-  return activeThemeName ? getTheme(activeThemeName, themes) : fallbackTheme;
+  return getFallbackTheme();
 }
 
-export function setActiveTheme(themeName: string): void {
+export function setActiveTheme(themeName: ThemeName): void {
   window.localStorage.setItem("active-theme", themeName);
 }
 
 export function setPageTheme(theme: Theme): void {
-  document.body.dataset.theme = theme.name;
+  document.body.dataset["theme"] = theme.name;
 }
