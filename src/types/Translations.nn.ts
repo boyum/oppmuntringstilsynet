@@ -1,4 +1,4 @@
-import { Translations } from "./Translations";
+import type { Translations } from "./Translations";
 
 export const TranslationsNn: Translations = {
   pageTitle: "Oppmuntringstilsynet",

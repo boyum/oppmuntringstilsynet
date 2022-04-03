@@ -1,6 +1,9 @@
 import { LanguageEnum } from "../enums/Language";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
+import type { ThemeName } from "../types/ThemeName";
 import { createEmptyMessage, isEmpty } from "./message-utils";
+
+const defaultThemeName: ThemeName = "pride";
 
 describe(isEmpty.name, () => {
   it("should return true if the provided Message is empty", () => {
@@ -10,7 +13,7 @@ describe(isEmpty.name, () => {
       name: "",
       checks: [false, false, false],
       language: LanguageEnum.NorskBokmal,
-      themeName: "",
+      themeName: defaultThemeName,
     };
 
     expect(isEmpty(message)).toBeTruthy();
@@ -23,7 +26,7 @@ describe(isEmpty.name, () => {
       name: "",
       checks: [false, false, false],
       language: LanguageEnum.NorskBokmal,
-      themeName: "",
+      themeName: defaultThemeName,
     };
 
     expect(isEmpty(message)).toBeFalsy();
@@ -36,7 +39,7 @@ describe(isEmpty.name, () => {
       name: "",
       checks: [false, false, false],
       language: LanguageEnum.NorskBokmal,
-      themeName: "",
+      themeName: defaultThemeName,
     };
 
     expect(isEmpty(message)).toBeFalsy();
@@ -49,7 +52,7 @@ describe(isEmpty.name, () => {
       name: "test",
       checks: [false, false, false],
       language: LanguageEnum.NorskBokmal,
-      themeName: "",
+      themeName: defaultThemeName,
     };
 
     expect(isEmpty(message)).toBeFalsy();
@@ -62,7 +65,7 @@ describe(isEmpty.name, () => {
       name: "",
       checks: [true, false, false],
       language: LanguageEnum.NorskBokmal,
-      themeName: "",
+      themeName: defaultThemeName,
     };
 
     expect(isEmpty(message)).toBeFalsy();
@@ -75,7 +78,7 @@ describe(isEmpty.name, () => {
       name: "",
       checks: [false, false, false],
       language: LanguageEnum.English,
-      themeName: "",
+      themeName: defaultThemeName,
     };
 
     expect(isEmpty(message)).toBeFalsy();
@@ -88,7 +91,7 @@ describe(isEmpty.name, () => {
       name: "",
       checks: [false, false, false],
       language: LanguageEnum.NorskBokmal,
-      themeName: "test",
+      themeName: "winter",
     };
 
     expect(isEmpty(message)).toBeFalsy();
@@ -104,7 +107,7 @@ describe(createEmptyMessage.name, () => {
       name: "",
       checks: [false, false, false],
       language: LanguageEnum.NorskBokmal,
-      themeName: "",
+      themeName: defaultThemeName,
     };
 
     expect(actualMessage).toEqual(expectedMessage);

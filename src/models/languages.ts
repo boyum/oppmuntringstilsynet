@@ -1,29 +1,22 @@
 import { LanguageEnum } from "../enums/Language";
-import { Translations } from "../types/Translations";
 import { TranslationsEn } from "../types/Translations.en";
 import { TranslationsNb } from "../types/Translations.nb";
 import { TranslationsNn } from "../types/Translations.nn";
 
-export type LanguageRecord = {
-  title: string;
-  translations: Translations;
-  codes: Array<string>;
-};
-
-export const languages: { [languageName in LanguageEnum]: LanguageRecord } = {
+export const languages = {
   [LanguageEnum.NorskBokmal]: {
     title: "Norsk bokmål",
     translations: TranslationsNb,
-    codes: ["nb", "no"],
+    codes: ["nb", "no"] as const,
   },
   [LanguageEnum.NorskNynorsk]: {
     title: "Norsk nynorsk",
     translations: TranslationsNn,
-    codes: ["nn"],
+    codes: ["nn"] as const,
   },
   [LanguageEnum.English]: {
     title: "English",
     translations: TranslationsEn,
-    codes: ["en"],
+    codes: ["en"] as const,
   },
 };

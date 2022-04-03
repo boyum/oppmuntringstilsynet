@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import { NextRouter } from "next/router";
+import type { NextRouter } from "next/router";
 import { act } from "react-dom/test-utils";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";

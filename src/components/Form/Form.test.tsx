@@ -4,7 +4,8 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import { LanguageEnum } from "../../enums/Language";
 import { getEmptyState } from "../../reducers/message.reducer";
 import { LanguageStore } from "../../stores/LanguageStore";
-import { Message } from "../../types/Message";
+import type { Message } from "../../types/Message";
+import { getFallbackTheme } from "../../utils/theme-utils";
 import { Form } from "./Form";
 
 expect.extend(toHaveNoViolations);
@@ -66,7 +67,7 @@ describe(Form.name, () => {
       name: "name",
       checks: [false, true, false],
       language: LanguageEnum.English,
-      themeName: "themeName",
+      themeName: getFallbackTheme().name,
     };
 
     const form = render(
@@ -106,7 +107,7 @@ describe(Form.name, () => {
       name: "name",
       checks: [false, true, false],
       language: LanguageEnum.English,
-      themeName: "themeName",
+      themeName: getFallbackTheme().name,
     };
 
     const form = render(

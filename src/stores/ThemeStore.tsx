@@ -12,7 +12,7 @@ export const ThemeStore: React.FC<Props> = ({ children }) => {
   const isClient = typeof window === "object";
   const reducer = useReducer(
     themeReducer,
-    isClient ? getActiveTheme(themes) : themes[0],
+    isClient ? getActiveTheme() : themes[0],
   );
 
   return (

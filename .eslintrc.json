@@ -12,23 +12,21 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "consistent-return": "off",
+    "default-case": "off",
+    "dot-notation": "off",
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error", "info"]
+      }
+    ],
     "no-restricted-syntax": "off",
+    "no-shadow": "off",
+    "no-use-before-define": "off",
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
-    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/function-component-definition": [
-      "error",
-      {
-        "namedComponents": "arrow-function",
-        "unnamedComponents": "arrow-function"
-      }
-    ],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "@typescript-eslint/no-shadow": ["error"],
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -41,15 +39,18 @@
         ]
       }
     ],
-    "no-shadow": "off",
-    "default-case": "off",
-    "consistent-return": "off",
-    "no-console": [
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": [
       "error",
       {
-        "allow": ["warn", "error", "info"]
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
       }
     ],
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-use-before-define": ["error"],
     "jsx-a11y/label-has-associated-control": [
       "error",
       {

@@ -1,6 +1,6 @@
 import LZString from "lz-string";
 import { LanguageEnum } from "../enums/Language";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 
 export function encode(obj: unknown): string {
   const json = JSON.stringify(obj);

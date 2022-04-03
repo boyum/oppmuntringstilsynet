@@ -1,5 +1,7 @@
 import { LanguageEnum } from "../enums/Language";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
+import type { ThemeName } from "../types/ThemeName";
+import { getFallbackTheme } from "../utils/theme-utils";
 
 export enum MessageActionType {
   SetMessage = "setMessage",
@@ -15,7 +17,7 @@ export type MessageAction =
     }
   | {
       type: MessageActionType.SetTheme;
-      themeName: string;
+      themeName: ThemeName;
     }
   | {
       type: MessageActionType.SetCheck;
@@ -33,7 +35,7 @@ export function getEmptyState(): Message {
     message: "",
     name: "",
     language: LanguageEnum.NorskBokmal,
-    themeName: "",
+    themeName: getFallbackTheme().name,
   };
 }
 

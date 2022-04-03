@@ -1,5 +1,5 @@
 import { LanguageEnum } from "../enums/Language";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 import { copyToClipboard, createMessageUrl } from "./clipboard-utils";
 
 describe(copyToClipboard.name, () => {
@@ -23,11 +23,11 @@ describe(createMessageUrl.name, () => {
       name: "name",
       checks: [true, true, true],
       language: LanguageEnum.English,
-      themeName: "themeName",
+      themeName: "winter",
     };
 
     const encodedMessage =
-      "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjV0wDRgL5A";
+      "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(message, currentPath);
@@ -42,11 +42,11 @@ describe(createMessageUrl.name, () => {
       name: "name",
       checks: [true, true, true],
       language: LanguageEnum.English,
-      themeName: "themeName",
+      themeName: "winter",
     };
 
     const encodedMessage =
-      "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjV0wDRgL5A";
+      "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(message, `${currentPath}?m=message`);

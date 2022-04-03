@@ -13,14 +13,14 @@
 
   &:hover,
   &:focus {
-    .buttonInner {
+    .button-inner {
       transform: translate3d(-0.175rem, -0.35rem, 0);
       transition-duration: 0.15s;
     }
   }
 
   &:active {
-    .buttonInner {
+    .button-inner {
       transform: translate3d(-0.025rem, -0.1rem, 0);
       transition-duration: 0.1s;
     }
@@ -38,7 +38,7 @@
   }
 }
 
-.buttonInner {
+.button-inner {
   background-color: var(--theme-2-background-color);
   background-image: var(--theme-2-background-image);
   background-repeat: no-repeat;

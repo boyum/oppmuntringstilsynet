@@ -49,7 +49,7 @@ async function getSocialMediaPreviewImage(
   request: VercelRequest,
   response: VercelResponse,
 ): Promise<void> {
-  const isDev = request.query.isDev === "true";
+  const isDev = request.query["isDev"] === "true";
   let browser;
   if (isDev) {
     browser = await puppeteer.launch();

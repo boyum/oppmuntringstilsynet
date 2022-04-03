@@ -1,5 +1,6 @@
 import { LanguageEnum } from "../enums/Language";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
+import type { ThemeName } from "../types/ThemeName";
 import {
   getEmptyState,
   MessageAction,
@@ -33,8 +34,8 @@ describe(getEmptyState.name, () => {
     expect(message.language).toBe(defaultLanguage);
   });
 
-  it("should return an empty Message with no theme set", () => {
-    expect(message.themeName).toBe("");
+  it("should return an empty Message with the fallback theme set", () => {
+    expect(message.themeName).toBe("pride");
   });
 });
 
@@ -52,7 +53,7 @@ describe(messageReducer.name, () => {
         language: LanguageEnum.NorskNynorsk,
         message: "message",
         name: "name",
-        themeName: "themeName",
+        themeName: "winter",
         checks: [true, false, true],
       };
 
@@ -85,7 +86,7 @@ describe(messageReducer.name, () => {
 
   describe(MessageActionType.SetTheme, () => {
     it("should set the message's theme", () => {
-      const theme = "my-theme";
+      const theme: ThemeName = "winter";
 
       const action: MessageAction = {
         type: MessageActionType.SetTheme,
@@ -99,7 +100,7 @@ describe(messageReducer.name, () => {
 
   describe("Reset everything but theme", () => {
     it("should reset the message and return an empty state, and keep the current theme", () => {
-      const themeName = "themeName";
+      const themeName: ThemeName = "winter";
       const state: Message = {
         date: "date",
         language: LanguageEnum.NorskNynorsk,

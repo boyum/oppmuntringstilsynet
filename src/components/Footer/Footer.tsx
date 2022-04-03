@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer
-      className={styles.footer}
+      className={styles["footer"]}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: translations.footerHtml }}
     />

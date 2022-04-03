@@ -2,10 +2,11 @@ import parser from "accept-language-parser";
 import deepEqual from "deep-equal";
 import dotenv from "dotenv";
 import first from "lodash.first";
-import { GetServerSidePropsContext } from "next";
+import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
+  FC,
   useCallback,
   useContext,
   useEffect,
@@ -21,7 +22,7 @@ import { LanguagePicker } from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import { LanguageContext } from "../contexts/LanguageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { LanguageEnum } from "../enums/Language";
+import type { LanguageEnum } from "../enums/Language";
 import { LanguageActionType } from "../reducers/language.reducer";
 import {
   getEmptyState,
@@ -30,7 +31,7 @@ import {
 } from "../reducers/message.reducer";
 import { ThemeActionType } from "../reducers/theme.reducer";
 import styles from "../styles/Home.module.scss";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 import { themes } from "../types/Themes";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import {
@@ -43,7 +44,7 @@ import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
 import { decodeMessage } from "../utils/url-utils";
 
-export type HomeProps = {
+type Props = {
   encodedMessage: string | null;
   messageFromUrl: Message | null;
   resolvedUrl: string;
@@ -51,7 +52,7 @@ export type HomeProps = {
   preferredLanguage: LanguageEnum;
 };
 
-const Home: React.FC<HomeProps> = ({
+const Home: FC<Props> = ({
   encodedMessage,
   messageFromUrl,
   resolvedUrl,
@@ -94,7 +95,7 @@ const Home: React.FC<HomeProps> = ({
 
   useEffect(() => {
     const activeTheme = messageFromUrl?.themeName
-      ? getTheme(messageFromUrl.themeName, themes)
+      ? getTheme(messageFromUrl.themeName)
       : theme;
 
     if (messageFromUrl?.themeName) {
@@ -196,7 +197,7 @@ const Home: React.FC<HomeProps> = ({
   return (
     <>
       <Head>{headData}</Head>
-      <div className={styles.themePickerButtonWrapper}>
+      <div className={styles["theme-picker-button-wrapper"]}>
         <ThemePicker
           themes={themes}
           setTheme={newTheme => {
@@ -210,11 +211,11 @@ const Home: React.FC<HomeProps> = ({
         />
       </div>
 
-      <main className={styles.main}>
-        <div className={styles.container}>
-          <div className={styles.containerHeader}>
-            <h1 className={styles.heading}>{translations.formHeading}</h1>
-            <div className={styles.languagePickerContainer}>
+      <main className={styles["main"]}>
+        <div className={styles["container"]}>
+          <div className={styles["container-header"]}>
+            <h1 className={styles["heading"]}>{translations.formHeading}</h1>
+            <div className={styles["language-picker-container"]}>
               <LanguagePicker handleChange={handleLanguageChange} />
             </div>
           </div>
@@ -239,15 +240,15 @@ const Home: React.FC<HomeProps> = ({
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
-): Promise<{ props: HomeProps }> {
-  const encodedMessage = Array.isArray(context.query.m)
-    ? first(context.query.m)
-    : context.query.m;
+): Promise<{ props: Props }> {
+  const encodedMessage = Array.isArray(context.query["m"])
+    ? first(context.query["m"])
+    : context.query["m"];
   const messageFromUrl = decodeMessage(encodedMessage ?? "");
   dotenv.config();
 
   const localUrl = "http://localhost:3000";
-  const deployUrl = process.env.DEPLOY_URL ?? localUrl;
+  const deployUrl = process.env["DEPLOY_URL"] ?? localUrl;
 
   const { host } = context.req.headers;
   const acceptLanguage = context.req.headers["accept-language"] ?? "";
@@ -256,7 +257,7 @@ export async function getServerSideProps(
     .map(language => language.code);
   const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
-  const serverSideProps: { props: HomeProps } = {
+  const serverSideProps: { props: Props } = {
     props: {
       encodedMessage: encodedMessage ?? null,
       messageFromUrl,

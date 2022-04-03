@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useContext } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { LanguageEnum } from "../../enums/Language";
-import { Language } from "../../models/Language";
+import type { Language } from "../../types/Language";
 import { languages } from "../../models/languages";
 import { LanguageActionType } from "../../reducers/language.reducer";
 import { getTranslations } from "../../utils/translations-utils";
@@ -38,14 +38,14 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
       <span className="hidden">{translations.setLanguage}</span>
       <select
         data-test-id="language-select"
-        className={styles.select}
+        className={styles["select"]}
         onChange={handleOnChange}
         value={language}
       >
         {languageArr.map(([languageName, languageTitle]) => (
           <option
             key={languageName}
-            className={styles.option}
+            className={styles["option"]}
             value={languageName}
           >
             {languageTitle}

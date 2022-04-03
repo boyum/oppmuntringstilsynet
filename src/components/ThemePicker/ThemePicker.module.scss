@@ -1,4 +1,4 @@
-.themePicker {
+.theme-picker {
   background-color: var(--theme-1-background-color);
   background-image: var(--theme-1-background-image, "none");
   background-repeat: no-repeat;
@@ -13,7 +13,7 @@
   z-index: 1;
 }
 
-.themePickerOpen {
+.theme-picker-open {
   opacity: 1;
   pointer-events: auto;
   transform: none;
@@ -38,7 +38,7 @@
   }
 }
 
-.themePickerButton {
+.theme-picker-button {
   background-color: var(--theme-2-background-color);
   background-image: var(--theme-2-background-image, "none");
   background-repeat: no-repeat;
@@ -51,7 +51,7 @@
   padding: 0.65em 0.7em;
 }
 
-.themePickerButton svg {
+.theme-picker-button svg {
   fill: currentColor;
   height: 1em;
   width: 1em;

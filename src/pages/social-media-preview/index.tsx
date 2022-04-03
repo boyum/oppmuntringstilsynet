@@ -1,13 +1,12 @@
 import parser from "accept-language-parser";
 import first from "lodash.first";
-import { GetServerSidePropsContext } from "next";
+import type { GetServerSidePropsContext } from "next";
 import { useContext, useEffect } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { LanguageEnum } from "../../enums/Language";
+import type { LanguageEnum } from "../../enums/Language";
 import { ThemeActionType } from "../../reducers/theme.reducer";
-import { Message } from "../../types/Message";
-import { themes } from "../../types/Themes";
+import type { Message } from "../../types/Message";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import {
   getTheme,
@@ -43,7 +42,7 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
 
   useEffect(() => {
     const activeTheme = message?.themeName
-      ? getTheme(message.themeName, themes)
+      ? getTheme(message.themeName)
       : theme;
 
     if (message?.themeName) {
@@ -59,9 +58,9 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   }, [message, dispatchThemeAction, theme]);
 
   return (
-    <main className={styles.main}>
-      <div className={styles.previewContainer}>
-        <h1 className={styles.heading}>{title}</h1>
+    <main className={styles["main"]}>
+      <div className={styles["preview-container"]}>
+        <h1 className={styles["heading"]}>{title}</h1>
       </div>
     </main>
   );
@@ -70,9 +69,9 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: SocialMediaPreviewProps }> {
-  const encodedMessage = Array.isArray(context.query.m)
-    ? first(context.query.m)
-    : context.query.m;
+  const encodedMessage = Array.isArray(context.query["m"])
+    ? first(context.query["m"])
+    : context.query["m"];
   const message = decodeMessage(encodedMessage ?? "");
 
   const acceptLanguage = context.req.headers["accept-language"] ?? "";
