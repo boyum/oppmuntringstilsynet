@@ -33,7 +33,7 @@
     "lodash.first": "^3.0.0",
     "lz-string": "^1.4.4",
     "next": "^12.1.5",
-    "puppeteer": "^13.6.0",
+    "puppeteer": "^13.7.0",
     "puppeteer-core": "^13.6.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
