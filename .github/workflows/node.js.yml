@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
@@ -56,14 +56,14 @@ jobs:
       - run: npm run ci-test:unit
 
       - name: Codecov
-        uses: codecov/codecov-action@v2 # https://github.com/codecov/codecov-action
+        uses: codecov/codecov-action@v3 # https://github.com/codecov/codecov-action
 
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
 
       - uses: chrnorm/deployment-action@releases/v1
         name: Create GitHub deployment
@@ -74,7 +74,7 @@ jobs:
           environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
 
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20.0.0
+        uses: amondnet/vercel-action@v20.0.1
         id: vercel-deployment
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
