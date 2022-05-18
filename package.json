@@ -40,8 +40,8 @@
   },
   "devDependencies": {
     "@axe-core/puppeteer": "^4.4.2",
-    "@babel/preset-env": "^7.17.10",
-    "@babel/preset-typescript": "^7.16.7",
+    "@babel/preset-env": "^7.17.12",
+    "@babel/preset-typescript": "^7.17.12",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@tsconfig/strictest": "^1.0.1",
