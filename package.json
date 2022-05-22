@@ -74,7 +74,7 @@
     "prettier": "^2.6.2",
     "sass": "^1.52.1",
     "start-server-and-test": "^1.14.0",
-    "ts-node": "^10.7.0",
+    "ts-node": "^10.8.0",
     "typescript": "^4.6.4"
   }
 }
