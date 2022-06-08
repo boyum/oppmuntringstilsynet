@@ -69,7 +69,7 @@
     "jest-config": "^28.1.0",
     "jest-css-modules": "^2.1.0",
     "jest-css-modules-transform": "^4.4.2",
-    "jest-environment-jsdom": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.1",
     "jest-puppeteer": "^6.1.0",
     "prettier": "^2.6.2",
     "sass": "^1.52.2",
