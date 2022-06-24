@@ -65,12 +65,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: chrnorm/deployment-action@releases/v1
+      - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
         id: deployment
         with:
           token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
-          initial_status: in_progress
+          initial-status: in_progress
           environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
 
       - name: Deploy to Vercel
@@ -86,21 +86,21 @@ jobs:
 
       - name: Update deployment status (success)
         if: success()
-        uses: chrnorm/deployment-status@releases/v1
+        uses: chrnorm/deployment-status@v2
         with:
           token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
-          target_url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
+          environment-url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
           state: success
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
       - name: Update deployment status (failure)
         if: failure()
-        uses: chrnorm/deployment-status@releases/v1
+        uses: chrnorm/deployment-status@v2
         with:
           token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
-          target_url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
+          environment-url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
           state: failure
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
     outputs:
       preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
