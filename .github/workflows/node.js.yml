@@ -78,7 +78,6 @@ jobs:
         id: vercel-deployment
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          zeit-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
