@@ -74,7 +74,7 @@ jobs:
           environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
 
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20.0.1
+        uses: amondnet/vercel-action@v25.0.0
         id: vercel-deployment
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
