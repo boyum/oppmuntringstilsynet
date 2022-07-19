@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.2.1",
+    "@testing-library/user-event": "^14.2.6",
     "@types/accept-language-parser": "^1.5.3",
     "@types/lodash.first": "^3.0.7",
     "@vercel/node": "^2.4.1",
