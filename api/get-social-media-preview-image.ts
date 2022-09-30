@@ -6,7 +6,7 @@ import type {
   BrowserLaunchArgumentOptions,
   LaunchOptions,
 } from "puppeteer-core";
-import { launch as launchCore } from "puppeteer-core";
+import { launch as launchCore } from "puppeteer-core14";
 
 function getExecutablePath(): string {
   let exePath = "";
