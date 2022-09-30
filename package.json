@@ -20,13 +20,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@sparticuz/chrome-aws-lambda": "^14.4.1",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/accept-language-parser": "^1.5.3",
     "@types/lodash.first": "^3.0.7",
     "@vercel/node": "^2.5.15",
     "accept-language-parser": "^1.5.0",
-    "chrome-aws-lambda": "^10.1.0",
     "deep-equal": "^2.0.5",
     "dotenv": "^16.0.2",
     "jest-axe": "^6.0.0",
@@ -34,7 +34,7 @@
     "lz-string": "^1.4.4",
     "next": "^12.3.1",
     "puppeteer": "^15.5.0",
-    "puppeteer-core": "^10.4.0",
+    "puppeteer-core": "^14.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

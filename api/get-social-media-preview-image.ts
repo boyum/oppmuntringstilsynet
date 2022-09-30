@@ -1,7 +1,12 @@
+import chromeAwsLambda from "@sparticuz/chrome-aws-lambda";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import chrome from "chrome-aws-lambda";
-import puppeteer from "puppeteer";
-import puppeteerCore from "puppeteer-core";
+import { launch as launchPuppeteer } from "puppeteer";
+import type {
+  BrowserConnectOptions,
+  BrowserLaunchArgumentOptions,
+  LaunchOptions,
+} from "puppeteer-core";
+import { launch as launchCore } from "puppeteer-core";
 
 function getExecutablePath(): string {
   let exePath = "";
@@ -24,9 +29,7 @@ function getExecutablePath(): string {
 async function getOptions(
   isDev: boolean,
 ): Promise<
-  puppeteerCore.LaunchOptions &
-    puppeteerCore.BrowserLaunchArgumentOptions &
-    puppeteerCore.BrowserConnectOptions
+  LaunchOptions & BrowserLaunchArgumentOptions & BrowserConnectOptions
 > {
   let options;
   if (isDev) {
@@ -37,9 +40,9 @@ async function getOptions(
     };
   } else {
     options = {
-      args: chrome.args,
-      executablePath: await chrome.executablePath,
-      headless: chrome.headless,
+      args: chromeAwsLambda.args,
+      executablePath: await chromeAwsLambda.executablePath,
+      headless: chromeAwsLambda.headless,
     };
   }
   return options;
@@ -52,11 +55,10 @@ async function getSocialMediaPreviewImage(
   const isDev = request.query["isDev"] === "true";
   let browser;
   if (isDev) {
-    browser = await puppeteer.launch();
+    browser = await launchPuppeteer();
   } else {
     const options = await getOptions(isDev);
-
-    browser = await puppeteerCore.launch(options);
+    browser = await launchCore(options);
   }
   const page = await browser.newPage();
 
