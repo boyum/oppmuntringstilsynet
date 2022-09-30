@@ -1,12 +1,12 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 import chromeAwsLambda from "@sparticuz/chrome-aws-lambda";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { launch as launchPuppeteer } from "puppeteer";
 import type {
-  LaunchOptions,
-  BrowserLaunchArgumentOptions,
   BrowserConnectOptions,
+  BrowserLaunchArgumentOptions,
+  LaunchOptions,
 } from "puppeteer-core";
 import { launch as launchCore } from "puppeteer-core";
-// import { launch as launchPuppeteer } from "puppeteer";
 
 function getExecutablePath(): string {
   let exePath = "";
@@ -52,14 +52,14 @@ async function getSocialMediaPreviewImage(
   request: VercelRequest,
   response: VercelResponse,
 ): Promise<void> {
-  // const isDev = request.query["isDev"] === "true";
-  // let browser;
-  // if (isDev) {
-  //   browser = await launchPuppeteer();
-  // } else {
-  const options = await getOptions(false);
-  const browser = await launchCore(options);
-  // }
+  const isDev = request.query["isDev"] === "true";
+  let browser;
+  if (isDev) {
+    browser = await launchPuppeteer();
+  } else {
+    const options = await getOptions(isDev);
+    browser = await launchCore(options);
+  }
   const page = await browser.newPage();
 
   // Set viewport to preferred Open Graph image size
