@@ -11,6 +11,8 @@ import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
 
 expect.extend(toHaveNoViolations);
+// eslint-disable-next-line global-require
+jest.mock("next/router", () => require("next-router-mock"));
 
 describe(Home.name, () => {
   it("should render with a message", () => {
@@ -150,46 +152,20 @@ describe(Home.name, () => {
 
   describe("Reset button", () => {
     it("should reset the form on click", () => {
-      const mockRouter: NextRouter = {
-        basePath: "",
-        pathname: "/",
-        route: "/",
-        asPath: "/",
-        query: {},
-        push: jest.fn(),
-        replace: jest.fn(),
-        reload: jest.fn(),
-        back: jest.fn(),
-        prefetch: jest.fn(),
-        beforePopState: jest.fn(),
-        events: {
-          on: jest.fn(),
-          off: jest.fn(),
-          emit: jest.fn(),
-        },
-        isFallback: false,
-        isLocaleDomain: false,
-        isReady: false,
-        isPreview: false,
-      };
-
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        // eslint-disable-next-line react/jsx-no-constructed-context-values
-        <RouterContext.Provider value={{ ...mockRouter }}>
-          <ThemeStore>
-            <LanguageStore>
-              <Home
-                encodedMessage=""
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-              />
-            </LanguageStore>
-          </ThemeStore>
-        </RouterContext.Provider>,
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage=""
+              messageFromUrl={messageFromUrl}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
       ).container;
 
       document.execCommand = jest.fn();
