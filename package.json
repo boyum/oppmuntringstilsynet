@@ -34,7 +34,7 @@
     "lz-string": "^1.4.4",
     "next": "^13.0.4",
     "puppeteer": "^15.5.0",
-    "puppeteer-core": "^14.4.1",
+    "puppeteer-core": "^19.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
