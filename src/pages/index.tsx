@@ -188,10 +188,10 @@ const Home: FC<Props> = ({
   }, [
     deployUrl,
     encodedMessage,
+    forcedLanguage,
     language,
     messageFromUrl?.language,
     resolvedUrl,
-    forcedLanguage,
   ]);
 
   return (
