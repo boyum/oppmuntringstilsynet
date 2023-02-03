@@ -223,9 +223,8 @@ describe(getServerSideProps.name, () => {
 
     const serverSideProps = await getServerSideProps(context);
 
-    expect(serverSideProps.props).toEqual({
+    expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
       messageFromUrl,
-      encodedMessage,
       resolvedUrl,
       deployUrl: `//${host}`,
       preferredLanguage: LanguageEnum.NorskBokmal,

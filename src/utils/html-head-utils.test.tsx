@@ -8,8 +8,6 @@ import { getDefaultHtmlHeadData, renderHtmlHead } from "./html-head-utils";
 describe(getDefaultHtmlHeadData.name, () => {
   it("should return html head data corresponding to the current language", () => {
     const ogUrl = "url";
-    const encodedMessage = "encodedMessage";
-    const deployUrl = "deployUrl";
 
     const language = LanguageEnum.NorskBokmal;
 
@@ -19,16 +17,9 @@ describe(getDefaultHtmlHeadData.name, () => {
       description: TranslationsNb.pageDescription,
       ogDescription: TranslationsNb.pageDescription,
       ogUrl,
-      encodedMessage,
-      deployUrl,
     };
 
-    const actualData = getDefaultHtmlHeadData(
-      language,
-      ogUrl,
-      encodedMessage,
-      deployUrl,
-    );
+    const actualData = getDefaultHtmlHeadData(language, ogUrl);
 
     expect(actualData).toEqual(expectedData);
   });
@@ -42,8 +33,6 @@ describe(renderHtmlHead.name, () => {
       description: "description",
       ogDescription: "ogDescription",
       ogUrl: "url",
-      encodedMessage: "encodedMessage",
-      deployUrl: "deployUrl",
     };
 
     const container = document.createElement("div");
