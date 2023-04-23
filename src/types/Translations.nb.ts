@@ -23,5 +23,5 @@ export const TranslationsNb: Translations = {
   themePickerHeading: "Velg fargetema",
   someone: "Noen",
   previewTitleWithMessage: "{name} setter pris på deg!",
-  previewTitleWithoutMessage: "Oppmuntringstilsynet",
+  previewTitleWithoutMessage: "Du settes pris på!",
 };
