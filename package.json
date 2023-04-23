@@ -34,8 +34,6 @@
     "lodash.first": "^3.0.0",
     "lz-string": "^1.4.4",
     "next": "^13.0.4",
-    "puppeteer": "^15.5.0",
-    "puppeteer-core": "^14.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -74,6 +72,8 @@
     "jest-puppeteer": "^6.1.1",
     "next-router-mock": "^0.8.0",
     "prettier": "^2.8.0",
+    "puppeteer": "^15.5.0",
+    "puppeteer-core": "^14.4.1",
     "sass": "^1.56.1",
     "start-server-and-test": "^1.14.0",
     "ts-node": "^10.9.1",
