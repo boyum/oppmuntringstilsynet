@@ -15,7 +15,7 @@ export type SocialMediaPreviewProps = {
 };
 
 export const config = {
-  runtime: "experimental-edge",
+  runtime: "edge",
 };
 
 const OgImage = (request: NextRequest) => {
