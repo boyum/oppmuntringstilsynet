@@ -1,8 +1,6 @@
 import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
-import { RouterContext } from "next/dist/shared/lib/router-context";
-import type { NextRouter } from "next/router";
 import { act } from "react-dom/test-utils";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
@@ -24,6 +22,7 @@ describe(Home.name, () => {
       language: LanguageEnum.English,
       themeName: "pride",
     };
+
     const encodedMessage =
       "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
 
@@ -91,6 +90,7 @@ describe(Home.name, () => {
       language: LanguageEnum.English,
       themeName: "pride",
     };
+
     const encodedMessage =
       "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
 
@@ -223,7 +223,7 @@ describe(getServerSideProps.name, () => {
 
     const serverSideProps = await getServerSideProps(context);
 
-    expect(serverSideProps.props).toEqual({
+    expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
       messageFromUrl,
       encodedMessage,
       resolvedUrl,

@@ -280,19 +280,28 @@ describe("Home", () => {
       throw new Error("Form did not render");
     }
 
-    const disabledFields = await form.$$("input, textarea");
-    await Promise.all(
-      disabledFields.map(async element => {
-        // If the `_remoteObject` property is ever changed or removed,
-        // this can also be done by running everything inside `page.evaluate`
+    const allAreDisabled = (
+      await form.$$eval("input, textarea", elements =>
+        (elements as (HTMLInputElement | HTMLTextAreaElement)[]).map(
+          element => element.disabled,
+        ),
+      )
+    ).every(isDisabled => isDisabled === true);
 
-        // eslint-disable-next-line no-underscore-dangle
-        const isDisabled = (await element.getProperty("disabled"))
-          ?._remoteObject.value;
+    // const disabledFields = await form.$$("input, textarea");
+    // await Promise.all(
+    //   disabledFields.map(async element => {
+    //     // If the `_remoteObject` property is ever changed or removed,
+    //     // this can also be done by running everything inside `page.evaluate`
 
-        expect(isDisabled).toBe(true);
-      }),
-    );
+    //     const isDisabled = (
+    //       (await element.jsonValue()) as HTMLInputElement | HTMLTextAreaElement
+    //     ).disabled;
+
+    //     expect(isDisabled).toBe(true);
+    //   }),
+    // );
+    expect(allAreDisabled).toBe(true);
   });
 
   it("should mark not mark any fields in an empty card as readonly", async () => {
@@ -305,9 +314,9 @@ describe("Home", () => {
     const disabledFields = await form.$$("input, textarea");
     await Promise.all(
       disabledFields.map(async element => {
-        // eslint-disable-next-line no-underscore-dangle
-        const isDisabled = (await element.getProperty("disabled"))
-          ?._remoteObject.value;
+        const isDisabled = (
+          await element.getProperty("disabled")
+        )?.remoteObject().value;
 
         expect(isDisabled).toBe(false);
       }),

@@ -42,8 +42,8 @@ describe(renderHtmlHead.name, () => {
       description: "description",
       ogDescription: "ogDescription",
       ogUrl: "url",
-      encodedMessage: "encodedMessage",
       deployUrl: "deployUrl",
+      encodedMessage: "encodedMessage",
     };
 
     const container = document.createElement("div");
