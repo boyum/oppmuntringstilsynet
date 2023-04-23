@@ -23,10 +23,14 @@ describe(Home.name, () => {
       themeName: "pride",
     };
 
+    const encodedMessage =
+      "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
+
     const page = render(
       <ThemeStore>
         <LanguageStore>
           <Home
+            encodedMessage={encodedMessage}
             messageFromUrl={message}
             resolvedUrl=""
             deployUrl=""
@@ -62,6 +66,7 @@ describe(Home.name, () => {
       <ThemeStore>
         <LanguageStore>
           <Home
+            encodedMessage=""
             messageFromUrl={messageFromUrl}
             resolvedUrl=""
             deployUrl=""
@@ -86,10 +91,14 @@ describe(Home.name, () => {
       themeName: "pride",
     };
 
+    const encodedMessage =
+      "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
+
     const page = render(
       <ThemeStore>
         <LanguageStore>
           <Home
+            encodedMessage={encodedMessage}
             messageFromUrl={messageFromUrl}
             resolvedUrl=""
             deployUrl=""
@@ -112,6 +121,7 @@ describe(Home.name, () => {
         <ThemeStore>
           <LanguageStore>
             <Home
+              encodedMessage=""
               messageFromUrl={messageFromUrl}
               resolvedUrl=""
               deployUrl=""
@@ -148,6 +158,7 @@ describe(Home.name, () => {
         <ThemeStore>
           <LanguageStore>
             <Home
+              encodedMessage=""
               messageFromUrl={messageFromUrl}
               resolvedUrl=""
               deployUrl=""
@@ -214,6 +225,7 @@ describe(getServerSideProps.name, () => {
 
     expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
       messageFromUrl,
+      encodedMessage,
       resolvedUrl,
       deployUrl: `//${host}`,
       preferredLanguage: LanguageEnum.NorskBokmal,
