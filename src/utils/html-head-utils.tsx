@@ -30,7 +30,7 @@ export function renderHtmlHead({
   encodedMessage,
   deployUrl,
 }: HtmlHeadData): JSX.Element {
-  const previewImageUrl = `${deployUrl}/api/get-social-media-preview-image${
+  const previewImageUrl = `${deployUrl}/api/og-image${
     encodedMessage ? `?m=${encodedMessage}` : ""
   }`;
 
