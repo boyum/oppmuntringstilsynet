@@ -26,6 +26,7 @@
     "@types/accept-language-parser": "^1.5.3",
     "@types/lodash.first": "^3.0.7",
     "@vercel/node": "^2.6.4",
+    "@vercel/og": "^0.5.3",
     "accept-language-parser": "^1.5.0",
     "deep-equal": "^2.1.0",
     "dotenv": "^16.0.3",
