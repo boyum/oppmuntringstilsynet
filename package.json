@@ -32,7 +32,7 @@
     "jest-axe": "^7.0.1",
     "lodash.first": "^3.0.0",
     "lz-string": "^1.5.0",
-    "next": "^13.3.1",
+    "next": "^13.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -57,7 +57,7 @@
     "@typescript-eslint/parser": "^5.59.1",
     "eslint": "^8.39.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "^13.3.1",
+    "eslint-config-next": "^13.3.2",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
