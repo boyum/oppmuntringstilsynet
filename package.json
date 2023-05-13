@@ -40,7 +40,7 @@
     "@axe-core/puppeteer": "^4.7.0",
     "@babel/preset-env": "^7.21.5",
     "@babel/preset-typescript": "^7.21.5",
-    "@testing-library/dom": "^9.2.0",
+    "@testing-library/dom": "^9.3.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@tsconfig/strictest": "^2.0.1",
     "@types/deep-equal": "^1.0.1",
