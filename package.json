@@ -72,7 +72,7 @@
     "next-router-mock": "^0.9.6",
     "prettier": "^2.8.8",
     "puppeteer": "^20.5.0",
-    "puppeteer-core": "^20.5.0",
+    "puppeteer-core": "^20.6.0",
     "sass": "^1.63.3",
     "start-server-and-test": "^2.0.0",
     "ts-node": "^10.9.1",
