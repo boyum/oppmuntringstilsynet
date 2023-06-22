@@ -72,7 +72,7 @@
     "prettier": "^2.8.8",
     "puppeteer": "^20.7.3",
     "puppeteer-core": "^20.7.3",
-    "sass": "^1.63.4",
+    "sass": "^1.63.6",
     "start-server-and-test": "^2.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.3"
