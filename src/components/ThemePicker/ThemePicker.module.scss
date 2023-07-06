@@ -9,7 +9,9 @@
   position: absolute;
   right: 3.5rem;
   transform: scale(0.98);
-  transition: opacity 0.15s ease-in-out, transform 0.25s ease-in-out;
+  transition:
+    opacity 0.15s ease-in-out,
+    transform 0.25s ease-in-out;
   z-index: 1;
 }
 
