@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { act } from "react-dom/test-utils";
 import { LanguageEnum } from "../enums/Language";
 import type { HtmlHeadData } from "../reducers/html-head.reducer";
@@ -49,7 +49,7 @@ describe(renderHtmlHead.name, () => {
     const container = document.createElement("div");
 
     act(() => {
-      ReactDOM.render(renderHtmlHead(data), container);
+      createRoot(container).render(renderHtmlHead(data));
     });
 
     const titleElement = container.querySelector("title");
