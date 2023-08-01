@@ -24,7 +24,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/accept-language-parser": "^1.5.3",
     "@types/lodash.first": "^3.0.7",
-    "@vercel/node": "^2.15.6",
+    "@vercel/node": "^2.15.7",
     "@vercel/og": "^0.5.9",
     "accept-language-parser": "^1.5.0",
     "deep-equal": "^2.2.2",
