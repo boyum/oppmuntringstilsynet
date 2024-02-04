@@ -1,5 +1,5 @@
-import { encode } from "./url-utils";
 import type { Message } from "../types/Message";
+import { encode } from "./url-utils";
 
 export function copyToClipboard(
   inputElement: HTMLInputElement,
