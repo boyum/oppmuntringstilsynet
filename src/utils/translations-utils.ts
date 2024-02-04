@@ -1,6 +1,6 @@
 import type { LanguageEnum } from "../enums/Language";
-import type { Language } from "../types/Language";
 import { languages } from "../models/languages";
+import type { Language } from "../types/Language";
 import type { Translations } from "../types/Translations";
 
 export function getLanguage(language: LanguageEnum): Language {

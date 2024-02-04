@@ -12,7 +12,7 @@ export function getLanguage(localeCode: string): LanguageEnum | null {
       ),
     ) ?? [];
 
-  return <LanguageEnum>language ?? null;
+  return (language as LanguageEnum | undefined) ?? null;
 }
 
 export function getPreferredLanguage(

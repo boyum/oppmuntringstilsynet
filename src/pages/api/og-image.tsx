@@ -4,10 +4,10 @@ import type { NextRequest } from "next/server";
 import { defaultLanguage } from "../../contexts/LanguageContext";
 import type { LanguageEnum } from "../../enums/Language";
 import type { Message } from "../../types/Message";
+import { randomArrayValue } from "../../utils/array-utils";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { decodeMessage } from "../../utils/url-utils";
-import { randomArrayValue } from "../../utils/array-utils";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;

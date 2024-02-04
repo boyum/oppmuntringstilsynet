@@ -1,9 +1,9 @@
 import { ChangeEventHandler, useContext } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { LanguageEnum } from "../../enums/Language";
-import type { Language } from "../../types/Language";
 import { languages } from "../../models/languages";
 import { LanguageActionType } from "../../reducers/language.reducer";
+import type { Language } from "../../types/Language";
 import { getTranslations } from "../../utils/translations-utils";
 import styles from "./LanguagePicker.module.scss";
 
