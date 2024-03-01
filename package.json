@@ -72,7 +72,7 @@
     "prettier": "^3.2.5",
     "prettier-config": "github:boyum/prettier-config",
     "puppeteer": "^22.1.0",
-    "puppeteer-core": "^22.1.0",
+    "puppeteer-core": "^22.3.0",
     "sass": "^1.71.1",
     "start-server-and-test": "^2.0.3",
     "ts-node": "^10.9.2",
