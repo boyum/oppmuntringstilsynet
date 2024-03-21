@@ -71,7 +71,7 @@
     "next-router-mock": "^0.9.12",
     "prettier": "^3.2.5",
     "prettier-config": "github:boyum/prettier-config",
-    "puppeteer": "^22.5.0",
+    "puppeteer": "^22.6.0",
     "puppeteer-core": "^22.6.0",
     "sass": "^1.72.0",
     "start-server-and-test": "^2.0.3",
