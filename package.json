@@ -50,7 +50,7 @@
     "@types/jest-environment-puppeteer": "^5.0.6",
     "@types/node": "^20.11.19",
     "@types/puppeteer": "^5.4.7",
-    "@types/react": "^18.2.69",
+    "@types/react": "^18.2.70",
     "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
