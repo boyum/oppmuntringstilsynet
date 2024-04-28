@@ -21,7 +21,7 @@
   },
   "prettier": "prettier-config",
   "dependencies": {
-    "@testing-library/react": "^14.3.0",
+    "@testing-library/react": "^15.0.5",
     "@testing-library/user-event": "^14.5.2",
     "@types/accept-language-parser": "^1.5.6",
     "@types/lodash.first": "^3.0.9",
