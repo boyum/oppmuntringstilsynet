@@ -41,7 +41,7 @@
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.23.3",
     "@testing-library/dom": "^9.3.4",
-    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/jest-dom": "^6.4.5",
     "@tsconfig/strictest": "^2.0.5",
     "@types/deep-equal": "^1.0.4",
     "@types/expect-puppeteer": "^5.0.6",
