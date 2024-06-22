@@ -76,6 +76,6 @@
     "sass": "^1.77.6",
     "start-server-and-test": "^2.0.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   }
 }
