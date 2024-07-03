@@ -1,5 +1,4 @@
 import parser from "accept-language-parser";
-import first from "lodash.first";
 import type { GetServerSidePropsContext } from "next";
 import { useContext, useEffect } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
@@ -66,28 +65,36 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   );
 };
 
+function getQueryParams(resolvedUrl: string): URLSearchParams {
+  const [, ...queryParams] = resolvedUrl.split("?");
+
+  return new URLSearchParams(queryParams.join());
+}
+
+function getAcceptedLanguages(acceptLanguage: string): string[] {
+  return parser.parse(acceptLanguage).map(language => language.code);
+}
+
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: SocialMediaPreviewProps }> {
-  const encodedMessage = Array.isArray(context.query["m"])
-    ? first(context.query["m"])
-    : context.query["m"];
-  const message = decodeMessage(encodedMessage ?? "");
+  const { req, resolvedUrl } = context;
 
-  const acceptLanguage = context.req.headers["accept-language"] ?? "";
-  const acceptedLanguages = parser
-    .parse(acceptLanguage)
-    .map(language => language.code);
+  const queryParams = getQueryParams(resolvedUrl);
+  const encodedMessage = queryParams.get("m");
+  const messageFromUrl = decodeMessage(encodedMessage ?? "");
+
+  const { "accept-language": acceptLanguageHeader } = req.headers;
+
+  const acceptedLanguages = getAcceptedLanguages(acceptLanguageHeader ?? "");
   const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
-  const serverSideProps: { props: SocialMediaPreviewProps } = {
+  return {
     props: {
-      message,
+      message: messageFromUrl,
       preferredLanguage,
     },
-  };
-
-  return serverSideProps;
+  } satisfies { props: SocialMediaPreviewProps };
 }
 
 export default SocialMediaPreview;
