@@ -1,4 +1,4 @@
-import { act } from "react";
+import { act } from "@testing-library/react";
 import { createRoot } from "react-dom/client";
 import { LanguageEnum } from "../enums/Language";
 import type { HtmlHeadData } from "../reducers/html-head.reducer";

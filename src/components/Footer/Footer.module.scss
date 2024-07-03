@@ -1,10 +1,10 @@
 .footer {
-  color: var(--footer-color, inherit);
+  color: var(--footer-color);
   margin-top: 2rem;
   padding: 1rem 2rem;
   text-align: center;
 
   a {
-    color: var(--footer-link-color, var(--theme-2-background-color));
+    color: var(--footer-link-color);
   }
 }

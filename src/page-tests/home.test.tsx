@@ -1,12 +1,16 @@
 import { render } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
-import { act } from "react";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
 import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
+
+type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>;
+};
 
 expect.extend(toHaveNoViolations);
 jest.mock("next/router", () => require("next-router-mock"));
@@ -204,23 +208,21 @@ describe(getServerSideProps.name, () => {
     const encodedMessage =
       "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEmqBB1oQAZRxQBzFKUaUdAOQdDAAdmHAEUAF8gA";
 
-    const resolvedUrl = "resolvedUrl";
+    const resolvedUrl = `resolvedUrl?m=${encodedMessage}`;
     const host = "host";
-    const context = {
-      query: {
-        m: encodedMessage,
-      },
+    const context: DeepPartial<GetServerSidePropsContext> = {
       req: {
-        host: "",
         headers: {
           "accept-language": "nb",
           host,
         },
       },
       resolvedUrl,
-    } as unknown as GetServerSidePropsContext;
+    };
 
-    const serverSideProps = await getServerSideProps(context);
+    const serverSideProps = await getServerSideProps(
+      context as GetServerSidePropsContext,
+    );
 
     expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
       messageFromUrl,
@@ -234,18 +236,20 @@ describe(getServerSideProps.name, () => {
   it("should return the correct props in a happy path, if there is no message", async () => {
     const messageFromUrl: Message | null = null;
 
-    const context = {
-      query: {},
+    const context: DeepPartial<GetServerSidePropsContext> = {
+      resolvedUrl: "",
       req: {
-        host: null,
         headers: {},
       },
-    } as unknown as GetServerSidePropsContext;
+    };
 
-    const serverSideProps = await getServerSideProps(context);
+    const serverSideProps = await getServerSideProps(
+      context as GetServerSidePropsContext,
+    );
 
     expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
   });
+
   it("should return the first message if there are multiple", async () => {
     const messageFromUrl: Message = {
       date: "1st of January",
@@ -256,20 +260,21 @@ describe(getServerSideProps.name, () => {
       themeName: "pride",
     };
 
-    const context = {
-      query: {
-        m: [
-          "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKWM1QIOtCADKOKAOYUUkZKHQA5D0MAB2YcARQAXyA",
-          "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKQCZNUCDrQgAyjigCzCikjJQ6AHKehgAOzDgCKAC%2BQA",
-        ],
-      },
+    const messages = [
+      "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKWM1QIOtCADKOKAOYUUkZKHQA5D0MAB2YcARQAXyA",
+      "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKQCZNUCDrQgAyjigCzCikjJQ6AHKehgAOzDgCKAC%2BQA",
+    ];
+
+    const context: DeepPartial<GetServerSidePropsContext> = {
+      resolvedUrl: `?m=${messages.join("&m=")}`,
       req: {
-        host: null,
         headers: {},
       },
-    } as unknown as GetServerSidePropsContext;
+    };
 
-    const serverSideProps = await getServerSideProps(context);
+    const serverSideProps = await getServerSideProps(
+      context as GetServerSidePropsContext,
+    );
 
     expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
   });

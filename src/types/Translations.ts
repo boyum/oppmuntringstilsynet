@@ -13,7 +13,6 @@ export type Translations = {
   copyButtonText: string;
   resetButtonText: string;
   setLanguage: string;
-  footerHtml: string;
   openThemePicker: string;
   closeThemePicker: string;
   themePickerHeading: string;

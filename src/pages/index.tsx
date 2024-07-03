@@ -1,7 +1,6 @@
 import parser from "accept-language-parser";
 import deepEqual from "deep-equal";
 import dotenv from "dotenv";
-import first from "lodash.first";
 import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -61,7 +60,6 @@ const Home: FC<Props> = ({
 }) => {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
@@ -75,23 +73,20 @@ const Home: FC<Props> = ({
 
   const translations = getTranslations(messageFromUrl?.language ?? language);
 
+  const hasMessage = !!messageFromUrl;
+  const isDisabled = hasMessage;
+
   useEffect(() => {
     const shouldSetMessage =
       isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
 
-    if (!!messageFromUrl && shouldSetMessage) {
+    if (hasMessage && shouldSetMessage) {
       dispatchMessageAction({
         type: MessageActionType.SetMessage,
         message: messageFromUrl,
       });
     }
   }, [isResetting, message, messageFromUrl]);
-
-  useEffect(() => {
-    if (messageFromUrl) {
-      setIsDisabled(true);
-    }
-  }, [messageFromUrl]);
 
   useEffect(() => {
     const activeTheme = messageFromUrl?.themeName
@@ -141,7 +136,6 @@ const Home: FC<Props> = ({
     });
 
     setIsResetting(true);
-    setIsDisabled(false);
   }, [router]);
 
   const handleLanguageChange = useCallback(
@@ -238,36 +232,45 @@ const Home: FC<Props> = ({
   );
 };
 
+function getQueryParams(resolvedUrl: string): URLSearchParams {
+  const [, ...queryParams] = resolvedUrl.split("?");
+
+  return new URLSearchParams(queryParams.join());
+}
+
+function getAcceptedLanguages(acceptLanguage: string): string[] {
+  return parser.parse(acceptLanguage).map(language => language.code);
+}
+
+const localUrl = "http://localhost:3000";
+const deployUrl = process.env["DEPLOY_URL"] ?? localUrl;
+
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  const encodedMessage = Array.isArray(context.query["m"])
-    ? first(context.query["m"])
-    : context.query["m"];
-  const messageFromUrl = decodeMessage(encodedMessage ?? "");
   dotenv.config();
 
-  const localUrl = "http://localhost:3000";
-  const deployUrl = process.env["DEPLOY_URL"] ?? localUrl;
+  const { req, resolvedUrl } = context;
 
-  const { host } = context.req.headers;
-  const acceptLanguage = context.req.headers["accept-language"] ?? "";
-  const acceptedLanguages = parser
-    .parse(acceptLanguage)
-    .map(language => language.code);
+  const queryParams = getQueryParams(resolvedUrl);
+  const encodedMessage = queryParams.get("m");
+  const messageFromUrl = decodeMessage(encodedMessage ?? "");
+
+  const { host: hostHeader, "accept-language": acceptLanguageHeader } =
+    req.headers;
+
+  const acceptedLanguages = getAcceptedLanguages(acceptLanguageHeader ?? "");
   const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
-  const serverSideProps: { props: Props } = {
+  return {
     props: {
-      encodedMessage: encodedMessage ?? null,
+      encodedMessage,
       messageFromUrl,
-      resolvedUrl: context.resolvedUrl,
-      deployUrl: host ? `//${host}` : deployUrl,
+      resolvedUrl,
+      deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
       preferredLanguage,
     },
-  };
-
-  return serverSideProps;
+  } satisfies { props: Props };
 }
 
 export default Home;
