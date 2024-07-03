@@ -1,4 +1,4 @@
-import { createContext, Dispatch } from "react";
+import { Dispatch, createContext } from "react";
 import type { ThemeAction } from "../reducers/theme.reducer";
 import type { Theme } from "../types/Theme";
 import { themes } from "../types/Themes";
