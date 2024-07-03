@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
-import { act } from "react";
+import { act } from "@testing-library/react";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
 import { LanguageStore } from "../stores/LanguageStore";

@@ -26,7 +26,6 @@
     "deep-equal": "^2.2.3",
     "dotenv": "^16.4.5",
     "jest-axe": "^9.0.0",
-    "lodash.first": "^3.0.0",
     "lz-string": "^1.5.0",
     "next": "^14.2.4"
   },
@@ -46,7 +45,6 @@
     "@types/jest": "^29.5.12",
     "@types/jest-axe": "^3.5.9",
     "@types/jest-environment-puppeteer": "^5.0.6",
-    "@types/lodash.first": "^3.0.9",
     "@types/node": "^20.14.9",
     "@types/puppeteer": "^5.4.7",
     "fast-check": "^3.19.0",

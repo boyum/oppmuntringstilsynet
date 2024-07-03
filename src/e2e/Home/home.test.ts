@@ -31,11 +31,12 @@ describe("Home", () => {
       });
       await page.goto(deployUrl);
 
-      await page.waitForSelector("[data-theme]");
+      // Await one render cycle
+      await sleep(100);
 
-      await expect(page.title()).resolves.toMatch(
-        languageRecord.translations.pageTitle,
-      );
+      const title = await getTitle(page);
+
+      expect(title).toMatch(languageRecord.translations.pageTitle);
     });
   });
 
@@ -288,19 +289,6 @@ describe("Home", () => {
       )
     ).every(isDisabled => isDisabled === true);
 
-    // const disabledFields = await form.$$("input, textarea");
-    // await Promise.all(
-    //   disabledFields.map(async element => {
-    //     // If the `_remoteObject` property is ever changed or removed,
-    //     // this can also be done by running everything inside `page.evaluate`
-
-    //     const isDisabled = (
-    //       (await element.jsonValue()) as HTMLInputElement | HTMLTextAreaElement
-    //     ).disabled;
-
-    //     expect(isDisabled).toBe(true);
-    //   }),
-    // );
     expect(allAreDisabled).toBe(true);
   });
 
@@ -342,15 +330,13 @@ describe("Home", () => {
   it("should update the page title when the language changes", async () => {
     const newLanguage = languages.NorskBokmal;
 
+    // Set the language to Norwegian
     await page.select("[data-test-id=language-select]", "NorskBokmal");
 
-    const title = await page.$eval("title", titleElement => {
-      if (!titleElement) {
-        throw new Error("Title element not found");
-      }
+    // Await one render cycle
+    await sleep(100);
 
-      return titleElement.innerHTML;
-    });
+    const title = await getTitle(page);
 
     const expectedTitle = newLanguage.translations.pageTitle;
 
@@ -364,13 +350,7 @@ describe("Home", () => {
     const oldLanguage = languages.English;
     const newLanguage = languages.NorskBokmal;
 
-    const oldTitle = await page.$eval("title", titleElement => {
-      if (!titleElement) {
-        throw new Error("Title element not found");
-      }
-
-      return titleElement.innerHTML;
-    });
+    const oldTitle = await getTitle(page);
 
     await page.type("#date-field", "date");
 
@@ -381,13 +361,7 @@ describe("Home", () => {
     await page.goto(copiedUrl);
     await page.select("[data-test-id=language-select]", "NorskBokmal");
 
-    const newTitle = await page.$eval("title", titleElement => {
-      if (!titleElement) {
-        throw new Error("Title element not found");
-      }
-
-      return titleElement.innerHTML;
-    });
+    const newTitle = await getTitle(page);
 
     const expectedOldTitle = oldLanguage.translations.pageTitle;
     const expectedNewTitle = newLanguage.translations.pageTitle;
@@ -396,3 +370,17 @@ describe("Home", () => {
     expect(newTitle).toBe(expectedNewTitle);
   });
 });
+
+async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function getTitle(page: Page) {
+  return page.$eval("title", titleElement => {
+    if (!titleElement) {
+      throw new Error("Title element not found");
+    }
+
+    return titleElement.innerHTML;
+  });
+}
