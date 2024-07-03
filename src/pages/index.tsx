@@ -61,7 +61,6 @@ const Home: FC<Props> = ({
 }) => {
   const [language, dispatchLanguageAction] = useContext(LanguageContext);
   const [theme, dispatchThemeAction] = useContext(ThemeContext);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
@@ -75,23 +74,20 @@ const Home: FC<Props> = ({
 
   const translations = getTranslations(messageFromUrl?.language ?? language);
 
+  const hasMessage = !!messageFromUrl;
+  const isDisabled = hasMessage;
+
   useEffect(() => {
     const shouldSetMessage =
       isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
 
-    if (!!messageFromUrl && shouldSetMessage) {
+    if (hasMessage && shouldSetMessage) {
       dispatchMessageAction({
         type: MessageActionType.SetMessage,
         message: messageFromUrl,
       });
     }
   }, [isResetting, message, messageFromUrl]);
-
-  useEffect(() => {
-    if (messageFromUrl) {
-      setIsDisabled(true);
-    }
-  }, [messageFromUrl]);
 
   useEffect(() => {
     const activeTheme = messageFromUrl?.themeName
@@ -141,7 +137,6 @@ const Home: FC<Props> = ({
     });
 
     setIsResetting(true);
-    setIsDisabled(false);
   }, [router]);
 
   const handleLanguageChange = useCallback(
