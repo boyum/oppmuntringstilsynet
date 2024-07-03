@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { LanguageEnum } from "../enums/Language";
 import type { HtmlHeadData } from "../reducers/html-head.reducer";
 import { TranslationsNb } from "../types/Translations.nb";
