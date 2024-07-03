@@ -50,41 +50,39 @@ const OgImage = (request: NextRequest) => {
   const emoji = randomArrayValue(["💛", "🥰", "😻", "💐", "🫶"]);
 
   return new ImageResponse(
-    (
-      <main
+    <main
+      style={{
+        alignItems: "center",
+        display: "flex",
+        flexGrow: 1,
+        minHeight: "100vh",
+        justifyContent: "center",
+        padding: "0 1rem",
+      }}
+    >
+      <div
         style={{
-          alignItems: "center",
+          backgroundColor: "hsl(353, 53%, 54%)",
+          border: "0.125rem solid",
+          borderRadius: "0.5em",
+          boxShadow: " 0 0 10px 0 rgba(0, 0, 0, 0.15)",
+          color: "white",
           display: "flex",
-          flexGrow: 1,
-          minHeight: "100vh",
-          justifyContent: "center",
-          padding: "0 1rem",
+          padding: "4rem 6rem 5rem",
         }}
       >
-        <div
+        <h1
           style={{
-            backgroundColor: "hsl(353, 53%, 54%)",
-            border: "0.125rem solid",
-            borderRadius: "0.5em",
-            boxShadow: " 0 0 10px 0 rgba(0, 0, 0, 0.15)",
-            color: "white",
             display: "flex",
-            padding: "4rem 6rem 5rem",
+            fontSize: "36px",
+            margin: 0,
+            textAlign: "center",
           }}
         >
-          <h1
-            style={{
-              display: "flex",
-              fontSize: "36px",
-              margin: 0,
-              textAlign: "center",
-            }}
-          >
-            {title} {emoji}
-          </h1>
-        </div>
-      </main>
-    ),
+          {title} {emoji}
+        </h1>
+      </div>
+    </main>,
     {
       width: 1200,
       height: 630,
@@ -92,5 +90,4 @@ const OgImage = (request: NextRequest) => {
   );
 };
 
-// eslint-disable-next-line import/no-default-export
 export default OgImage;

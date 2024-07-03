@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
 import { LanguageStore } from "../stores/LanguageStore";
@@ -9,7 +9,6 @@ import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
 
 expect.extend(toHaveNoViolations);
-// eslint-disable-next-line global-require
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe(Home.name, () => {

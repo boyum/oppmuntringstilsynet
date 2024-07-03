@@ -5,7 +5,6 @@ export function copyToClipboard(
   inputElement: HTMLInputElement,
   text: string,
 ): void {
-  // eslint-disable-next-line no-param-reassign
   inputElement.value = text;
   inputElement.select();
   inputElement.setSelectionRange(0, 100_000);

@@ -2,9 +2,9 @@ import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
 import {
-  getEmptyState,
   MessageAction,
   MessageActionType,
+  getEmptyState,
   messageReducer,
 } from "./message.reducer";
 

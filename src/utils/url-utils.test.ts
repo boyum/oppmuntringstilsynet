@@ -47,8 +47,11 @@ describe("Message encoder/decoder", () => {
     expect(actualMessage).toBe(expectedMessage);
   });
 
-  it("should return null if a malformed encoded string is provided", () =>
-    fc.assert(
+  it("should return null if a malformed encoded string is provided", () => {
+    const consoleError = console.error;
+    console.error = () => undefined;
+
+    const testResult = fc.assert(
       fc.property(fc.string({ minLength: 5 }), encodedMessage => {
         const expectedMessage: Message | null = null;
 
@@ -56,5 +59,10 @@ describe("Message encoder/decoder", () => {
 
         expect(actualMessage).toBe(expectedMessage);
       }),
-    ));
+    );
+
+    console.error = consoleError;
+
+    return testResult;
+  });
 });

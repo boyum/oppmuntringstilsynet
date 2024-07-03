@@ -1,7 +1,7 @@
 import {
   HtmlHeadAction,
-  HtmlHeadData,
   HtmlHeadActionType,
+  HtmlHeadData,
   htmlHeadReducer,
 } from "./html-head.reducer";
 

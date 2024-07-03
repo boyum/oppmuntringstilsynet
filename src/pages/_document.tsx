@@ -55,7 +55,7 @@ class CustomDocument extends Document {
           href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
           rel="stylesheet"
         />
-        {/* eslint-disable-next-line react/no-danger */}
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: The tag manager script is hard coded, thus safe */}
         <script dangerouslySetInnerHTML={{ __html: tagManagerScript }} />
 
         {CustomDocument.renderMetaTags()}
@@ -77,5 +77,4 @@ class CustomDocument extends Document {
   }
 }
 
-// eslint-disable-next-line import/no-default-export
 export default CustomDocument;

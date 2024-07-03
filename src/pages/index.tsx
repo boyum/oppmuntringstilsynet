@@ -25,8 +25,8 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import type { LanguageEnum } from "../enums/Language";
 import { LanguageActionType } from "../reducers/language.reducer";
 import {
-  getEmptyState,
   MessageActionType,
+  getEmptyState,
   messageReducer,
 } from "../reducers/message.reducer";
 import { ThemeActionType } from "../reducers/theme.reducer";
@@ -270,5 +270,4 @@ export async function getServerSideProps(
   return serverSideProps;
 }
 
-// eslint-disable-next-line import/no-default-export
 export default Home;
