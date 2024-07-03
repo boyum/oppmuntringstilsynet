@@ -23,8 +23,11 @@ describe(getLanguage.name, () => {
     expect(actualLanguage).toEqual(expectedLanguage);
   });
 
-  it("should return null if the locale code is not supported", () =>
-    fc.assert(
+  it("should return null if the locale code is not supported", () => {
+    const consoleError = console.error;
+    console.error = () => undefined;
+
+    const testResult = fc.assert(
       fc.property(fc.string(), localeCode => {
         const expectedLanguage: LanguageEnum | null = null;
         const actualLanguage = getLanguage(localeCode);
@@ -38,7 +41,12 @@ describe(getLanguage.name, () => {
 
         return actualLanguage === expectedLanguage;
       }),
-    ));
+    );
+
+    console.error = consoleError;
+
+    return testResult;
+  });
 });
 
 describe(getPreferredLanguage.name, () => {
