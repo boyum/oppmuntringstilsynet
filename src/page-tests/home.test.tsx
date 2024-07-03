@@ -9,7 +9,6 @@ import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
 
 expect.extend(toHaveNoViolations);
-// eslint-disable-next-line global-require
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe(Home.name, () => {

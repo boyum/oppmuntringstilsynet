@@ -1,4 +1,3 @@
-/* eslint-disable import/no-default-export */
 import type { Config } from "@jest/types";
 import { defaults } from "jest-config";
 import nextJest from "next/jest";

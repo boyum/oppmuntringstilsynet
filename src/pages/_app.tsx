@@ -12,11 +12,9 @@ export type AppProps = {
 const Oppmuntringstilsynet: FC<AppProps> = ({ Component, pageProps }) => (
   <ThemeStore>
     <LanguageStore>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Component {...pageProps} />
     </LanguageStore>
   </ThemeStore>
 );
 
-// eslint-disable-next-line import/no-default-export
 export default Oppmuntringstilsynet;

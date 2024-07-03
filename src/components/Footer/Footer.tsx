@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
   return (
     <footer
       className={styles["footer"]}
-      // eslint-disable-next-line react/no-danger
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: Footer html is translated and hard coded, thus safe
       dangerouslySetInnerHTML={{ __html: translations.footerHtml }}
     />
   );

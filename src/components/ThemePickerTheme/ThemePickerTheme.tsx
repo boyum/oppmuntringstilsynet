@@ -29,7 +29,7 @@ export const ThemePickerTheme: React.FC<Props> = ({
             .fill(0)
             .map((_, index) => (
               <span
-                /* eslint-disable-next-line react/no-array-index-key */
+                // biome-ignore lint/suspicious/noArrayIndexKey: We use the index as a key because the array is static
                 key={index}
                 className={styles["circle"]}
                 aria-hidden="true"

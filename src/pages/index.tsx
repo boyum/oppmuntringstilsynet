@@ -270,5 +270,4 @@ export async function getServerSideProps(
   return serverSideProps;
 }
 
-// eslint-disable-next-line import/no-default-export
 export default Home;
