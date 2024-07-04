@@ -7,7 +7,7 @@ export default {
   experimental: {
     reactCompiler: true,
   },
-  
+
   webpack: (/** @type any */ config, { dev, isServer }) => {
     if (!dev && !isServer) {
       Object.assign(config.resolve.alias, {
