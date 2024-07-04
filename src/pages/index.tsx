@@ -1,6 +1,5 @@
 import parser from "accept-language-parser";
 import deepEqual from "deep-equal";
-import dotenv from "dotenv";
 import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -248,8 +247,6 @@ const deployUrl = process.env["DEPLOY_URL"] ?? localUrl;
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  dotenv.config();
-
   const { req, resolvedUrl } = context;
 
   const queryParams = getQueryParams(resolvedUrl);
