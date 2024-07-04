@@ -39,6 +39,8 @@ export function getEmptyState(): Message {
   };
 }
 
+export const serializedEmpty = JSON.stringify(getEmptyState());
+
 export function messageReducer(state: Message, action: MessageAction): Message {
   switch (action.type) {
     case MessageActionType.SetMessage: {

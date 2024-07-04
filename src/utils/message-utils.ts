@@ -1,11 +1,10 @@
-import deepEqual from "deep-equal";
-import { getEmptyState } from "../reducers/message.reducer";
+import { getEmptyState, serializedEmpty } from "../reducers/message.reducer";
 import type { Message } from "../types/Message";
 
 export function isEmpty(message: Message): boolean {
-  const emptyMessage = getEmptyState();
+  const serializedMessage = JSON.stringify(message);
 
-  return deepEqual(message, emptyMessage);
+  return serializedEmpty === serializedMessage;
 }
 
 export function createEmptyMessage(): Message {

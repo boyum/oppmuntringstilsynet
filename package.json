@@ -13,6 +13,8 @@
     "format:fix": "npm run format -- --fix",
     "lint": "biome lint",
     "lint:fix": "npm run lint -- --fix",
+    "check": "biome check",
+    "check:fix": "npm run check -- --fix",
     "run-ci-e2e": "start-server-and-test start-server 3000 ci-test:e2e",
     "start": "next start",
     "start-server": "npm run build && npm run start",
@@ -23,7 +25,6 @@
   "dependencies": {
     "@vercel/og": "^0.6.2",
     "accept-language-parser": "^1.5.0",
-    "deep-equal": "^2.2.3",
     "jest-axe": "^9.0.0",
     "lz-string": "^1.5.0",
     "next": "^14.2.4"
@@ -37,7 +38,6 @@
     "@testing-library/user-event": "^14.5.2",
     "@tsconfig/strictest": "^2.0.5",
     "@types/accept-language-parser": "^1.5.6",
-    "@types/deep-equal": "^1.0.4",
     "@types/expect-puppeteer": "^5.0.6",
     "@types/jest": "^29.5.12",
     "@types/jest-axe": "^3.5.9",
