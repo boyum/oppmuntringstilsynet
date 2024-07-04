@@ -96,6 +96,45 @@ describe(isEmpty.name, () => {
 
     expect(isEmpty(message)).toBeFalsy();
   });
+
+  it("should throw an error if a property is of an unknown type", () => {
+    const message = {
+      date: new Date(),
+      message: "",
+      name: "",
+      checks: [false, false, false],
+      language: LanguageEnum.NorskBokmal,
+      themeName: "winter",
+    } as unknown as Message;
+
+    expect(() => isEmpty(message)).toThrow();
+  });
+
+  it("should throw an error if a property within an array is not primitive", () => {
+    const message = {
+      date: "",
+      message: "",
+      name: "",
+      checks: [{}, false, false],
+      language: LanguageEnum.NorskBokmal,
+      themeName: "winter",
+    } as unknown as Message;
+
+    expect(() => isEmpty(message)).toThrow();
+  });
+
+  it("should support numbers", () => {
+    const message = {
+      date: 2,
+      message: "",
+      name: "",
+      checks: [1, false, false],
+      language: LanguageEnum.NorskBokmal,
+      themeName: "winter",
+    } as unknown as Message;
+
+    expect(() => isEmpty(message)).not.toThrow();
+  });
 });
 
 describe(createEmptyMessage.name, () => {
