@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import type { Message } from "../../types/Message";
-import { CheckboxesContainer } from "../CheckboxesContainer/CheckboxesContainer";
-import { Checkboxes } from "../Checkboxes/Checkboxes";
 import { useTranslations } from "../../hooks/useTranslations";
+import type { Message } from "../../types/Message";
+import { Checkboxes } from "../Checkboxes/Checkboxes";
+import { CheckboxesContainer } from "../CheckboxesContainer/CheckboxesContainer";
 import styles from "./Form.module.scss";
 
 export type FormProps = {

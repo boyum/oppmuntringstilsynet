@@ -1,11 +1,11 @@
 import type { ChangeEventHandler } from "react";
 import { LanguageEnum } from "../../enums/Language";
+import { useLanguage } from "../../hooks/useLanguage";
 import { languages } from "../../models/languages";
 import { LanguageActionType } from "../../reducers/language.reducer";
 import type { Language } from "../../types/Language";
 import { getTranslations } from "../../utils/translations-utils";
 import styles from "./LanguagePicker.module.scss";
-import { useLanguage } from "../../hooks/useLanguage";
 
 export type LanguagePickerProps = {
   handleChange: (newLanguage: LanguageEnum) => void;

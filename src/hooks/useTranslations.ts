@@ -1,5 +1,5 @@
-import { getTranslations } from "../utils/translations-utils";
 import type { Translations } from "../types/Translations";
+import { getTranslations } from "../utils/translations-utils";
 import { useLanguage } from "./useLanguage";
 
 export const useTranslations = (): Translations => {

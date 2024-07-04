@@ -1,12 +1,12 @@
 import type { FC } from "react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "../../hooks/useLanguage";
 import type { Theme } from "../../types/Theme";
 import type { ThemeName } from "../../types/ThemeName";
 import { getActiveTheme, getTheme } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
-import { useLanguage } from "../../hooks/useLanguage";
 
 type Props = {
   themes: readonly Theme[];
@@ -15,7 +15,7 @@ type Props = {
 
 export const ThemePicker: FC<Props> = ({ themes, setTheme }) => {
   const [language] = useLanguage();
-  const [selectedTheme, setSelectedTheme] = useState<Theme>(({} as Theme));
+  const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
   const [isOpen, setIsOpen] = useState(false);
 
   const translations = getTranslations(language);

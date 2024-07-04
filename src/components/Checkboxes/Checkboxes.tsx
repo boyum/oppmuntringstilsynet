@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import type { Message } from "../../types/Message";
-import styles from "./Checkboxes.module.scss";
 import { useTranslations } from "../../hooks/useTranslations";
+import type { Message } from "../../types/Message";
 import type { Translations } from "../../types/Translations";
+import styles from "./Checkboxes.module.scss";
 
 type Props = {
   isDisabled: boolean;

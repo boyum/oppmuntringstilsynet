@@ -17,6 +17,8 @@ import { Form } from "../components/Form/Form";
 import { LanguagePicker } from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import type { LanguageEnum } from "../enums/Language";
+import { useLanguage } from "../hooks/useLanguage";
+import { useTheme } from "../hooks/useTheme";
 import { LanguageActionType } from "../reducers/language.reducer";
 import {
   MessageActionType,
@@ -37,8 +39,6 @@ import { isEmpty } from "../utils/message-utils";
 import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
 import { decodeMessage } from "../utils/url-utils";
-import { useLanguage } from "../hooks/useLanguage";
-import { useTheme } from "../hooks/useTheme";
 
 type Props = {
   encodedMessage: string | null;

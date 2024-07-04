@@ -1,7 +1,7 @@
 import type { FC, MouseEventHandler } from "react";
+import { useTranslations } from "../../hooks/useTranslations";
 import { Button } from "../Button/Button";
 import styles from "./Buttons.module.scss";
-import { useTranslations } from "../../hooks/useTranslations";
 
 export type ButtonsProps = {
   handleReset: MouseEventHandler<HTMLButtonElement>;

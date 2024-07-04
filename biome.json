@@ -1,13 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "formatter": {
-    "enabled": true,
-    "formatWithErrors": false,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf",
-    "lineWidth": 80,
-    "attributePosition": "auto",
+  "files": {
     "ignore": [
       "**/.next/**",
       "**/.vercel/**",
@@ -16,16 +9,18 @@
       "**/package-lock.json/**"
     ]
   },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto"
+  },
   "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
-    "ignore": [
-      "**/.next/**",
-      "**/.vercel/**",
-      "**/coverage/**",
-      "**/node_modules/**",
-      "**/package-lock.json/**"
-    ],
     "rules": {
       "recommended": false,
       "a11y": {

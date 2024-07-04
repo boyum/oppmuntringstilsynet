@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
-import styles from "./CheckboxesContainer.module.scss";
 import { useTranslations } from "../../hooks/useTranslations";
+import styles from "./CheckboxesContainer.module.scss";
 
 type Props = {
   children: ReactNode;
