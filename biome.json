@@ -18,7 +18,9 @@
     "lineWidth": 80,
     "attributePosition": "auto"
   },
-  "organizeImports": { "enabled": true },
+  "organizeImports": {
+    "enabled": true
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -51,7 +53,10 @@
         "useValidAriaProps": "error",
         "useValidAriaRole": {
           "level": "error",
-          "options": { "allowInvalidRoles": [], "ignoreNonDom": false }
+          "options": {
+            "allowInvalidRoles": [],
+            "ignoreNonDom": false
+          }
         },
         "useValidAriaValues": "error",
         "useValidLang": "error"
@@ -250,7 +255,12 @@
   },
   "overrides": [
     {
-      "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+      "include": [
+        "*.ts",
+        "*.tsx",
+        "*.mts",
+        "*.cts"
+      ],
       "linter": {
         "rules": {
           "correctness": {
