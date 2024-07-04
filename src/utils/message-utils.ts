@@ -6,27 +6,44 @@ import type { Message } from "../types/Message";
 
 function deepEqualMessage(a: Message, b: Message): boolean {
   // For all fields in a, check if they are equal to the corresponding field in b.
-  return Object.keys(a).every(k => {
+  return Object.entries(a).every(([k, aValue]) => {
     const key = k as keyof Message;
 
-    // If the property is an array, compare each element.
-    // If the property is a string, a number, or a boolean, compare the values.
+    const bValue = b[key];
 
-    if (Array.isArray(a[key])) {
-      return a[key].every((element, index) => element === b[key][index]);
+    // If the property is an array, compare each element.
+    if (Array.isArray(aValue)) {
+      return aValue.every((element, index) => {
+        // If the property is a string, a number, or a boolean, compare the values.
+        const elementType = typeof element;
+        if (
+          elementType === "string" ||
+          elementType === "number" ||
+          elementType === "boolean"
+        ) {
+          return element === bValue[index];
+        }
+
+        // If the property is of an unknown type (e.g. an object), throw an error because of undefined behaviour.
+        throw new Error(
+          `Cannot compare objects in array '${key}'. Type ${elementType} is not supported.`,
+        );
+      });
     }
 
+    // If the property is a string, a number, or a boolean, compare the values.
+    const valueType = typeof aValue;
     if (
-      typeof a[key] === "string" ||
-      typeof a[key] === "number" ||
-      typeof a[key] === "boolean"
+      valueType === "string" ||
+      valueType === "number" ||
+      valueType === "boolean"
     ) {
-      return a[key] === b[key];
+      return aValue === bValue;
     }
 
     // If the property is of an unknown type (e.g. an object), throw an error because of undefined behaviour.
     throw new Error(
-      `Cannot compare objects. Type ${typeof a[key]} is not supported.`,
+      `Cannot compare objects. Type ${valueType} is not supported.`,
     );
   });
 }
