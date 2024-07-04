@@ -1,6 +1,6 @@
-import { ChangeEventHandler, useContext } from "react";
-import { LanguageContext } from "../../contexts/LanguageContext";
+import type { ChangeEventHandler } from "react";
 import { LanguageEnum } from "../../enums/Language";
+import { useLanguage } from "../../hooks/useLanguage";
 import { languages } from "../../models/languages";
 import { LanguageActionType } from "../../reducers/language.reducer";
 import type { Language } from "../../types/Language";
@@ -14,7 +14,7 @@ export type LanguagePickerProps = {
 export const LanguagePicker: React.FC<LanguagePickerProps> = ({
   handleChange,
 }) => {
-  const [language, setLanguage] = useContext(LanguageContext);
+  const [language, setLanguage] = useLanguage();
   const languageArr = Object.entries(languages).map(
     ([languageName, lang]: [string, Language]) => [languageName, lang.title],
   );

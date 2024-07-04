@@ -2,10 +2,9 @@ import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import type { FC } from "react";
 import {
-  FC,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useReducer,
@@ -17,9 +16,9 @@ import { Footer } from "../components/Footer/Footer";
 import { Form } from "../components/Form/Form";
 import { LanguagePicker } from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
-import { LanguageContext } from "../contexts/LanguageContext";
-import { ThemeContext } from "../contexts/ThemeContext";
 import type { LanguageEnum } from "../enums/Language";
+import { useLanguage } from "../hooks/useLanguage";
+import { useTheme } from "../hooks/useTheme";
 import { LanguageActionType } from "../reducers/language.reducer";
 import {
   MessageActionType,
@@ -56,8 +55,8 @@ const Home: FC<Props> = ({
   deployUrl,
   preferredLanguage,
 }) => {
-  const [language, dispatchLanguageAction] = useContext(LanguageContext);
-  const [theme, dispatchThemeAction] = useContext(ThemeContext);
+  const [language, dispatchLanguageAction] = useLanguage();
+  const [theme, dispatchThemeAction] = useTheme();
   const [isResetting, setIsResetting] = useState(false);
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,

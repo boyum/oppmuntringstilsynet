@@ -1,9 +1,9 @@
 import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
-import { useContext, useEffect } from "react";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useEffect } from "react";
 import type { LanguageEnum } from "../../enums/Language";
+import { useLanguage } from "../../hooks/useLanguage";
+import { useTheme } from "../../hooks/useTheme";
 import { ThemeActionType } from "../../reducers/theme.reducer";
 import type { Message } from "../../types/Message";
 import { getPreferredLanguage } from "../../utils/language-utils";
@@ -25,8 +25,8 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   message,
   preferredLanguage,
 }) => {
-  const [language] = useContext(LanguageContext);
-  const [theme, dispatchThemeAction] = useContext(ThemeContext);
+  const [language] = useLanguage();
+  const [theme, dispatchThemeAction] = useTheme();
 
   const translations = getTranslations(
     message?.language ?? preferredLanguage ?? language,

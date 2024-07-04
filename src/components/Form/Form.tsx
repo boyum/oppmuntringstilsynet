@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { LanguageContext } from "../../contexts/LanguageContext";
+import type { FC } from "react";
+import { useTranslations } from "../../hooks/useTranslations";
 import type { Message } from "../../types/Message";
-import type { Translations } from "../../types/Translations";
-import { getTranslations } from "../../utils/translations-utils";
+import { Checkboxes } from "../Checkboxes/Checkboxes";
+import { CheckboxesContainer } from "../CheckboxesContainer/CheckboxesContainer";
 import styles from "./Form.module.scss";
 
 export type FormProps = {
@@ -12,63 +12,21 @@ export type FormProps = {
   setCheck: (checkValue: boolean, checkIndex: number) => void;
 };
 
-export const Form: React.FC<FormProps> = ({
+export const Form: FC<FormProps> = ({
   isDisabled,
   message,
   setMessage,
   setCheck,
 }) => {
-  const [language] = useContext(LanguageContext);
-  const translations = getTranslations(language);
+  const translations = useTranslations();
 
   function handleChange(newMessage: Partial<Message>): void {
     setMessage(newMessage);
   }
 
-  function handleCheckChange(payloadString: string, checkIndex: number): void {
-    const checkValue = payloadString === "false";
-
-    setCheck(checkValue, checkIndex);
-  }
-
-  function getCheckboxLabel(index: number): string {
-    const labelKey = `checkbox${index + 1}Label` as keyof Translations;
-    return translations[labelKey];
-  }
-
-  function getCheckboxId(index: number): string {
-    return `checkbox-${index}`;
-  }
-
-  function renderCheckboxes(): JSX.Element[] {
-    const checkboxClassName = `${styles["checkbox"]} hidden`;
-
-    return message.checks.map((check, index) => (
-      <div key={getCheckboxId(index)}>
-        <input
-          id={getCheckboxId(index)}
-          className={checkboxClassName}
-          type="checkbox"
-          checked={check}
-          value={check.toString()}
-          disabled={isDisabled}
-          onChange={event =>
-            handleCheckChange(event.currentTarget.value, index)
-          }
-        />
-        <label
-          className={styles["checkbox-label"]}
-          htmlFor={getCheckboxId(index)}
-        >
-          {getCheckboxLabel(index)}
-        </label>
-      </div>
-    ));
-  }
-
   return (
     <form className={styles["form"]}>
-      <label className={styles["date"]}>
+      <label className={styles["date"]} htmlFor="date-field">
         {translations.dateLabel}
         <input
           type="text"
@@ -78,7 +36,7 @@ export const Form: React.FC<FormProps> = ({
           onChange={event => handleChange({ date: event.currentTarget.value })}
         />
       </label>
-      <label className={styles["message"]}>
+      <label className={styles["message"]} htmlFor="message-body-field">
         {translations.messageLabel}
         <textarea
           id="message-body-field"
@@ -90,11 +48,14 @@ export const Form: React.FC<FormProps> = ({
           }
         />
       </label>
-      <div className={styles["checkbox-container"]}>
-        {translations.checkboxHeading}
-        {renderCheckboxes()}
-      </div>
-      <label className={styles["name"]}>
+      <CheckboxesContainer>
+        <Checkboxes
+          isDisabled={isDisabled}
+          message={message}
+          setCheck={setCheck}
+        />
+      </CheckboxesContainer>
+      <label className={styles["name"]} htmlFor="name-field">
         {translations.nameLabel}
         <input
           id="name-field"

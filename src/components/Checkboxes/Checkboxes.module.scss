@@ -1,0 +1,30 @@
+.checkbox-label {
+  cursor: pointer;
+  display: flex;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.checkbox-label::before {
+  border: 2px solid;
+  content: "";
+  flex-shrink: 0;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  text-align: center;
+  width: 1.5rem;
+}
+
+.checkbox:checked + .checkbox-label::before {
+  content: "✓";
+}
+
+.checkbox:disabled + .checkbox-label {
+  cursor: default;
+}
+
+.checkbox:focus:not(:active) + .checkbox-label::before {
+  outline: 2px solid var(--theme-2-background-color);
+  outline-offset: 2px;
+}
+
