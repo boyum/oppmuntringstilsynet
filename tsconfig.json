@@ -12,7 +12,7 @@
     "useUnknownInCatchVariables": true,
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next.config.mjs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next.config.mjs", "fix-js-dom-environment.ts"],
   "exclude": ["node_modules"],
   "extends": "@tsconfig/strictest/tsconfig.json"
 }

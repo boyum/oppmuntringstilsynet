@@ -8,7 +8,7 @@ const createJestConfig = nextJest({
 
 const customConfig: Config.InitialOptions = {
   testPathIgnorePatterns: [...defaults.testPathIgnorePatterns, "e2e"],
-  testEnvironment: "jsdom",
+  testEnvironment: "./fix-js-dom-environment.ts",
 };
 
 export default createJestConfig(customConfig);
