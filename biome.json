@@ -255,12 +255,7 @@
   },
   "overrides": [
     {
-      "include": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts"
-      ],
+      "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
           "correctness": {
