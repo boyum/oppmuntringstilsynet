@@ -24,7 +24,6 @@
     "@vercel/og": "^0.6.2",
     "accept-language-parser": "^1.5.0",
     "deep-equal": "^2.2.3",
-    "dotenv": "^16.4.5",
     "jest-axe": "^9.0.0",
     "lz-string": "^1.5.0",
     "next": "^14.2.4"

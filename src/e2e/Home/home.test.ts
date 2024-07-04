@@ -1,13 +1,10 @@
 import { AxePuppeteer } from "@axe-core/puppeteer";
-import dotenv from "dotenv";
 import type { Page } from "puppeteer";
 import { languages } from "../../models/languages";
 import type { LocaleCode } from "../../types/LocaleCode";
 import { themes } from "../../types/Themes";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
-
-dotenv.config();
 
 const deployUrl = process.env["DEPLOY_URL"] ?? "http://localhost:3000";
 
