@@ -1,21 +1,21 @@
-import { useContext, useEffect, useState } from "react";
-import { LanguageContext } from "../../contexts/LanguageContext";
+import type { FC } from "react";
+import { useEffect, useState } from "react";
 import type { Theme } from "../../types/Theme";
 import type { ThemeName } from "../../types/ThemeName";
 import { getActiveTheme, getTheme } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
+import { useLanguage } from "../../hooks/useLanguage";
 
 type Props = {
   themes: readonly Theme[];
   setTheme: (theme: Theme) => void;
 };
 
-export const ThemePicker: React.FC<Props> = ({ themes, setTheme }) => {
-  const [language] = useContext(LanguageContext);
-  const [className, setClassName] = useState(styles["theme-picker"]);
-  const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
+export const ThemePicker: FC<Props> = ({ themes, setTheme }) => {
+  const [language] = useLanguage();
+  const [selectedTheme, setSelectedTheme] = useState<Theme>(({} as Theme));
   const [isOpen, setIsOpen] = useState(false);
 
   const translations = getTranslations(language);
@@ -24,13 +24,9 @@ export const ThemePicker: React.FC<Props> = ({ themes, setTheme }) => {
     setSelectedTheme(getActiveTheme());
   }, [themes]);
 
-  useEffect(() => {
-    setClassName(
-      isOpen
-        ? `${styles["theme-picker"]} ${styles["theme-picker-open"]}`
-        : styles["theme-picker"],
-    );
-  }, [isOpen]);
+  const className = isOpen
+    ? `${styles["theme-picker"]} ${styles["theme-picker-open"]}`
+    : styles["theme-picker"];
 
   const onClick = (themeName: ThemeName) => {
     const newSelectedTheme = getTheme(themeName);
