@@ -2,9 +2,9 @@ import { act, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { LanguageEnum } from "../../enums/Language";
-import { getEmptyState } from "../../reducers/message.reducer";
 import { LanguageStore } from "../../stores/LanguageStore";
 import type { Message } from "../../types/Message";
+import { createEmptyMessage } from "../../utils/message-utils";
 import { getFallbackTheme } from "../../utils/theme-utils";
 import { Form } from "./Form";
 
@@ -12,7 +12,7 @@ expect.extend(toHaveNoViolations);
 
 describe(Form.name, () => {
   it("should render without accessibility errors when fields are disabled", async () => {
-    const message = getEmptyState();
+    const message = createEmptyMessage();
 
     const form = render(
       <LanguageStore>
@@ -37,7 +37,7 @@ describe(Form.name, () => {
   });
 
   it("should render without accessibility errors when fields are not disabled", async () => {
-    const message = getEmptyState();
+    const message = createEmptyMessage();
     const form = render(
       <LanguageStore>
         <main>

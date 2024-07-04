@@ -1,5 +1,4 @@
 import parser from "accept-language-parser";
-import deepEqual from "deep-equal";
 import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -77,7 +76,10 @@ const Home: FC<Props> = ({
 
   useEffect(() => {
     const shouldSetMessage =
-      isEmpty(message) && !deepEqual(messageFromUrl, message) && !isResetting;
+      isEmpty(message) &&
+      messageFromUrl != null &&
+      !isEmpty(messageFromUrl) &&
+      !isResetting;
 
     if (hasMessage && shouldSetMessage) {
       dispatchMessageAction({

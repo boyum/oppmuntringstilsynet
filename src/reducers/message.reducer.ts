@@ -28,15 +28,20 @@ export type MessageAction =
       type: MessageActionType.ResetEverythingButTheme;
     };
 
+/**
+ * Only use this for comparing to see if a message is empty.
+ */
+export const emptyMessage_DO_NOT_USE: Message = {
+  checks: [false, false, false],
+  date: "",
+  message: "",
+  name: "",
+  language: LanguageEnum.NorskBokmal,
+  themeName: getFallbackTheme().name,
+};
+
 export function getEmptyState(): Message {
-  return {
-    checks: [false, false, false],
-    date: "",
-    message: "",
-    name: "",
-    language: LanguageEnum.NorskBokmal,
-    themeName: getFallbackTheme().name,
-  };
+  return global.structuredClone(emptyMessage_DO_NOT_USE);
 }
 
 export function messageReducer(state: Message, action: MessageAction): Message {
