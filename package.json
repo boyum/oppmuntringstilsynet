@@ -27,7 +27,7 @@
     "accept-language-parser": "^1.5.0",
     "jest-axe": "^9.0.0",
     "lz-string": "^1.5.0",
-    "next": "^14.2.4"
+    "next": "^14.2.12"
   },
   "devDependencies": {
     "@axe-core/puppeteer": "^4.9.1",
