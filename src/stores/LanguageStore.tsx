@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, type JSX } from "react";
 import { LanguageContext } from "../contexts/LanguageContext";
 import { LanguageEnum } from "../enums/Language";
 import { languageReducer } from "../reducers/language.reducer";

@@ -12,7 +12,8 @@ describe("Home", () => {
   let page: Page;
 
   beforeEach(async () => {
-    page = await browser.newPage();
+    // @ts-expect-error Browser.newPage should return a new Page object
+    page = (await browser.newPage()) as Page;
     await page.goto(deployUrl);
     await page.evaluate(() => localStorage.clear());
   });
@@ -299,9 +300,11 @@ describe("Home", () => {
     const disabledFields = await form.$$("input, textarea");
     await Promise.all(
       disabledFields.map(async element => {
-        const isDisabled = (
-          await element.getProperty("disabled")
-        )?.remoteObject().value;
+        const isDisabled = await element.getProperty("disabled");
+
+        await element.evaluate(
+          input => (input as HTMLInputElement | HTMLTextAreaElement).value,
+        );
 
         expect(isDisabled).toBe(false);
       }),

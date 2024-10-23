@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, type JSX } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { themeReducer } from "../reducers/theme.reducer";
 import { themes } from "../types/Themes";
