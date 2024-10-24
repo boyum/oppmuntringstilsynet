@@ -1,6 +1,7 @@
 import type { LanguageEnum } from "../enums/Language";
 import type { HtmlHeadData } from "../reducers/html-head.reducer";
 import { getTranslations } from "./translations-utils";
+import type { JSX } from "react";
 
 export function getDefaultHtmlHeadData(
   language: LanguageEnum,

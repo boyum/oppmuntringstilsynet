@@ -7,6 +7,7 @@ import Document, {
   NextScript,
 } from "next/document";
 import { getFallbackTheme } from "../utils/theme-utils";
+import type { JSX } from "react";
 
 class CustomDocument extends Document {
   static host: string;
