@@ -52,6 +52,7 @@ jobs:
 
     permissions:
       deployments: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
