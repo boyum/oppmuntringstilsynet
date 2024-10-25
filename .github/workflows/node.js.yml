@@ -52,7 +52,7 @@ jobs:
 
     permissions:
       deployments: write
-      contents: read
+      contents: write
       pull-requests: write
 
     steps:
