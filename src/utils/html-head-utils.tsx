@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { LanguageEnum } from "../enums/Language";
 import type { HtmlHeadData } from "../reducers/html-head.reducer";
 import { getTranslations } from "./translations-utils";
@@ -29,7 +30,7 @@ export function renderHtmlHead({
   ogUrl,
   encodedMessage,
   deployUrl,
-}: HtmlHeadData): JSX.Element {
+}: HtmlHeadData): ReactNode {
   const ogImageUrl = `${deployUrl}/api/og-image${
     encodedMessage ? `?m=${encodedMessage}` : ""
   }`;

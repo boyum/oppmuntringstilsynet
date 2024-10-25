@@ -6,6 +6,7 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
+import { ReactNode } from "react";
 import { getFallbackTheme } from "../utils/theme-utils";
 
 class CustomDocument extends Document {
@@ -24,11 +25,11 @@ class CustomDocument extends Document {
     return { ...initialProps };
   }
 
-  private static renderMetaTags(): JSX.Element {
+  private static renderMetaTags(): ReactNode {
     return <meta property="og:type" content="website" />;
   }
 
-  private static renderHead(): JSX.Element {
+  private static renderHead(): ReactNode {
     return (
       <>
         <link

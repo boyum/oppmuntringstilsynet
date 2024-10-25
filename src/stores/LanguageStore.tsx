@@ -1,10 +1,10 @@
-import { useReducer } from "react";
+import { type ReactNode, useReducer } from "react";
 import { LanguageContext } from "../contexts/LanguageContext";
 import { LanguageEnum } from "../enums/Language";
 import { languageReducer } from "../reducers/language.reducer";
 
 export type LanguageStoreProps = {
-  children: JSX.Element | JSX.Element[];
+  children: ReactNode;
 };
 
 export const LanguageStore: React.FC<LanguageStoreProps> = ({ children }) => {
