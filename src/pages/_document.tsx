@@ -6,8 +6,8 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
-import { getFallbackTheme } from "../utils/theme-utils";
 import { ReactNode } from "react";
+import { getFallbackTheme } from "../utils/theme-utils";
 
 class CustomDocument extends Document {
   static host: string;
