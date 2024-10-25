@@ -54,6 +54,9 @@ jobs:
       deployments: write
       contents: read
       pull-requests: write
+      checks: write
+      statuses: write
+      actions: read
 
     steps:
       - uses: actions/checkout@v4
