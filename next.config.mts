@@ -1,7 +1,6 @@
-// @ts-check
+import { NextConfig } from "next";
 
-/** @type {import("next").NextConfig} */
 export default {
   reactStrictMode: true,
   poweredByHeader: false,
-};
+} satisfies NextConfig;
