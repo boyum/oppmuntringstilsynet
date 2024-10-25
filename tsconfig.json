@@ -16,7 +16,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "next.config.mts",
+    "next.config.ts",
     "fix-js-dom-environment.ts"
   ],
   "exclude": ["node_modules"],
