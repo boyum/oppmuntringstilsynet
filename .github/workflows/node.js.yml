@@ -52,11 +52,8 @@ jobs:
 
     permissions:
       deployments: write
-      contents: read
+      contents: write
       pull-requests: write
-      checks: write
-      statuses: write
-      actions: read
 
     steps:
       - uses: actions/checkout@v4
