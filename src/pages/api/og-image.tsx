@@ -7,7 +7,7 @@ import type { Message } from "../../types/Message";
 import { randomArrayValue } from "../../utils/array-utils";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
-import { decodeMessage } from "../../utils/url-utils";
+import { decodeMessageV1 } from "../../utils/url-utils";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;
@@ -22,7 +22,7 @@ const OgImage = (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
 
   const encodedMessage = searchParams.get("m");
-  const message = encodedMessage ? decodeMessage(encodedMessage) : null;
+  const message = encodedMessage ? decodeMessageV1(encodedMessage) : null;
 
   const acceptLanguage = request.headers.get("accept-language") ?? "";
   const acceptedLanguages = parser

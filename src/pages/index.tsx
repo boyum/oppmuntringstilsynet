@@ -38,7 +38,7 @@ import { getPreferredLanguage } from "../utils/language-utils";
 import { isEmpty } from "../utils/message-utils";
 import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
-import { decodeMessage } from "../utils/url-utils";
+import { decodeMessageV1, decodeMessageV2, encodeV2 } from "../utils/url-utils";
 
 type Props = {
   encodedMessage: string | null;
@@ -251,8 +251,15 @@ export async function getServerSideProps(
   const { req, resolvedUrl } = context;
 
   const queryParams = getQueryParams(resolvedUrl);
-  const encodedMessage = queryParams.get("m");
-  const messageFromUrl = decodeMessage(encodedMessage ?? "");
+
+  const encodedMessageV1 = queryParams.get("m");
+  const encodedMessageV2 = queryParams.get("n=");
+
+  const messageFromUrl = encodedMessageV2
+    ? decodeMessageV2(encodedMessageV2)
+    : encodedMessageV1
+      ? decodeMessageV1(encodedMessageV1)
+      : null;
 
   const { host: hostHeader, "accept-language": acceptLanguageHeader } =
     req.headers;
@@ -262,7 +269,7 @@ export async function getServerSideProps(
 
   return {
     props: {
-      encodedMessage,
+      encodedMessage: encodedMessageV2 ? encodedMessageV2 : encodedMessageV1 ? encodeV2(messageFromUrl!) : null,
       messageFromUrl,
       resolvedUrl,
       deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
