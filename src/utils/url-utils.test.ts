@@ -130,5 +130,21 @@ describe("Message encoder/decoder", () => {
 
       console.error = consoleError;
     });
+
+    it("should support using | in the texts", () => {
+      const message: Message = {
+        date: "date|",
+        message: "message|||",
+        name: "name|||",
+        checks: [true, true, true],
+        language: LanguageEnum.English,
+        themeName: "winter",
+      };
+
+      const encodedMessage = encodeV2(message);
+      const actualMessage = decodeV2(encodedMessage);
+
+      expect(actualMessage).toEqual(message);
+    });
   });
 });
