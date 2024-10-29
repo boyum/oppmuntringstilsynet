@@ -1,5 +1,5 @@
 import type { Message } from "../types/Message";
-import { encode } from "./url-utils";
+import { encodeV2 } from "./url-utils";
 
 export function copyToClipboard(
   inputElement: HTMLInputElement,
@@ -12,9 +12,9 @@ export function copyToClipboard(
 }
 
 export function createMessageUrl(message: Message, currentUrl: string): URL {
-  const encodedMessage = encode(message);
+  const encodedMessage = encodeV2(message);
   const url = new URL(currentUrl);
-  url.searchParams.set("m", encodedMessage);
+  url.searchParams.set("n", encodedMessage);
 
   return url;
 }

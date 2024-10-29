@@ -7,6 +7,7 @@ import Home, { getServerSideProps } from "../pages";
 import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
+import { encodeV2 } from "../utils/url-utils";
 
 type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
@@ -16,53 +17,6 @@ expect.extend(toHaveNoViolations);
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe(Home.name, () => {
-  it("should render with a message", () => {
-    const message: Message = {
-      date: "1st of January",
-      message: "Hi, tester! 🌸",
-      checks: [true, true, true],
-      name: "Sindre",
-      language: LanguageEnum.English,
-      themeName: "pride",
-    };
-
-    const encodedMessage =
-      "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
-
-    const page = render(
-      <ThemeStore>
-        <LanguageStore>
-          <Home
-            encodedMessage={encodedMessage}
-            messageFromUrl={message}
-            resolvedUrl=""
-            deployUrl=""
-            preferredLanguage={LanguageEnum.English}
-          />
-        </LanguageStore>
-      </ThemeStore>,
-    ).container;
-
-    const dateText = page.querySelector<HTMLInputElement>("#date-field")?.value;
-    const messageText = page.querySelector<HTMLTextAreaElement>(
-      "#message-body-field",
-    )?.value;
-    const checkbox0Value =
-      page.querySelector<HTMLInputElement>("#checkbox-0")?.value;
-    const checkbox1Value =
-      page.querySelector<HTMLInputElement>("#checkbox-1")?.value;
-    const checkbox2Value =
-      page.querySelector<HTMLInputElement>("#checkbox-2")?.value;
-    const nameText = page.querySelector<HTMLInputElement>("#name-field")?.value;
-
-    expect(dateText).toBe("1st of January");
-    expect(messageText).toBe("Hi, tester! 🌸");
-    expect(checkbox0Value).toBe("true");
-    expect(checkbox1Value).toBe("true");
-    expect(checkbox2Value).toBe("true");
-    expect(nameText).toBe("Sindre");
-  });
-
   it("should render without accessibility errors when no message", async () => {
     const messageFromUrl: Message | null = null;
     const page = render(
@@ -70,38 +24,6 @@ describe(Home.name, () => {
         <LanguageStore>
           <Home
             encodedMessage=""
-            messageFromUrl={messageFromUrl}
-            resolvedUrl=""
-            deployUrl=""
-            preferredLanguage={LanguageEnum.English}
-          />
-        </LanguageStore>
-      </ThemeStore>,
-    ).container;
-
-    const results = await axe(page);
-
-    expect(results).toHaveNoViolations();
-  });
-
-  it("should render without accessibility errors when there is a message", async () => {
-    const messageFromUrl: Message = {
-      date: "1st of January",
-      message: "Hi, tester! 🌸",
-      checks: [true, true, true],
-      name: "Sindre",
-      language: LanguageEnum.English,
-      themeName: "pride",
-    };
-
-    const encodedMessage =
-      "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
-
-    const page = render(
-      <ThemeStore>
-        <LanguageStore>
-          <Home
-            encodedMessage={encodedMessage}
             messageFromUrl={messageFromUrl}
             resolvedUrl=""
             deployUrl=""
@@ -195,87 +117,347 @@ describe(Home.name, () => {
   });
 });
 
-describe(getServerSideProps.name, () => {
-  it("should return the correct props in a happy path, if there is a message", async () => {
-    const messageFromUrl: Message = {
-      date: "1st of January",
-      message: "Hi, tester!",
-      checks: [true, true, true],
-      name: "Sindre",
-      language: LanguageEnum.English,
-      themeName: "pride",
-    };
-    const encodedMessage =
-      "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEmqBB1oQAZRxQBzFKUaUdAOQdDAAdmHAEUAF8gA";
+describe("Message V1", () => {
+  describe(getServerSideProps.name, () => {
+    it("should return the correct props in a happy path, if there is a message", async () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester!",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
 
-    const resolvedUrl = `resolvedUrl?m=${encodedMessage}`;
-    const host = "host";
-    const context: DeepPartial<GetServerSidePropsContext> = {
-      req: {
-        headers: {
-          "accept-language": "nb",
-          host,
+      const encodedMessageV1 =
+        "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEmqBB1oQAZRxQBzFKUaUdAOQdDAAdmHAEUAF8gA";
+      const encodedMessageV2 =
+        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOAosgOYA2BIACxwAHDASZswGVJOmyZQA";
+
+      const resolvedUrl = `resolvedUrl?m=${encodedMessageV1}`;
+      const host = "host";
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        req: {
+          headers: {
+            "accept-language": "nb",
+            host,
+          },
         },
-      },
-      resolvedUrl,
-    };
+        resolvedUrl,
+      };
 
-    const serverSideProps = await getServerSideProps(
-      context as GetServerSidePropsContext,
-    );
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
 
-    expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
-      messageFromUrl,
-      encodedMessage,
-      resolvedUrl,
-      deployUrl: `//${host}`,
-      preferredLanguage: LanguageEnum.NorskBokmal,
+      expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
+        messageFromUrl,
+        // Should use encoded message v2 even though v1 is provided
+        encodedMessage: encodedMessageV2,
+        resolvedUrl,
+        deployUrl: `//${host}`,
+        preferredLanguage: LanguageEnum.NorskBokmal,
+      });
+    });
+
+    it("should return the correct props in a happy path, if there is no message", async () => {
+      const messageFromUrl: Message | null = null;
+
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        resolvedUrl: "",
+        req: {
+          headers: {},
+        },
+      };
+
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
+
+      expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+    });
+
+    it("should return the first message if there are multiple", async () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester! Message 1",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const messages = [
+        "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKWM1QIOtCADKOKAOYUUkZKHQA5D0MAB2YcARQAXyA",
+        "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKQCZNUCDrQgAyjigCzCikjJQ6AHKehgAOzDgCKAC%2BQA",
+      ];
+
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        resolvedUrl: `?m=${messages.join("&m=")}`,
+        req: {
+          headers: {},
+        },
+      };
+
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
+
+      expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+    });
+
+    it("should render without accessibility errors when there is a message", async () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester! 🌸",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessage =
+        "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
+
+      const page = render(
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage={encodedMessage}
+              messageFromUrl={messageFromUrl}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
+      ).container;
+
+      const results = await axe(page);
+
+      expect(results).toHaveNoViolations();
+    });
+
+    it("should render with a message", () => {
+      const message: Message = {
+        date: "1st of January",
+        message: "Hi, tester! 🌸",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessage =
+        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
+
+      const page = render(
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage={encodedMessage}
+              messageFromUrl={message}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
+      ).container;
+
+      const dateText =
+        page.querySelector<HTMLInputElement>("#date-field")?.value;
+      const messageText = page.querySelector<HTMLTextAreaElement>(
+        "#message-body-field",
+      )?.value;
+      const checkbox0Value =
+        page.querySelector<HTMLInputElement>("#checkbox-0")?.value;
+      const checkbox1Value =
+        page.querySelector<HTMLInputElement>("#checkbox-1")?.value;
+      const checkbox2Value =
+        page.querySelector<HTMLInputElement>("#checkbox-2")?.value;
+      const nameText =
+        page.querySelector<HTMLInputElement>("#name-field")?.value;
+
+      expect(dateText).toBe("1st of January");
+      expect(messageText).toBe("Hi, tester! 🌸");
+      expect(checkbox0Value).toBe("true");
+      expect(checkbox1Value).toBe("true");
+      expect(checkbox2Value).toBe("true");
+      expect(nameText).toBe("Sindre");
     });
   });
 
-  it("should return the correct props in a happy path, if there is no message", async () => {
-    const messageFromUrl: Message | null = null;
+  describe("Message V2", () => {
+    it("should return the correct props in a happy path, if there is a message", async () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester!",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
 
-    const context: DeepPartial<GetServerSidePropsContext> = {
-      resolvedUrl: "",
-      req: {
-        headers: {},
-      },
-    };
+      const encodedMessage =
+        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOAosgOYA2BIACxwAHDASZswGVJOmyZQA";
 
-    const serverSideProps = await getServerSideProps(
-      context as GetServerSidePropsContext,
-    );
+      const resolvedUrl = `resolvedUrl?n=${encodedMessage}`;
+      const host = "host";
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        req: {
+          headers: {
+            "accept-language": "nb",
+            host,
+          },
+        },
+        resolvedUrl,
+      };
 
-    expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
-  });
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
 
-  it("should return the first message if there are multiple", async () => {
-    const messageFromUrl: Message = {
-      date: "1st of January",
-      message: "Hi, tester! Message 1",
-      checks: [true, true, true],
-      name: "Sindre",
-      language: LanguageEnum.English,
-      themeName: "pride",
-    };
+      expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
+        messageFromUrl,
+        encodedMessage,
+        resolvedUrl,
+        deployUrl: `//${host}`,
+        preferredLanguage: LanguageEnum.NorskBokmal,
+      });
+    });
 
-    const messages = [
-      "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKWM1QIOtCADKOKAOYUUkZKHQA5D0MAB2YcARQAXyA",
-      "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEUgLK79yKQCZNUCDrQgAyjigCzCikjJQ6AHKehgAOzDgCKAC%2BQA",
-    ];
+    it("should return the correct props in a happy path, if there is no message", async () => {
+      const messageFromUrl: Message | null = null;
 
-    const context: DeepPartial<GetServerSidePropsContext> = {
-      resolvedUrl: `?m=${messages.join("&m=")}`,
-      req: {
-        headers: {},
-      },
-    };
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        resolvedUrl: "",
+        req: {
+          headers: {},
+        },
+      };
 
-    const serverSideProps = await getServerSideProps(
-      context as GetServerSidePropsContext,
-    );
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
 
-    expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+      expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+    });
+
+    it("should return the first message if there are multiple", async () => {
+      const message1: Message = {
+        date: "1st of January",
+        message: "Hi, tester! Message 1",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const message2: Message = {
+        date: "1st of January",
+        message: "Hi, tester! Message 2",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const messages = [encodeV2(message1), encodeV2(message2)];
+
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        resolvedUrl: `?n=${messages.join("&n=")}`,
+        req: {
+          headers: {},
+        },
+      };
+
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
+
+      expect(serverSideProps.props.messageFromUrl).toEqual(message1);
+    });
+
+    it("should render without accessibility errors when there is a message", async () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester! 🌸",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessage =
+        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
+
+      const page = render(
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage={encodedMessage}
+              messageFromUrl={messageFromUrl}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
+      ).container;
+
+      const results = await axe(page);
+
+      expect(results).toHaveNoViolations();
+    });
+
+    it("should render with a message", () => {
+      const message: Message = {
+        date: "1st of January",
+        message: "Hi, tester! 🌸",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessage =
+        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
+
+      const page = render(
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage={encodedMessage}
+              messageFromUrl={message}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
+      ).container;
+
+      const dateText =
+        page.querySelector<HTMLInputElement>("#date-field")?.value;
+      const messageText = page.querySelector<HTMLTextAreaElement>(
+        "#message-body-field",
+      )?.value;
+      const checkbox0Value =
+        page.querySelector<HTMLInputElement>("#checkbox-0")?.value;
+      const checkbox1Value =
+        page.querySelector<HTMLInputElement>("#checkbox-1")?.value;
+      const checkbox2Value =
+        page.querySelector<HTMLInputElement>("#checkbox-2")?.value;
+      const nameText =
+        page.querySelector<HTMLInputElement>("#name-field")?.value;
+
+      expect(dateText).toBe("1st of January");
+      expect(messageText).toBe("Hi, tester! 🌸");
+      expect(checkbox0Value).toBe("true");
+      expect(checkbox1Value).toBe("true");
+      expect(checkbox2Value).toBe("true");
+      expect(nameText).toBe("Sindre");
+    });
   });
 });

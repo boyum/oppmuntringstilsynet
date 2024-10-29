@@ -27,12 +27,12 @@ describe(createMessageUrl.name, () => {
     };
 
     const encodedMessage =
-      "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
+      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(message, currentPath);
 
-    expect(url.href).toBe(`${currentPath}/?m=${encodedMessage}`);
+    expect(url.href).toBe(`${currentPath}/?n=${encodedMessage}`);
   });
 
   it("should replace the message in the current url with the new encodedMessage", () => {
@@ -46,11 +46,11 @@ describe(createMessageUrl.name, () => {
     };
 
     const encodedMessage =
-      "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
+      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
     const currentPath = "https://example.com";
 
-    const url = createMessageUrl(message, `${currentPath}?m=message`);
+    const url = createMessageUrl(message, `${currentPath}?n=message`);
 
-    expect(url.href).toBe(`${currentPath}/?m=${encodedMessage}`);
+    expect(url.href).toBe(`${currentPath}/?n=${encodedMessage}`);
   });
 });

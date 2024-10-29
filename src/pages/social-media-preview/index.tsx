@@ -13,7 +13,7 @@ import {
   setPageTheme,
 } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
-import { decodeMessage } from "../../utils/url-utils";
+import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
 import styles from "./SocialMediaPreview.module.scss";
 
 export type SocialMediaPreviewProps = {
@@ -81,8 +81,7 @@ export async function getServerSideProps(
   const { req, resolvedUrl } = context;
 
   const queryParams = getQueryParams(resolvedUrl);
-  const encodedMessage = queryParams.get("m");
-  const messageFromUrl = decodeMessage(encodedMessage ?? "");
+  const [, decodedMessage] = getEncodedAndDecodedMessage(queryParams);
 
   const { "accept-language": acceptLanguageHeader } = req.headers;
 
@@ -91,7 +90,7 @@ export async function getServerSideProps(
 
   return {
     props: {
-      message: messageFromUrl,
+      message: decodedMessage,
       preferredLanguage,
     },
   } satisfies { props: SocialMediaPreviewProps };
