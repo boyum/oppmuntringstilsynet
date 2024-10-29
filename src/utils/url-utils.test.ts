@@ -2,11 +2,12 @@ import * as fc from "fast-check";
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import {
-  decodeV1,
   decodeMessageV1,
-  encodeV2,
-  decodeV2,
   decodeMessageV2,
+  decodeV1,
+  decodeV2,
+  encodeV2,
+  getEncodedAndDecodedMessage,
 } from "./url-utils";
 
 describe("Message encoder/decoder", () => {
@@ -146,5 +147,108 @@ describe("Message encoder/decoder", () => {
 
       expect(actualMessage).toEqual(message);
     });
+  });
+});
+
+describe(getEncodedAndDecodedMessage, () => {
+  it("should return the encoded and decoded message if message V2 (n) is set", () => {
+    const message: Message = {
+      date: "date",
+      message: "message",
+      name: "name",
+      checks: [true, true, true],
+      language: LanguageEnum.English,
+      themeName: "winter",
+    };
+
+    const encodedMessage =
+      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+
+    const queryParams = new URLSearchParams();
+    queryParams.set("n", encodedMessage);
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBe(encodedMessage);
+    expect(actualDecodedMessage).toEqual(message);
+  });
+
+  it("should return the encoded and decoded message if message V1 (m) is set", () => {
+    const message: Message = {
+      date: "date",
+      message: "message",
+      name: "name",
+      checks: [true, true, true],
+      language: LanguageEnum.English,
+      themeName: "winter",
+    };
+
+    const encodedMessageV1 =
+      "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
+    const encodedMessageV2 =
+      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+
+    const queryParams = new URLSearchParams();
+    queryParams.set("m", encodedMessageV1);
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBe(encodedMessageV2);
+    expect(actualDecodedMessage).toEqual(message);
+  });
+
+  it("should return null if no message is set", () => {
+    const queryParams = new URLSearchParams();
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBeNull();
+    expect(actualDecodedMessage).toBeNull();
+  });
+
+  it("should return null if the message is empty", () => {
+    const queryParams = new URLSearchParams();
+    queryParams.set("n", "");
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBeNull();
+    expect(actualDecodedMessage).toBeNull();
+  });
+
+  it("should return null if the V2 message is malformed", () => {
+    const consoleError = console.error;
+    console.error = () => undefined;
+
+    const queryParams = new URLSearchParams();
+    queryParams.set("n", "!");
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBeNull();
+    expect(actualDecodedMessage).toBeNull();
+
+    console.error = consoleError;
+  });
+
+  it("should return null if the V1 message is malformed", () => {
+    const consoleError = console.error;
+    console.error = () => undefined;
+
+    const queryParams = new URLSearchParams();
+    queryParams.set("m", "Ix");
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBeNull();
+    expect(actualDecodedMessage).toBeNull();
+
+    console.error = consoleError;
   });
 });

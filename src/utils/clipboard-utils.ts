@@ -14,7 +14,7 @@ export function copyToClipboard(
 export function createMessageUrl(message: Message, currentUrl: string): URL {
   const encodedMessage = encodeV2(message);
   const url = new URL(currentUrl);
-  url.searchParams.set("n=", encodedMessage);
+  url.searchParams.set("n", encodedMessage);
 
   return url;
 }
