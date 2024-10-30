@@ -64,7 +64,7 @@ describe("Home", () => {
       navigator.clipboard.readText(),
     );
     expect(copiedText).toBe(
-      `${deployUrl}/?n=N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmUprvIFsp54qBzOpEV9rkxAA7Kq3qjx5ADZVhnLIPoA5APYZ4sAEKrYzKtJDk00VsrE8QABwwBLCnQC%2BQA`,
+      `${deployUrl}/?n=CYQwLgpgPgthDO8QHNoDsRygOQPYCd4BrAIVyJhABsoAHfAS2GjHwFcX3OOg`,
     );
   });
 
@@ -85,13 +85,13 @@ describe("Home", () => {
       navigator.clipboard.readText(),
     );
     expect(copiedText).toBe(
-      `${deployUrl}/?n=N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmUprvIFsp54qBzOpEV9rkxAA7Kq3qjx5ADZVhnLIPoA5APYZ4sAEKrYzKtJDk00VsrE8QABwwBLCnQC%2BQA`,
+      `${deployUrl}/?n=CYQwLgpgPgthDO8QHNoDsRygOQPYCd4BrAIVyJhABsoAHfAS2GjHwFcX3OOg`,
     );
   });
 
   it("should open a new card with the parsed message's parameters", async () => {
     await page.goto(
-      `${deployUrl}/?m=N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmUprvIFsp54qBzOpEV9rkxAA7Kq3qjx5ADZVhnLIPoA5APYZ4sAEKrYzKtJDk00VsrE8QABwwBLCnQC%2BQA`,
+      `${deployUrl}/?n=CYQwLgpgPgthDO8QHNoDsRygOQPYCd4BrAIVyJhABsoAHfAS2GjHwFcX3OOg`,
     );
 
     const dateText = await page.evaluate(

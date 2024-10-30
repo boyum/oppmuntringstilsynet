@@ -1,10 +1,11 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: Node.js CI
 
 on:
-  - pull_request_target
+  pull_request:
+  push:
+    branches:
+      - main
+  
 
 jobs:
   validate-code:
@@ -78,7 +79,7 @@ jobs:
         uses: amondnet/vercel-action@v25.2.0
         id: vercel-deployment
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
@@ -117,7 +118,7 @@ jobs:
         id: lighthouse-check
         uses: foo-software/lighthouse-check-action@master # https://github.com/foo-software/lighthouse-check-action
         with:
-          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          accessToken: ${{ github.token }}
           prCommentEnabled: true
           urls: https://oppmuntring.sindre.is,${{ needs.deploy.outputs.preview-url }}
 
