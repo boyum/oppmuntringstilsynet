@@ -74,6 +74,13 @@ describe("Message encoder/decoder", () => {
 
       return testResult;
     });
+
+    it("should handle encoded %2B values in encoded message", () => {
+      const encodedMessage =
+        "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQATTZYMLAA4YpUPmCgtxVWFMPCW1cwCMoaWhgB0LACoR%2BCFhzbqbASz6yLFQssmxsFJ4YvroUTipYhjT2LGhshgaAJuSA8H9iIHxUkvSSLIAAZDnkADb8soLy9ACiARW%2B8BC5aNCSAHIFCgIVFQC%2BQA";
+
+      expect(() => decodeMessageV1(encodedMessage)).not.toThrow();
+    });
   });
 
   describe("V2", () => {
@@ -146,6 +153,13 @@ describe("Message encoder/decoder", () => {
       const actualMessage = decodeV2(encodedMessage);
 
       expect(actualMessage).toEqual(message);
+    });
+
+    it("should handle encoded %2B values in encoded message", () => {
+      const encodedMessage =
+        "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQATTZYMLAA4YpUPmCgtxVWFMPCW1cwCMoaWhgB0LACoR%2BCFhzbqbASz6yLFQssmxsFJ4YvroUTipYhjT2LGhshgaAJuSA8H9iIHxUkvSSLIAAZDnkADb8soLy9ACiARW%2B8BC5aNCSAHIFCgIVFQC%2BQA";
+
+      expect(() => decodeMessageV1(encodedMessage)).not.toThrow();
     });
   });
 });
