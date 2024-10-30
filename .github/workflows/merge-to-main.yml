@@ -1,0 +1,56 @@
+name: Merge to main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      deployments: write
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: ${{ github.token }}
+          initial-status: in_progress
+          environment: Production
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25.2.0
+        id: vercel-deployment
+        with:
+          github-token: ${{ github.token }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-args: --prod
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          environment-url: ${{ secrets.PRODUCTION_URL }}
+          state: success
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          environment-url: ${{ secrets.PRODUCTION_URL }}
+          state: failure
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+
