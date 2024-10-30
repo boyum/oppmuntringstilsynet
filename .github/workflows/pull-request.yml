@@ -41,7 +41,9 @@ jobs:
       - run: npm run ci-test:unit
 
       - name: Codecov
-        uses: codecov/codecov-action@v4 # https://github.com/codecov/codecov-action
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy:
     name: Deploy
