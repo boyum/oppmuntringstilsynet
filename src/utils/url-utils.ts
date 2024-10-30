@@ -44,6 +44,9 @@ export function decodeV1<Type>(encodedObj: string): Type | null {
 }
 
 export function decodeMessageV1(encodedObj: string): Message | null {
+  // biome-ignore lint/style/noParameterAssign: Replace encoded %2B with +
+  encodedObj = encodedObj.replace(/%2B/g, "+");
+  
   const hasObj = !!encodedObj?.trim();
   if (!hasObj) {
     return null;
@@ -138,6 +141,9 @@ export function decodeV2(encodedObj: string): Message | null {
 }
 
 export function decodeMessageV2(encodedMessage: string): Message | null {
+  // biome-ignore lint/style/noParameterAssign: Replace encoded %2B with +
+  encodedMessage = encodedMessage.replace(/%2B/g, "+");
+  
   const hasMessage = !!encodedMessage?.trim();
   if (!hasMessage) {
     return null;
