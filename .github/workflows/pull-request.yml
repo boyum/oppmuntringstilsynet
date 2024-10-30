@@ -1,11 +1,7 @@
-name: Node.js CI
+name: Pull request
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
-  
 
 jobs:
   validate-code:
@@ -14,8 +10,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
@@ -28,8 +22,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
@@ -42,8 +34,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
@@ -64,8 +54,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
 
       - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
@@ -73,7 +61,7 @@ jobs:
         with:
           token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
           initial-status: in_progress
-          environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview'}}
+          environment: Preview
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25.2.0
@@ -83,14 +71,13 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || ''}}
 
       - name: Update deployment status (success)
         if: success()
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
-          environment-url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
+          environment-url: ${{ steps.vercel-deployment.outputs.preview-url }}
           state: success
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
@@ -99,7 +86,7 @@ jobs:
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
-          environment-url: ${{ github.ref == 'refs/heads/main' && secrets.PRODUCTION_URL || steps.vercel-deployment.outputs.preview-url }}
+          environment-url: ${{ steps.vercel-deployment.outputs.preview-url }}
           state: failure
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
@@ -138,8 +125,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
