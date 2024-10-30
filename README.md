@@ -1,6 +1,5 @@
 # Oppmuntringstilsynet
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![codebeat badge](https://codebeat.co/badges/c213cf8a-a3b8-42c9-8513-ab3008fd10a1)](https://codebeat.co/projects/github-com-boyum-oppmuntringstilsynet-main)
 [![codecov](https://codecov.io/gh/boyum/oppmuntringstilsynet/branch/main/graph/badge.svg?token=YQ9FVCIF01)](https://codecov.io/gh/boyum/oppmuntringstilsynet)
 
