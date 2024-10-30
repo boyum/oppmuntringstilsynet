@@ -71,8 +71,10 @@ export function decodeMessageV1(encodedObj: string): Message | null {
   };
 }
 
-const sanitizeString = (str: string): string => {
-  return str.replace(/\|/g, "%7C");
+const sanitizeString = <T extends string | undefined>(
+  str: T,
+): T extends string ? string : undefined => {
+  return str?.replace(/\|/g, "%7C") as T extends string ? string : undefined;
 };
 
 const desanitizeString = (str: string): string => {
