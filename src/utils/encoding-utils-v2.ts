@@ -44,7 +44,7 @@ export function decodeV2(encodedObj: string): Message | null {
 
   try {
     decoded = LZString.decompressFromEncodedURIComponent(encodedObj);
-  } catch (error: unknown) {    
+  } catch (error: unknown) {
     if (error instanceof TypeError) {
       console.error(error.message);
       return null;
