@@ -2,6 +2,12 @@ import { LanguageEnum } from "../enums/Language";
 import { languages } from "../models/languages";
 import type { LocaleCode } from "../types/LocaleCode";
 
+export const defaultLanguage = LanguageEnum.NorskBokmal;
+
+export const isLanguage = (value: string): value is LanguageEnum => {
+  return Object.values(LanguageEnum).includes(value as LanguageEnum);
+};
+
 export function getLanguage(localeCode: string): LanguageEnum | null {
   const languageCode = localeCode.slice(0, 2) as LocaleCode;
 

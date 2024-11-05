@@ -6,7 +6,7 @@ import Home, { getServerSideProps } from "../pages";
 import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
-import { encodeV2 } from "../utils/url-utils";
+import { encodeV2 } from "../utils/encoding-utils-v2";
 
 type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;

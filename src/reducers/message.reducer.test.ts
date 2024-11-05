@@ -1,6 +1,7 @@
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
+import { defaultLanguage } from "../utils/language-utils";
 import {
   MessageAction,
   MessageActionType,
@@ -29,8 +30,6 @@ describe(getEmptyState.name, () => {
   });
 
   it("should return an empty Message with default language set", () => {
-    const defaultLanguage = LanguageEnum.NorskBokmal;
-
     expect(message.language).toBe(defaultLanguage);
   });
 

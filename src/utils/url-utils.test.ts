@@ -1,168 +1,10 @@
-import * as fc from "fast-check";
 import { LanguageEnum } from "../enums/Language";
-import type { Message } from "../types/Message";
+import { Message } from "../types/Message";
 import {
-  decodeMessageV1,
-  decodeMessageV2,
-  decodeV1,
-  decodeV2,
-  encodeV2,
+  ACTIVE_QUERY_PARAM_MESSAGE_KEY,
+  QUERY_PARAM_MESSAGE_KEY_V1,
   getEncodedAndDecodedMessage,
 } from "./url-utils";
-
-describe("Message encoder/decoder", () => {
-  describe("V1", () => {
-    it("should encode and decode a Message such that it stays the same", () => {
-      const expectedMessage: Message = {
-        date: "date",
-        message: "message",
-        name: "name",
-        checks: [false, true, false],
-        language: LanguageEnum.English,
-        themeName: "winter",
-      };
-
-      const encodedMessage =
-        "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtAMwgBssMFFABOAVyG8BMALpo+EcnjGkaAUSV8AllkYg0UZpgBydGgHct5WCJABfIA";
-      const actualMessage = decodeMessageV1(encodedMessage);
-
-      expect(actualMessage).toEqual(expectedMessage);
-    });
-
-    it("should return null if an empty encoded string is provided (decodeMessage)", () => {
-      const expectedMessage: Message | null = null;
-
-      const encodedMessage = "";
-      const actualMessage = decodeMessageV1(encodedMessage);
-
-      expect(actualMessage).toBe(expectedMessage);
-    });
-
-    it("should return null if an empty encoded string is provided (decode)", () => {
-      const expectedMessage: Message | null = null;
-
-      const encodedMessage = "";
-      const actualMessage = decodeV1<unknown>(encodedMessage);
-
-      expect(actualMessage).toBe(expectedMessage);
-    });
-
-    it("should return null if the string decodes to something that's not an object", () => {
-      const expectedMessage: Message | null = null;
-
-      const encodedMessage = "Ix";
-      const actualMessage = decodeV1<unknown>(encodedMessage);
-
-      expect(actualMessage).toBe(expectedMessage);
-    });
-
-    it("should return null if a malformed encoded string is provided", () => {
-      const consoleError = console.error;
-      console.error = () => undefined;
-
-      const testResult = fc.assert(
-        fc.property(fc.string({ minLength: 5 }), encodedMessage => {
-          const expectedMessage: Message | null = null;
-
-          const actualMessage = decodeMessageV1(encodedMessage);
-
-          expect(actualMessage).toBe(expectedMessage);
-        }),
-      );
-
-      console.error = consoleError;
-
-      return testResult;
-    });
-
-    it("should handle encoded %2B values in encoded message", () => {
-      const encodedMessage =
-        "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQATTZYMLAA4YpUPmCgtxVWFMPCW1cwCMoaWhgB0LACoR%2BCFhzbqbASz6yLFQssmxsFJ4YvroUTipYhjT2LGhshgaAJuSA8H9iIHxUkvSSLIAAZDnkADb8soLy9ACiARW%2B8BC5aNCSAHIFCgIVFQC%2BQA";
-
-      expect(() => decodeMessageV1(encodedMessage)).not.toThrow();
-    });
-  });
-
-  describe("V2", () => {
-    it("should encode and decode a Message such that it stays the same", () => {
-      const expectedMessage: Message = {
-        date: "date",
-        message: "message",
-        name: "name",
-        checks: [false, true, false],
-        language: LanguageEnum.English,
-        themeName: "winter",
-      };
-
-      const encodedMessage = encodeV2(expectedMessage);
-      const actualMessage = decodeMessageV2(encodedMessage);
-
-      expect(actualMessage).toEqual(expectedMessage);
-    });
-
-    it("should return null if an empty encoded string is provided (decodeMessage)", () => {
-      const expectedMessage: Message | null = null;
-
-      const encodedMessage = "";
-      const actualMessage = decodeMessageV2(encodedMessage);
-
-      expect(actualMessage).toBe(expectedMessage);
-    });
-
-    it("should return null if an empty encoded string is provided (decode)", () => {
-      const expectedMessage: Message | null = null;
-
-      const encodedMessage = "";
-      const actualMessage = decodeV2(encodedMessage);
-
-      expect(actualMessage).toBe(expectedMessage);
-    });
-
-    it("should return null if an encoded string consisting of only whitespaces is provided (decode)", () => {
-      const expectedMessage: Message | null = null;
-
-      const encodedMessage = "    ";
-      const actualMessage = decodeV2(encodedMessage);
-
-      expect(actualMessage).toBe(expectedMessage);
-    });
-
-    it("should return null if a malformed encoded string is provided", () => {
-      const consoleError = console.error;
-      console.error = () => undefined;
-
-      const encodedMessage = "!";
-      const actualMessage = decodeV2(encodedMessage);
-
-      expect(actualMessage).toBeNull();
-
-      console.error = consoleError;
-    });
-
-    it("should support using | in the texts", () => {
-      const message: Message = {
-        date: "date|",
-        message: "message|||",
-        name: "name|||",
-        checks: [true, true, true],
-        language: LanguageEnum.English,
-        themeName: "winter",
-      };
-
-      const encodedMessage = encodeV2(message);
-      const actualMessage = decodeV2(encodedMessage);
-
-      expect(actualMessage).toEqual(message);
-    });
-
-    it("should handle encoded %2B values in encoded message", () => {
-      const encodedMessage =
-        "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQATTZYMLAA4YpUPmCgtxVWFMPCW1cwCMoaWhgB0LACoR%2BCFhzbqbASz6yLFQssmxsFJ4YvroUTipYhjT2LGhshgaAJuSA8H9iIHxUkvSSLIAAZDnkADb8soLy9ACiARW%2B8BC5aNCSAHIFCgIVFQC%2BQA";
-
-      expect(() => decodeMessageV1(encodedMessage)).not.toThrow();
-    });
-  });
-});
 
 describe(getEncodedAndDecodedMessage, () => {
   it("should return the encoded and decoded message if message V2 (n) is set", () => {
@@ -179,7 +21,7 @@ describe(getEncodedAndDecodedMessage, () => {
       "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
 
     const queryParams = new URLSearchParams();
-    queryParams.set("n", encodedMessage);
+    queryParams.set(ACTIVE_QUERY_PARAM_MESSAGE_KEY, encodedMessage);
 
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
@@ -204,7 +46,7 @@ describe(getEncodedAndDecodedMessage, () => {
       "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
 
     const queryParams = new URLSearchParams();
-    queryParams.set("m", encodedMessageV1);
+    queryParams.set(QUERY_PARAM_MESSAGE_KEY_V1, encodedMessageV1);
 
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
@@ -225,7 +67,7 @@ describe(getEncodedAndDecodedMessage, () => {
 
   it("should return null if the message is empty", () => {
     const queryParams = new URLSearchParams();
-    queryParams.set("n", "");
+    queryParams.set(ACTIVE_QUERY_PARAM_MESSAGE_KEY, "");
 
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
@@ -239,7 +81,7 @@ describe(getEncodedAndDecodedMessage, () => {
     console.error = () => undefined;
 
     const queryParams = new URLSearchParams();
-    queryParams.set("n", "!");
+    queryParams.set(ACTIVE_QUERY_PARAM_MESSAGE_KEY, "!");
 
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
@@ -255,7 +97,7 @@ describe(getEncodedAndDecodedMessage, () => {
     console.error = () => undefined;
 
     const queryParams = new URLSearchParams();
-    queryParams.set("m", "Ix");
+    queryParams.set(QUERY_PARAM_MESSAGE_KEY_V1, "Ix");
 
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
