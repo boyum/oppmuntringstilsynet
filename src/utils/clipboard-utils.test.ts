@@ -1,7 +1,7 @@
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { copyToClipboard, createMessageUrl } from "./clipboard-utils";
-import { ACTIVE_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
+import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
 
 describe(copyToClipboard.name, () => {
   it("should copy the element's value to the clipboard", () => {
@@ -28,13 +28,13 @@ describe(createMessageUrl.name, () => {
     };
 
     const encodedMessage =
-      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+      "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(message, currentPath);
 
     expect(url.href).toBe(
-      `${currentPath}/?${ACTIVE_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}`,
+      `${currentPath}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}`,
     );
   });
 
@@ -49,16 +49,16 @@ describe(createMessageUrl.name, () => {
     };
 
     const encodedMessage =
-      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+      "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(
       message,
-      `${currentPath}?${ACTIVE_QUERY_PARAM_MESSAGE_KEY}=message`,
+      `${currentPath}?${LATEST_QUERY_PARAM_MESSAGE_KEY}=message`,
     );
 
     expect(url.href).toBe(
-      `${currentPath}/?${ACTIVE_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}`,
+      `${currentPath}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}`,
     );
   });
 });

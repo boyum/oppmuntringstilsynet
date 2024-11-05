@@ -7,7 +7,7 @@ export const QUERY_PARAM_MESSAGE_KEY_V1 = "m";
 export const QUERY_PARAM_MESSAGE_KEY_V2 = "n";
 export const QUERY_PARAM_MESSAGE_KEY_V3 = "o";
 
-export const ACTIVE_QUERY_PARAM_MESSAGE_KEY = QUERY_PARAM_MESSAGE_KEY_V3;
+export const LATEST_QUERY_PARAM_MESSAGE_KEY = QUERY_PARAM_MESSAGE_KEY_V3;
 
 export function getEncodedAndDecodedMessage(
   queryParams: URLSearchParams,
@@ -43,3 +43,5 @@ export function getEncodedAndDecodedMessage(
 
   return [null, null];
 }
+
+export const latestEncoder = encodeV3;
