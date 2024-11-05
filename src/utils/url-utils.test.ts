@@ -44,7 +44,7 @@ describe(getEncodedAndDecodedMessage, () => {
 
     const encodedMessageV2 =
       "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
-    const encodedMessageV3 = "1dNt0BHk.8OH-zPX_9Jr*zGq3-K-t43";
+    const encodedMessageV3 = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
 
     const queryParams = new URLSearchParams();
     queryParams.set(QUERY_PARAM_MESSAGE_KEY_V2, encodedMessageV2);
@@ -68,7 +68,7 @@ describe(getEncodedAndDecodedMessage, () => {
 
     const encodedMessageV1 =
       "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
-    const encodedMessageV3 = "1dNt0BHk.8OH-zPX_9Jr*zGq3-K-t43";
+    const encodedMessageV3 = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
 
     const queryParams = new URLSearchParams();
     queryParams.set(QUERY_PARAM_MESSAGE_KEY_V1, encodedMessageV1);

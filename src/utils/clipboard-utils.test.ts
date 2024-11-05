@@ -27,7 +27,7 @@ describe(createMessageUrl.name, () => {
       themeName: "winter",
     };
 
-    const encodedMessage = "1dNt0BHk.8OH-zPX_9Jr*zGq3-K-t43";
+    const encodedMessage = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(message, currentPath);
@@ -47,7 +47,7 @@ describe(createMessageUrl.name, () => {
       themeName: "winter",
     };
 
-    const encodedMessage = "1dNt0BHk.8OH-zPX_9Jr*zGq3-K-t43";
+    const encodedMessage = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(

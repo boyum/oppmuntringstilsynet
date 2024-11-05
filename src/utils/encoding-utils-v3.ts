@@ -1,45 +1,10 @@
+import LZString from "lz-string";
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { ThemeName } from "../types/ThemeName";
 import { themes } from "../types/Themes";
 import { defaultLanguage } from "./language-utils";
 import { getFallbackTheme } from "./theme-utils";
-
-const URL_SAFE_CHARACTER_SET =
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz._-*'";
-const BASE = URL_SAFE_CHARACTER_SET.length;
-
-function urlSafeEncodeString(str: string): string {
-  let num = BigInt(0);
-  for (let i = 0; i < str.length; i++) {
-    num = (num << BigInt(8)) + BigInt(str.charCodeAt(i));
-  }
-
-  let result = "";
-  while (num > 0) {
-    result = URL_SAFE_CHARACTER_SET[Number(num % BigInt(BASE))] + result;
-    num /= BigInt(BASE);
-  }
-
-  return result || (URL_SAFE_CHARACTER_SET[0] ?? "");
-}
-
-function urlSafeDecodeString(encodedStr: string): string {
-  let num = BigInt(0);
-  for (let i = 0; i < encodedStr.length; i++) {
-    num =
-      num * BigInt(BASE) +
-      BigInt(URL_SAFE_CHARACTER_SET.indexOf(encodedStr[i]!));
-  }
-
-  let result = "";
-  while (num > 0) {
-    result = String.fromCharCode(Number(num & BigInt(0xff))) + result;
-    num >>= BigInt(8);
-  }
-
-  return result;
-}
 
 const sanitizeString = <T extends string | undefined>(
   str: T,
@@ -95,7 +60,7 @@ export function encodeV3({
     Number.parseInt(checks.map(check => (check ? "1" : "0")).join(""), 2),
   ].join("|");
 
-  return urlSafeEncodeString(comprisedData);
+  return LZString.compressToEncodedURIComponent(comprisedData);
 }
 
 const parseLanguageByIndex = (indexStr: string | undefined): LanguageEnum => {
@@ -131,21 +96,30 @@ const parseChecks = (
     .map(check => check === "1") as [boolean, boolean, boolean];
 };
 
-export function decodeV3(encodedMessage: string): Message | null {
-  const hasObj = !!encodedMessage?.trim();
+export function decodeV3(encodedObj: string): Message | null {
+  const hasObj = !!encodedObj?.trim();
   if (!hasObj) {
     return null;
   }
 
-  const decodedMessage = urlSafeDecodeString(encodedMessage);
+  let decoded: string | null = null;
 
-  if (!decodedMessage) {
-    console.error(`Invalid encoded object ${encodedMessage}`);
+  try {
+    decoded = LZString.decompressFromEncodedURIComponent(encodedObj);
+  } catch (error: unknown) {
+    if (error instanceof TypeError) {
+      console.error(error.message);
+      return null;
+    }
+  }
+
+  if (!decoded) {
+    console.error(`Invalid encoded object ${encodedObj}`);
     return null;
   }
 
   const [date, message, name, languageIndex, themeIndex, checksAsDecimal] =
-    decodedMessage.split("|");
+    decoded.split("|");
 
   const language = parseLanguageByIndex(languageIndex);
   const themeName = parseThemeByIndex(themeIndex);
@@ -162,6 +136,9 @@ export function decodeV3(encodedMessage: string): Message | null {
 }
 
 export function decodeMessageV3(encodedMessage: string): Message | null {
+  // biome-ignore lint/style/noParameterAssign: Replace encoded %2B with +
+  encodedMessage = encodedMessage.replace(/%2B/g, "+");
+
   const hasMessage = !!encodedMessage?.trim();
   if (!hasMessage) {
     return null;

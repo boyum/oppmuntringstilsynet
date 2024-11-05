@@ -49,6 +49,30 @@ describe("Message encoder/decoder", () => {
       expect(actualMessage).toBe(expectedMessage);
     });
 
+    it("should return null if a malformed encoded string is provided", () => {
+      const consoleError = console.error;
+      console.error = () => undefined;
+
+      const encodedMessage = "!";
+      const actualMessage = decodeV3(encodedMessage);
+
+      expect(actualMessage).toBeNull();
+
+      console.error = consoleError;
+    });
+
+    it("should return null if a malformed encoded string is provided", () => {
+      const consoleError = console.error;
+      console.error = () => undefined;
+
+      const encodedMessage = "z%toLoc";
+      const actualMessage = decodeV3(encodedMessage);
+
+      expect(actualMessage).toBeNull();
+
+      console.error = consoleError;
+    });
+
     it("should support using | in the texts", () => {
       const message: Message = {
         date: "date|",
@@ -99,7 +123,7 @@ describe("Message encoder/decoder", () => {
         themeName: getFallbackTheme().name,
       };
 
-      const encodedMessage = "1GcUP7";
+      const encodedMessage = "CYQwLgpkA";
       const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toEqual(emptyMessage);

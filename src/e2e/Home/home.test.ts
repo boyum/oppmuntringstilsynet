@@ -65,7 +65,7 @@ describe("Home", () => {
       navigator.clipboard.readText(),
     );
     expect(copiedText).toBe(
-      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=1dNt0BHk.8OH-zPX_9Jr*zGq3v_jkMf`,
+      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
     );
   });
 
@@ -86,13 +86,13 @@ describe("Home", () => {
       navigator.clipboard.readText(),
     );
     expect(copiedText).toBe(
-      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=1dNt0BHk.8OH-zPX_9Jr*zGq3v_jkMf`,
+      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
     );
   });
 
   it("should open a new card with the parsed message's parameters", async () => {
     await page.goto(
-      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=1dNt0BHk.8OH-zPX_9Jr*zGq3v_jkMf`,
+      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
     );
 
     const dateText = await page.evaluate(
