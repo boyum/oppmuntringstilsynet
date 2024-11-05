@@ -99,7 +99,7 @@ describe("Message encoder/decoder", () => {
         themeName: getFallbackTheme().name,
       };
 
-      const encodedMessage = "CfoLIPk0dUDMvmOy";
+      const encodedMessage = "1GcUP7";
       const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toEqual(emptyMessage);
