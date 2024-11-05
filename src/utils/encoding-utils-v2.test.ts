@@ -2,6 +2,7 @@ import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { decodeMessageV1 } from "./encoding-utils-v1";
 import { decodeMessageV2, decodeV2, encodeV2 } from "./encoding-utils-v2";
+import { getFallbackTheme } from "./theme-utils";
 
 describe("Message encoder/decoder", () => {
   describe("V2", () => {
@@ -110,6 +111,22 @@ describe("Message encoder/decoder", () => {
       const actualMessage = decodeV2(encodedMessage);
 
       expect(actualMessage?.themeName).toBe("pride");
+    });
+
+    it("should handle decoded strings with only one value", () => {
+      const emptyMessage: Message = {
+        date: "date",
+        message: "",
+        name: "",
+        checks: [false, false, false],
+        language: LanguageEnum.NorskBokmal,
+        themeName: getFallbackTheme().name,
+      };
+
+      const encodedMessage = "CYQwLgpkA";
+      const actualMessage = decodeV2(encodedMessage);
+
+      expect(actualMessage).toEqual(emptyMessage);
     });
   });
 });

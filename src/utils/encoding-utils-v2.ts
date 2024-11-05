@@ -1,8 +1,8 @@
 import LZString from "lz-string";
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
-import { ThemeName } from "../types/ThemeName";
-import { isThemeName } from "./theme-utils";
+import { defaultLanguage, isLanguage } from "./language-utils";
+import { getFallbackTheme, isThemeName } from "./theme-utils";
 
 const sanitizeString = <T extends string | undefined>(
   str: T,
@@ -10,7 +10,11 @@ const sanitizeString = <T extends string | undefined>(
   return str?.replace(/\|/g, "%7C") as T extends string ? string : undefined;
 };
 
-const desanitizeString = (str: string): string => {
+const desanitizeString = (str: string | undefined): string => {
+  if (!str) {
+    return "";
+  }
+
   return str.replace(/%7C/g, "|");
 };
 
@@ -59,19 +63,27 @@ export function decodeV2(encodedObj: string): Message | null {
   const [date, message, name, language, themeName, ...checks] =
     decoded.split("|");
 
+  let lang = defaultLanguage;
+  const desanitizedLanguage = desanitizeString(language);
+  if (isLanguage(desanitizedLanguage)) {
+    lang = desanitizedLanguage;
+  }
+
+  let theme = getFallbackTheme().name;
+  const desanitizedThemeName = desanitizeString(themeName);
+  if (isThemeName(desanitizedThemeName)) {
+    theme = desanitizedThemeName;
+  }
+
   return {
-    date: desanitizeString(date ?? ""),
-    message: desanitizeString(message ?? ""),
-    name: desanitizeString(name ?? ""),
-    language: desanitizeString(language ?? "") as LanguageEnum,
-    themeName: isThemeName(desanitizeString(themeName ?? ""))
-      ? (desanitizeString(themeName ?? "") as ThemeName)
-      : "pride",
-    checks: checks.map(check => check === "true") as [
-      boolean,
-      boolean,
-      boolean,
-    ],
+    date: desanitizeString(date),
+    message: desanitizeString(message),
+    name: desanitizeString(name),
+    language: lang,
+    themeName: theme,
+    checks: Array.from({ length: 3 }).map(
+      (_, index) => checks[index] === "true",
+    ) as [boolean, boolean, boolean],
   };
 }
 
