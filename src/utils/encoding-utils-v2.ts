@@ -3,7 +3,6 @@ import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { ThemeName } from "../types/ThemeName";
 import { isThemeName } from "./theme-utils";
-import { decodeMessageV1 } from "./encoding-utils-v1";
 
 const sanitizeString = <T extends string | undefined>(
   str: T,
@@ -98,28 +97,4 @@ export function decodeMessageV2(encodedMessage: string): Message | null {
     ...defaultValuesForBackwardsCompatibility,
     ...decodedMessage,
   };
-}
-
-export function getEncodedAndDecodedMessage(
-  queryParams: URLSearchParams,
-): [string, Message] | [null, null] {
-  const encodedMessageV1 = queryParams.get("m");
-  const encodedMessageV2 = queryParams.get("n");
-
-  if (encodedMessageV2) {
-    const message = decodeMessageV2(encodedMessageV2);
-    if (message) {
-      return [encodedMessageV2, message];
-    }
-  }
-
-  if (encodedMessageV1) {
-    const message = decodeMessageV1(encodedMessageV1);
-    if (message) {
-      // Convert encoded V1 to V2
-      return [encodeV2(message), message];
-    }
-  }
-
-  return [null, null];
 }

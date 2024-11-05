@@ -1,5 +1,6 @@
 import type { Message } from "../types/Message";
 import { encodeV2 } from "./encoding-utils-v2";
+import { ACTIVE_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
 
 export function copyToClipboard(
   inputElement: HTMLInputElement,
@@ -14,7 +15,7 @@ export function copyToClipboard(
 export function createMessageUrl(message: Message, currentUrl: string): URL {
   const encodedMessage = encodeV2(message);
   const url = new URL(currentUrl);
-  url.searchParams.set("n", encodedMessage);
+  url.searchParams.set(ACTIVE_QUERY_PARAM_MESSAGE_KEY, encodedMessage);
 
   return url;
 }
