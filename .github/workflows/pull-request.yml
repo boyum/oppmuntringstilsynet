@@ -105,11 +105,11 @@ jobs:
     steps:
       - name: Lighthouse Check
         id: lighthouse-check
-        uses: foo-software/lighthouse-check-action@master # https://github.com/foo-software/lighthouse-check-action
+        uses: foo-software/lighthouse-check-action@master
         with:
           accessToken: ${{ github.token }}
           prCommentEnabled: true
-          urls: https://oppmuntring.sindre.is,${{ needs.deploy.outputs.preview-url }}
+          urls: ${{ needs.deploy.outputs.preview-url }}
 
       - name: Handle Lighthouse Check results
         uses: foo-software/lighthouse-check-status-action@master
