@@ -38,7 +38,7 @@ import { getPreferredLanguage } from "../utils/language-utils";
 import { isEmpty } from "../utils/message-utils";
 import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
-import { getEncodedAndDecodedMessage } from "../utils/url-utils";
+import { getEncodedAndDecodedMessage } from "../utils/encoding-utils-v2";
 
 type Props = {
   encodedMessage: string | null;

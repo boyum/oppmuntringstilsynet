@@ -13,7 +13,7 @@ import {
   setPageTheme,
 } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
-import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
+import { getEncodedAndDecodedMessage } from "../../utils/encoding-utils-v2";
 import styles from "./SocialMediaPreview.module.scss";
 
 export type SocialMediaPreviewProps = {
