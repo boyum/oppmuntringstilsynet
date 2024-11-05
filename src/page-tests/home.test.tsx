@@ -284,7 +284,7 @@ describe(Home.name, () => {
         const encodedMessageV1 =
           "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEmqBB1oQAZRxQBzFKUaUdAOQdDAAdmHAEUAF8gA";
         const encodedMessageV3 =
-          "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOATDgAw4DsQA";
+          "1D5mY_DQZB46hj0rdJ4X5Z3HxYN2sjdU0KBBdhTsLFjsb4.mp54T";
 
         const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V1}=${encodedMessageV1}`;
         const host = "host";
