@@ -8,7 +8,7 @@ exact note. Send the link to the receiver and they can read the note today and
 forever 🥰 Send a bit of encouragement to a friend or a colleague and brighten
 their day 😍
 
-[Demo](https://oppmuntring.sinre.no/?n=IwZwLgBA9gZhBSBDAdgV0QJwJ4B8CaUqGEADhgKYjnIDG5EAtogNaWNYQAmiHARuWDDkMAOggAVABYpmICDCjF%2BAS2QBzCIghqoUTvIzLqnMQVSNEg4RDBRG9QCbkgeD%2BcDeoAAyFwFF1AG2Ugkq66ALQMoTCYDDhgGKjkMXEJsfFAA)
+[Demo](https://oppmuntring.sinre.no/?o=IwZwLgBA9gZhBSBDAdgV0QJwJ4B8CaUqGEADhgKYjnIDG5EAtogNaWNYQAmiHARuWDDkMAOggAVABYpmICDCjF%2BAS2QBzCIghqoUTvIzLqnMQVSNEg4RDBRG9QCbkgeD%2BcDeoAAyFwCYcPgOxAA)
 
 ## Getting Started
 

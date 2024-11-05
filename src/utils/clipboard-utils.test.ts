@@ -1,6 +1,7 @@
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { copyToClipboard, createMessageUrl } from "./clipboard-utils";
+import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
 
 describe(copyToClipboard.name, () => {
   it("should copy the element's value to the clipboard", () => {
@@ -26,13 +27,14 @@ describe(createMessageUrl.name, () => {
       themeName: "winter",
     };
 
-    const encodedMessage =
-      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+    const encodedMessage = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(message, currentPath);
 
-    expect(url.href).toBe(`${currentPath}/?n=${encodedMessage}`);
+    expect(url.href).toBe(
+      `${currentPath}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}`,
+    );
   });
 
   it("should replace the message in the current url with the new encodedMessage", () => {
@@ -45,12 +47,16 @@ describe(createMessageUrl.name, () => {
       themeName: "winter",
     };
 
-    const encodedMessage =
-      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+    const encodedMessage = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
     const currentPath = "https://example.com";
 
-    const url = createMessageUrl(message, `${currentPath}?n=message`);
+    const url = createMessageUrl(
+      message,
+      `${currentPath}?${LATEST_QUERY_PARAM_MESSAGE_KEY}=message`,
+    );
 
-    expect(url.href).toBe(`${currentPath}/?n=${encodedMessage}`);
+    expect(url.href).toBe(
+      `${currentPath}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}`,
+    );
   });
 });

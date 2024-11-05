@@ -1,4 +1,5 @@
 import { LanguageEnum } from "../enums/Language";
+import type { Checks } from "../types/Checks";
 import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
 import { getFallbackTheme } from "../utils/theme-utils";
@@ -57,7 +58,7 @@ export function messageReducer(state: Message, action: MessageAction): Message {
         ...state,
         checks: state.checks.map((check, index) =>
           index === action.checkIndex ? action.check : check,
-        ) as [boolean, boolean, boolean],
+        ) as Checks,
       };
 
       return newState;

@@ -1,11 +1,11 @@
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { decodeMessageV1 } from "./encoding-utils-v1";
-import { decodeMessageV2, decodeV2, encodeV2 } from "./encoding-utils-v2";
+import { decodeMessageV3, decodeV3, encodeV3 } from "./encoding-utils-v3";
 import { getFallbackTheme } from "./theme-utils";
 
 describe("Message encoder/decoder", () => {
-  describe("V2", () => {
+  describe("V3", () => {
     it("should encode and decode a Message such that it stays the same", () => {
       const expectedMessage: Message = {
         date: "date",
@@ -16,8 +16,8 @@ describe("Message encoder/decoder", () => {
         themeName: "winter",
       };
 
-      const encodedMessage = encodeV2(expectedMessage);
-      const actualMessage = decodeMessageV2(encodedMessage);
+      const encodedMessage = encodeV3(expectedMessage);
+      const actualMessage = decodeMessageV3(encodedMessage);
 
       expect(actualMessage).toEqual(expectedMessage);
     });
@@ -26,7 +26,7 @@ describe("Message encoder/decoder", () => {
       const expectedMessage: Message | null = null;
 
       const encodedMessage = "";
-      const actualMessage = decodeMessageV2(encodedMessage);
+      const actualMessage = decodeMessageV3(encodedMessage);
 
       expect(actualMessage).toBe(expectedMessage);
     });
@@ -35,7 +35,7 @@ describe("Message encoder/decoder", () => {
       const expectedMessage: Message | null = null;
 
       const encodedMessage = "";
-      const actualMessage = decodeV2(encodedMessage);
+      const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toBe(expectedMessage);
     });
@@ -44,7 +44,7 @@ describe("Message encoder/decoder", () => {
       const expectedMessage: Message | null = null;
 
       const encodedMessage = "    ";
-      const actualMessage = decodeMessageV2(encodedMessage);
+      const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toBe(expectedMessage);
     });
@@ -54,7 +54,7 @@ describe("Message encoder/decoder", () => {
       console.error = () => undefined;
 
       const encodedMessage = "!";
-      const actualMessage = decodeMessageV2(encodedMessage);
+      const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toBeNull();
 
@@ -66,7 +66,7 @@ describe("Message encoder/decoder", () => {
       console.error = () => undefined;
 
       const encodedMessage = "z%toLoc";
-      const actualMessage = decodeMessageV2(encodedMessage);
+      const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toBeNull();
 
@@ -83,8 +83,8 @@ describe("Message encoder/decoder", () => {
         themeName: "winter",
       };
 
-      const encodedMessage = encodeV2(message);
-      const actualMessage = decodeV2(encodedMessage);
+      const encodedMessage = encodeV3(message);
+      const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toEqual(message);
     });
@@ -107,8 +107,8 @@ describe("Message encoder/decoder", () => {
         themeName: "invalid-theme",
       };
 
-      const encodedMessage = encodeV2(message);
-      const actualMessage = decodeV2(encodedMessage);
+      const encodedMessage = encodeV3(message);
+      const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage?.themeName).toBe("pride");
     });
@@ -124,7 +124,7 @@ describe("Message encoder/decoder", () => {
       };
 
       const encodedMessage = "CYQwLgpkA";
-      const actualMessage = decodeV2(encodedMessage);
+      const actualMessage = decodeV3(encodedMessage);
 
       expect(actualMessage).toEqual(emptyMessage);
     });
