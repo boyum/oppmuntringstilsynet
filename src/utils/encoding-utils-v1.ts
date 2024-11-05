@@ -2,6 +2,10 @@ import LZString from "lz-string";
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 
+export function encodeV1(message: Message) {
+  return LZString.compressToEncodedURIComponent(JSON.stringify(message));
+}
+
 export function decodeV1<Type>(encodedObj: string): Type | null {
   const hasObj = !!encodedObj;
 

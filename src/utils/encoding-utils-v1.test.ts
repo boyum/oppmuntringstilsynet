@@ -1,11 +1,27 @@
 import * as fc from "fast-check";
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
-import { decodeMessageV1, decodeV1 } from "./encoding-utils-v1";
+import { decodeMessageV1, decodeV1, encodeV1 } from "./encoding-utils-v1";
 
 describe("Message encoder/decoder", () => {
   describe("V1", () => {
     it("should encode and decode a Message such that it stays the same", () => {
+      const expectedMessage: Message = {
+        date: "date",
+        message: "message",
+        name: "name",
+        checks: [false, true, false],
+        language: LanguageEnum.English,
+        themeName: "winter",
+      };
+
+      const encodedMessage = encodeV1(expectedMessage);
+      const actualMessage = decodeMessageV1(encodedMessage);
+
+      expect(actualMessage).toEqual(expectedMessage);
+    });
+
+    it("should decode a Message", () => {
       const expectedMessage: Message = {
         date: "date",
         message: "message",
@@ -47,6 +63,20 @@ describe("Message encoder/decoder", () => {
       const actualMessage = decodeV1<unknown>(encodedMessage);
 
       expect(actualMessage).toBe(expectedMessage);
+    });
+
+    it("should return null if the string decodes to something that's not JSON", () => {
+      const consoleError = console.error;
+      console.error = () => undefined;
+
+      const expectedMessage: Message | null = null;
+
+      const encodedMessage = "N4XwFgpgNlD2Q";
+      const actualMessage = decodeV1<unknown>(encodedMessage);
+
+      expect(actualMessage).toBe(expectedMessage);
+
+      console.error = consoleError;
     });
 
     it("should return null if a malformed encoded string is provided", () => {

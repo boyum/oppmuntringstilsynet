@@ -60,6 +60,18 @@ describe("Message encoder/decoder", () => {
       console.error = consoleError;
     });
 
+    it("should return null if a malformed encoded string is provided", () => {
+      const consoleError = console.error;
+      console.error = () => undefined;
+
+      const encodedMessage = "z%toLoc";
+      const actualMessage = decodeV2(encodedMessage);
+
+      expect(actualMessage).toBeNull();
+
+      console.error = consoleError;
+    });
+
     it("should support using | in the texts", () => {
       const message: Message = {
         date: "date|",
