@@ -5,6 +5,7 @@ import type { LocaleCode } from "../../types/LocaleCode";
 import { themes } from "../../types/Themes";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
+import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "../../utils/url-utils";
 
 const deployUrl = process.env["DEPLOY_URL"] ?? "http://localhost:3000";
 
@@ -64,7 +65,7 @@ describe("Home", () => {
       navigator.clipboard.readText(),
     );
     expect(copiedText).toBe(
-      `${deployUrl}/?n=CYQwLgpgPgthDO8QHNoDsRygOQPYCd4BrAIVyJhABsoAHfAS2GjHwFcX3OOg`,
+      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
     );
   });
 
@@ -85,13 +86,13 @@ describe("Home", () => {
       navigator.clipboard.readText(),
     );
     expect(copiedText).toBe(
-      `${deployUrl}/?n=CYQwLgpgPgthDO8QHNoDsRygOQPYCd4BrAIVyJhABsoAHfAS2GjHwFcX3OOg`,
+      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
     );
   });
 
   it("should open a new card with the parsed message's parameters", async () => {
     await page.goto(
-      `${deployUrl}/?n=CYQwLgpgPgthDO8QHNoDsRygOQPYCd4BrAIVyJhABsoAHfAS2GjHwFcX3OOg`,
+      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
     );
 
     const dateText = await page.evaluate(
