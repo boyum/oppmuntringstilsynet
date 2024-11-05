@@ -1,12 +1,37 @@
 import { LanguageEnum } from "../enums/Language";
 import { Message } from "../types/Message";
+import { encodeV3 } from "./encoding-utils-v3";
 import {
   ACTIVE_QUERY_PARAM_MESSAGE_KEY,
   QUERY_PARAM_MESSAGE_KEY_V1,
+  QUERY_PARAM_MESSAGE_KEY_V2,
+  QUERY_PARAM_MESSAGE_KEY_V3,
   getEncodedAndDecodedMessage,
 } from "./url-utils";
 
 describe(getEncodedAndDecodedMessage, () => {
+  it("should return the encoded and decoded message if message V3 (o) is set", () => {
+    const message: Message = {
+      date: "date",
+      message: "message",
+      name: "name",
+      checks: [true, true, true],
+      language: LanguageEnum.English,
+      themeName: "winter",
+    };
+
+    const encodedMessage = encodeV3(message);
+
+    const queryParams = new URLSearchParams();
+    queryParams.set(QUERY_PARAM_MESSAGE_KEY_V3, encodedMessage);
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBe(encodedMessage);
+    expect(actualDecodedMessage).toEqual(message);
+  });
+
   it("should return the encoded and decoded message if message V2 (n) is set", () => {
     const message: Message = {
       date: "date",
@@ -17,16 +42,17 @@ describe(getEncodedAndDecodedMessage, () => {
       themeName: "winter",
     };
 
-    const encodedMessage =
+    const encodedMessageV2 =
       "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+    const encodedMessageV3 = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
 
     const queryParams = new URLSearchParams();
-    queryParams.set(ACTIVE_QUERY_PARAM_MESSAGE_KEY, encodedMessage);
+    queryParams.set(QUERY_PARAM_MESSAGE_KEY_V2, encodedMessageV2);
 
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
 
-    expect(actualEncodedMessage).toBe(encodedMessage);
+    expect(actualEncodedMessage).toBe(encodedMessageV3);
     expect(actualDecodedMessage).toEqual(message);
   });
 
@@ -42,8 +68,7 @@ describe(getEncodedAndDecodedMessage, () => {
 
     const encodedMessageV1 =
       "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
-    const encodedMessageV2 =
-      "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
+    const encodedMessageV3 = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
 
     const queryParams = new URLSearchParams();
     queryParams.set(QUERY_PARAM_MESSAGE_KEY_V1, encodedMessageV1);
@@ -51,7 +76,7 @@ describe(getEncodedAndDecodedMessage, () => {
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
 
-    expect(actualEncodedMessage).toBe(encodedMessageV2);
+    expect(actualEncodedMessage).toBe(encodedMessageV3);
     expect(actualDecodedMessage).toEqual(message);
   });
 

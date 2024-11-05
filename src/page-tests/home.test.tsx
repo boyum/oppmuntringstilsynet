@@ -7,6 +7,12 @@ import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
 import { encodeV2 } from "../utils/encoding-utils-v2";
+import {
+  QUERY_PARAM_MESSAGE_KEY_V1,
+  QUERY_PARAM_MESSAGE_KEY_V2,
+  QUERY_PARAM_MESSAGE_KEY_V3,
+} from "../utils/url-utils";
+import { encodeV3 } from "../utils/encoding-utils-v3";
 
 type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
@@ -277,10 +283,10 @@ describe(Home.name, () => {
 
         const encodedMessageV1 =
           "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEmqBB1oQAZRxQBzFKUaUdAOQdDAAdmHAEUAF8gA";
-        const encodedMessageV2 =
-          "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOAosgOYA2BIACxwAHDASZswGVJOmyZQA";
+        const encodedMessageV3 =
+          "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOATDgAw4DsQA";
 
-        const resolvedUrl = `resolvedUrl?m=${encodedMessageV1}`;
+        const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V1}=${encodedMessageV1}`;
         const host = "host";
         const context: DeepPartial<GetServerSidePropsContext> = {
           req: {
@@ -299,7 +305,7 @@ describe(Home.name, () => {
         expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
           messageFromUrl,
           // Should use encoded message v2 even though v1 is provided
-          encodedMessage: encodedMessageV2,
+          encodedMessage: encodedMessageV3,
           resolvedUrl,
           deployUrl: `//${host}`,
           preferredLanguage: LanguageEnum.NorskBokmal,
@@ -339,7 +345,7 @@ describe(Home.name, () => {
         ];
 
         const context: DeepPartial<GetServerSidePropsContext> = {
-          resolvedUrl: `?m=${messages.join("&m=")}`,
+          resolvedUrl: `?${QUERY_PARAM_MESSAGE_KEY_V1}=${messages.join(`&${QUERY_PARAM_MESSAGE_KEY_V1}=`)}`,
           req: {
             headers: {},
           },
@@ -446,10 +452,10 @@ describe(Home.name, () => {
         themeName: "pride",
       };
 
-      const encodedMessage =
-        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOAosgOYA2BIACxwAHDASZswGVJOmyZQA";
+      const encodedMessageV2 = encodeV2(messageFromUrl);
+      const encodedMessageV3 = encodeV3(messageFromUrl);
 
-      const resolvedUrl = `resolvedUrl?n=${encodedMessage}`;
+      const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V2}=${encodedMessageV2}`;
       const host = "host";
       const context: DeepPartial<GetServerSidePropsContext> = {
         req: {
@@ -467,7 +473,7 @@ describe(Home.name, () => {
 
       expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
         messageFromUrl,
-        encodedMessage,
+        encodedMessage: encodedMessageV3,
         resolvedUrl,
         deployUrl: `//${host}`,
         preferredLanguage: LanguageEnum.NorskBokmal,
@@ -513,7 +519,179 @@ describe(Home.name, () => {
       const messages = [encodeV2(message1), encodeV2(message2)];
 
       const context: DeepPartial<GetServerSidePropsContext> = {
-        resolvedUrl: `?n=${messages.join("&n=")}`,
+        resolvedUrl: `?${QUERY_PARAM_MESSAGE_KEY_V2}=${messages.join(`&${QUERY_PARAM_MESSAGE_KEY_V2}=`)}`,
+        req: {
+          headers: {},
+        },
+      };
+
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
+
+      expect(serverSideProps.props.messageFromUrl).toEqual(message1);
+    });
+
+    it("should render without accessibility errors when there is a message", async () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester! 🌸",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessage =
+        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
+
+      const page = render(
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage={encodedMessage}
+              messageFromUrl={messageFromUrl}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
+      ).container;
+
+      const results = await axe(page);
+
+      expect(results).toHaveNoViolations();
+    });
+
+    it("should render with a message", () => {
+      const message: Message = {
+        date: "1st of January",
+        message: "Hi, tester! 🌸",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessage =
+        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
+
+      const page = render(
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage={encodedMessage}
+              messageFromUrl={message}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
+      ).container;
+
+      const dateText =
+        page.querySelector<HTMLInputElement>("#date-field")?.value;
+      const messageText = page.querySelector<HTMLTextAreaElement>(
+        "#message-body-field",
+      )?.value;
+      const checkbox0Value =
+        page.querySelector<HTMLInputElement>("#checkbox-0")?.value;
+      const checkbox1Value =
+        page.querySelector<HTMLInputElement>("#checkbox-1")?.value;
+      const checkbox2Value =
+        page.querySelector<HTMLInputElement>("#checkbox-2")?.value;
+      const nameText =
+        page.querySelector<HTMLInputElement>("#name-field")?.value;
+
+      expect(dateText).toBe("1st of January");
+      expect(messageText).toBe("Hi, tester! 🌸");
+      expect(checkbox0Value).toBe("true");
+      expect(checkbox1Value).toBe("true");
+      expect(checkbox2Value).toBe("true");
+      expect(nameText).toBe("Sindre");
+    });
+  });
+
+  describe("Message V3", () => {
+    it("should return the correct props in a happy path, if there is a message", async () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester!",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessageV3 = encodeV3(messageFromUrl);
+
+      const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V3}=${encodedMessageV3}`;
+      const host = "host";
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        req: {
+          headers: {
+            "accept-language": "nb",
+            host,
+          },
+        },
+        resolvedUrl,
+      };
+
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
+
+      expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
+        messageFromUrl,
+        encodedMessage: encodedMessageV3,
+        resolvedUrl,
+        deployUrl: `//${host}`,
+        preferredLanguage: LanguageEnum.NorskBokmal,
+      });
+    });
+
+    it("should return the correct props in a happy path, if there is no message", async () => {
+      const messageFromUrl: Message | null = null;
+
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        resolvedUrl: "",
+        req: {
+          headers: {},
+        },
+      };
+
+      const serverSideProps = await getServerSideProps(
+        context as GetServerSidePropsContext,
+      );
+
+      expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+    });
+
+    it("should return the first message if there are multiple", async () => {
+      const message1: Message = {
+        date: "1st of January",
+        message: "Hi, tester! Message 1",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const message2: Message = {
+        date: "1st of January",
+        message: "Hi, tester! Message 2",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const messages = [encodeV3(message1), encodeV3(message2)];
+
+      const context: DeepPartial<GetServerSidePropsContext> = {
+        resolvedUrl: `?${QUERY_PARAM_MESSAGE_KEY_V3}=${messages.join(`&${QUERY_PARAM_MESSAGE_KEY_V3}=`)}`,
         req: {
           headers: {},
         },
