@@ -1,11 +1,7 @@
 import { LanguageEnum } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { decodeMessageV1 } from "./encoding-utils-v1";
-import {
-  decodeMessageV2,
-  decodeV2,
-  encodeV2
-} from "./encoding-utils-v2";
+import { decodeMessageV2, decodeV2, encodeV2 } from "./encoding-utils-v2";
 
 describe("Message encoder/decoder", () => {
   describe("V2", () => {
@@ -88,4 +84,3 @@ describe("Message encoder/decoder", () => {
     });
   });
 });
-

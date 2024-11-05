@@ -7,7 +7,7 @@ import type { Message } from "../../types/Message";
 import { randomArrayValue } from "../../utils/array-utils";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
-import { getEncodedAndDecodedMessage } from "../../utils/encoding-utils-v2";
+import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;

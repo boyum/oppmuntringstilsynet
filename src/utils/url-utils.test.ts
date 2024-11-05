@@ -1,6 +1,10 @@
 import { LanguageEnum } from "../enums/Language";
 import { Message } from "../types/Message";
-import { ACTIVE_QUERY_PARAM_MESSAGE_KEY, getEncodedAndDecodedMessage, QUERY_PARAM_MESSAGE_KEY_V1 } from "./url-utils";
+import {
+  ACTIVE_QUERY_PARAM_MESSAGE_KEY,
+  QUERY_PARAM_MESSAGE_KEY_V1,
+  getEncodedAndDecodedMessage,
+} from "./url-utils";
 
 describe(getEncodedAndDecodedMessage, () => {
   it("should return the encoded and decoded message if message V2 (n) is set", () => {
