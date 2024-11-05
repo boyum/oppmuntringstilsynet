@@ -94,5 +94,22 @@ describe("Message encoder/decoder", () => {
 
       expect(() => decodeMessageV1(encodedMessage)).not.toThrow();
     });
+
+    it("should fallback to the default theme if the themeName is not valid", () => {
+      const message: Message = {
+        date: "date",
+        message: "message",
+        name: "name",
+        checks: [true, true, true],
+        language: LanguageEnum.English,
+        // @ts-expect-error This theme name should be invalid
+        themeName: "invalid-theme",
+      };
+
+      const encodedMessage = encodeV2(message);
+      const actualMessage = decodeV2(encodedMessage);
+
+      expect(actualMessage?.themeName).toBe("pride");
+    });
   });
 });
