@@ -96,14 +96,14 @@ export function decodeMessageV2(encodedMessage: string): Message | null {
     return null;
   }
 
-  const defaultValuesForBackwardsCompatibility = {
-    language: LanguageEnum.NorskBokmal,
-  };
-
   const decodedMessage = decodeV2(encodedMessage);
   if (!decodedMessage) {
     return null;
   }
+
+  const defaultValuesForBackwardsCompatibility = {
+    language: LanguageEnum.NorskBokmal,
+  };
 
   return {
     ...defaultValuesForBackwardsCompatibility,

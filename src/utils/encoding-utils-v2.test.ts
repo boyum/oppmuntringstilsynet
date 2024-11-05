@@ -44,7 +44,7 @@ describe("Message encoder/decoder", () => {
       const expectedMessage: Message | null = null;
 
       const encodedMessage = "    ";
-      const actualMessage = decodeV2(encodedMessage);
+      const actualMessage = decodeMessageV2(encodedMessage);
 
       expect(actualMessage).toBe(expectedMessage);
     });
@@ -54,7 +54,7 @@ describe("Message encoder/decoder", () => {
       console.error = () => undefined;
 
       const encodedMessage = "!";
-      const actualMessage = decodeV2(encodedMessage);
+      const actualMessage = decodeMessageV2(encodedMessage);
 
       expect(actualMessage).toBeNull();
 
@@ -66,7 +66,7 @@ describe("Message encoder/decoder", () => {
       console.error = () => undefined;
 
       const encodedMessage = "z%toLoc";
-      const actualMessage = decodeV2(encodedMessage);
+      const actualMessage = decodeMessageV2(encodedMessage);
 
       expect(actualMessage).toBeNull();
 
