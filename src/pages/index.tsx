@@ -64,6 +64,8 @@ type Props = {
   preferredTheme: Theme;
 };
 
+export const runtime = "edge";
+
 const Home: FC<Props> = ({
   encodedMessage,
   messageFromUrl,
