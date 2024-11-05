@@ -15,7 +15,7 @@ describe(getEncodedAndDecodedMessage, () => {
       date: "date",
       message: "message",
       name: "name",
-      checks: [true, true, true],
+      checks: [true, false, true],
       language: LanguageEnum.English,
       themeName: "winter",
     };

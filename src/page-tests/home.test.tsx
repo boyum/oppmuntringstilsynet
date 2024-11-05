@@ -7,12 +7,12 @@ import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
 import { encodeV2 } from "../utils/encoding-utils-v2";
+import { encodeV3 } from "../utils/encoding-utils-v3";
 import {
   QUERY_PARAM_MESSAGE_KEY_V1,
   QUERY_PARAM_MESSAGE_KEY_V2,
   QUERY_PARAM_MESSAGE_KEY_V3,
 } from "../utils/url-utils";
-import { encodeV3 } from "../utils/encoding-utils-v3";
 
 type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;

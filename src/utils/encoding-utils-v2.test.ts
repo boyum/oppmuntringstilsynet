@@ -78,7 +78,7 @@ describe("Message encoder/decoder", () => {
         date: "date|",
         message: "message|||",
         name: "name|||",
-        checks: [true, true, true],
+        checks: [true, false, true],
         language: LanguageEnum.English,
         themeName: "winter",
       };
@@ -101,7 +101,7 @@ describe("Message encoder/decoder", () => {
         date: "date",
         message: "message",
         name: "name",
-        checks: [true, true, true],
+        checks: [true, false, true],
         language: LanguageEnum.English,
         // @ts-expect-error This theme name should be invalid
         themeName: "invalid-theme",
