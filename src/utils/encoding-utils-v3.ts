@@ -1,5 +1,6 @@
 import LZString from "lz-string";
 import { LanguageEnum } from "../enums/Language";
+import type { Checks } from "../types/Checks";
 import type { Message } from "../types/Message";
 import { ThemeName } from "../types/ThemeName";
 import { themes } from "../types/Themes";
@@ -34,6 +35,30 @@ const getEnumValueByIndex = <T extends string>(
   return Object.values(enumObject)[index] as T;
 };
 
+const binaryToDecimal = (binary: string): number => {
+  return Number.parseInt(binary, 2);
+};
+
+const decimalToBinary = (decimal: number): string => {
+  return decimal.toString(2);
+};
+
+const checksToBinary = (checks: Checks): string => {
+  return checks.map(check => (check ? "1" : "0")).join("");
+};
+
+const checksToDecimal = (checks: Checks): number => {
+  return binaryToDecimal(checksToBinary(checks));
+};
+
+const themesRecord = themes.reduce(
+  (acc, theme) => {
+    acc[theme.name] = theme.name;
+    return acc;
+  },
+  {} as Record<string, ThemeName>,
+);
+
 export function encodeV3({
   date,
   message,
@@ -47,17 +72,8 @@ export function encodeV3({
     sanitizeString(message),
     sanitizeString(name),
     getEnumValueIndex(language, LanguageEnum),
-    getEnumValueIndex(
-      themeName,
-      themes.reduce(
-        (acc, theme) => {
-          acc[theme.name] = theme.name;
-          return acc;
-        },
-        {} as Record<string, string>,
-      ),
-    ),
-    Number.parseInt(checks.map(check => (check ? "1" : "0")).join(""), 2),
+    getEnumValueIndex(themeName, themesRecord),
+    checksToDecimal(checks),
   ].join("|");
 
   return LZString.compressToEncodedURIComponent(comprisedData);
@@ -68,7 +84,7 @@ const parseLanguageByIndex = (indexStr: string | undefined): LanguageEnum => {
     return defaultLanguage;
   }
 
-  const index = parseInt(indexStr, 10);
+  const index = Number.parseInt(indexStr, 10);
 
   return getEnumValueByIndex(index, LanguageEnum) ?? defaultLanguage;
 };
@@ -78,22 +94,19 @@ const parseThemeByIndex = (indexStr: string | undefined): ThemeName => {
     return getFallbackTheme().name;
   }
 
-  const index = parseInt(indexStr, 10);
+  const index = Number.parseInt(indexStr, 10);
   return themes[index]?.name ?? getFallbackTheme().name;
 };
 
-const parseChecks = (
-  checks: string | undefined,
-): [boolean, boolean, boolean] => {
+const parseChecks = (checks: string | undefined): Checks => {
   if (!checks) {
     return [false, false, false];
   }
 
-  return Number.parseInt(checks, 10)
-    .toString(2)
+  return decimalToBinary(Number.parseInt(checks, 10))
     .padStart(3, "0")
     .split("")
-    .map(check => check === "1") as [boolean, boolean, boolean];
+    .map(check => check === "1") as Checks;
 };
 
 export function decodeV3(encodedObj: string): Message | null {

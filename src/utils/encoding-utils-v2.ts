@@ -1,5 +1,6 @@
 import LZString from "lz-string";
 import { LanguageEnum } from "../enums/Language";
+import type { Checks } from "../types/Checks";
 import type { Message } from "../types/Message";
 import { defaultLanguage, isLanguage } from "./language-utils";
 import { getFallbackTheme, isThemeName } from "./theme-utils";
@@ -83,7 +84,7 @@ export function decodeV2(encodedObj: string): Message | null {
     themeName: theme,
     checks: Array.from({ length: 3 }).map(
       (_, index) => checks[index] === "true",
-    ) as [boolean, boolean, boolean],
+    ) as Checks,
   };
 }
 
