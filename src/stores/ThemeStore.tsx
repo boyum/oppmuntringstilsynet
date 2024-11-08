@@ -11,12 +11,7 @@ export const ThemeStore: React.FC<Props> = ({ children }) => {
   const [theme, setTheme] = useState(() => {
     const isBrowser = typeof window === "object";
 
-    if (isBrowser) {
-      const activeTheme = getActiveTheme();
-      return activeTheme;
-    }
-
-    return themes[0];
+    return isBrowser ? getActiveTheme() : themes[0];
   });
 
   return (
