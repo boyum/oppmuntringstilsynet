@@ -3,6 +3,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
+import { getEmptyState } from "../reducers/message.reducer";
 import { LanguageStore } from "../stores/LanguageStore";
 import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
@@ -12,6 +13,7 @@ import {
   QUERY_PARAM_MESSAGE_KEY_V1,
   QUERY_PARAM_MESSAGE_KEY_V2,
   QUERY_PARAM_MESSAGE_KEY_V3,
+  latestEncoder,
 } from "../utils/url-utils";
 
 type DeepPartial<T> = {
@@ -22,7 +24,7 @@ expect.extend(toHaveNoViolations);
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe(Home.name, () => {
-  it("should render without accessibility errors when no message", async () => {
+  it("should render without accessibility errors when message is null", async () => {
     const messageFromUrl: Message | null = null;
     const page = render(
       <ThemeStore>
@@ -41,6 +43,51 @@ describe(Home.name, () => {
     const results = await axe(page);
 
     expect(results).toHaveNoViolations();
+  });
+
+  it("should render an empty form when the message is empty", () => {
+    const messageFromUrl: Message = getEmptyState();
+    const encodedMessage = latestEncoder(messageFromUrl);
+
+    const page = render(
+      <ThemeStore>
+        <LanguageStore>
+          <Home
+            encodedMessage={encodedMessage}
+            messageFromUrl={messageFromUrl}
+            resolvedUrl=""
+            deployUrl=""
+            preferredLanguage={LanguageEnum.English}
+          />
+        </LanguageStore>
+      </ThemeStore>,
+    ).container;
+
+    const dateField = page.querySelector<HTMLInputElement>("#date-field");
+    const messageBodyField = page.querySelector<HTMLTextAreaElement>(
+      "#message-body-field",
+    );
+    const checkbox0 = page.querySelector<HTMLInputElement>("#checkbox-0");
+    const checkbox1 = page.querySelector<HTMLInputElement>("#checkbox-1");
+    const checkbox2 = page.querySelector<HTMLInputElement>("#checkbox-2");
+    const nameField = page.querySelector<HTMLInputElement>("#name-field");
+
+    if (
+      !dateField ||
+      !messageBodyField ||
+      !checkbox0 ||
+      !checkbox1 ||
+      !checkbox2 ||
+      !nameField
+    ) {
+      throw new Error("Form fields not rendered");
+    }
+
+    expect(dateField.value).toBe("");
+    expect(messageBodyField.value).toBe("");
+    expect(checkbox0.checked).toBe(false);
+    expect(checkbox1.checked).toBe(false);
+    expect(checkbox2.checked).toBe(false);
   });
 
   describe("Copy button", () => {
