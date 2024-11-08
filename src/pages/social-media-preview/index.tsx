@@ -1,5 +1,6 @@
 import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -15,7 +16,6 @@ import {
 import { getTranslations } from "../../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
 import styles from "./SocialMediaPreview.module.scss";
-import Head from "next/head";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;
