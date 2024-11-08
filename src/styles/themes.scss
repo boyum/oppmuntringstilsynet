@@ -12,14 +12,14 @@
 
   --theme-2-background-color: hsl(340, 87%, 70%);
   --theme-2-color: var(--theme-1-color);
-  --global-background-repeat: initial;
-  --global-background-size: initial;
-
-  --global-background-color: hsl(340, 87%, 76%);
-  --global-background-image: url("/pride-hearts.svg");
+  --global-background-size: 1000px 1000px;
 
   --footer-color: inherit;
   --footer-link-color: var(--theme-1-color);
+}
+
+body[data-theme="pride"] {
+  background: 600px/600px url("/pride-hearts.svg"), linear-gradient(to top left, hsl(320, 95%, 76%), hsl(9, 70%, 55%));
 }
 
 [data-theme="original"] {
