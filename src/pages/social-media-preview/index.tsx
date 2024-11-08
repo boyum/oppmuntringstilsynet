@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import type { LanguageEnum } from "../../enums/Language";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useTheme } from "../../hooks/useTheme";
-import { ThemeActionType } from "../../reducers/theme.reducer";
 import type { Message } from "../../types/Message";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import {
@@ -26,7 +25,7 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   preferredLanguage,
 }) => {
   const [language] = useLanguage();
-  const [theme, dispatchThemeAction] = useTheme();
+  const [theme, setTheme] = useTheme();
 
   const translations = getTranslations(
     message?.language ?? preferredLanguage ?? language,
@@ -49,12 +48,8 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
     }
 
     setPageTheme(activeTheme);
-
-    dispatchThemeAction({
-      type: ThemeActionType.SetTheme,
-      themeName: activeTheme.name,
-    });
-  }, [message, dispatchThemeAction, theme]);
+    setTheme(activeTheme);
+  }, [message, setTheme, theme]);
 
   return (
     <main className={styles["main"]}>

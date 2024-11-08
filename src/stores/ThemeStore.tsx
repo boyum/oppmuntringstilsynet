@@ -1,6 +1,5 @@
-import { type ReactNode, useReducer } from "react";
+import { type ReactNode, useState } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { themeReducer } from "../reducers/theme.reducer";
 import { themes } from "../types/Themes";
 import { getActiveTheme } from "../utils/theme-utils";
 
@@ -9,13 +8,20 @@ export type Props = {
 };
 
 export const ThemeStore: React.FC<Props> = ({ children }) => {
-  const isClient = typeof window === "object";
-  const reducer = useReducer(
-    themeReducer,
-    isClient ? getActiveTheme() : themes[0],
-  );
+  const [theme, setTheme] = useState(() => {
+    const isBrowser = typeof window === "object";
+
+    if (isBrowser) {
+      const activeTheme = getActiveTheme();
+      return activeTheme;
+    }
+
+    return themes[0];
+  });
 
   return (
-    <ThemeContext.Provider value={reducer}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={[theme, setTheme]}>
+      {children}
+    </ThemeContext.Provider>
   );
 };

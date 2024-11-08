@@ -19,13 +19,11 @@ import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import type { LanguageEnum } from "../enums/Language";
 import { useLanguage } from "../hooks/useLanguage";
 import { useTheme } from "../hooks/useTheme";
-import { LanguageActionType } from "../reducers/language.reducer";
 import {
   MessageActionType,
   getEmptyState,
   messageReducer,
 } from "../reducers/message.reducer";
-import { ThemeActionType } from "../reducers/theme.reducer";
 import styles from "../styles/Home.module.scss";
 import type { Message } from "../types/Message";
 import { themes } from "../types/Themes";
@@ -55,8 +53,8 @@ const Home: FC<Props> = ({
   deployUrl,
   preferredLanguage,
 }) => {
-  const [language, dispatchLanguageAction] = useLanguage();
-  const [theme, dispatchThemeAction] = useTheme();
+  const [language, setLanguage] = useLanguage();
+  const [theme, setTheme] = useTheme();
   const [isResetting, setIsResetting] = useState(false);
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
@@ -103,19 +101,12 @@ const Home: FC<Props> = ({
     }
 
     setPageTheme(activeTheme);
+    setTheme(activeTheme);
 
-    dispatchThemeAction({
-      type: ThemeActionType.SetTheme,
-      themeName: activeTheme.name,
-    });
-
-    dispatchLanguageAction({
-      type: LanguageActionType.SetLanguage,
-      language: messageFromUrl?.language ?? preferredLanguage,
-    });
+    setLanguage(messageFromUrl?.language ?? preferredLanguage);
   }, [
-    dispatchLanguageAction,
-    dispatchThemeAction,
+    setLanguage,
+    setTheme,
     messageFromUrl?.language,
     messageFromUrl?.themeName,
     preferredLanguage,
