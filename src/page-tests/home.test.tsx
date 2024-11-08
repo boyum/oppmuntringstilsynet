@@ -128,7 +128,7 @@ describe(Home.name, () => {
   });
 
   describe("Reset button", () => {
-    it("should reset the form on click", () => {
+    it("should reset the form on click (empty message)", () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
@@ -145,8 +145,6 @@ describe(Home.name, () => {
         </ThemeStore>,
       ).container;
 
-      document.execCommand = jest.fn();
-
       const resetButton =
         page.querySelector<HTMLButtonElement>("#reset-button");
       const dateField = page.querySelector<HTMLInputElement>("#date-field");
@@ -159,6 +157,49 @@ describe(Home.name, () => {
         dateField.value = "date";
       });
       expect(dateField.value).toBe("date");
+
+      act(() => {
+        resetButton.click();
+      });
+
+      expect(dateField.value).toBe("");
+    });
+
+    it("should reset the form on click (with message)", () => {
+      const messageFromUrl: Message = {
+        date: "1st of January",
+        message: "Hi, tester!",
+        checks: [true, true, true],
+        name: "Sindre",
+        language: LanguageEnum.English,
+        themeName: "pride",
+      };
+
+      const encodedMessage = latestEncoder(messageFromUrl);
+
+      const page = render(
+        <ThemeStore>
+          <LanguageStore>
+            <Home
+              encodedMessage={encodedMessage}
+              messageFromUrl={messageFromUrl}
+              resolvedUrl=""
+              deployUrl=""
+              preferredLanguage={LanguageEnum.English}
+            />
+          </LanguageStore>
+        </ThemeStore>,
+      ).container;
+
+      const resetButton =
+        page.querySelector<HTMLButtonElement>("#reset-button");
+      const dateField = page.querySelector<HTMLInputElement>("#date-field");
+
+      if (!resetButton || !dateField) {
+        throw new Error("Reset button or date field not rendered");
+      }
+
+      expect(dateField.value).toBe("1st of January");
 
       act(() => {
         resetButton.click();
