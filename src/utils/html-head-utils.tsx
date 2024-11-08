@@ -1,7 +1,16 @@
 import type { ReactNode } from "react";
 import type { LanguageEnum } from "../enums/Language";
-import type { HtmlHeadData } from "../reducers/html-head.reducer";
 import { getTranslations } from "./translations-utils";
+
+export type HtmlHeadData = {
+  title: string;
+  description: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogUrl: string;
+  encodedMessage: string | null;
+  deployUrl: string;
+};
 
 export function getDefaultHtmlHeadData(
   language: LanguageEnum,
