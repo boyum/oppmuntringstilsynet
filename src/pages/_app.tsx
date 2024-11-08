@@ -1,8 +1,7 @@
 import type { FC } from "react";
-import { LanguageStore } from "../stores/LanguageStore";
-import { ThemeStore } from "../stores/ThemeStore";
 import "../styles/globals.css";
 import "../styles/themes.scss";
+import { MessageStore } from "../stores/MessageStore";
 
 export type AppProps = {
   Component: FC<unknown>;
@@ -10,11 +9,9 @@ export type AppProps = {
 };
 
 const Oppmuntringstilsynet: FC<AppProps> = ({ Component, pageProps }) => (
-  <ThemeStore>
-    <LanguageStore>
-      <Component {...pageProps} />
-    </LanguageStore>
-  </ThemeStore>
+  <MessageStore>
+    <Component {...pageProps} />
+  </MessageStore>
 );
 
 export default Oppmuntringstilsynet;

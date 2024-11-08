@@ -8,8 +8,8 @@ import type { Message } from "../../types/Message";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import {
   getTheme,
-  setActiveTheme,
-  setPageTheme,
+  setPageThemeStyles,
+  storeThemeInCookie,
 } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
@@ -44,10 +44,10 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
       : theme;
 
     if (message?.themeName) {
-      setActiveTheme(message.themeName);
+      storeThemeInCookie(message.themeName);
     }
 
-    setPageTheme(activeTheme);
+    setPageThemeStyles(activeTheme);
     setTheme(activeTheme);
   }, [message, setTheme, theme]);
 

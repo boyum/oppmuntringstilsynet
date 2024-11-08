@@ -1,28 +1,20 @@
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLanguage } from "../../hooks/useLanguage";
-import type { Theme } from "../../types/Theme";
+import { useTheme } from "../../hooks/useTheme";
 import type { ThemeName } from "../../types/ThemeName";
-import { getActiveTheme, getTheme } from "../../utils/theme-utils";
+import { themes } from "../../types/Themes";
+import { getTheme } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
 
-type Props = {
-  themes: readonly Theme[];
-  setTheme: (theme: Theme) => void;
-};
-
-export const ThemePicker: FC<Props> = ({ themes, setTheme }) => {
+export const ThemePicker: FC = () => {
   const [language] = useLanguage();
-  const [selectedTheme, setSelectedTheme] = useState<Theme>({} as Theme);
+  const [theme, setTheme] = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   const translations = getTranslations(language);
-
-  useEffect(() => {
-    setSelectedTheme(getActiveTheme());
-  }, [themes]);
 
   const className = isOpen
     ? `${styles["theme-picker"]} ${styles["theme-picker-open"]}`
@@ -31,7 +23,6 @@ export const ThemePicker: FC<Props> = ({ themes, setTheme }) => {
   const onClick = (themeName: ThemeName) => {
     const newSelectedTheme = getTheme(themeName);
 
-    setSelectedTheme(newSelectedTheme);
     setTheme(newSelectedTheme);
     setIsOpen(false);
   };
@@ -62,12 +53,12 @@ export const ThemePicker: FC<Props> = ({ themes, setTheme }) => {
       <div id="theme-picker" data-is-open={isOpen} className={className}>
         <h2 className={styles["heading"]}>{translations.themePickerHeading}</h2>
         <ol hidden={!isOpen} className={styles["list"]}>
-          {themes.map(theme => (
+          {themes.map(t => (
             <ThemePickerTheme
-              isSelected={selectedTheme.name === theme.name}
+              isSelected={theme.name === t.name}
               onClick={onClick}
-              theme={theme}
-              key={theme.name}
+              theme={t}
+              key={t.name}
             />
           ))}
         </ol>

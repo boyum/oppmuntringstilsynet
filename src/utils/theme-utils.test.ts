@@ -1,11 +1,6 @@
 import type { ThemeName } from "../types/ThemeName";
 import { themes } from "../types/Themes";
-import {
-  getActiveTheme,
-  getTheme,
-  isThemeName,
-  setActiveTheme,
-} from "./theme-utils";
+import { getTheme, isThemeName } from "./theme-utils";
 
 describe(getTheme.name, () => {
   it("should return the theme with the given themeName", () => {
@@ -20,24 +15,6 @@ describe(getTheme.name, () => {
 
     const expectedTheme = themes[0];
     const actualTheme = getTheme(themeName);
-
-    expect(actualTheme).toEqual(expectedTheme);
-  });
-});
-
-describe(getActiveTheme.name, () => {
-  it("should return a fallback theme if no active theme is set", () => {
-    const expectedTheme = themes[0];
-    const actualTheme = getActiveTheme();
-
-    expect(actualTheme).toEqual(expectedTheme);
-  });
-
-  it("should get the current active theme", () => {
-    setActiveTheme("winter");
-
-    const expectedTheme = themes[3];
-    const actualTheme = getActiveTheme();
 
     expect(actualTheme).toEqual(expectedTheme);
   });

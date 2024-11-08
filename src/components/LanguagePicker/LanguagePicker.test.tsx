@@ -10,7 +10,7 @@ describe(LanguagePicker.name, () => {
     const languagePicker = render(
       <main>
         <LanguagePicker
-          handleChange={() => {
+          onChange={() => {
             // Intentionally empty
           }}
         />
@@ -26,7 +26,7 @@ describe(LanguagePicker.name, () => {
     const handleChange = jest.fn();
     const languagePicker = render(
       <main>
-        <LanguagePicker handleChange={handleChange} />
+        <LanguagePicker onChange={handleChange} />
       </main>,
     ).container;
 

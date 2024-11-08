@@ -1,14 +1,20 @@
-import { render } from "@testing-library/react";
+import { render, renderHook } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { LanguageStore } from "../../stores/LanguageStore";
+import { useState } from "react";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { LanguageEnum } from "../../enums/Language";
 import { Buttons } from "./Buttons";
 
 expect.extend(toHaveNoViolations);
 
 describe(Buttons.name, () => {
   it("should render without accessibility errors", async () => {
+    const [language, setLanguage] = renderHook(() =>
+      useState<LanguageEnum>(LanguageEnum.English),
+    ).result.current;
+
     const buttons = render(
-      <LanguageStore>
+      <LanguageContext.Provider value={[language, setLanguage]}>
         <main>
           <Buttons
             handleReset={() => {
@@ -19,7 +25,7 @@ describe(Buttons.name, () => {
             }}
           />
         </main>
-      </LanguageStore>,
+      </LanguageContext.Provider>,
     ).container;
 
     const results = await axe(buttons);
