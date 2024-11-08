@@ -2,7 +2,6 @@ import type { ChangeEventHandler } from "react";
 import { LanguageEnum } from "../../enums/Language";
 import { useLanguage } from "../../hooks/useLanguage";
 import { languages } from "../../models/languages";
-import { LanguageActionType } from "../../reducers/language.reducer";
 import type { Language } from "../../types/Language";
 import { getTranslations } from "../../utils/translations-utils";
 import styles from "./LanguagePicker.module.scss";
@@ -26,11 +25,7 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
   }) => {
     const newLanguage = LanguageEnum[currentTarget.value as LanguageEnum];
     handleChange(newLanguage);
-
-    setLanguage({
-      type: LanguageActionType.SetLanguage,
-      language: newLanguage,
-    });
+    setLanguage(newLanguage);
   };
 
   return (
