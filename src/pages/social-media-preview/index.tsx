@@ -2,8 +2,6 @@ import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
 import { useEffect, useState } from "react";
 import type { LanguageEnum } from "../../enums/Language";
-import { useLanguage } from "../../hooks/useLanguage";
-import { useTheme } from "../../hooks/useTheme";
 import type { Message } from "../../types/Message";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import {
