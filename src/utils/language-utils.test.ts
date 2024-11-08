@@ -35,6 +35,7 @@ describe(getLanguage.name, () => {
         const isSupportedCode = Object.values(languages)
           .flatMap(language => language.codes)
           .includes(localeCode.trim() as LocaleCode);
+
         if (isSupportedCode) {
           return true;
         }
