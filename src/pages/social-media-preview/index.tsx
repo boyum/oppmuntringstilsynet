@@ -1,6 +1,8 @@
 import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
 import { useEffect, useState } from "react";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import type { LanguageEnum } from "../../enums/Language";
 import type { Message } from "../../types/Message";
 import { getPreferredLanguage } from "../../utils/language-utils";
@@ -13,8 +15,6 @@ import {
 import { getTranslations } from "../../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
 import styles from "./SocialMediaPreview.module.scss";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { ThemeContext } from "../../contexts/ThemeContext";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;
