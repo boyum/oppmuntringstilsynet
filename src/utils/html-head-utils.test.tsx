@@ -2,7 +2,11 @@ import { act } from "@testing-library/react";
 import { createRoot } from "react-dom/client";
 import { LanguageEnum } from "../enums/Language";
 import { TranslationsNb } from "../types/Translations.nb";
-import { getDefaultHtmlHeadData,type HtmlHeadData, renderHtmlHead } from "./html-head-utils";
+import {
+  type HtmlHeadData,
+  getDefaultHtmlHeadData,
+  renderHtmlHead,
+} from "./html-head-utils";
 
 describe(getDefaultHtmlHeadData.name, () => {
   it("should return html head data corresponding to the current language", () => {
