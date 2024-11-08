@@ -142,7 +142,13 @@ const Home: FC<Props> = ({
     <MessageContext.Provider value={[message, dispatchMessageAction]}>
       <ThemeContext.Provider value={[theme, handleThemeChange]}>
         <LanguageContext.Provider value={[language, setLanguage]}>
-          <Head>{headData}</Head>
+          <Head>
+            {headData}
+
+            {/* By inserting a `body` element in `Head`, we can add properties to the body */}
+            <body data-theme={theme.name} />
+          </Head>
+
           <div className={styles["theme-picker-button-wrapper"]}>
             <ThemePicker />
           </div>

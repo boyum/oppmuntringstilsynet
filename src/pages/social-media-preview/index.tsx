@@ -15,6 +15,7 @@ import {
 import { getTranslations } from "../../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
 import styles from "./SocialMediaPreview.module.scss";
+import Head from "next/head";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;
@@ -59,6 +60,10 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
       <LanguageContext.Provider value={[language, setLanguage]}>
+        <Head>
+          {/* By inserting a `body` element in `Head`, we can add properties to the body */}
+          <body data-theme={theme.name} />
+        </Head>
         <main className={styles["main"]}>
           <div className={styles["preview-container"]}>
             <h1 className={styles["heading"]}>{title}</h1>
