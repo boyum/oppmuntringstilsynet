@@ -5,8 +5,7 @@ import { useReducer, useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { MessageContext } from "../../contexts/MessageContext";
 import { LanguageEnum } from "../../enums/Language";
-import { messageReducer } from "../../reducers/message.reducer";
-import { MessageStore } from "../../stores/MessageStore";
+import { getEmptyState, messageReducer } from "../../reducers/message.reducer";
 import { getFallbackTheme } from "../../utils/theme-utils";
 import { Form } from "./Form";
 
@@ -21,14 +20,18 @@ describe(Form.name, () => {
   });
 
   it("should render without accessibility errors when fields are disabled", async () => {
+    const [message, dispatchMessageAction] = renderHook(() =>
+      useReducer(messageReducer, getEmptyState()),
+    ).result.current;
+
     const form = render(
-      <MessageStore>
+      <MessageContext.Provider value={[message, dispatchMessageAction]}>
         <LanguageContext.Provider value={l}>
           <main>
             <Form isDisabled />
           </main>
         </LanguageContext.Provider>
-      </MessageStore>,
+      </MessageContext.Provider>,
     ).container;
 
     const results = await axe(form);
@@ -37,14 +40,18 @@ describe(Form.name, () => {
   });
 
   it("should render without accessibility errors when fields are not disabled", async () => {
+    const [message, dispatchMessageAction] = renderHook(() =>
+      useReducer(messageReducer, getEmptyState()),
+    ).result.current;
+
     const form = render(
-      <MessageStore>
+      <MessageContext.Provider value={[message, dispatchMessageAction]}>
         <LanguageContext.Provider value={l}>
           <main>
             <Form isDisabled={false} />
           </main>
         </LanguageContext.Provider>
-      </MessageStore>,
+      </MessageContext.Provider>,
     ).container;
 
     const results = await axe(form);

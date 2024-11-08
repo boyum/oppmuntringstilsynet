@@ -3,17 +3,21 @@ import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import type { FC } from "react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import { Buttons } from "../components/Buttons/Buttons";
 import { Footer } from "../components/Footer/Footer";
 import { Form } from "../components/Form/Form";
 import { LanguagePicker } from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import { LanguageContext } from "../contexts/LanguageContext";
+import { MessageContext } from "../contexts/MessageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { LanguageEnum } from "../enums/Language";
-import { useMessage } from "../hooks/useMessage";
-import { MessageActionType } from "../reducers/message.reducer";
+import {
+  MessageActionType,
+  getEmptyState,
+  messageReducer,
+} from "../reducers/message.reducer";
 import styles from "../styles/Home.module.scss";
 import type { Message } from "../types/Message";
 import { Theme } from "../types/Theme";
@@ -77,17 +81,13 @@ const Home: FC<Props> = ({
     getInitialTheme(messageFromUrl, preferredTheme),
   );
 
-  const [message, dispatchMessageAction] = useMessage();
+  const [message, dispatchMessageAction] = useReducer(
+    messageReducer,
+    messageFromUrl ?? getEmptyState(),
+  );
 
   const tempInput = useRef<HTMLInputElement>(null);
   const translations = getTranslations(language);
-
-  if (messageFromUrl) {
-    dispatchMessageAction({
-      type: MessageActionType.SetMessage,
-      message: messageFromUrl,
-    });
-  }
 
   const hasMessage = !!messageFromUrl;
   const isDisabled = hasMessage;
@@ -104,19 +104,19 @@ const Home: FC<Props> = ({
     });
   };
 
-  const handleCopy = useCallback((): void => {
+  const handleCopy = (): void => {
     if (tempInput.current) {
       encodeAndCopyMessage(message, tempInput.current);
     }
-  }, [message]);
+  };
 
-  const handleReset = useCallback((): void => {
+  const handleReset = (): void => {
     router.push("/");
 
     dispatchMessageAction({
       type: MessageActionType.ResetEverythingButTheme,
     });
-  }, [router]);
+  };
 
   const handleLanguageChange = (newLanguage: LanguageEnum): void => {
     dispatchMessageAction({
@@ -127,46 +127,48 @@ const Home: FC<Props> = ({
     });
   };
 
-  const headData = useMemo(() => {
-    const htmlHeadData = getDefaultHtmlHeadData(
-      language,
-      `${deployUrl}${resolvedUrl}`,
-      encodedMessage,
-      deployUrl,
-    );
+  const htmlHeadData = getDefaultHtmlHeadData(
+    language,
+    `${deployUrl}${resolvedUrl}`,
+    encodedMessage,
+    deployUrl,
+  );
 
-    return renderHtmlHead(htmlHeadData);
-  }, [deployUrl, encodedMessage, language, resolvedUrl]);
+  const headData = renderHtmlHead(htmlHeadData);
 
   return (
-    <ThemeContext.Provider value={[theme, handleThemeChange]}>
-      <LanguageContext.Provider value={[language, setLanguage]}>
-        <Head>{headData}</Head>
-        <div className={styles["theme-picker-button-wrapper"]}>
-          <ThemePicker />
-        </div>
-
-        <main className={styles["main"]}>
-          <div className={styles["container"]}>
-            <div className={styles["container-header"]}>
-              <h1 className={styles["heading"]}>{translations.formHeading}</h1>
-              <div className={styles["language-picker-container"]}>
-                <LanguagePicker onChange={handleLanguageChange} />
-              </div>
-            </div>
-
-            <Form isDisabled={isDisabled} />
-
-            <Buttons handleReset={handleReset} handleCopy={handleCopy} />
-            <label className="hidden" aria-hidden="true">
-              Hidden label used for copying
-              <input ref={tempInput} type="text" readOnly tabIndex={-1} />
-            </label>
+    <MessageContext.Provider value={[message, dispatchMessageAction]}>
+      <ThemeContext.Provider value={[theme, handleThemeChange]}>
+        <LanguageContext.Provider value={[language, setLanguage]}>
+          <Head>{headData}</Head>
+          <div className={styles["theme-picker-button-wrapper"]}>
+            <ThemePicker />
           </div>
-        </main>
-        <Footer />
-      </LanguageContext.Provider>
-    </ThemeContext.Provider>
+
+          <main className={styles["main"]}>
+            <div className={styles["container"]}>
+              <div className={styles["container-header"]}>
+                <h1 className={styles["heading"]}>
+                  {translations.formHeading}
+                </h1>
+                <div className={styles["language-picker-container"]}>
+                  <LanguagePicker onChange={handleLanguageChange} />
+                </div>
+              </div>
+
+              <Form isDisabled={isDisabled} />
+
+              <Buttons handleReset={handleReset} handleCopy={handleCopy} />
+              <label className="hidden" aria-hidden="true">
+                Hidden label used for copying
+                <input ref={tempInput} type="text" readOnly tabIndex={-1} />
+              </label>
+            </div>
+          </main>
+          <Footer />
+        </LanguageContext.Provider>
+      </ThemeContext.Provider>
+    </MessageContext.Provider>
   );
 };
 
@@ -198,7 +200,7 @@ export async function getServerSideProps(
   const acceptedLanguages = getAcceptedLanguages(acceptLanguageHeader ?? "");
   const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
-  const cookieTheme = req.cookies["theme"] as ThemeName | undefined;
+  const cookieTheme = req.cookies?.["theme"] as ThemeName | undefined;
   const preferredTheme = cookieTheme
     ? getTheme(cookieTheme)
     : getFallbackTheme();

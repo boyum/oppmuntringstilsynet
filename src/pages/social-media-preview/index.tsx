@@ -1,12 +1,13 @@
 import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { LanguageEnum } from "../../enums/Language";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useTheme } from "../../hooks/useTheme";
 import type { Message } from "../../types/Message";
 import { getPreferredLanguage } from "../../utils/language-utils";
 import {
+  getFallbackTheme,
   getTheme,
   setPageThemeStyles,
   storeThemeInCookie,
@@ -14,6 +15,8 @@ import {
 import { getTranslations } from "../../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
 import styles from "./SocialMediaPreview.module.scss";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;
@@ -24,8 +27,12 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   message,
   preferredLanguage,
 }) => {
-  const [language] = useLanguage();
-  const [theme, setTheme] = useTheme();
+  const [language, setLanguage] = useState(
+    message?.language ?? preferredLanguage,
+  );
+  const [theme, setTheme] = useState(
+    message?.themeName ? getTheme(message.themeName) : getFallbackTheme(),
+  );
 
   const translations = getTranslations(
     message?.language ?? preferredLanguage ?? language,
@@ -52,11 +59,15 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   }, [message, setTheme, theme]);
 
   return (
-    <main className={styles["main"]}>
-      <div className={styles["preview-container"]}>
-        <h1 className={styles["heading"]}>{title}</h1>
-      </div>
-    </main>
+    <ThemeContext.Provider value={[theme, setTheme]}>
+      <LanguageContext.Provider value={[language, setLanguage]}>
+        <main className={styles["main"]}>
+          <div className={styles["preview-container"]}>
+            <h1 className={styles["heading"]}>{title}</h1>
+          </div>
+        </main>
+      </LanguageContext.Provider>
+    </ThemeContext.Provider>
   );
 };
 

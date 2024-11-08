@@ -1,15 +1,10 @@
-import { act, fireEvent, render, renderHook } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
-import { useState } from "react";
-import { LanguageContext } from "../contexts/LanguageContext";
-import { ThemeContext } from "../contexts/ThemeContext";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
 import { getEmptyState } from "../reducers/message.reducer";
-import { MessageStore } from "../stores/MessageStore";
 import type { Message } from "../types/Message";
-import { Theme } from "../types/Theme";
 import { encodeV2 } from "../utils/encoding-utils-v2";
 import { encodeV3 } from "../utils/encoding-utils-v3";
 import { getFallbackTheme } from "../utils/theme-utils";
@@ -28,32 +23,17 @@ expect.extend(toHaveNoViolations);
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe(Home.name, () => {
-  let t: [Theme, (theme: Theme) => void];
-  let l: [LanguageEnum, (language: LanguageEnum) => void];
-
-  beforeEach(() => {
-    t = renderHook(() => useState(getFallbackTheme())).result.current;
-    l = renderHook(() => useState(LanguageEnum.English as LanguageEnum)).result
-      .current;
-  });
-
   it("should render without accessibility errors when message is null", async () => {
     const messageFromUrl: Message | null = null;
     const page = render(
-      <MessageStore>
-        <ThemeContext.Provider value={t}>
-          <LanguageContext.Provider value={l}>
-            <Home
-              encodedMessage=""
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-              preferredTheme={getFallbackTheme()}
-            />
-          </LanguageContext.Provider>
-        </ThemeContext.Provider>
-      </MessageStore>,
+      <Home
+        encodedMessage=""
+        messageFromUrl={messageFromUrl}
+        resolvedUrl=""
+        deployUrl=""
+        preferredLanguage={LanguageEnum.English}
+        preferredTheme={getFallbackTheme()}
+      />,
     ).container;
 
     const results = await axe(page);
@@ -66,20 +46,14 @@ describe(Home.name, () => {
     const encodedMessage = latestEncoder(messageFromUrl);
 
     const page = render(
-      <MessageStore>
-        <ThemeContext.Provider value={t}>
-          <LanguageContext.Provider value={l}>
-            <Home
-              encodedMessage={encodedMessage}
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-              preferredTheme={getFallbackTheme()}
-            />
-          </LanguageContext.Provider>
-        </ThemeContext.Provider>
-      </MessageStore>,
+      <Home
+        encodedMessage={encodedMessage}
+        messageFromUrl={messageFromUrl}
+        resolvedUrl=""
+        deployUrl=""
+        preferredLanguage={LanguageEnum.English}
+        preferredTheme={getFallbackTheme()}
+      />,
     ).container;
 
     const dateField = page.querySelector<HTMLInputElement>("#date-field");
@@ -114,20 +88,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage=""
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       document.execCommand = jest.fn();
@@ -154,20 +122,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage=""
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const resetButton =
@@ -203,20 +165,14 @@ describe(Home.name, () => {
       const encodedMessage = latestEncoder(messageFromUrl);
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage={encodedMessage}
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const resetButton =
@@ -242,20 +198,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage=""
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const languageSelect = page.querySelector<HTMLSelectElement>(
@@ -281,20 +231,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage=""
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const themeSelectorOpenButton = page.querySelector<HTMLButtonElement>(
@@ -311,7 +255,7 @@ describe(Home.name, () => {
       }
 
       const previousTheme = body.dataset["theme"];
-      expect(previousTheme).toBe("pride");
+      expect(previousTheme).toBeUndefined();
 
       // Open theme selector
       act(() => {
@@ -340,20 +284,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage=""
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const dateField = page.querySelector<HTMLInputElement>("#date-field");
@@ -498,21 +436,14 @@ describe(Home.name, () => {
           "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
 
         const page = render(
-          <MessageStore>
-            {" "}
-            <ThemeContext.Provider value={t}>
-              <LanguageContext.Provider value={l}>
-                <Home
-                  encodedMessage={encodedMessage}
-                  messageFromUrl={messageFromUrl}
-                  resolvedUrl=""
-                  deployUrl=""
-                  preferredLanguage={LanguageEnum.English}
-                  preferredTheme={getFallbackTheme()}
-                />
-              </LanguageContext.Provider>
-            </ThemeContext.Provider>
-          </MessageStore>,
+          <Home
+            encodedMessage={encodedMessage}
+            messageFromUrl={messageFromUrl}
+            resolvedUrl=""
+            deployUrl=""
+            preferredLanguage={LanguageEnum.English}
+            preferredTheme={getFallbackTheme()}
+          />,
         ).container;
 
         const results = await axe(page);
@@ -534,21 +465,14 @@ describe(Home.name, () => {
           "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
         const page = render(
-          <MessageStore>
-            {" "}
-            <ThemeContext.Provider value={t}>
-              <LanguageContext.Provider value={l}>
-                <Home
-                  encodedMessage={encodedMessage}
-                  messageFromUrl={message}
-                  resolvedUrl=""
-                  deployUrl=""
-                  preferredLanguage={LanguageEnum.English}
-                  preferredTheme={getFallbackTheme()}
-                />
-              </LanguageContext.Provider>
-            </ThemeContext.Provider>
-          </MessageStore>,
+          <Home
+            encodedMessage={encodedMessage}
+            messageFromUrl={message}
+            resolvedUrl=""
+            deployUrl=""
+            preferredLanguage={LanguageEnum.English}
+            preferredTheme={getFallbackTheme()}
+          />,
         ).container;
 
         const dateText =
@@ -681,20 +605,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage={encodedMessage}
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const results = await axe(page);
@@ -716,20 +634,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage={encodedMessage}
-                messageFromUrl={message}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={message}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const dateText =
@@ -860,20 +772,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage={encodedMessage}
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const results = await axe(page);
@@ -895,20 +801,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <MessageStore>
-          <ThemeContext.Provider value={t}>
-            <LanguageContext.Provider value={l}>
-              <Home
-                encodedMessage={encodedMessage}
-                messageFromUrl={message}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-                preferredTheme={getFallbackTheme()}
-              />
-            </LanguageContext.Provider>
-          </ThemeContext.Provider>
-        </MessageStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={message}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const dateText =
