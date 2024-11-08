@@ -7,6 +7,7 @@ import Document, {
   NextScript,
 } from "next/document";
 import { ReactNode } from "react";
+import { Theme } from "../types/Theme";
 import { getFallbackTheme } from "../utils/theme-utils";
 
 class CustomDocument extends Document {
@@ -43,10 +44,13 @@ class CustomDocument extends Document {
   }
 
   override render(): JSX.Element {
+    const pageProps = this.props?.__NEXT_DATA__?.props?.["pageProps"];
+    const theme: Theme = pageProps?.preferredTheme ?? getFallbackTheme();
+
     return (
       <Html lang="nb">
         <Head>{CustomDocument.renderHead()}</Head>
-        <body data-theme={getFallbackTheme()}>
+        <body data-theme={theme?.name}>
           <Main />
           <NextScript />
         </body>

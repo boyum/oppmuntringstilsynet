@@ -7,12 +7,10 @@ import { getTranslations } from "../../utils/translations-utils";
 import styles from "./LanguagePicker.module.scss";
 
 export type LanguagePickerProps = {
-  handleChange: (newLanguage: LanguageEnum) => void;
+  onChange: (newLanguage: LanguageEnum) => void;
 };
 
-export const LanguagePicker: React.FC<LanguagePickerProps> = ({
-  handleChange,
-}) => {
+export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onChange }) => {
   const [language, setLanguage] = useLanguage();
   const languageArr = Object.entries(languages).map(
     ([languageName, lang]: [string, Language]) => [languageName, lang.title],
@@ -24,7 +22,7 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
     currentTarget,
   }) => {
     const newLanguage = LanguageEnum[currentTarget.value as LanguageEnum];
-    handleChange(newLanguage);
+    onChange(newLanguage);
     setLanguage(newLanguage);
   };
 

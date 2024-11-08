@@ -1,14 +1,14 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
+import { NextIncomingMessage } from "next/dist/server/request-meta";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
 import { getEmptyState } from "../reducers/message.reducer";
-import { LanguageStore } from "../stores/LanguageStore";
-import { ThemeStore } from "../stores/ThemeStore";
 import type { Message } from "../types/Message";
 import { encodeV2 } from "../utils/encoding-utils-v2";
 import { encodeV3 } from "../utils/encoding-utils-v3";
+import { getFallbackTheme } from "../utils/theme-utils";
 import {
   QUERY_PARAM_MESSAGE_KEY_V1,
   QUERY_PARAM_MESSAGE_KEY_V2,
@@ -27,17 +27,14 @@ describe(Home.name, () => {
   it("should render without accessibility errors when message is null", async () => {
     const messageFromUrl: Message | null = null;
     const page = render(
-      <ThemeStore>
-        <LanguageStore>
-          <Home
-            encodedMessage=""
-            messageFromUrl={messageFromUrl}
-            resolvedUrl=""
-            deployUrl=""
-            preferredLanguage={LanguageEnum.English}
-          />
-        </LanguageStore>
-      </ThemeStore>,
+      <Home
+        encodedMessage=""
+        messageFromUrl={messageFromUrl}
+        resolvedUrl=""
+        deployUrl=""
+        preferredLanguage={LanguageEnum.English}
+        preferredTheme={getFallbackTheme()}
+      />,
     ).container;
 
     const results = await axe(page);
@@ -50,17 +47,14 @@ describe(Home.name, () => {
     const encodedMessage = latestEncoder(messageFromUrl);
 
     const page = render(
-      <ThemeStore>
-        <LanguageStore>
-          <Home
-            encodedMessage={encodedMessage}
-            messageFromUrl={messageFromUrl}
-            resolvedUrl=""
-            deployUrl=""
-            preferredLanguage={LanguageEnum.English}
-          />
-        </LanguageStore>
-      </ThemeStore>,
+      <Home
+        encodedMessage={encodedMessage}
+        messageFromUrl={messageFromUrl}
+        resolvedUrl=""
+        deployUrl=""
+        preferredLanguage={LanguageEnum.English}
+        preferredTheme={getFallbackTheme()}
+      />,
     ).container;
 
     const dateField = page.querySelector<HTMLInputElement>("#date-field");
@@ -95,17 +89,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage=""
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       document.execCommand = jest.fn();
@@ -132,17 +123,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage=""
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const resetButton =
@@ -178,17 +166,14 @@ describe(Home.name, () => {
       const encodedMessage = latestEncoder(messageFromUrl);
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage={encodedMessage}
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const resetButton =
@@ -214,17 +199,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage=""
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const languageSelect = page.querySelector<HTMLSelectElement>(
@@ -246,21 +228,35 @@ describe(Home.name, () => {
   });
 
   describe("Theme", () => {
+    it("should use the theme cookie if it's set", async () => {
+      const { props } = await getServerSideProps({
+        req: {
+          cookies: {
+            theme: "winter",
+          },
+          headers: {
+            host: "",
+          },
+        } as unknown as NextIncomingMessage,
+        resolvedUrl: "",
+      } as GetServerSidePropsContext);
+
+      const currentTheme = props.preferredTheme.name;
+      expect(currentTheme).toBe("winter");
+    });
+
     it("should be possible to change theme", () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage=""
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const themeSelectorOpenButton = page.querySelector<HTMLButtonElement>(
@@ -277,7 +273,7 @@ describe(Home.name, () => {
       }
 
       const previousTheme = body.dataset["theme"];
-      expect(previousTheme).toBe("pride");
+      expect(previousTheme).toBeUndefined();
 
       // Open theme selector
       act(() => {
@@ -306,17 +302,14 @@ describe(Home.name, () => {
       const messageFromUrl: Message | null = null;
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage=""
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage=""
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const dateField = page.querySelector<HTMLInputElement>("#date-field");
@@ -397,6 +390,7 @@ describe(Home.name, () => {
           resolvedUrl,
           deployUrl: `//${host}`,
           preferredLanguage: LanguageEnum.NorskBokmal,
+          preferredTheme: getFallbackTheme(),
         });
       });
 
@@ -460,17 +454,14 @@ describe(Home.name, () => {
           "N4IgxgFgpmDWDOIBcBtALgJwK5QDSZ32ygF1cQATAQzSmRAEZ40ACAewDMWApKgOyxUMATxDkAtlHjwqAczpIQACQCWuFrWZQMAQhaAeDcAc%2B2JB8qk%2BgGUVfChjrkANv1mD59AKJ9ZjlfAgmaNCSAHLmCiAADhgqFHQAvkA";
 
         const page = render(
-          <ThemeStore>
-            <LanguageStore>
-              <Home
-                encodedMessage={encodedMessage}
-                messageFromUrl={messageFromUrl}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-              />
-            </LanguageStore>
-          </ThemeStore>,
+          <Home
+            encodedMessage={encodedMessage}
+            messageFromUrl={messageFromUrl}
+            resolvedUrl=""
+            deployUrl=""
+            preferredLanguage={LanguageEnum.English}
+            preferredTheme={getFallbackTheme()}
+          />,
         ).container;
 
         const results = await axe(page);
@@ -492,17 +483,14 @@ describe(Home.name, () => {
           "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
         const page = render(
-          <ThemeStore>
-            <LanguageStore>
-              <Home
-                encodedMessage={encodedMessage}
-                messageFromUrl={message}
-                resolvedUrl=""
-                deployUrl=""
-                preferredLanguage={LanguageEnum.English}
-              />
-            </LanguageStore>
-          </ThemeStore>,
+          <Home
+            encodedMessage={encodedMessage}
+            messageFromUrl={message}
+            resolvedUrl=""
+            deployUrl=""
+            preferredLanguage={LanguageEnum.English}
+            preferredTheme={getFallbackTheme()}
+          />,
         ).container;
 
         const dateText =
@@ -565,6 +553,7 @@ describe(Home.name, () => {
         resolvedUrl,
         deployUrl: `//${host}`,
         preferredLanguage: LanguageEnum.NorskBokmal,
+        preferredTheme: getFallbackTheme(),
       });
     });
 
@@ -634,17 +623,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage={encodedMessage}
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const results = await axe(page);
@@ -666,17 +652,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage={encodedMessage}
-              messageFromUrl={message}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={message}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const dateText =
@@ -737,6 +720,7 @@ describe(Home.name, () => {
         resolvedUrl,
         deployUrl: `//${host}`,
         preferredLanguage: LanguageEnum.NorskBokmal,
+        preferredTheme: getFallbackTheme(),
       });
     });
 
@@ -806,17 +790,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage={encodedMessage}
-              messageFromUrl={messageFromUrl}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={messageFromUrl}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const results = await axe(page);
@@ -838,17 +819,14 @@ describe(Home.name, () => {
         "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhBIDwbgHPs4DKByAJhmTgKLIDmAGwIgAFjgAOGAu25gMqOQqWKgA";
 
       const page = render(
-        <ThemeStore>
-          <LanguageStore>
-            <Home
-              encodedMessage={encodedMessage}
-              messageFromUrl={message}
-              resolvedUrl=""
-              deployUrl=""
-              preferredLanguage={LanguageEnum.English}
-            />
-          </LanguageStore>
-        </ThemeStore>,
+        <Home
+          encodedMessage={encodedMessage}
+          messageFromUrl={message}
+          resolvedUrl=""
+          deployUrl=""
+          preferredLanguage={LanguageEnum.English}
+          preferredTheme={getFallbackTheme()}
+        />,
       ).container;
 
       const dateText =

@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import type { Theme } from "../types/Theme";
 import type { ThemeName } from "../types/ThemeName";
 import { themes } from "../types/Themes";
@@ -26,21 +27,21 @@ export function isThemeName(name: string): name is ThemeName {
   return (themes.map(theme => theme.name) as Array<string>).includes(name);
 }
 
-export function getActiveTheme(): Theme {
-  const activeThemeName = window.localStorage.getItem("active-theme");
+// export function getActiveTheme(): Theme {
+//   const activeThemeName = window.localStorage.getItem("active-theme");
 
-  const themeExists = activeThemeName && isThemeName(activeThemeName);
-  if (themeExists) {
-    return getTheme(activeThemeName);
-  }
+//   const themeExists = activeThemeName && isThemeName(activeThemeName);
+//   if (themeExists) {
+//     return getTheme(activeThemeName);
+//   }
 
-  return getFallbackTheme();
+//   return getFallbackTheme();
+// }
+
+export function storeThemeInCookie(themeName: ThemeName): void {
+  Cookies.set("theme", themeName);
 }
 
-export function setActiveTheme(themeName: ThemeName): void {
-  window.localStorage.setItem("active-theme", themeName);
-}
-
-export function setPageTheme(theme: Theme): void {
+export function setPageThemeStyles(theme: Theme): void {
   document.body.dataset["theme"] = theme.name;
 }

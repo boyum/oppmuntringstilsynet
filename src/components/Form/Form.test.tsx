@@ -1,34 +1,37 @@
-import { act, render } from "@testing-library/react";
+import { act, render, renderHook } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
+import { useReducer, useState } from "react";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { MessageContext } from "../../contexts/MessageContext";
 import { LanguageEnum } from "../../enums/Language";
-import { LanguageStore } from "../../stores/LanguageStore";
-import type { Message } from "../../types/Message";
-import { createEmptyMessage } from "../../utils/message-utils";
+import { getEmptyState, messageReducer } from "../../reducers/message.reducer";
 import { getFallbackTheme } from "../../utils/theme-utils";
 import { Form } from "./Form";
 
 expect.extend(toHaveNoViolations);
 
 describe(Form.name, () => {
+  let l: [LanguageEnum, (language: LanguageEnum) => void];
+
+  beforeEach(() => {
+    l = renderHook(() => useState(LanguageEnum.English as LanguageEnum)).result
+      .current;
+  });
+
   it("should render without accessibility errors when fields are disabled", async () => {
-    const message = createEmptyMessage();
+    const [message, dispatchMessageAction] = renderHook(() =>
+      useReducer(messageReducer, getEmptyState()),
+    ).result.current;
 
     const form = render(
-      <LanguageStore>
-        <main>
-          <Form
-            isDisabled
-            message={message}
-            setMessage={() => {
-              /* Intentionally empty */
-            }}
-            setCheck={() => {
-              /* Intentionally empty */
-            }}
-          />
-        </main>
-      </LanguageStore>,
+      <MessageContext.Provider value={[message, dispatchMessageAction]}>
+        <LanguageContext.Provider value={l}>
+          <main>
+            <Form isDisabled />
+          </main>
+        </LanguageContext.Provider>
+      </MessageContext.Provider>,
     ).container;
 
     const results = await axe(form);
@@ -37,22 +40,18 @@ describe(Form.name, () => {
   });
 
   it("should render without accessibility errors when fields are not disabled", async () => {
-    const message = createEmptyMessage();
+    const [message, dispatchMessageAction] = renderHook(() =>
+      useReducer(messageReducer, getEmptyState()),
+    ).result.current;
+
     const form = render(
-      <LanguageStore>
-        <main>
-          <Form
-            isDisabled={false}
-            message={message}
-            setMessage={() => {
-              /* Intentionally empty */
-            }}
-            setCheck={() => {
-              /* Intentionally empty */
-            }}
-          />
-        </main>
-      </LanguageStore>,
+      <MessageContext.Provider value={[message, dispatchMessageAction]}>
+        <LanguageContext.Provider value={l}>
+          <main>
+            <Form isDisabled={false} />
+          </main>
+        </LanguageContext.Provider>
+      </MessageContext.Provider>,
     ).container;
 
     const results = await axe(form);
@@ -61,30 +60,25 @@ describe(Form.name, () => {
   });
 
   it("should handle text input changes", async () => {
-    const message: Message = {
-      date: "date",
-      message: "message",
-      name: "name",
-      checks: [false, true, false],
-      language: LanguageEnum.English,
-      themeName: getFallbackTheme().name,
-    };
+    const [message, dispatchMessageAction] = renderHook(() =>
+      useReducer(messageReducer, {
+        date: "date",
+        message: "message",
+        name: "name",
+        checks: [false, true, false],
+        language: LanguageEnum.English,
+        themeName: getFallbackTheme().name,
+      }),
+    ).result.current;
 
     const form = render(
-      <LanguageStore>
-        <main>
-          <Form
-            isDisabled={false}
-            message={message}
-            setMessage={() => {
-              /* Intentionally empty */
-            }}
-            setCheck={() => {
-              /* Intentionally empty */
-            }}
-          />
-        </main>
-      </LanguageStore>,
+      <MessageContext.Provider value={[message, dispatchMessageAction]}>
+        <LanguageContext.Provider value={l}>
+          <main>
+            <Form isDisabled={false} />
+          </main>
+        </LanguageContext.Provider>
+      </MessageContext.Provider>,
     ).container;
 
     const dateInput = form.querySelector<HTMLInputElement>("#date-field");
@@ -101,30 +95,25 @@ describe(Form.name, () => {
   });
 
   it("should handle checkbox changes", async () => {
-    const message: Message = {
-      date: "date",
-      message: "message",
-      name: "name",
-      checks: [false, true, false],
-      language: LanguageEnum.English,
-      themeName: getFallbackTheme().name,
-    };
+    const [message, dispatchMessageAction] = renderHook(() =>
+      useReducer(messageReducer, {
+        date: "date",
+        message: "message",
+        name: "name",
+        checks: [false, true, false],
+        language: LanguageEnum.English,
+        themeName: getFallbackTheme().name,
+      }),
+    ).result.current;
 
     const form = render(
-      <LanguageStore>
-        <main>
-          <Form
-            isDisabled={false}
-            message={message}
-            setMessage={() => {
-              /* Intentionally empty */
-            }}
-            setCheck={() => {
-              /* Intentionally empty */
-            }}
-          />
-        </main>
-      </LanguageStore>,
+      <MessageContext.Provider value={[message, dispatchMessageAction]}>
+        <LanguageContext.Provider value={l}>
+          <main>
+            <Form isDisabled={false} />
+          </main>
+        </LanguageContext.Provider>
+      </MessageContext.Provider>,
     ).container;
 
     const checkbox = form.querySelector<HTMLInputElement>(

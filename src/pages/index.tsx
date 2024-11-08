@@ -3,22 +3,16 @@ import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import type { FC } from "react";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { useReducer, useRef, useState } from "react";
 import { Buttons } from "../components/Buttons/Buttons";
 import { Footer } from "../components/Footer/Footer";
 import { Form } from "../components/Form/Form";
 import { LanguagePicker } from "../components/LanguagePicker/LanguagePicker";
 import { ThemePicker } from "../components/ThemePicker/ThemePicker";
-import type { LanguageEnum } from "../enums/Language";
-import { useLanguage } from "../hooks/useLanguage";
-import { useTheme } from "../hooks/useTheme";
+import { LanguageContext } from "../contexts/LanguageContext";
+import { MessageContext } from "../contexts/MessageContext";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { LanguageEnum } from "../enums/Language";
 import {
   MessageActionType,
   getEmptyState,
@@ -26,16 +20,40 @@ import {
 } from "../reducers/message.reducer";
 import styles from "../styles/Home.module.scss";
 import type { Message } from "../types/Message";
-import { themes } from "../types/Themes";
+import { Theme } from "../types/Theme";
+import { ThemeName } from "../types/ThemeName";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import {
   getDefaultHtmlHeadData,
   renderHtmlHead,
 } from "../utils/html-head-utils";
 import { getPreferredLanguage } from "../utils/language-utils";
-import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
+import {
+  getFallbackTheme,
+  getTheme,
+  setPageThemeStyles,
+  storeThemeInCookie,
+} from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../utils/url-utils";
+
+const getInitialTheme = (
+  message: Message | null,
+  preferredTheme: Theme,
+): Theme => {
+  if (message?.themeName) {
+    return getTheme(message.themeName);
+  }
+
+  return preferredTheme;
+};
+
+const getInitialLanguage = (
+  message: Message | null,
+  preferredLanguage: LanguageEnum,
+): LanguageEnum => {
+  return message?.language ?? preferredLanguage;
+};
 
 type Props = {
   encodedMessage: string | null;
@@ -43,6 +61,7 @@ type Props = {
   resolvedUrl: string;
   deployUrl: string;
   preferredLanguage: LanguageEnum;
+  preferredTheme: Theme;
 };
 
 const Home: FC<Props> = ({
@@ -51,156 +70,105 @@ const Home: FC<Props> = ({
   resolvedUrl,
   deployUrl,
   preferredLanguage,
+  preferredTheme,
 }) => {
-  const [language, setLanguage] = useLanguage();
-  const [theme, setTheme] = useTheme();
+  const router = useRouter();
+
+  const [language, setLanguage] = useState(() =>
+    getInitialLanguage(messageFromUrl, preferredLanguage),
+  );
+  const [theme, setTheme] = useState(() =>
+    getInitialTheme(messageFromUrl, preferredTheme),
+  );
+
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
     messageFromUrl ?? getEmptyState(),
   );
-  const [forcedLanguage, setForcedLanguage] = useState<LanguageEnum | null>(
-    null,
-  );
-  const router = useRouter();
-  const tempInput = useRef<HTMLInputElement>(null);
 
-  const translations = getTranslations(messageFromUrl?.language ?? language);
+  const tempInput = useRef<HTMLInputElement>(null);
+  const translations = getTranslations(language);
 
   const hasMessage = !!messageFromUrl;
   const isDisabled = hasMessage;
 
-  useEffect(() => {
-    const activeTheme = messageFromUrl?.themeName
-      ? getTheme(messageFromUrl.themeName)
-      : theme;
+  const handleThemeChange = (newTheme: Theme): void => {
+    setTheme(newTheme);
 
-    if (messageFromUrl?.themeName) {
-      setActiveTheme(activeTheme.name);
-    } else {
-      dispatchMessageAction({
-        type: MessageActionType.SetTheme,
-        themeName: activeTheme.name,
-      });
-    }
+    setPageThemeStyles(newTheme);
+    storeThemeInCookie(newTheme.name);
 
-    setPageTheme(activeTheme);
-    setTheme(activeTheme);
+    dispatchMessageAction({
+      type: MessageActionType.SetTheme,
+      themeName: theme.name,
+    });
+  };
 
-    setLanguage(messageFromUrl?.language ?? preferredLanguage);
-  }, [
-    setLanguage,
-    setTheme,
-    messageFromUrl?.language,
-    messageFromUrl?.themeName,
-    preferredLanguage,
-    theme,
-  ]);
-
-  const handleCopy = useCallback((): void => {
+  const handleCopy = (): void => {
     if (tempInput.current) {
       encodeAndCopyMessage(message, tempInput.current);
     }
-  }, [message]);
+  };
 
-  const handleReset = useCallback((): void => {
+  const handleReset = (): void => {
     router.push("/");
 
     dispatchMessageAction({
       type: MessageActionType.ResetEverythingButTheme,
     });
-  }, [router]);
+  };
 
-  const handleLanguageChange = useCallback(
-    (newLanguage: LanguageEnum): void => {
-      setForcedLanguage(newLanguage);
-      return dispatchMessageAction({
-        type: MessageActionType.SetMessage,
-        message: {
-          language: newLanguage,
-        },
-      });
-    },
-    [],
-  );
+  const handleLanguageChange = (newLanguage: LanguageEnum): void => {
+    dispatchMessageAction({
+      type: MessageActionType.SetMessage,
+      message: {
+        language: newLanguage,
+      },
+    });
+  };
 
-  const handleSetMessage = useCallback(
-    (newMessage: Partial<Message>): void =>
-      dispatchMessageAction({
-        type: MessageActionType.SetMessage,
-        message: newMessage,
-      }),
-    [],
-  );
-
-  const handleSetCheck = useCallback(
-    (checkValue: boolean, checkIndex: number) =>
-      dispatchMessageAction({
-        type: MessageActionType.SetCheck,
-        check: checkValue,
-        checkIndex,
-      }),
-    [],
-  );
-
-  const headData = useMemo(() => {
-    const htmlHeadData = getDefaultHtmlHeadData(
-      forcedLanguage ?? messageFromUrl?.language ?? language,
-      `${deployUrl}${resolvedUrl}`,
-      encodedMessage,
-      deployUrl,
-    );
-
-    return renderHtmlHead(htmlHeadData);
-  }, [
-    deployUrl,
-    encodedMessage,
-    forcedLanguage,
+  const htmlHeadData = getDefaultHtmlHeadData(
     language,
-    messageFromUrl?.language,
-    resolvedUrl,
-  ]);
+    `${deployUrl}${resolvedUrl}`,
+    encodedMessage,
+    deployUrl,
+  );
+
+  const headData = renderHtmlHead(htmlHeadData);
 
   return (
-    <>
-      <Head>{headData}</Head>
-      <div className={styles["theme-picker-button-wrapper"]}>
-        <ThemePicker
-          themes={themes}
-          setTheme={newTheme => {
-            setPageTheme(newTheme);
-            setActiveTheme(newTheme.name);
-            dispatchMessageAction({
-              type: MessageActionType.SetTheme,
-              themeName: newTheme.name,
-            });
-          }}
-        />
-      </div>
-
-      <main className={styles["main"]}>
-        <div className={styles["container"]}>
-          <div className={styles["container-header"]}>
-            <h1 className={styles["heading"]}>{translations.formHeading}</h1>
-            <div className={styles["language-picker-container"]}>
-              <LanguagePicker handleChange={handleLanguageChange} />
-            </div>
+    <MessageContext.Provider value={[message, dispatchMessageAction]}>
+      <ThemeContext.Provider value={[theme, handleThemeChange]}>
+        <LanguageContext.Provider value={[language, setLanguage]}>
+          <Head>{headData}</Head>
+          <div className={styles["theme-picker-button-wrapper"]}>
+            <ThemePicker />
           </div>
 
-          <Form
-            isDisabled={isDisabled}
-            message={message}
-            setMessage={handleSetMessage}
-            setCheck={handleSetCheck}
-          />
-          <Buttons handleReset={handleReset} handleCopy={handleCopy} />
-          <label className="hidden">
-            Hidden label used for copying
-            <input ref={tempInput} type="text" readOnly tabIndex={-1} />
-          </label>
-        </div>
-      </main>
-      <Footer />
-    </>
+          <main className={styles["main"]}>
+            <div className={styles["container"]}>
+              <div className={styles["container-header"]}>
+                <h1 className={styles["heading"]}>
+                  {translations.formHeading}
+                </h1>
+                <div className={styles["language-picker-container"]}>
+                  <LanguagePicker onChange={handleLanguageChange} />
+                </div>
+              </div>
+
+              <Form isDisabled={isDisabled} />
+
+              <Buttons handleReset={handleReset} handleCopy={handleCopy} />
+              <label className="hidden" aria-hidden="true">
+                Hidden label used for copying
+                <input ref={tempInput} type="text" readOnly tabIndex={-1} />
+              </label>
+            </div>
+          </main>
+          <Footer />
+        </LanguageContext.Provider>
+      </ThemeContext.Provider>
+    </MessageContext.Provider>
   );
 };
 
@@ -232,6 +200,11 @@ export async function getServerSideProps(
   const acceptedLanguages = getAcceptedLanguages(acceptLanguageHeader ?? "");
   const preferredLanguage = getPreferredLanguage(acceptedLanguages);
 
+  const cookieTheme = req.cookies?.["theme"] as ThemeName | undefined;
+  const preferredTheme = cookieTheme
+    ? getTheme(cookieTheme)
+    : getFallbackTheme();
+
   return {
     props: {
       encodedMessage,
@@ -239,6 +212,7 @@ export async function getServerSideProps(
       resolvedUrl,
       deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
       preferredLanguage,
+      preferredTheme,
     },
   } satisfies { props: Props };
 }
