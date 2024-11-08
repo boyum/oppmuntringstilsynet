@@ -22,20 +22,52 @@ describe("Home", () => {
     await page.close();
   });
 
-  Object.entries(languages).forEach(([languageName, languageRecord]) => {
-    it(`should be titled ${languageRecord.translations.pageTitle} when the Accept-Language is ${languageName}`, async () => {
-      await page.setExtraHTTPHeaders({
-        "Accept-Language": languageRecord.codes[0],
-      });
-      await page.goto(deployUrl);
+  it(`should be titled Oppmuntringstilsynet when the Accept-Language is NorskBokmal`, async () => {
+    const language = languages.NorskBokmal;
 
-      // Await one render cycle
-      await sleep(100);
-
-      const title = await getTitle(page);
-
-      expect(title).toMatch(languageRecord.translations.pageTitle);
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": language.codes[0],
     });
+    await page.goto(deployUrl);
+
+    // Await one render cycle
+    await sleep(100);
+
+    const title = await getTitle(page);
+
+    expect(title).toMatch(language.translations.pageTitle);
+  });
+
+  it(`should be titled Oppmuntringstilsynet when the Accept-Language is NorskNynorsk`, async () => {
+    const language = languages.NorskNynorsk;
+
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": language.codes[0],
+    });
+    await page.goto(deployUrl);
+
+    // Await one render cycle
+    await sleep(100);
+
+    const title = await getTitle(page);
+
+    expect(title).toMatch(language.translations.pageTitle);
+  });
+
+  it(`should be titled The National Encouragement Authority when the Accept-Language is English`, async () => {
+    const language = languages.English;
+
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": language.codes[0],
+    });
+    await page.goto(deployUrl);
+
+    // Await one render cycle
+    await sleep(100);
+
+    const title = await getTitle(page);
+
+    expect(title).toMatch(language.translations.pageTitle);
   });
 
   it(`should have the default language's title if the Accept-Language is not supported`, async () => {
