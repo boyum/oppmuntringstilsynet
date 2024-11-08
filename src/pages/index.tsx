@@ -33,7 +33,6 @@ import {
   renderHtmlHead,
 } from "../utils/html-head-utils";
 import { getPreferredLanguage } from "../utils/language-utils";
-import { isEmpty } from "../utils/message-utils";
 import { getTheme, setActiveTheme, setPageTheme } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../utils/url-utils";
@@ -55,7 +54,6 @@ const Home: FC<Props> = ({
 }) => {
   const [language, setLanguage] = useLanguage();
   const [theme, setTheme] = useTheme();
-  const [isResetting, setIsResetting] = useState(false);
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
     messageFromUrl ?? getEmptyState(),
@@ -70,21 +68,6 @@ const Home: FC<Props> = ({
 
   const hasMessage = !!messageFromUrl;
   const isDisabled = hasMessage;
-
-  useEffect(() => {
-    const shouldSetMessage =
-      isEmpty(message) &&
-      messageFromUrl != null &&
-      !isEmpty(messageFromUrl) &&
-      !isResetting;
-
-    if (hasMessage && shouldSetMessage) {
-      dispatchMessageAction({
-        type: MessageActionType.SetMessage,
-        message: messageFromUrl,
-      });
-    }
-  }, [isResetting, message, messageFromUrl]);
 
   useEffect(() => {
     const activeTheme = messageFromUrl?.themeName
@@ -125,8 +108,6 @@ const Home: FC<Props> = ({
     dispatchMessageAction({
       type: MessageActionType.ResetEverythingButTheme,
     });
-
-    setIsResetting(true);
   }, [router]);
 
   const handleLanguageChange = useCallback(
