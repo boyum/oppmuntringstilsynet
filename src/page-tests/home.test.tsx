@@ -1,6 +1,7 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
+import { NextIncomingMessage } from "next/dist/server/request-meta";
 import { LanguageEnum } from "../enums/Language";
 import Home, { getServerSideProps } from "../pages";
 import { getEmptyState } from "../reducers/message.reducer";
@@ -227,6 +228,23 @@ describe(Home.name, () => {
   });
 
   describe("Theme", () => {
+    it("should use the theme cookie if it's set", async () => {
+      const { props } = await getServerSideProps({
+        req: {
+          cookies: {
+            theme: "winter",
+          },
+          headers: {
+            host: "",
+          },
+        } as unknown as NextIncomingMessage,
+        resolvedUrl: "",
+      } as GetServerSidePropsContext);
+
+      const currentTheme = props.preferredTheme.name;
+      expect(currentTheme).toBe("winter");
+    });
+
     it("should be possible to change theme", () => {
       const messageFromUrl: Message | null = null;
 
