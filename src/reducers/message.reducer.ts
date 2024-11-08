@@ -42,7 +42,7 @@ export const emptyMessage_DO_NOT_USE: Message = {
 };
 
 export function getEmptyState(): Message {
-  return global.structuredClone(emptyMessage_DO_NOT_USE);
+  return JSON.parse(JSON.stringify(emptyMessage_DO_NOT_USE));
 }
 
 export function messageReducer(state: Message, action: MessageAction): Message {

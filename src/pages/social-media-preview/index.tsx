@@ -1,5 +1,6 @@
 import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -59,6 +60,10 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
       <LanguageContext.Provider value={[language, setLanguage]}>
+        <Head>
+          {/* By inserting a `body` element in `Head`, we can add properties to the body */}
+          <body data-theme={theme.name} />
+        </Head>
         <main className={styles["main"]}>
           <div className={styles["preview-container"]}>
             <h1 className={styles["heading"]}>{title}</h1>

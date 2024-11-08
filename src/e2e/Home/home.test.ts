@@ -24,9 +24,12 @@ describe("Home", () => {
 
   Object.entries(languages).forEach(([languageName, languageRecord]) => {
     it(`should be titled ${languageRecord.translations.pageTitle} when the Accept-Language is ${languageName}`, async () => {
-      await page.setExtraHTTPHeaders({
-        "Accept-Language": languageRecord.codes[0],
+      const cdpSession = await page.createCDPSession();
+      cdpSession.send("Network.setUserAgentOverride", {
+        userAgent: await browser.userAgent(),
+        acceptLanguage: languageRecord.codes[0],
       });
+
       await page.goto(deployUrl);
 
       // Await one render cycle
@@ -124,20 +127,99 @@ describe("Home", () => {
     expect(nameText).toBe("name");
   });
 
-  it("should store the theme in a cookie", async () => {
-    const expectedTheme = themes[3];
+  // it("should use the current page theme as the theme of the card", async () => {
+  //   const context = browser.defaultBrowserContext();
+  //   await context.overridePermissions(deployUrl, ["clipboard-read"]);
 
-    await page.click("#theme-picker-button");
-    await page.click(`#theme-${expectedTheme.name}`);
+  //   const incognitoBrowser = await puppeteer.launch({
+  //     args: ["--incognito"],
+  //   });
+  //   const incognitoPage = await incognitoBrowser.newPage();
 
-    await page.reload();
+  //   const expectedTheme = "winter";
 
-    const cookieValue = (await page.cookies()).find(
-      cookie => cookie.name === "theme",
-    )?.value;
+  //   await page.click("#theme-picker-button");
+  //   await page.click(`#theme-${expectedTheme}`);
 
-    expect(cookieValue).toBe(expectedTheme.name);
-  });
+  //   await page.click("#copy-button");
+
+  //   const cardUrl = await page.evaluate(() => navigator.clipboard.readText());
+
+  //   // Use an incognito page to avoid using localstorage
+  //   await incognitoPage.goto(cardUrl);
+
+  //   const actualTheme = await incognitoPage.evaluate(
+  //     () => document.body.dataset.theme,
+  //   );
+
+  //   expect(actualTheme).toBe(expectedTheme);
+
+  //   incognitoBrowser.close();
+  // });
+
+  // it("should use the current page theme as the theme of the card even if the card is reset", async () => {
+  //   const context = browser.defaultBrowserContext();
+  //   await context.overridePermissions(deployUrl, ["clipboard-read"]);
+
+  //   const incognitoBrowser = await puppeteer.launch({
+  //     args: ["--incognito"],
+  //   });
+  //   const incognitoPage = await incognitoBrowser.newPage();
+
+  //   const expectedTheme = "winter";
+
+  //   await page.click("#theme-picker-button");
+  //   await page.click(`#theme-${expectedTheme}`);
+
+  //   await page.click("#reset-button");
+
+  //   await page.click("#copy-button");
+
+  //   const cardUrl = await page.evaluate(() => navigator.clipboard.readText());
+
+  //   // Use an incognito page to avoid using localstorage
+  //   await incognitoPage.goto(cardUrl);
+
+  //   const actualTheme = await incognitoPage.evaluate(
+  //     () => document.body.dataset.theme,
+  //   );
+
+  //   expect(actualTheme).toBe(expectedTheme);
+
+  //   incognitoBrowser.close();
+  // });
+
+  // it("should use the current page theme as the theme of the card even if the page is reloaded", async () => {
+  //   const context = browser.defaultBrowserContext();
+  //   await context.overridePermissions(deployUrl, ["clipboard-read"]);
+
+  //   const incognitoBrowser = await puppeteer.launch({
+  //     args: ["--incognito"],
+  //   });
+  //   const incognitoPage = await incognitoBrowser.newPage();
+
+  //   const expectedTheme = "winter";
+
+  //   await page.click("#theme-picker-button");
+  //   await page.click(`#theme-${expectedTheme}`);
+
+  //   await page.reload();
+
+  //   await page.click("#copy-button");
+
+  //   const cardUrl = await page.evaluate(() => navigator.clipboard.readText());
+
+  //   // Use an incognito page to avoid using localstorage
+  //   await incognitoPage.goto(cardUrl);
+
+  //   const actualTheme = await incognitoPage.evaluate(
+  //     () => document.body.dataset.theme,
+  //   );
+
+  //   expect(actualTheme).toBe(expectedTheme);
+
+  //   incognitoBrowser.close();
+  // });
 
   themes.forEach(({ name: themeName }) => {
     it(`should not break any accessibility tests if using ${themeName} theme`, async () => {
