@@ -1,0 +1,17 @@
+.is-selected {
+  outline: 0.125rem dashed var(--theme-2-background-color);
+  outline-offset: 0.125rem;
+}
+
+.button {
+  background-color: var(--theme-1-background-color);
+  background-image: var(--theme-1-background-image, "none");
+  background-repeat: no-repeat;
+  border: 0.125rem solid var(--theme-picker-border-color);
+  color: var(--theme-1-color);
+  cursor: pointer;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  width: 100%;
+}

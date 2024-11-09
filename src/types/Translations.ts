@@ -15,6 +15,9 @@ export type Translations = {
   setLanguage: string;
   openThemePicker: string;
   closeThemePicker: string;
+  openLanguagePicker: string;
+  closeLanguagePicker: string;
+  languagePickerHeading: string;
   themePickerHeading: string;
   previewTitleWithMessage: string;
   someone: string;

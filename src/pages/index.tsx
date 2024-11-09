@@ -83,6 +83,9 @@ const Home: FC<Props> = ({
     getInitialTheme(messageFromUrl, preferredTheme),
   );
 
+  const [themePickerIsOpen, setThemePickerIsOpen] = useState(false);
+  const [languagePickerIsOpen, setLanguagePickerIsOpen] = useState(false);
+
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
     messageFromUrl ?? getEmptyState(),
@@ -149,8 +152,26 @@ const Home: FC<Props> = ({
             <body data-theme={theme.name} />
           </Head>
 
-          <div className={styles["theme-picker-button-wrapper"]}>
-            <ThemePicker />
+          <div className={styles["theme-language-picker-button-wrapper"]}>
+            <ThemePicker
+              isOpen={themePickerIsOpen}
+              setIsOpen={open => {
+                setThemePickerIsOpen(open);
+                if (open) {
+                  setLanguagePickerIsOpen(false);
+                }
+              }}
+            />
+            <LanguagePicker
+              onChange={handleLanguageChange}
+              isOpen={languagePickerIsOpen}
+              setIsOpen={open => {
+                setLanguagePickerIsOpen(open);
+                if (open) {
+                  setThemePickerIsOpen(false);
+                }
+              }}
+            />
           </div>
 
           <main className={styles["main"]}>
@@ -159,9 +180,6 @@ const Home: FC<Props> = ({
                 <h1 className={styles["heading"]}>
                   {translations.formHeading}
                 </h1>
-                <div className={styles["language-picker-container"]}>
-                  <LanguagePicker onChange={handleLanguageChange} />
-                </div>
               </div>
 
               <Form isDisabled={isDisabled} />

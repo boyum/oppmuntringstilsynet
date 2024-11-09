@@ -24,13 +24,6 @@
   position: relative;
 }
 
-.language-picker-container {
-  font-size: 0.8125em;
-  position: absolute;
-  right: -2rem;
-  top: -2rem;
-}
-
 /**
  * {1} Decrease from the default 2em just to make the Norwegian
  *     heading text fit on one line on iPhones in portrait mode.
@@ -41,9 +34,15 @@
   text-align: center;
 }
 
-.theme-picker-button-wrapper {
+.theme-language-picker-button-wrapper {
   display: flex;
+  gap: 0.5rem;
   justify-content: flex-end;
   margin: 2rem 1rem;
   position: relative;
+
+  @media screen and (min-width: 32rem) {
+    align-items: flex-end;
+    flex-direction: column;
+  }
 }
