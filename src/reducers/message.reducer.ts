@@ -4,29 +4,29 @@ import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
 import { getFallbackTheme } from "../utils/theme-utils";
 
-export enum MessageActionType {
+export enum MessageAction {
   SetMessage = "setMessage",
   SetCheck = "setCheck",
   SetTheme = "setTheme",
   ResetEverythingButTheme = "reset",
 }
 
-export type MessageAction =
+export type MessageActionType =
   | {
-      type: MessageActionType.SetMessage;
+      type: MessageAction.SetMessage;
       message: Partial<Message>;
     }
   | {
-      type: MessageActionType.SetTheme;
+      type: MessageAction.SetTheme;
       themeName: ThemeName;
     }
   | {
-      type: MessageActionType.SetCheck;
+      type: MessageAction.SetCheck;
       checkIndex: number;
       check: boolean;
     }
   | {
-      type: MessageActionType.ResetEverythingButTheme;
+      type: MessageAction.ResetEverythingButTheme;
     };
 
 /**
@@ -45,15 +45,18 @@ export function getEmptyState(): Message {
   return JSON.parse(JSON.stringify(emptyMessage_DO_NOT_USE));
 }
 
-export function messageReducer(state: Message, action: MessageAction): Message {
+export function messageReducer(
+  state: Message,
+  action: MessageActionType,
+): Message {
   switch (action.type) {
-    case MessageActionType.SetMessage: {
+    case MessageAction.SetMessage: {
       const { message } = action;
 
       return { ...state, ...message };
     }
 
-    case MessageActionType.SetCheck: {
+    case MessageAction.SetCheck: {
       const newState = {
         ...state,
         checks: state.checks.map((check, index) =>
@@ -64,7 +67,7 @@ export function messageReducer(state: Message, action: MessageAction): Message {
       return newState;
     }
 
-    case MessageActionType.SetTheme: {
+    case MessageAction.SetTheme: {
       const { themeName } = action;
 
       return {
@@ -73,7 +76,7 @@ export function messageReducer(state: Message, action: MessageAction): Message {
       };
     }
 
-    case MessageActionType.ResetEverythingButTheme:
+    case MessageAction.ResetEverythingButTheme:
       return {
         ...getEmptyState(),
         themeName: state.themeName,

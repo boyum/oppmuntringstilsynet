@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useMessage } from "../../hooks/useMessage";
 import { useTranslations } from "../../hooks/useTranslations";
-import { MessageActionType } from "../../reducers/message.reducer";
+import { MessageAction } from "../../reducers/message.reducer";
 import type { Message } from "../../types/Message";
 import { Checkboxes } from "../Checkboxes/Checkboxes";
 import { CheckboxesContainer } from "../CheckboxesContainer/CheckboxesContainer";
@@ -17,13 +17,13 @@ export const Form: FC<FormProps> = ({ isDisabled }) => {
 
   const setMessage = (newMessage: Partial<Message>): void =>
     dispatchMessageAction({
-      type: MessageActionType.SetMessage,
+      type: MessageAction.SetMessage,
       message: newMessage,
     });
 
   const setCheck = (checkValue: boolean, checkIndex: number) =>
     dispatchMessageAction({
-      type: MessageActionType.SetCheck,
+      type: MessageAction.SetCheck,
       check: checkValue,
       checkIndex,
     });

@@ -2,8 +2,7 @@ import parser from "accept-language-parser";
 import type { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import type { FC } from "react";
-import { useReducer, useRef, useState } from "react";
+import { type FC, useReducer, useRef, useState } from "react";
 import { Buttons } from "../components/Buttons/Buttons";
 import { Footer } from "../components/Footer/Footer";
 import { Form } from "../components/Form/Form";
@@ -14,7 +13,7 @@ import { MessageContext } from "../contexts/MessageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { LanguageEnum } from "../enums/Language";
 import {
-  MessageActionType,
+  MessageAction,
   getEmptyState,
   messageReducer,
 } from "../reducers/message.reducer";
@@ -56,7 +55,7 @@ const getInitialLanguage = (
 
 type Props = {
   encodedMessage: string | null;
-  messageFromUrl: Message | null;
+  initialMessage: Message | null;
   resolvedUrl: string;
   deployUrl: string;
   preferredLanguage: LanguageEnum;
@@ -67,7 +66,7 @@ export const runtime = "experimental-edge";
 
 const Home: FC<Props> = ({
   encodedMessage,
-  messageFromUrl,
+  initialMessage,
   resolvedUrl,
   deployUrl,
   preferredLanguage,
@@ -76,10 +75,10 @@ const Home: FC<Props> = ({
   const router = useRouter();
 
   const [language, setLanguage] = useState(() =>
-    getInitialLanguage(messageFromUrl, preferredLanguage),
+    getInitialLanguage(initialMessage, preferredLanguage),
   );
   const [theme, setTheme] = useState(() =>
-    getInitialTheme(messageFromUrl, preferredTheme),
+    getInitialTheme(initialMessage, preferredTheme),
   );
 
   const [themePickerIsOpen, setThemePickerIsOpen] = useState(false);
@@ -87,43 +86,44 @@ const Home: FC<Props> = ({
 
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
-    messageFromUrl ?? getEmptyState(),
+    initialMessage ?? getEmptyState(),
   );
 
   const tempInput = useRef<HTMLInputElement>(null);
   const translations = getTranslations(language);
 
-  const hasMessage = !!messageFromUrl;
+  const hasMessage = !!initialMessage;
   const isDisabled = hasMessage;
 
   const handleThemeChange = (newTheme: Theme): void => {
     setTheme(newTheme);
-
     setPageThemeStyles(newTheme);
 
     dispatchMessageAction({
-      type: MessageActionType.SetTheme,
+      type: MessageAction.SetTheme,
       themeName: theme.name,
     });
   };
 
   const handleCopy = (): void => {
-    if (tempInput.current) {
-      encodeAndCopyMessage(message, tempInput.current);
+    if (!tempInput.current) {
+      return;
     }
+
+    encodeAndCopyMessage(message, tempInput.current);
   };
 
   const handleReset = (): void => {
     router.push("/");
 
     dispatchMessageAction({
-      type: MessageActionType.ResetEverythingButTheme,
+      type: MessageAction.ResetEverythingButTheme,
     });
   };
 
   const handleLanguageChange = (newLanguage: LanguageEnum): void => {
     dispatchMessageAction({
-      type: MessageActionType.SetMessage,
+      type: MessageAction.SetMessage,
       message: {
         language: newLanguage,
       },
@@ -155,16 +155,19 @@ const Home: FC<Props> = ({
               isOpen={themePickerIsOpen}
               setIsOpen={open => {
                 setThemePickerIsOpen(open);
+
                 if (open) {
                   setLanguagePickerIsOpen(false);
                 }
               }}
             />
+
             <LanguagePicker
               onChange={handleLanguageChange}
               isOpen={languagePickerIsOpen}
               setIsOpen={open => {
                 setLanguagePickerIsOpen(open);
+
                 if (open) {
                   setThemePickerIsOpen(false);
                 }
@@ -236,7 +239,7 @@ export async function getServerSideProps(
   return {
     props: {
       encodedMessage,
-      messageFromUrl: decodedMessage,
+      initialMessage: decodedMessage,
       resolvedUrl,
       deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
       preferredLanguage,
