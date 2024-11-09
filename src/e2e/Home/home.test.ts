@@ -351,7 +351,7 @@ describe("Home", () => {
     // Make sure English is selected
     await page.click("#language-picker-button");
     await page.click("#language-en");
-    
+
     const context = browser.defaultBrowserContext();
     await context.overridePermissions(deployUrl, ["clipboard-read"]);
 
