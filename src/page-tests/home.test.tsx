@@ -247,6 +247,23 @@ describe(Home.name, () => {
         languages[LanguageEnum.NorskBokmal].translations.formHeading,
       );
     });
+
+    it("should use the language cookie if it's set", async () => {
+      const { props } = await getServerSideProps({
+        req: {
+          cookies: {
+            language: LanguageEnum.NorskNynorsk,
+          },
+          headers: {
+            host: "",
+          },
+        } as unknown as NextIncomingMessage,
+        resolvedUrl: "",
+      } as GetServerSidePropsContext);
+
+      const currentLanguage = props.preferredLanguage;
+      expect(currentLanguage).toBe(LanguageEnum.NorskNynorsk);
+    });
   });
 
   describe("Theme", () => {
