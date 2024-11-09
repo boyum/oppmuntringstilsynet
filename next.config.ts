@@ -6,6 +6,6 @@ export default {
   i18n: {
     // locales: ["nb", "nn", "en"],
     locales: ["nb"],
-    defaultLocale: "nb"
+    defaultLocale: "nb",
   },
 } satisfies NextConfig;
