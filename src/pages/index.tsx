@@ -106,11 +106,9 @@ const Home: FC<Props> = ({
   };
 
   const handleCopy = (): void => {
-    if (!tempInput.current) {
-      return;
+    if (tempInput.current) {
+      encodeAndCopyMessage(message, tempInput.current);
     }
-
-    encodeAndCopyMessage(message, tempInput.current);
   };
 
   const handleReset = (): void => {
