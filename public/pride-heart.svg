@@ -1,0 +1,33 @@
+<svg
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns="http://www.w3.org/2000/svg"
+  version="1.0"
+  width="200"
+  height="200"
+>
+  <defs>
+    <linearGradient id="rainbow-gradient" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(-5)">
+      <stop stop-color="hsl(0, 100%, 55%)" offset="14.2857142857%" />
+      <stop stop-color="hsl(23, 100%, 65%)" offset="0" />
+      <stop stop-color="hsl(23, 100%, 65%)" offset="28.5714285714%" />
+      <stop stop-color="hsl(60, 100%, 65%)" offset="0" />
+      <stop stop-color="hsl(60, 100%, 65%)" offset="42.8571428571%" />
+      <stop stop-color="hsl(120, 100%, 60%)" offset="0" />
+      <stop stop-color="hsl(120, 100%, 60%)" offset="57.1428571429%" />
+      <stop stop-color="hsl(240, 100%, 75%)" offset="0" />
+      <stop stop-color="hsl(240, 100%, 75%)" offset="71.4285714286%" />
+      <stop stop-color="hsl(275, 100%, 60%)" offset="0" />
+      <stop stop-color="hsl(275, 100%, 60%)" offset="85.7142857143%" />
+      <stop stop-color="hsl(281, 100%, 85%)" offset="0" />
+      <stop stop-color="hsl(281, 100%, 85%)" offset="100%" />
+    </linearGradient>
+  </defs>
+
+  <path
+    d="M 30,55 C 28,54 25,50 22,48 C 14,42 13,41 9,38 C 3,32 0.24,27 0.25,19 C 0.25,15 0.5,13 1,11 C 3.4,6 5,5 8,3 C 12,1 13,1 17,1 C 22,1.5 22,1 25,3 C 28,4 31,8 32,10 L 32,12 L 33,10 C 39,-2 56,-2 63,10 C 65,14 65,22 63,27 C 61,33 57,38 47,45 C 40,50 33,57 32,58 C 32,59 32,58 30,55 z"
+    fill="url(#rainbow-gradient)"
+    stroke="#333a"
+    stroke-width="2"
+    style="opacity: 0.7"
+  />
+</svg>
