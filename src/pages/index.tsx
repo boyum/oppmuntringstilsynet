@@ -27,12 +27,11 @@ import {
   getDefaultHtmlHeadData,
   renderHtmlHead,
 } from "../utils/html-head-utils";
-import { getPreferredLanguage } from "../utils/language-utils";
+import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
 import {
   getFallbackTheme,
   getTheme,
   setPageThemeStyles,
-  storeThemeInCookie,
 } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../utils/url-utils";
@@ -101,7 +100,6 @@ const Home: FC<Props> = ({
     setTheme(newTheme);
 
     setPageThemeStyles(newTheme);
-    storeThemeInCookie(newTheme.name);
 
     dispatchMessageAction({
       type: MessageActionType.SetTheme,
@@ -220,13 +218,17 @@ export async function getServerSideProps(
   const [encodedMessage, decodedMessage] =
     getEncodedAndDecodedMessage(queryParams);
 
-  const { host: hostHeader, "accept-language": acceptLanguageHeader } =
-    req.headers;
+  const { cookies, headers } = req;
+  const { host: hostHeader, "accept-language": acceptLanguageHeader } = headers;
+
+  const cookieLanguage = cookies?.["language"] as string | undefined;
 
   const acceptedLanguages = getAcceptedLanguages(acceptLanguageHeader ?? "");
-  const preferredLanguage = getPreferredLanguage(acceptedLanguages);
+  const preferredLanguage = isLanguage(cookieLanguage)
+    ? cookieLanguage
+    : getFirstAcceptedLanguage(acceptedLanguages);
 
-  const cookieTheme = req.cookies?.["theme"] as ThemeName | undefined;
+  const cookieTheme = cookies?.["theme"] as ThemeName | undefined;
   const preferredTheme = cookieTheme
     ? getTheme(cookieTheme)
     : getFallbackTheme();

@@ -1,6 +1,7 @@
 import { LanguageEnum } from "../../enums/Language";
 import { useLanguage } from "../../hooks/useLanguage";
 import { languages } from "../../models/languages";
+import { storeLanguageInCookie } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { LanguagePickerLanguage } from "../LanguagePickerLanguage/LanguagePickerLanguage";
 import styles from "./LanguagePicker.module.scss";
@@ -24,6 +25,8 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
     onChange(newLanguage);
     setLanguage(newLanguage);
     setIsOpen(false);
+
+    storeLanguageInCookie(newLanguage);
   };
 
   const className = isOpen

@@ -3,7 +3,7 @@ import { useLanguage } from "../../hooks/useLanguage";
 import { useTheme } from "../../hooks/useTheme";
 import type { ThemeName } from "../../types/ThemeName";
 import { themes } from "../../types/Themes";
-import { getTheme } from "../../utils/theme-utils";
+import { getTheme, storeThemeInCookie } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
@@ -25,6 +25,8 @@ export const ThemePicker: FC<Props> = ({ isOpen, setIsOpen }) => {
 
   const onClick = (themeName: ThemeName) => {
     const newSelectedTheme = getTheme(themeName);
+
+    storeThemeInCookie(themeName);
 
     setTheme(newSelectedTheme);
     setIsOpen(false);

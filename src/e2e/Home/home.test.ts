@@ -3,7 +3,7 @@ import type { Page } from "puppeteer";
 import { languages } from "../../models/languages";
 import type { LocaleCode } from "../../types/LocaleCode";
 import { themes } from "../../types/Themes";
-import { getPreferredLanguage } from "../../utils/language-utils";
+import { getFirstAcceptedLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "../../utils/url-utils";
 
@@ -42,7 +42,7 @@ describe("Home", () => {
   });
 
   it(`should have the default language's title if the Accept-Language is not supported`, async () => {
-    const defaultLanguage = getPreferredLanguage([
+    const defaultLanguage = getFirstAcceptedLanguage([
       "unknown",
       "language",
     ] as unknown as Array<LocaleCode>);
