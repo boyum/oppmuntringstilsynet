@@ -61,7 +61,7 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
         </svg>
       </button>
-      <div id="theme-picker" data-is-open={isOpen} className={className}>
+      <div id="language-picker" data-is-open={isOpen} className={className}>
         <h2 className={styles["heading"]}>
           {translations.languagePickerHeading}
         </h2>

@@ -3,6 +3,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
 import { NextIncomingMessage } from "next/dist/server/request-meta";
 import { LanguageEnum } from "../enums/Language";
+import { languages } from "../models/languages";
 import Home, { getServerSideProps } from "../pages";
 import { getEmptyState } from "../reducers/message.reducer";
 import type { Message } from "../types/Message";
@@ -209,21 +210,42 @@ describe(Home.name, () => {
         />,
       ).container;
 
-      const languageSelect = page.querySelector<HTMLSelectElement>(
-        "[data-test-id=language-select]",
+      const languageSelectorOpenButton = page.querySelector<HTMLButtonElement>(
+        "#language-picker-button",
       );
 
-      if (!languageSelect) {
-        throw new Error("Language select not rendered");
+      if (!languageSelectorOpenButton) {
+        throw new Error("Theme selector button not rendered");
       }
 
-      expect(languageSelect.value).toBe(LanguageEnum.English);
+      const h1 = page.querySelector<HTMLHeadingElement>("h1");
+      if (!h1) {
+        throw new Error("H1 not rendered");
+      }
 
-      fireEvent.change(languageSelect, {
-        target: { value: LanguageEnum.NorskNynorsk },
+      // Open language selector
+      act(() => {
+        languageSelectorOpenButton.click();
       });
 
-      expect(languageSelect.value).toBe(LanguageEnum.NorskNynorsk);
+      expect(h1.textContent).toBe(
+        languages[LanguageEnum.English].translations.formHeading,
+      );
+
+      const languagePickerNorwegian =
+        page.querySelector<HTMLButtonElement>("#language-nb");
+
+      if (!languagePickerNorwegian) {
+        throw new Error("Language picker Norwegian not rendered");
+      }
+
+      act(() => {
+        languagePickerNorwegian.click();
+      });
+
+      expect(h1.textContent).toBe(
+        languages[LanguageEnum.NorskBokmal].translations.formHeading,
+      );
     });
   });
 

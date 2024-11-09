@@ -21,7 +21,7 @@ export const LanguagePickerLanguage: React.FC<Props> = ({
   return (
     <li className={classNames}>
       <button
-        id={`theme-${languageCode}`}
+        id={`language-${languageCode}`}
         className={styles["button"]}
         type="button"
         onClick={onClick}

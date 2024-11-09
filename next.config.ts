@@ -8,4 +8,7 @@ export default {
     locales: ["nb"],
     defaultLocale: "nb",
   },
+  sassOptions: {
+    silenceDeprecations: ["legacy-js-api"],
+  },
 } satisfies NextConfig;
