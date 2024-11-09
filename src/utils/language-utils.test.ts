@@ -2,9 +2,13 @@ import * as fc from "fast-check";
 import { LanguageEnum } from "../enums/Language";
 import { languages } from "../models/languages";
 import type { LocaleCode } from "../types/LocaleCode";
-import { getLanguage, getPreferredLanguage } from "./language-utils";
+import {
+  getFirstAcceptedLanguage,
+  getLanguage,
+  isLanguage,
+} from "./language-utils";
 
-describe(getLanguage.name, () => {
+describe(getLanguage, () => {
   it("should return the language that fits the locale code if it has a country code", () => {
     const localeCode = "nb-NO";
 
@@ -50,12 +54,12 @@ describe(getLanguage.name, () => {
   });
 });
 
-describe(getPreferredLanguage.name, () => {
+describe(getFirstAcceptedLanguage, () => {
   it("should get the first language that fits the available languages", () => {
     const preferredLanguages = ["nb-NO", "en-US", "no", "es", "de"];
 
     const expectedLanguage = LanguageEnum.NorskBokmal;
-    const actualLanguage = getPreferredLanguage(preferredLanguages);
+    const actualLanguage = getFirstAcceptedLanguage(preferredLanguages);
 
     expect(actualLanguage).toEqual(expectedLanguage);
   });
@@ -64,7 +68,7 @@ describe(getPreferredLanguage.name, () => {
     const preferredLanguages = ["invalid", "languages"];
 
     const expectedLanguage = LanguageEnum.English;
-    const actualLanguage = getPreferredLanguage(preferredLanguages);
+    const actualLanguage = getFirstAcceptedLanguage(preferredLanguages);
 
     expect(actualLanguage).toEqual(expectedLanguage);
   });
@@ -73,8 +77,18 @@ describe(getPreferredLanguage.name, () => {
     const preferredLanguages: Array<string> = [];
 
     const expectedLanguage = LanguageEnum.English;
-    const actualLanguage = getPreferredLanguage(preferredLanguages);
+    const actualLanguage = getFirstAcceptedLanguage(preferredLanguages);
 
     expect(actualLanguage).toEqual(expectedLanguage);
+  });
+});
+
+describe(isLanguage, () => {
+  it("should handle undefined values", () => {
+    const value = undefined;
+
+    const actualResult = isLanguage(value);
+
+    expect(actualResult).toBe(false);
   });
 });

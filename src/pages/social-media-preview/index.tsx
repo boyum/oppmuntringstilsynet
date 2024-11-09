@@ -6,7 +6,7 @@ import { LanguageContext } from "../../contexts/LanguageContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import type { LanguageEnum } from "../../enums/Language";
 import type { Message } from "../../types/Message";
-import { getPreferredLanguage } from "../../utils/language-utils";
+import { getFirstAcceptedLanguage } from "../../utils/language-utils";
 import {
   getFallbackTheme,
   getTheme,
@@ -95,7 +95,7 @@ export async function getServerSideProps(
   const { "accept-language": acceptLanguageHeader } = req.headers;
 
   const acceptedLanguages = getAcceptedLanguages(acceptLanguageHeader ?? "");
-  const preferredLanguage = getPreferredLanguage(acceptedLanguages);
+  const preferredLanguage = getFirstAcceptedLanguage(acceptedLanguages);
 
   return {
     props: {

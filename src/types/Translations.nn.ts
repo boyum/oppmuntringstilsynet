@@ -5,7 +5,7 @@ export const TranslationsNn: Translations = {
   pageOgTitle: "Oppmuntringstilsynet",
   pageDescription:
     "Send ein helsing til nokon som har gjort det lille ekstra, eller gje oppmuntringskortet til nokon som treng ein liten oppmuntring ❤️",
-  formHeading: "✨ Hei, du er god! ✨",
+  formHeading: "Hei, du er god! ✨",
   dateLabel: "Di jobbutføring/framtreden vart observert og vurdert den",
   messageLabel: "Eg gjev deg følgjande kommentar",
   checkboxHeading: "Konklusjon:",
@@ -19,6 +19,9 @@ export const TranslationsNn: Translations = {
   openThemePicker: "Opne temavelgeren",
   closeThemePicker: "Lukk temavelgeren",
   themePickerHeading: "Velg fargetema",
+  openLanguagePicker: "Opne språkvelgeren",
+  closeLanguagePicker: "Lukk språkvelgeren",
+  languagePickerHeading: "Velg språk",
   someone: "Nokon",
   previewTitleWithMessage: "{name} set pris på deg!",
   previewTitleWithoutMessage: "Du settes pris på!",

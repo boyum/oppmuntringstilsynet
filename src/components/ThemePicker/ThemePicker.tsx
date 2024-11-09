@@ -1,18 +1,21 @@
 import type { FC } from "react";
-import { useState } from "react";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useTheme } from "../../hooks/useTheme";
 import type { ThemeName } from "../../types/ThemeName";
 import { themes } from "../../types/Themes";
-import { getTheme } from "../../utils/theme-utils";
+import { getTheme, storeThemeInCookie } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { ThemePickerTheme } from "../ThemePickerTheme/ThemePickerTheme";
 import styles from "./ThemePicker.module.scss";
 
-export const ThemePicker: FC = () => {
+type Props = {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+};
+
+export const ThemePicker: FC<Props> = ({ isOpen, setIsOpen }) => {
   const [language] = useLanguage();
   const [theme, setTheme] = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
 
   const translations = getTranslations(language);
 
@@ -23,12 +26,14 @@ export const ThemePicker: FC = () => {
   const onClick = (themeName: ThemeName) => {
     const newSelectedTheme = getTheme(themeName);
 
+    storeThemeInCookie(themeName);
+
     setTheme(newSelectedTheme);
     setIsOpen(false);
   };
 
   return (
-    <>
+    <div>
       <button
         id="theme-picker-button"
         type="button"
@@ -63,6 +68,6 @@ export const ThemePicker: FC = () => {
           ))}
         </ol>
       </div>
-    </>
+    </div>
   );
 };

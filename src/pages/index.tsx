@@ -27,12 +27,11 @@ import {
   getDefaultHtmlHeadData,
   renderHtmlHead,
 } from "../utils/html-head-utils";
-import { getPreferredLanguage } from "../utils/language-utils";
+import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
 import {
   getFallbackTheme,
   getTheme,
   setPageThemeStyles,
-  storeThemeInCookie,
 } from "../utils/theme-utils";
 import { getTranslations } from "../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../utils/url-utils";
@@ -83,6 +82,9 @@ const Home: FC<Props> = ({
     getInitialTheme(messageFromUrl, preferredTheme),
   );
 
+  const [themePickerIsOpen, setThemePickerIsOpen] = useState(false);
+  const [languagePickerIsOpen, setLanguagePickerIsOpen] = useState(false);
+
   const [message, dispatchMessageAction] = useReducer(
     messageReducer,
     messageFromUrl ?? getEmptyState(),
@@ -98,7 +100,6 @@ const Home: FC<Props> = ({
     setTheme(newTheme);
 
     setPageThemeStyles(newTheme);
-    storeThemeInCookie(newTheme.name);
 
     dispatchMessageAction({
       type: MessageActionType.SetTheme,
@@ -149,8 +150,26 @@ const Home: FC<Props> = ({
             <body data-theme={theme.name} />
           </Head>
 
-          <div className={styles["theme-picker-button-wrapper"]}>
-            <ThemePicker />
+          <div className={styles["theme-language-picker-button-wrapper"]}>
+            <ThemePicker
+              isOpen={themePickerIsOpen}
+              setIsOpen={open => {
+                setThemePickerIsOpen(open);
+                if (open) {
+                  setLanguagePickerIsOpen(false);
+                }
+              }}
+            />
+            <LanguagePicker
+              onChange={handleLanguageChange}
+              isOpen={languagePickerIsOpen}
+              setIsOpen={open => {
+                setLanguagePickerIsOpen(open);
+                if (open) {
+                  setThemePickerIsOpen(false);
+                }
+              }}
+            />
           </div>
 
           <main className={styles["main"]}>
@@ -159,9 +178,6 @@ const Home: FC<Props> = ({
                 <h1 className={styles["heading"]}>
                   {translations.formHeading}
                 </h1>
-                <div className={styles["language-picker-container"]}>
-                  <LanguagePicker onChange={handleLanguageChange} />
-                </div>
               </div>
 
               <Form isDisabled={isDisabled} />
@@ -202,13 +218,17 @@ export async function getServerSideProps(
   const [encodedMessage, decodedMessage] =
     getEncodedAndDecodedMessage(queryParams);
 
-  const { host: hostHeader, "accept-language": acceptLanguageHeader } =
-    req.headers;
+  const { cookies, headers } = req;
+  const { host: hostHeader, "accept-language": acceptLanguageHeader } = headers;
+
+  const cookieLanguage = cookies?.["language"] as string | undefined;
 
   const acceptedLanguages = getAcceptedLanguages(acceptLanguageHeader ?? "");
-  const preferredLanguage = getPreferredLanguage(acceptedLanguages);
+  const preferredLanguage = isLanguage(cookieLanguage)
+    ? cookieLanguage
+    : getFirstAcceptedLanguage(acceptedLanguages);
 
-  const cookieTheme = req.cookies?.["theme"] as ThemeName | undefined;
+  const cookieTheme = cookies?.["theme"] as ThemeName | undefined;
   const preferredTheme = cookieTheme
     ? getTheme(cookieTheme)
     : getFallbackTheme();

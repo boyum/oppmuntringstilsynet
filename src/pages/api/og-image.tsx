@@ -6,7 +6,7 @@ import type { Message } from "../../types/Message";
 import { randomArrayValue } from "../../utils/array-utils";
 import {
   defaultLanguage,
-  getPreferredLanguage,
+  getFirstAcceptedLanguage,
 } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
@@ -30,7 +30,7 @@ const OgImage = (request: NextRequest) => {
     .parse(acceptLanguage)
     .map(language => language.code);
 
-  const preferredLanguage = getPreferredLanguage(acceptedLanguages);
+  const preferredLanguage = getFirstAcceptedLanguage(acceptedLanguages);
 
   let translations;
   let title;

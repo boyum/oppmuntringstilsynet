@@ -3,7 +3,7 @@ import type { Page } from "puppeteer";
 import { languages } from "../../models/languages";
 import type { LocaleCode } from "../../types/LocaleCode";
 import { themes } from "../../types/Themes";
-import { getPreferredLanguage } from "../../utils/language-utils";
+import { getFirstAcceptedLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "../../utils/url-utils";
 
@@ -42,7 +42,7 @@ describe("Home", () => {
   });
 
   it(`should have the default language's title if the Accept-Language is not supported`, async () => {
-    const defaultLanguage = getPreferredLanguage([
+    const defaultLanguage = getFirstAcceptedLanguage([
       "unknown",
       "language",
     ] as unknown as Array<LocaleCode>);
@@ -331,8 +331,11 @@ describe("Home", () => {
   it("should update the page title when the language changes", async () => {
     const newLanguage = languages.NorskBokmal;
 
-    // Set the language to Norwegian
-    await page.select("[data-test-id=language-select]", "NorskBokmal");
+    // Open language picker
+    await page.click("#language-picker-button");
+
+    // Change language
+    await page.click("#language-nb");
 
     // Await one render cycle
     await sleep(100);
@@ -345,6 +348,10 @@ describe("Home", () => {
   });
 
   it("should update the page title when the language changes also on opened cards", async () => {
+    // Make sure English is selected
+    await page.click("#language-picker-button");
+    await page.click("#language-en");
+
     const context = browser.defaultBrowserContext();
     await context.overridePermissions(deployUrl, ["clipboard-read"]);
 
@@ -360,7 +367,12 @@ describe("Home", () => {
     const copiedUrl = await page.evaluate(() => navigator.clipboard.readText());
 
     await page.goto(copiedUrl);
-    await page.select("[data-test-id=language-select]", "NorskBokmal");
+
+    // Open language picker
+    await page.click("#language-picker-button");
+
+    // Change language
+    await page.click("#language-nb");
 
     const newTitle = await getTitle(page);
 

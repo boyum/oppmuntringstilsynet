@@ -13,7 +13,7 @@
     }
   </style>
   <defs>
-    <linearGradient id="rainbow-gradient" x1="0" x2="0" y1="0" y2="1">
+    <linearGradient id="rainbow-gradient" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(5)">
       <stop stop-color="hsl(0, 100%, 55%)" offset="14.2857142857%" />
       <stop stop-color="hsl(23, 100%, 65%)" offset="0" />
       <stop stop-color="hsl(23, 100%, 65%)" offset="28.5714285714%" />

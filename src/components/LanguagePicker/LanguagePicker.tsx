@@ -1,50 +1,81 @@
-import type { ChangeEventHandler } from "react";
 import { LanguageEnum } from "../../enums/Language";
 import { useLanguage } from "../../hooks/useLanguage";
 import { languages } from "../../models/languages";
-import type { Language } from "../../types/Language";
+import { storeLanguageInCookie } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
+import { LanguagePickerLanguage } from "../LanguagePickerLanguage/LanguagePickerLanguage";
 import styles from "./LanguagePicker.module.scss";
 
 export type LanguagePickerProps = {
   onChange: (newLanguage: LanguageEnum) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 };
 
-export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onChange }) => {
+export const LanguagePicker: React.FC<LanguagePickerProps> = ({
+  onChange,
+  isOpen,
+  setIsOpen,
+}) => {
   const [language, setLanguage] = useLanguage();
-  const languageArr = Object.entries(languages).map(
-    ([languageName, lang]: [string, Language]) => [languageName, lang.title],
-  );
 
   const translations = getTranslations(language);
 
-  const handleOnChange: ChangeEventHandler<HTMLSelectElement> = ({
-    currentTarget,
-  }) => {
-    const newLanguage = LanguageEnum[currentTarget.value as LanguageEnum];
+  const handleOnChange = (newLanguage: LanguageEnum) => {
     onChange(newLanguage);
     setLanguage(newLanguage);
+    setIsOpen(false);
+
+    storeLanguageInCookie(newLanguage);
   };
 
+  const className = isOpen
+    ? `${styles["language-picker"]} ${styles["language-picker-open"]}`
+    : styles["language-picker"];
+
   return (
-    <label>
-      <span className="hidden">{translations.setLanguage}</span>
-      <select
-        data-test-id="language-select"
-        className={styles["select"]}
-        onChange={handleOnChange}
-        value={language}
+    <div>
+      <button
+        id="language-picker-button"
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={styles["language-picker-button"]}
       >
-        {languageArr.map(([languageName, languageTitle]) => (
-          <option
-            key={languageName}
-            className={styles["option"]}
-            value={languageName}
-          >
-            {languageTitle}
-          </option>
-        ))}
-      </select>
-    </label>
+        <span className="hidden">
+          {isOpen
+            ? translations.closeLanguagePicker
+            : translations.openLanguagePicker}
+        </span>
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+      </button>
+      <div id="language-picker" data-is-open={isOpen} className={className}>
+        <h2 className={styles["heading"]}>
+          {translations.languagePickerHeading}
+        </h2>
+        <ol hidden={!isOpen} className={styles["list"]}>
+          {Object.keys(languages).map(l => (
+            <LanguagePickerLanguage
+              isSelected={language === l}
+              onClick={() => handleOnChange(l as LanguageEnum)}
+              key={l}
+              language={l as LanguageEnum}
+            />
+          ))}
+        </ol>
+      </div>
+    </div>
   );
 };
