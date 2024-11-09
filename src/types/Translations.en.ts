@@ -5,7 +5,7 @@ export const TranslationsEn: Translations = {
   pageOgTitle: "The National Encouragement Authority",
   pageDescription:
     "Show your appreciation and send this card of encouragement to someone who has done something special, or give it to someone who needs a little encouragement ❤️",
-  formHeading: "✨ You are appreciated! ✨",
+  formHeading: "You are appreciated! ✨",
   dateLabel: "Your work performance/behaviour was observed and rated on the",
   messageLabel: "I express the following remark",
   checkboxHeading: "Conclusion:",

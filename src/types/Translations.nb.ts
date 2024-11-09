@@ -5,7 +5,7 @@ export const TranslationsNb: Translations = {
   pageOgTitle: "Oppmuntringstilsynet",
   pageDescription:
     "Send en liten hilsen til noen som har gjort det lille ekstra, eller gi oppmuntringskortet til noen som trenger en liten oppmuntring ❤️",
-  formHeading: "✨ Hei, du er god! ✨",
+  formHeading: "Hei, du er god! ✨",
   dateLabel: "Din jobbutførelse/fremtreden ble observert og vurdert den",
   messageLabel: "Jeg gir deg følgende kommentar",
   checkboxHeading: "Konklusjon:",
