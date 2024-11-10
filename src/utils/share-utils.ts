@@ -2,9 +2,6 @@ import { Message } from "../types/Message";
 import { createMessageUrl } from "./clipboard-utils";
 import { getTranslations } from "./translations-utils";
 
-export const supportsShare =
-  typeof navigator !== "undefined" && "share" in navigator;
-
 export function getShareTitle(message: Message): string {
   const translations = getTranslations(message.language);
 

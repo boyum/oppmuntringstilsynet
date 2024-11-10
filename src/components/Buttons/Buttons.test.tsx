@@ -20,7 +20,7 @@ describe(Buttons.name, () => {
             onReset={() => {
               // Intentionally empty
             }}
-            onCopyOrShare={() => {
+            onCopy={() => {
               // Intentionally empty
             }}
           />

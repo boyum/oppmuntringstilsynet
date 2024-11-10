@@ -1,35 +1,42 @@
 import type { FC } from "react";
 import { useTranslations } from "../../hooks/useTranslations";
-import { supportsShare } from "../../utils/share-utils";
 import { Button } from "../Button/Button";
 import styles from "./Buttons.module.scss";
 
 export type ButtonsProps = {
+  onCopy: () => void;
   onReset: () => void;
-  onCopyOrShare: () => void;
+  onShare: () => void;
+  isIosOrAndroid: boolean;
 };
 
 export const Buttons: FC<ButtonsProps> = ({
-  onCopyOrShare: handleCopyOrShare,
-  onReset: handleReset,
+  onCopy,
+  onReset,
+  onShare,
+  isIosOrAndroid,
 }) => {
   const translations = useTranslations();
 
   return (
     <div className={styles["buttons"]} id="buttons">
-      <Button
-        id="copy-button"
-        onClick={handleCopyOrShare}
-        labelText={
-          supportsShare
-            ? translations.shareButtonText
-            : translations.copyButtonText
-        }
-      />
+      {isIosOrAndroid ? (
+        <Button
+          id="share-button"
+          onClick={onShare}
+          labelText={translations.shareButtonText}
+        />
+      ) : (
+        <Button
+          id="copy-button"
+          onClick={onCopy}
+          labelText={translations.copyButtonText}
+        />
+      )}
 
       <Button
         id="reset-button"
-        onClick={handleReset}
+        onClick={onReset}
         labelText={translations.resetButtonText}
       />
     </div>
