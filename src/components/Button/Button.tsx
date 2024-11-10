@@ -8,8 +8,6 @@ export type ButtonProps = {
 
 export const Button: React.FC<ButtonProps> = ({ id, onClick, labelText }) => (
   <button type="button" id={id} className={styles["button"]} onClick={onClick}>
-    <div className={styles["button-inner"]} suppressHydrationWarning>
-      {labelText}
-    </div>
+    <div className={styles["button-inner"]}>{labelText}</div>
   </button>
 );
