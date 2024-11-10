@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/coverage-e2e
+/coverage-unit
 
 # next.js
 /.next/

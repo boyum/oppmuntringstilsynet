@@ -5,8 +5,8 @@
   "scripts": {
     "build": "next build",
     "ci-lint-and-format": "biome ci",
-    "ci-test:e2e": "jest --coverage --config jest.config.e2e.ts",
-    "ci-test:unit": "jest --coverage",
+    "ci-test:e2e": "jest --coverage --coverage-directory=coverage-e2e --config jest.config.e2e.ts",
+    "ci-test:unit": "jest --coverage --coverage-directory=coverage-unit",
     "dev": "next dev --turbopack",
     "dev:api": "npx vercel dev",
     "format": "biome format",

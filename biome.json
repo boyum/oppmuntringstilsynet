@@ -5,6 +5,8 @@
       "**/.next/**",
       "**/.vercel/**",
       "**/coverage/**",
+      "**/coverage-e2e/**",
+      "**/coverage-unit/**",
       "**/node_modules/**",
       "**/package-lock.json/**"
     ]
