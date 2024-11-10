@@ -14,6 +14,7 @@ export const TranslationsNn: Translations = {
   checkbox3Label: "Du bidreg til eit godt miljø – du gjer meg glad!",
   nameLabel: "Helsing",
   copyButtonText: "Kopier lenka til kortet 🔗",
+  shareButtonText: "Del kortet ❤️",
   resetButtonText: "Lag eit nytt kort ✨",
   setLanguage: "Velg språk",
   openThemePicker: "Opne temavelgeren",

@@ -1,11 +1,6 @@
 import { Language } from "../enums/Language";
 import { languages } from "../models/languages";
-import type { Translations } from "../types/Translations";
-import { getLanguage } from "./translations-utils";
-
-export function getTranslations(language: Language): Translations {
-  return getLanguage(language).translations;
-}
+import { getLanguage, getTranslations } from "./translations-utils";
 
 describe(getLanguage.name, () => {
   it("should return the language that corresponds to the provided language name", () => {

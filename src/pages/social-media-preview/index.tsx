@@ -7,6 +7,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import type { Language } from "../../enums/Language";
 import type { Message } from "../../types/Message";
 import { getFirstAcceptedLanguage } from "../../utils/language-utils";
+import { getShareTitle } from "../../utils/share-utils";
 import {
   getFallbackTheme,
   getTheme,
@@ -38,10 +39,7 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
   );
 
   const title = message
-    ? translations.previewTitleWithMessage.replace(
-        /\{name\}/g,
-        message.name || translations.someone,
-      )
+    ? getShareTitle(message)
     : translations.previewTitleWithoutMessage;
 
   useEffect(() => {

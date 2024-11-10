@@ -24,6 +24,7 @@ import { ThemeName } from "../types/ThemeName";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import { renderHtmlHead } from "../utils/html-head-utils";
 import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
+import { share } from "../utils/share-utils";
 import {
   getFallbackTheme,
   getTheme,
@@ -57,6 +58,7 @@ type Props = {
   deployUrl: string;
   preferredLanguage: Language;
   preferredTheme: Theme;
+  isIosOrAndroid: boolean;
 };
 
 export const runtime = "experimental-edge";
@@ -68,6 +70,7 @@ const Home: FC<Props> = ({
   deployUrl,
   preferredLanguage,
   preferredTheme,
+  isIosOrAndroid,
 }) => {
   const router = useRouter();
 
@@ -102,6 +105,12 @@ const Home: FC<Props> = ({
   const handleCopy = (): void => {
     if (tempInput.current) {
       encodeAndCopyMessage(message, tempInput.current);
+    }
+  };
+
+  const handleShare = (): void => {
+    if (isIosOrAndroid) {
+      share(message);
     }
   };
 
@@ -176,7 +185,12 @@ const Home: FC<Props> = ({
 
               <Form isDisabled={disableForm} />
 
-              <Buttons handleReset={handleReset} handleCopy={handleCopy} />
+              <Buttons
+                onReset={handleReset}
+                onCopy={handleCopy}
+                onShare={handleShare}
+                isIosOrAndroid={isIosOrAndroid}
+              />
               <label className="hidden" aria-hidden="true">
                 Hidden label used for copying
                 <input ref={tempInput} type="text" readOnly tabIndex={-1} />
@@ -213,7 +227,11 @@ export async function getServerSideProps(
     getEncodedAndDecodedMessage(queryParams);
 
   const { cookies, headers } = req;
-  const { host: hostHeader, "accept-language": acceptLanguageHeader } = headers;
+  const {
+    host: hostHeader,
+    "accept-language": acceptLanguageHeader,
+    "user-agent": userAgentHeader,
+  } = headers;
 
   const cookieLanguage = cookies?.["language"] as string | undefined;
 
@@ -227,6 +245,8 @@ export async function getServerSideProps(
     ? getTheme(cookieTheme)
     : getFallbackTheme();
 
+  const isIosOrAndroid = !!userAgentHeader?.match(/(iPhone|iPad|Android)/i);
+
   return {
     props: {
       encodedMessage,
@@ -235,6 +255,7 @@ export async function getServerSideProps(
       deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
       preferredLanguage,
       preferredTheme,
+      isIosOrAndroid: isIosOrAndroid,
     },
   } satisfies { props: Props };
 }

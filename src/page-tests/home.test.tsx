@@ -35,6 +35,7 @@ describe(Home.name, () => {
         deployUrl=""
         preferredLanguage={Language.English}
         preferredTheme={getFallbackTheme()}
+        isIosOrAndroid={false}
       />,
     ).container;
 
@@ -55,6 +56,7 @@ describe(Home.name, () => {
         deployUrl=""
         preferredLanguage={Language.English}
         preferredTheme={getFallbackTheme()}
+        isIosOrAndroid={false}
       />,
     ).container;
 
@@ -97,6 +99,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -131,6 +134,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -174,6 +178,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -207,6 +212,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -295,6 +301,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -348,6 +355,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -387,6 +395,64 @@ describe(Home.name, () => {
       expect(checkbox2.checked).toBe(true);
       expect(nameField.value).toBe("name");
     });
+  });
+
+  it("should check if the user agent is iOS or Android", async () => {
+    const resolvedUrl = "resolvedUrl";
+    const host = "host";
+    const context: DeepPartial<GetServerSidePropsContext> = {
+      req: {
+        headers: {
+          "accept-language": "nb",
+          host,
+          "user-agent":
+            "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1",
+        },
+      },
+      resolvedUrl,
+    };
+
+    const serverSideProps = await getServerSideProps(
+      context as GetServerSidePropsContext,
+    );
+
+    expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
+      initialMessage: null,
+      encodedMessage: null,
+      resolvedUrl,
+      deployUrl: `//${host}`,
+      preferredLanguage: Language.NorskBokmal,
+      preferredTheme: getFallbackTheme(),
+      isIosOrAndroid: true,
+    });
+  });
+
+  it("should show a share button if the user agent is iOS or Android", () => {
+    const share = window.navigator.share;
+    window.navigator.share = jest.fn();
+
+    const messageFromUrl: Message | null = null;
+
+    const page = render(
+      <Home
+        encodedMessage=""
+        initialMessage={messageFromUrl}
+        resolvedUrl=""
+        deployUrl=""
+        preferredLanguage={Language.English}
+        preferredTheme={getFallbackTheme()}
+        isIosOrAndroid={true}
+      />,
+    ).container;
+
+    const shareButton = page.querySelector<HTMLButtonElement>("#share-button");
+
+    expect(shareButton).not.toBeNull();
+
+    shareButton?.click();
+    expect(window.navigator.share).toHaveBeenCalled();
+
+    window.navigator.share = share;
   });
 
   describe("Message V1", () => {
@@ -430,6 +496,7 @@ describe(Home.name, () => {
           deployUrl: `//${host}`,
           preferredLanguage: Language.NorskBokmal,
           preferredTheme: getFallbackTheme(),
+          isIosOrAndroid: false,
         });
       });
 
@@ -500,6 +567,7 @@ describe(Home.name, () => {
             deployUrl=""
             preferredLanguage={Language.English}
             preferredTheme={getFallbackTheme()}
+            isIosOrAndroid={false}
           />,
         ).container;
 
@@ -529,6 +597,7 @@ describe(Home.name, () => {
             deployUrl=""
             preferredLanguage={Language.English}
             preferredTheme={getFallbackTheme()}
+            isIosOrAndroid={false}
           />,
         ).container;
 
@@ -593,6 +662,7 @@ describe(Home.name, () => {
         deployUrl: `//${host}`,
         preferredLanguage: Language.NorskBokmal,
         preferredTheme: getFallbackTheme(),
+        isIosOrAndroid: false,
       });
     });
 
@@ -669,6 +739,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -698,6 +769,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -760,6 +832,7 @@ describe(Home.name, () => {
         deployUrl: `//${host}`,
         preferredLanguage: Language.NorskBokmal,
         preferredTheme: getFallbackTheme(),
+        isIosOrAndroid: false,
       });
     });
 
@@ -836,6 +909,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -865,6 +939,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
