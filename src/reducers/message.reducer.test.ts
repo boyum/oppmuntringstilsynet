@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
 import { defaultLanguage } from "../utils/language-utils";
@@ -49,7 +49,7 @@ describe(messageReducer.name, () => {
     it("should set message value", () => {
       const message: Message = {
         date: "date",
-        language: LanguageEnum.NorskNynorsk,
+        language: Language.NorskNynorsk,
         message: "message",
         name: "name",
         themeName: "winter",
@@ -102,7 +102,7 @@ describe(messageReducer.name, () => {
       const themeName: ThemeName = "winter";
       const state: Message = {
         date: "date",
-        language: LanguageEnum.NorskNynorsk,
+        language: Language.NorskNynorsk,
         message: "message",
         name: "name",
         themeName,

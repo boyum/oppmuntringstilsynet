@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Checks } from "../types/Checks";
 import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
@@ -37,7 +37,7 @@ export const emptyMessage_DO_NOT_USE: Message = {
   date: "",
   message: "",
   name: "",
-  language: LanguageEnum.NorskBokmal,
+  language: Language.NorskBokmal,
   themeName: getFallbackTheme().name,
 };
 

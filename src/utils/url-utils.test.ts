@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import { Message } from "../types/Message";
 import { encodeV3 } from "./encoding-utils-v3";
 import {
@@ -16,7 +16,7 @@ describe(getEncodedAndDecodedMessage, () => {
       message: "message",
       name: "name",
       checks: [true, false, true],
-      language: LanguageEnum.English,
+      language: Language.English,
       themeName: "winter",
     };
 
@@ -38,7 +38,7 @@ describe(getEncodedAndDecodedMessage, () => {
       message: "message",
       name: "name",
       checks: [true, true, true],
-      language: LanguageEnum.English,
+      language: Language.English,
       themeName: "winter",
     };
 
@@ -62,7 +62,7 @@ describe(getEncodedAndDecodedMessage, () => {
       message: "message",
       name: "name",
       checks: [true, true, true],
-      language: LanguageEnum.English,
+      language: Language.English,
       themeName: "winter",
     };
 

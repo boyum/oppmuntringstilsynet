@@ -1,7 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 import parser from "accept-language-parser";
 import type { NextRequest } from "next/server";
-import type { LanguageEnum } from "../../enums/Language";
+import type { Language } from "../../enums/Language";
 import type { Message } from "../../types/Message";
 import { randomArrayValue } from "../../utils/array-utils";
 import {
@@ -13,7 +13,7 @@ import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;
-  preferredLanguage: LanguageEnum;
+  preferredLanguage: Language;
 };
 
 export const config = {

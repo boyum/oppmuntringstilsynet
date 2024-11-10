@@ -1,5 +1,5 @@
 import * as fc from "fast-check";
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { decodeMessageV1, decodeV1, encodeV1 } from "./encoding-utils-v1";
 
@@ -11,7 +11,7 @@ describe("Message encoder/decoder", () => {
         message: "message",
         name: "name",
         checks: [false, true, false],
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "winter",
       };
 
@@ -27,7 +27,7 @@ describe("Message encoder/decoder", () => {
         message: "message",
         name: "name",
         checks: [false, true, false],
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "winter",
       };
 

@@ -4,7 +4,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import { useReducer, useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { MessageContext } from "../../contexts/MessageContext";
-import { LanguageEnum } from "../../enums/Language";
+import { Language } from "../../enums/Language";
 import { getEmptyState, messageReducer } from "../../reducers/message.reducer";
 import { getFallbackTheme } from "../../utils/theme-utils";
 import { Form } from "./Form";
@@ -12,11 +12,10 @@ import { Form } from "./Form";
 expect.extend(toHaveNoViolations);
 
 describe(Form.name, () => {
-  let l: [LanguageEnum, (language: LanguageEnum) => void];
+  let l: [Language, (language: Language) => void];
 
   beforeEach(() => {
-    l = renderHook(() => useState(LanguageEnum.English as LanguageEnum)).result
-      .current;
+    l = renderHook(() => useState(Language.English as Language)).result.current;
   });
 
   it("should render without accessibility errors when fields are disabled", async () => {
@@ -66,7 +65,7 @@ describe(Form.name, () => {
         message: "message",
         name: "name",
         checks: [false, true, false],
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: getFallbackTheme().name,
       }),
     ).result.current;
@@ -101,7 +100,7 @@ describe(Form.name, () => {
         message: "message",
         name: "name",
         checks: [false, true, false],
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: getFallbackTheme().name,
       }),
     ).result.current;

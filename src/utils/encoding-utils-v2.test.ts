@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { decodeMessageV1 } from "./encoding-utils-v1";
 import { decodeMessageV2, decodeV2, encodeV2 } from "./encoding-utils-v2";
@@ -12,7 +12,7 @@ describe("Message encoder/decoder", () => {
         message: "message",
         name: "name",
         checks: [false, true, false],
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "winter",
       };
 
@@ -79,7 +79,7 @@ describe("Message encoder/decoder", () => {
         message: "message|||",
         name: "name|||",
         checks: [true, false, true],
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "winter",
       };
 
@@ -102,7 +102,7 @@ describe("Message encoder/decoder", () => {
         message: "message",
         name: "name",
         checks: [true, false, true],
-        language: LanguageEnum.English,
+        language: Language.English,
         // @ts-expect-error This theme name should be invalid
         themeName: "invalid-theme",
       };
@@ -119,7 +119,7 @@ describe("Message encoder/decoder", () => {
         message: "",
         name: "",
         checks: [false, false, false],
-        language: LanguageEnum.NorskBokmal,
+        language: Language.NorskBokmal,
         themeName: getFallbackTheme().name,
       };
 

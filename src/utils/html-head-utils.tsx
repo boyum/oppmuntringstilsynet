@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import type { LanguageEnum } from "../enums/Language";
+import type { Language } from "../enums/Language";
 import { getTranslations } from "./translations-utils";
+import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
 
 export type HtmlHeadData = {
   title: string;
@@ -12,12 +13,7 @@ export type HtmlHeadData = {
   deployUrl: string;
 };
 
-export function getDefaultHtmlHeadData(
-  language: LanguageEnum,
-  url: string,
-  encodedMessage: string | null,
-  deployUrl: string,
-): HtmlHeadData {
+export function getDefaultHtmlHeadData(language: Language) {
   const { pageTitle, pageOgTitle, pageDescription } = getTranslations(language);
 
   return {
@@ -25,23 +21,20 @@ export function getDefaultHtmlHeadData(
     description: pageDescription,
     ogTitle: pageOgTitle,
     ogDescription: pageDescription,
-    ogUrl: url,
-    encodedMessage,
-    deployUrl,
   };
 }
 
-export function renderHtmlHead({
-  title,
-  description,
-  ogTitle,
-  ogDescription,
-  ogUrl,
-  encodedMessage,
-  deployUrl,
-}: HtmlHeadData): ReactNode {
+export function renderHtmlHead(
+  language: Language,
+  ogUrl: string,
+  encodedMessage: string | null,
+  deployUrl: string,
+): ReactNode {
+  const { title, description, ogTitle, ogDescription } =
+    getDefaultHtmlHeadData(language);
+
   const ogImageUrl = `${deployUrl}/api/og-image${
-    encodedMessage ? `?m=${encodedMessage}` : ""
+    encodedMessage ? `?${LATEST_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}` : ""
   }`;
 
   return (

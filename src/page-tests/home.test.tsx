@@ -2,7 +2,7 @@ import { act, fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
 import { NextIncomingMessage } from "next/dist/server/request-meta";
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import { languages } from "../models/languages";
 import Home, { getServerSideProps } from "../pages";
 import { getEmptyState } from "../reducers/message.reducer";
@@ -33,7 +33,7 @@ describe(Home.name, () => {
         initialMessage={messageFromUrl}
         resolvedUrl=""
         deployUrl=""
-        preferredLanguage={LanguageEnum.English}
+        preferredLanguage={Language.English}
         preferredTheme={getFallbackTheme()}
       />,
     ).container;
@@ -53,7 +53,7 @@ describe(Home.name, () => {
         initialMessage={messageFromUrl}
         resolvedUrl=""
         deployUrl=""
-        preferredLanguage={LanguageEnum.English}
+        preferredLanguage={Language.English}
         preferredTheme={getFallbackTheme()}
       />,
     ).container;
@@ -95,7 +95,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -129,7 +129,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -160,7 +160,7 @@ describe(Home.name, () => {
         message: "Hi, tester!",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -172,7 +172,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -205,7 +205,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -229,7 +229,7 @@ describe(Home.name, () => {
       });
 
       expect(h1.textContent).toBe(
-        languages[LanguageEnum.English].translations.formHeading,
+        languages[Language.English].translations.formHeading,
       );
 
       const languagePickerNorwegian =
@@ -244,7 +244,7 @@ describe(Home.name, () => {
       });
 
       expect(h1.textContent).toBe(
-        languages[LanguageEnum.NorskBokmal].translations.formHeading,
+        languages[Language.NorskBokmal].translations.formHeading,
       );
     });
 
@@ -252,7 +252,7 @@ describe(Home.name, () => {
       const { props } = await getServerSideProps({
         req: {
           cookies: {
-            language: LanguageEnum.NorskNynorsk,
+            language: Language.NorskNynorsk,
           },
           headers: {
             host: "",
@@ -262,7 +262,7 @@ describe(Home.name, () => {
       } as GetServerSidePropsContext);
 
       const currentLanguage = props.preferredLanguage;
-      expect(currentLanguage).toBe(LanguageEnum.NorskNynorsk);
+      expect(currentLanguage).toBe(Language.NorskNynorsk);
     });
   });
 
@@ -293,7 +293,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -346,7 +346,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -397,7 +397,7 @@ describe(Home.name, () => {
           message: "Hi, tester!",
           checks: [true, true, true],
           name: "Sindre",
-          language: LanguageEnum.English,
+          language: Language.English,
           themeName: "pride",
         };
 
@@ -428,7 +428,7 @@ describe(Home.name, () => {
           encodedMessage: encodedMessageV3,
           resolvedUrl,
           deployUrl: `//${host}`,
-          preferredLanguage: LanguageEnum.NorskBokmal,
+          preferredLanguage: Language.NorskBokmal,
           preferredTheme: getFallbackTheme(),
         });
       });
@@ -456,7 +456,7 @@ describe(Home.name, () => {
           message: "Hi, tester! Message 1",
           checks: [true, true, true],
           name: "Sindre",
-          language: LanguageEnum.English,
+          language: Language.English,
           themeName: "pride",
         };
 
@@ -485,7 +485,7 @@ describe(Home.name, () => {
           message: "Hi, tester! 🌸",
           checks: [true, true, true],
           name: "Sindre",
-          language: LanguageEnum.English,
+          language: Language.English,
           themeName: "pride",
         };
 
@@ -498,7 +498,7 @@ describe(Home.name, () => {
             initialMessage={messageFromUrl}
             resolvedUrl=""
             deployUrl=""
-            preferredLanguage={LanguageEnum.English}
+            preferredLanguage={Language.English}
             preferredTheme={getFallbackTheme()}
           />,
         ).container;
@@ -514,7 +514,7 @@ describe(Home.name, () => {
           message: "Hi, tester! 🌸",
           checks: [true, true, true],
           name: "Sindre",
-          language: LanguageEnum.English,
+          language: Language.English,
           themeName: "pride",
         };
 
@@ -527,7 +527,7 @@ describe(Home.name, () => {
             initialMessage={message}
             resolvedUrl=""
             deployUrl=""
-            preferredLanguage={LanguageEnum.English}
+            preferredLanguage={Language.English}
             preferredTheme={getFallbackTheme()}
           />,
         ).container;
@@ -563,7 +563,7 @@ describe(Home.name, () => {
         message: "Hi, tester!",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -591,7 +591,7 @@ describe(Home.name, () => {
         encodedMessage: encodedMessageV3,
         resolvedUrl,
         deployUrl: `//${host}`,
-        preferredLanguage: LanguageEnum.NorskBokmal,
+        preferredLanguage: Language.NorskBokmal,
         preferredTheme: getFallbackTheme(),
       });
     });
@@ -619,7 +619,7 @@ describe(Home.name, () => {
         message: "Hi, tester! Message 1",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -628,7 +628,7 @@ describe(Home.name, () => {
         message: "Hi, tester! Message 2",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -654,7 +654,7 @@ describe(Home.name, () => {
         message: "Hi, tester! 🌸",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -667,7 +667,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -683,7 +683,7 @@ describe(Home.name, () => {
         message: "Hi, tester! 🌸",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -696,7 +696,7 @@ describe(Home.name, () => {
           initialMessage={message}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -731,7 +731,7 @@ describe(Home.name, () => {
         message: "Hi, tester!",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -758,7 +758,7 @@ describe(Home.name, () => {
         encodedMessage: encodedMessageV3,
         resolvedUrl,
         deployUrl: `//${host}`,
-        preferredLanguage: LanguageEnum.NorskBokmal,
+        preferredLanguage: Language.NorskBokmal,
         preferredTheme: getFallbackTheme(),
       });
     });
@@ -786,7 +786,7 @@ describe(Home.name, () => {
         message: "Hi, tester! Message 1",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -795,7 +795,7 @@ describe(Home.name, () => {
         message: "Hi, tester! Message 2",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -821,7 +821,7 @@ describe(Home.name, () => {
         message: "Hi, tester! 🌸",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -834,7 +834,7 @@ describe(Home.name, () => {
           initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;
@@ -850,7 +850,7 @@ describe(Home.name, () => {
         message: "Hi, tester! 🌸",
         checks: [true, true, true],
         name: "Sindre",
-        language: LanguageEnum.English,
+        language: Language.English,
         themeName: "pride",
       };
 
@@ -863,7 +863,7 @@ describe(Home.name, () => {
           initialMessage={message}
           resolvedUrl=""
           deployUrl=""
-          preferredLanguage={LanguageEnum.English}
+          preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
         />,
       ).container;

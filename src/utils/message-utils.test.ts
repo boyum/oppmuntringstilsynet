@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
 import { createEmptyMessage } from "./message-utils";
@@ -13,7 +13,7 @@ describe(createEmptyMessage.name, () => {
       message: "",
       name: "",
       checks: [false, false, false],
-      language: LanguageEnum.NorskBokmal,
+      language: Language.NorskBokmal,
       themeName: defaultThemeName,
     };
 
