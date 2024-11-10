@@ -14,7 +14,7 @@ export const TranslationsEn: Translations = {
   checkbox3Label:
     "You contribute to a healthy environment - you make me happy!",
   nameLabel: "Sincerely,",
-  copyButtonText: "Copy the link to this card 🔗",
+  copyButtonText: "Copy the link to this card 🌱",
   shareButtonText: "Share the card ❤️",
   resetButtonText: "Create a new card ✨",
   setLanguage: "Set language",
