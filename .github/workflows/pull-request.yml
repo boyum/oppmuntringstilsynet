@@ -38,12 +38,17 @@ jobs:
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
 
-      - run: npm run ci-test:unit
+      - name: Run unit tests
+        run: npm run ci-test:unit
 
-      - name: Codecov
+      - name: Run e2e tests
+        run: npm run run-ci-e2e
+
+      - name: Check code coverage
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage-unit/lcov.info,coverage-e2e/lcov.info
 
   deploy:
     name: Deploy
@@ -94,16 +99,3 @@ jobs:
 
     outputs:
       preview-url: ${{ steps.vercel-deployment.outputs.preview-url }}
-
-  e2e:
-    name: Run e2e tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install npm packages
-        uses: bahmutov/npm-install@v1
-
-      - name: Run e2e tests
-        run: npm run run-ci-e2e
