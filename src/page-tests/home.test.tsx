@@ -423,7 +423,7 @@ describe(Home.name, () => {
       deployUrl: `//${host}`,
       preferredLanguage: Language.NorskBokmal,
       preferredTheme: getFallbackTheme(),
-      isIosOrAndroid: false,
+      isIosOrAndroid: true,
     });
   });
 
