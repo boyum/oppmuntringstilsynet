@@ -27,17 +27,6 @@ export function isThemeName(name: string): name is ThemeName {
   return (themes.map(theme => theme.name) as Array<string>).includes(name);
 }
 
-// export function getActiveTheme(): Theme {
-//   const activeThemeName = window.localStorage.getItem("active-theme");
-
-//   const themeExists = activeThemeName && isThemeName(activeThemeName);
-//   if (themeExists) {
-//     return getTheme(activeThemeName);
-//   }
-
-//   return getFallbackTheme();
-// }
-
 export function storeThemeInCookie(themeName: ThemeName): void {
   Cookies.set("theme", themeName);
 }
