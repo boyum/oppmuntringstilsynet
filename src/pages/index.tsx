@@ -11,7 +11,7 @@ import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import { LanguageContext } from "../contexts/LanguageContext";
 import { MessageContext } from "../contexts/MessageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import {
   MessageAction,
   getEmptyState,
@@ -22,10 +22,7 @@ import type { Message } from "../types/Message";
 import { Theme } from "../types/Theme";
 import { ThemeName } from "../types/ThemeName";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
-import {
-  getDefaultHtmlHeadData,
-  renderHtmlHead,
-} from "../utils/html-head-utils";
+import { renderHtmlHead } from "../utils/html-head-utils";
 import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
 import {
   getFallbackTheme,
@@ -48,8 +45,8 @@ const getInitialTheme = (
 
 const getInitialLanguage = (
   message: Message | null,
-  preferredLanguage: LanguageEnum,
-): LanguageEnum => {
+  preferredLanguage: Language,
+): Language => {
   return message?.language ?? preferredLanguage;
 };
 
@@ -58,7 +55,7 @@ type Props = {
   initialMessage: Message | null;
   resolvedUrl: string;
   deployUrl: string;
-  preferredLanguage: LanguageEnum;
+  preferredLanguage: Language;
   preferredTheme: Theme;
 };
 
@@ -92,9 +89,6 @@ const Home: FC<Props> = ({
   const tempInput = useRef<HTMLInputElement>(null);
   const translations = getTranslations(language);
 
-  const hasMessage = !!initialMessage;
-  const isDisabled = hasMessage;
-
   const handleThemeChange = (newTheme: Theme): void => {
     setTheme(newTheme);
     setPageThemeStyles(newTheme);
@@ -119,7 +113,7 @@ const Home: FC<Props> = ({
     });
   };
 
-  const handleLanguageChange = (newLanguage: LanguageEnum): void => {
+  const handleLanguageChange = (newLanguage: Language): void => {
     dispatchMessageAction({
       type: MessageAction.SetMessage,
       message: {
@@ -128,14 +122,13 @@ const Home: FC<Props> = ({
     });
   };
 
-  const htmlHeadData = getDefaultHtmlHeadData(
+  const headData = renderHtmlHead(
     language,
     `${deployUrl}${resolvedUrl}`,
     encodedMessage,
     deployUrl,
   );
-
-  const headData = renderHtmlHead(htmlHeadData);
+  const disableForm = !!initialMessage;
 
   return (
     <MessageContext.Provider value={[message, dispatchMessageAction]}>
@@ -181,7 +174,7 @@ const Home: FC<Props> = ({
                 </h1>
               </div>
 
-              <Form isDisabled={isDisabled} />
+              <Form isDisabled={disableForm} />
 
               <Buttons handleReset={handleReset} handleCopy={handleCopy} />
               <label className="hidden" aria-hidden="true">

@@ -1,15 +1,15 @@
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import { languages } from "../models/languages";
 import type { Translations } from "../types/Translations";
 import { getLanguage } from "./translations-utils";
 
-export function getTranslations(language: LanguageEnum): Translations {
+export function getTranslations(language: Language): Translations {
   return getLanguage(language).translations;
 }
 
 describe(getLanguage.name, () => {
   it("should return the language that corresponds to the provided language name", () => {
-    const languageName = LanguageEnum.English;
+    const languageName = Language.English;
 
     const expectedLanguage = languages.English;
     const actualLanguage = getLanguage(languageName);
@@ -20,7 +20,7 @@ describe(getLanguage.name, () => {
 
 describe(getTranslations.name, () => {
   it("should return translations of the language that corresponds to the provided language name", () => {
-    const languageName = LanguageEnum.English;
+    const languageName = Language.English;
 
     const expectedTranslations = languages.English.translations;
     const actualTranslations = getTranslations(languageName);

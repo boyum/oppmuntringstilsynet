@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { copyToClipboard, createMessageUrl } from "./clipboard-utils";
 import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
@@ -23,7 +23,7 @@ describe(createMessageUrl.name, () => {
       message: "message",
       name: "name",
       checks: [true, true, true],
-      language: LanguageEnum.English,
+      language: Language.English,
       themeName: "winter",
     };
 
@@ -43,7 +43,7 @@ describe(createMessageUrl.name, () => {
       message: "message",
       name: "name",
       checks: [true, true, true],
-      language: LanguageEnum.English,
+      language: Language.English,
       themeName: "winter",
     };
 

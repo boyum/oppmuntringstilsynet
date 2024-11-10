@@ -1,5 +1,5 @@
 import LZString from "lz-string";
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 
 export function encodeV1(message: Message) {
@@ -55,7 +55,7 @@ export function decodeMessageV1(encodedObj: string): Message | null {
   }
 
   const defaultValuesForBackwardsCompatibility = {
-    language: LanguageEnum.NorskBokmal,
+    language: Language.NorskBokmal,
   };
 
   const decodedMessage = decodeV1<Message>(encodedObj);

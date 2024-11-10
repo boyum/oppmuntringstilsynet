@@ -1,21 +1,19 @@
 import Cookies from "js-cookie";
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import { languages } from "../models/languages";
 import type { LocaleCode } from "../types/LocaleCode";
 
-export const defaultLanguage = LanguageEnum.NorskBokmal;
+export const defaultLanguage = Language.NorskBokmal;
 
-export const isLanguage = (
-  value: string | undefined,
-): value is LanguageEnum => {
+export const isLanguage = (value: string | undefined): value is Language => {
   if (!value) {
     return false;
   }
 
-  return Object.values(LanguageEnum).includes(value as LanguageEnum);
+  return Object.values(Language).includes(value as Language);
 };
 
-export function getLanguage(localeCode: string): LanguageEnum | null {
+export function getLanguage(localeCode: string): Language | null {
   const languageCode = localeCode.slice(0, 2) as LocaleCode;
 
   const [language] =
@@ -25,13 +23,13 @@ export function getLanguage(localeCode: string): LanguageEnum | null {
       ),
     ) ?? [];
 
-  return (language as LanguageEnum | undefined) ?? null;
+  return (language as Language | undefined) ?? null;
 }
 
 export function getFirstAcceptedLanguage(
   preferredLanguages: Array<string>,
-): LanguageEnum {
-  const defaultLanguage = LanguageEnum.English;
+): Language {
+  const defaultLanguage = Language.English;
 
   for (const localeCode of preferredLanguages) {
     const language = getLanguage(localeCode);
@@ -44,6 +42,6 @@ export function getFirstAcceptedLanguage(
   return defaultLanguage;
 }
 
-export function storeLanguageInCookie(language: LanguageEnum): void {
+export function storeLanguageInCookie(language: Language): void {
   Cookies.set("language", language);
 }

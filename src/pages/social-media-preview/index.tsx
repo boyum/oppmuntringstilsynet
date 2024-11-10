@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import type { LanguageEnum } from "../../enums/Language";
+import type { Language } from "../../enums/Language";
 import type { Message } from "../../types/Message";
 import { getFirstAcceptedLanguage } from "../../utils/language-utils";
 import {
@@ -19,7 +19,7 @@ import styles from "./SocialMediaPreview.module.scss";
 
 export type SocialMediaPreviewProps = {
   message: Message | null;
-  preferredLanguage: LanguageEnum;
+  preferredLanguage: Language;
 };
 
 const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({

@@ -1,5 +1,5 @@
 import LZString from "lz-string";
-import { LanguageEnum } from "../enums/Language";
+import { Language } from "../enums/Language";
 import type { Checks } from "../types/Checks";
 import type { Message } from "../types/Message";
 import { ThemeName } from "../types/ThemeName";
@@ -71,7 +71,7 @@ export function encodeV3({
     sanitizeString(date),
     sanitizeString(message),
     sanitizeString(name),
-    getEnumValueIndex(language, LanguageEnum),
+    getEnumValueIndex(language, Language),
     getEnumValueIndex(themeName, themesRecord),
     checksToDecimal(checks),
   ].join("|");
@@ -79,14 +79,14 @@ export function encodeV3({
   return LZString.compressToEncodedURIComponent(comprisedData);
 }
 
-const parseLanguageByIndex = (indexStr: string | undefined): LanguageEnum => {
+const parseLanguageByIndex = (indexStr: string | undefined): Language => {
   if (!indexStr) {
     return defaultLanguage;
   }
 
   const index = Number.parseInt(indexStr, 10);
 
-  return getEnumValueByIndex(index, LanguageEnum) ?? defaultLanguage;
+  return getEnumValueByIndex(index, Language) ?? defaultLanguage;
 };
 
 const parseThemeByIndex = (indexStr: string | undefined): ThemeName => {
@@ -158,7 +158,7 @@ export function decodeMessageV3(encodedMessage: string): Message | null {
   }
 
   const defaultValuesForBackwardsCompatibility = {
-    language: LanguageEnum.NorskBokmal,
+    language: Language.NorskBokmal,
   };
 
   const decodedMessage = decodeV3(encodedMessage);

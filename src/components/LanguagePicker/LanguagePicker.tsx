@@ -1,4 +1,4 @@
-import { LanguageEnum } from "../../enums/Language";
+import { Language } from "../../enums/Language";
 import { useLanguage } from "../../hooks/useLanguage";
 import { languages } from "../../models/languages";
 import { storeLanguageInCookie } from "../../utils/language-utils";
@@ -7,7 +7,7 @@ import { LanguagePickerLanguage } from "../LanguagePickerLanguage/LanguagePicker
 import styles from "./LanguagePicker.module.scss";
 
 export type LanguagePickerProps = {
-  onChange: (newLanguage: LanguageEnum) => void;
+  onChange: (newLanguage: Language) => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
@@ -21,7 +21,7 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
 
   const translations = getTranslations(language);
 
-  const handleOnChange = (newLanguage: LanguageEnum) => {
+  const handleOnChange = (newLanguage: Language) => {
     onChange(newLanguage);
     setLanguage(newLanguage);
     setIsOpen(false);
@@ -69,9 +69,9 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
           {Object.keys(languages).map(l => (
             <LanguagePickerLanguage
               isSelected={language === l}
-              onClick={() => handleOnChange(l as LanguageEnum)}
+              onClick={() => handleOnChange(l as Language)}
               key={l}
-              language={l as LanguageEnum}
+              language={l as Language}
             />
           ))}
         </ol>

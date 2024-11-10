@@ -1,9 +1,9 @@
-import { LanguageEnum } from "../../enums/Language";
+import { Language } from "../../enums/Language";
 import { languages } from "../../models/languages";
 import styles from "./LanguagePickerLanguage.module.scss";
 
 type Props = {
-  language: LanguageEnum;
+  language: Language;
   isSelected: boolean;
   onClick: () => void;
 };

@@ -2,7 +2,7 @@ import { render, renderHook } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { useState } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext";
-import { LanguageEnum } from "../../enums/Language";
+import { Language } from "../../enums/Language";
 import { Buttons } from "./Buttons";
 
 expect.extend(toHaveNoViolations);
@@ -10,7 +10,7 @@ expect.extend(toHaveNoViolations);
 describe(Buttons.name, () => {
   it("should render without accessibility errors", async () => {
     const [language, setLanguage] = renderHook(() =>
-      useState<LanguageEnum>(LanguageEnum.English),
+      useState<Language>(Language.English),
     ).result.current;
 
     const buttons = render(
