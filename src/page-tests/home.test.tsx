@@ -427,6 +427,34 @@ describe(Home.name, () => {
     });
   });
 
+  it("should show a share button if the user agent is iOS or Android", () => {
+    const share = window.navigator.share;
+    window.navigator.share = jest.fn();
+
+    const messageFromUrl: Message | null = null;
+
+    const page = render(
+      <Home
+        encodedMessage=""
+        initialMessage={messageFromUrl}
+        resolvedUrl=""
+        deployUrl=""
+        preferredLanguage={Language.English}
+        preferredTheme={getFallbackTheme()}
+        isIosOrAndroid={true}
+      />,
+    ).container;
+
+    const shareButton = page.querySelector<HTMLButtonElement>("#share-button");
+
+    expect(shareButton).not.toBeNull();
+
+    shareButton?.click();
+    expect(window.navigator.share).toHaveBeenCalled();
+
+    window.navigator.share = share;
+  });
+
   describe("Message V1", () => {
     describe(getServerSideProps.name, () => {
       it("should return the correct props in a happy path, if there is a message", async () => {
