@@ -35,6 +35,7 @@ describe(Home.name, () => {
         deployUrl=""
         preferredLanguage={Language.English}
         preferredTheme={getFallbackTheme()}
+        isIosOrAndroid={false}
       />,
     ).container;
 
@@ -55,6 +56,7 @@ describe(Home.name, () => {
         deployUrl=""
         preferredLanguage={Language.English}
         preferredTheme={getFallbackTheme()}
+        isIosOrAndroid={false}
       />,
     ).container;
 
@@ -97,6 +99,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -131,6 +134,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -174,6 +178,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -207,6 +212,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -295,6 +301,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -348,6 +355,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -386,6 +394,36 @@ describe(Home.name, () => {
       expect(checkbox1.checked).toBe(true);
       expect(checkbox2.checked).toBe(true);
       expect(nameField.value).toBe("name");
+    });
+  });
+
+  it("should check if the user agent is iOS or Android", async () => {
+    const resolvedUrl = "resolvedUrl";
+    const host = "host";
+    const context: DeepPartial<GetServerSidePropsContext> = {
+      req: {
+        headers: {
+          "accept-language": "nb",
+          host,
+          "user-agent":
+            "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1",
+        },
+      },
+      resolvedUrl,
+    };
+
+    const serverSideProps = await getServerSideProps(
+      context as GetServerSidePropsContext,
+    );
+
+    expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
+      initialMessage: null,
+      encodedMessage: null,
+      resolvedUrl,
+      deployUrl: `//${host}`,
+      preferredLanguage: Language.NorskBokmal,
+      preferredTheme: getFallbackTheme(),
+      isIosOrAndroid: false,
     });
   });
 
@@ -430,6 +468,7 @@ describe(Home.name, () => {
           deployUrl: `//${host}`,
           preferredLanguage: Language.NorskBokmal,
           preferredTheme: getFallbackTheme(),
+          isIosOrAndroid: false,
         });
       });
 
@@ -500,6 +539,7 @@ describe(Home.name, () => {
             deployUrl=""
             preferredLanguage={Language.English}
             preferredTheme={getFallbackTheme()}
+            isIosOrAndroid={false}
           />,
         ).container;
 
@@ -529,6 +569,7 @@ describe(Home.name, () => {
             deployUrl=""
             preferredLanguage={Language.English}
             preferredTheme={getFallbackTheme()}
+            isIosOrAndroid={false}
           />,
         ).container;
 
@@ -593,6 +634,7 @@ describe(Home.name, () => {
         deployUrl: `//${host}`,
         preferredLanguage: Language.NorskBokmal,
         preferredTheme: getFallbackTheme(),
+        isIosOrAndroid: false,
       });
     });
 
@@ -669,6 +711,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -698,6 +741,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -760,6 +804,7 @@ describe(Home.name, () => {
         deployUrl: `//${host}`,
         preferredLanguage: Language.NorskBokmal,
         preferredTheme: getFallbackTheme(),
+        isIosOrAndroid: false,
       });
     });
 
@@ -836,6 +881,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
@@ -865,6 +911,7 @@ describe(Home.name, () => {
           deployUrl=""
           preferredLanguage={Language.English}
           preferredTheme={getFallbackTheme()}
+          isIosOrAndroid={false}
         />,
       ).container;
 
