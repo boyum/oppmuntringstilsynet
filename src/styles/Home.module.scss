@@ -4,6 +4,10 @@
   flex-grow: 1;
   justify-content: center;
   padding: 0 1rem;
+
+  @media screen and (min-width: 32rem) {
+    padding: 0 1rem;
+  }
 }
 
 .container {
@@ -17,7 +21,11 @@
   flex-direction: column;
   margin: 0 auto;
   max-width: 32rem;
-  padding: 3rem 3rem;
+  padding: 1.5rem 1.5rem 2rem;
+
+  @media screen and (min-width: 32rem) {
+    padding: 3rem;
+  }
 }
 
 .container-header {
@@ -38,11 +46,12 @@
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
-  margin: 2rem 1rem;
+  margin: 1rem 0.5rem;
   position: relative;
 
   @media screen and (min-width: 32rem) {
     align-items: flex-end;
     flex-direction: column;
+    margin: 2rem 1rem;
   }
 }

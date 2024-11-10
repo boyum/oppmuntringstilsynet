@@ -11,7 +11,7 @@ export const TranslationsNb = {
   checkbox2Label: "Du inspirerer meg – og gir meg energi!",
   checkbox3Label: "Du bidrar til et godt miljø – du gjør meg glad!",
   nameLabel: "Hilsen",
-  copyButtonText: "Kopier lenken til kortet 🔗",
+  copyButtonText: "Kopier lenken til kortet 🌱",
   shareButtonText: "Del kortet ❤️",
   resetButtonText: "Lag et nytt kort ✨",
   setLanguage: "Velg språk",
