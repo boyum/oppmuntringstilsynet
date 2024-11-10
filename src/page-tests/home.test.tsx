@@ -30,7 +30,7 @@ describe(Home.name, () => {
     const page = render(
       <Home
         encodedMessage=""
-        messageFromUrl={messageFromUrl}
+        initialMessage={messageFromUrl}
         resolvedUrl=""
         deployUrl=""
         preferredLanguage={LanguageEnum.English}
@@ -50,7 +50,7 @@ describe(Home.name, () => {
     const page = render(
       <Home
         encodedMessage={encodedMessage}
-        messageFromUrl={messageFromUrl}
+        initialMessage={messageFromUrl}
         resolvedUrl=""
         deployUrl=""
         preferredLanguage={LanguageEnum.English}
@@ -92,7 +92,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage=""
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -126,7 +126,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage=""
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -169,7 +169,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage={encodedMessage}
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -202,7 +202,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage=""
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -290,7 +290,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage=""
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -343,7 +343,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage=""
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -423,7 +423,7 @@ describe(Home.name, () => {
         );
 
         expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
-          messageFromUrl,
+          initialMessage: messageFromUrl,
           // Should use encoded message v2 even though v1 is provided
           encodedMessage: encodedMessageV3,
           resolvedUrl,
@@ -447,7 +447,7 @@ describe(Home.name, () => {
           context as GetServerSidePropsContext,
         );
 
-        expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+        expect(serverSideProps.props.initialMessage).toEqual(messageFromUrl);
       });
 
       it("should return the first message if there are multiple", async () => {
@@ -476,7 +476,7 @@ describe(Home.name, () => {
           context as GetServerSidePropsContext,
         );
 
-        expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+        expect(serverSideProps.props.initialMessage).toEqual(messageFromUrl);
       });
 
       it("should render without accessibility errors when there is a message", async () => {
@@ -495,7 +495,7 @@ describe(Home.name, () => {
         const page = render(
           <Home
             encodedMessage={encodedMessage}
-            messageFromUrl={messageFromUrl}
+            initialMessage={messageFromUrl}
             resolvedUrl=""
             deployUrl=""
             preferredLanguage={LanguageEnum.English}
@@ -524,7 +524,7 @@ describe(Home.name, () => {
         const page = render(
           <Home
             encodedMessage={encodedMessage}
-            messageFromUrl={message}
+            initialMessage={message}
             resolvedUrl=""
             deployUrl=""
             preferredLanguage={LanguageEnum.English}
@@ -587,7 +587,7 @@ describe(Home.name, () => {
       );
 
       expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
-        messageFromUrl,
+        initialMessage: messageFromUrl,
         encodedMessage: encodedMessageV3,
         resolvedUrl,
         deployUrl: `//${host}`,
@@ -610,7 +610,7 @@ describe(Home.name, () => {
         context as GetServerSidePropsContext,
       );
 
-      expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+      expect(serverSideProps.props.initialMessage).toEqual(messageFromUrl);
     });
 
     it("should return the first message if there are multiple", async () => {
@@ -645,7 +645,7 @@ describe(Home.name, () => {
         context as GetServerSidePropsContext,
       );
 
-      expect(serverSideProps.props.messageFromUrl).toEqual(message1);
+      expect(serverSideProps.props.initialMessage).toEqual(message1);
     });
 
     it("should render without accessibility errors when there is a message", async () => {
@@ -664,7 +664,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage={encodedMessage}
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -693,7 +693,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage={encodedMessage}
-          messageFromUrl={message}
+          initialMessage={message}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -754,7 +754,7 @@ describe(Home.name, () => {
       );
 
       expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
-        messageFromUrl,
+        initialMessage: messageFromUrl,
         encodedMessage: encodedMessageV3,
         resolvedUrl,
         deployUrl: `//${host}`,
@@ -777,7 +777,7 @@ describe(Home.name, () => {
         context as GetServerSidePropsContext,
       );
 
-      expect(serverSideProps.props.messageFromUrl).toEqual(messageFromUrl);
+      expect(serverSideProps.props.initialMessage).toEqual(messageFromUrl);
     });
 
     it("should return the first message if there are multiple", async () => {
@@ -812,7 +812,7 @@ describe(Home.name, () => {
         context as GetServerSidePropsContext,
       );
 
-      expect(serverSideProps.props.messageFromUrl).toEqual(message1);
+      expect(serverSideProps.props.initialMessage).toEqual(message1);
     });
 
     it("should render without accessibility errors when there is a message", async () => {
@@ -831,7 +831,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage={encodedMessage}
-          messageFromUrl={messageFromUrl}
+          initialMessage={messageFromUrl}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}
@@ -860,7 +860,7 @@ describe(Home.name, () => {
       const page = render(
         <Home
           encodedMessage={encodedMessage}
-          messageFromUrl={message}
+          initialMessage={message}
           resolvedUrl=""
           deployUrl=""
           preferredLanguage={LanguageEnum.English}

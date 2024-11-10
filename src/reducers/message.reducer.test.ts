@@ -45,7 +45,7 @@ describe(messageReducer.name, () => {
     defaultState = getEmptyState();
   });
 
-  describe(MessageActionType.SetMessage, () => {
+  describe(MessageAction.SetMessage, () => {
     it("should set message value", () => {
       const message: Message = {
         date: "date",
@@ -56,9 +56,9 @@ describe(messageReducer.name, () => {
         checks: [true, false, true],
       };
 
-      const action: MessageAction = {
+      const action: MessageActionType = {
         message,
-        type: MessageActionType.SetMessage,
+        type: MessageAction.SetMessage,
       };
 
       const newState = messageReducer(defaultState, action);
@@ -67,13 +67,13 @@ describe(messageReducer.name, () => {
     });
   });
 
-  describe(MessageActionType.SetCheck, () => {
+  describe(MessageAction.SetCheck, () => {
     it("should set the check with the given index", () => {
       const index = 0;
       const checkValue = true;
 
-      const action: MessageAction = {
-        type: MessageActionType.SetCheck,
+      const action: MessageActionType = {
+        type: MessageAction.SetCheck,
         check: checkValue,
         checkIndex: index,
       };
@@ -83,12 +83,12 @@ describe(messageReducer.name, () => {
     });
   });
 
-  describe(MessageActionType.SetTheme, () => {
+  describe(MessageAction.SetTheme, () => {
     it("should set the message's theme", () => {
       const theme: ThemeName = "winter";
 
-      const action: MessageAction = {
-        type: MessageActionType.SetTheme,
+      const action: MessageActionType = {
+        type: MessageAction.SetTheme,
         themeName: theme,
       };
 
@@ -109,8 +109,8 @@ describe(messageReducer.name, () => {
         checks: [true, false, true],
       };
 
-      const action: MessageAction = {
-        type: MessageActionType.ResetEverythingButTheme,
+      const action: MessageActionType = {
+        type: MessageAction.ResetEverythingButTheme,
       };
 
       const newState = messageReducer(state, action);
