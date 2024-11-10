@@ -1,6 +1,4 @@
-import type { Translations } from "./Translations";
-
-export const TranslationsNb: Translations = {
+export const TranslationsNb = {
   pageTitle: "Oppmuntringstilsynet",
   pageOgTitle: "Oppmuntringstilsynet",
   pageDescription:
@@ -14,6 +12,7 @@ export const TranslationsNb: Translations = {
   checkbox3Label: "Du bidrar til et godt miljø – du gjør meg glad!",
   nameLabel: "Hilsen",
   copyButtonText: "Kopier lenken til kortet 🔗",
+  shareButtonText: "Del kortet ❤️",
   resetButtonText: "Lag et nytt kort ✨",
   setLanguage: "Velg språk",
   openThemePicker: "Åpne temavelgeren",
@@ -23,6 +22,8 @@ export const TranslationsNb: Translations = {
   closeLanguagePicker: "Lukk språkvelgeren",
   languagePickerHeading: "Velg språk",
   someone: "Noen",
+
+  /** `{name}` will be replaced with the name on the card, or the translation of `someone` */
   previewTitleWithMessage: "{name} setter pris på deg!",
   previewTitleWithoutMessage: "Du settes pris på!",
 };

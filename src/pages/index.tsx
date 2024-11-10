@@ -24,6 +24,7 @@ import { ThemeName } from "../types/ThemeName";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import { renderHtmlHead } from "../utils/html-head-utils";
 import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
+import { share, supportsShare } from "../utils/share-utils";
 import {
   getFallbackTheme,
   getTheme,
@@ -99,8 +100,12 @@ const Home: FC<Props> = ({
     });
   };
 
-  const handleCopy = (): void => {
+  const handleCopyOrShare = (): void => {
     if (tempInput.current) {
+      if (supportsShare) {
+        share(message);
+      }
+
       encodeAndCopyMessage(message, tempInput.current);
     }
   };
@@ -176,7 +181,10 @@ const Home: FC<Props> = ({
 
               <Form isDisabled={disableForm} />
 
-              <Buttons handleReset={handleReset} handleCopy={handleCopy} />
+              <Buttons
+                onReset={handleReset}
+                onCopyOrShare={handleCopyOrShare}
+              />
               <label className="hidden" aria-hidden="true">
                 Hidden label used for copying
                 <input ref={tempInput} type="text" readOnly tabIndex={-1} />

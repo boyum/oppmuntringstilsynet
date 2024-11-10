@@ -1,22 +1,30 @@
-import type { FC, MouseEventHandler } from "react";
+import type { FC } from "react";
 import { useTranslations } from "../../hooks/useTranslations";
+import { supportsShare } from "../../utils/share-utils";
 import { Button } from "../Button/Button";
 import styles from "./Buttons.module.scss";
 
 export type ButtonsProps = {
-  handleReset: MouseEventHandler<HTMLButtonElement>;
-  handleCopy: MouseEventHandler<HTMLButtonElement>;
+  onReset: () => void;
+  onCopyOrShare: () => void;
 };
 
-export const Buttons: FC<ButtonsProps> = ({ handleCopy, handleReset }) => {
+export const Buttons: FC<ButtonsProps> = ({
+  onCopyOrShare: handleCopyOrShare,
+  onReset: handleReset,
+}) => {
   const translations = useTranslations();
 
   return (
     <div className={styles["buttons"]} id="buttons">
       <Button
         id="copy-button"
-        onClick={handleCopy}
-        labelText={translations.copyButtonText}
+        onClick={handleCopyOrShare}
+        labelText={
+          supportsShare
+            ? translations.shareButtonText
+            : translations.copyButtonText
+        }
       />
 
       <Button

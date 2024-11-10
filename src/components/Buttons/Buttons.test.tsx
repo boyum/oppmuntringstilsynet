@@ -17,10 +17,10 @@ describe(Buttons.name, () => {
       <LanguageContext.Provider value={[language, setLanguage]}>
         <main>
           <Buttons
-            handleReset={() => {
+            onReset={() => {
               // Intentionally empty
             }}
-            handleCopy={() => {
+            onCopyOrShare={() => {
               // Intentionally empty
             }}
           />
