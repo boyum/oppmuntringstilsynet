@@ -34,7 +34,7 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@axe-core/puppeteer": "^4.10.0",
+    "@axe-core/puppeteer": "^4.10.1",
     "@biomejs/biome": "^1.9.4",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
