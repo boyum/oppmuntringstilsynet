@@ -66,7 +66,7 @@ jobs:
         name: Create GitHub deployment
         id: deployment
         with:
-          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           initial-status: in_progress
           environment: Preview
 
@@ -83,7 +83,7 @@ jobs:
         if: success()
         uses: chrnorm/deployment-status@v2
         with:
-          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           environment-url: ${{ steps.vercel-deployment.outputs.preview-url }}
           state: success
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
@@ -92,7 +92,7 @@ jobs:
         if: failure()
         uses: chrnorm/deployment-status@v2
         with:
-          token: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           environment-url: ${{ steps.vercel-deployment.outputs.preview-url }}
           state: failure
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
