@@ -38,7 +38,7 @@
     "@biomejs/biome": "^1.9.4",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.0.1",
+    "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
     "@tsconfig/strictest": "^2.0.5",
     "@types/accept-language-parser": "^1.5.6",
