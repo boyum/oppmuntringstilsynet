@@ -61,7 +61,7 @@
     "puppeteer": "^23.10.3",
     "puppeteer-core": "^23.10.4",
     "sass": "^1.82.0",
-    "start-server-and-test": "^2.0.8",
+    "start-server-and-test": "^2.0.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
