@@ -60,7 +60,7 @@
     "next-router-mock": "^0.9.13",
     "puppeteer": "^24.1.1",
     "puppeteer-core": "^24.2.0",
-    "sass": "^1.83.4",
+    "sass": "^1.84.0",
     "start-server-and-test": "^2.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
