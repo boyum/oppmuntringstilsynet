@@ -59,7 +59,7 @@
     "jest-puppeteer": "^11.0.0",
     "next-router-mock": "^0.9.13",
     "puppeteer": "^24.2.1",
-    "puppeteer-core": "^24.2.1",
+    "puppeteer-core": "^24.3.0",
     "sass": "^1.85.0",
     "start-server-and-test": "^2.0.10",
     "ts-node": "^10.9.2",
