@@ -11,10 +11,10 @@ import { encodeV2 } from "../utils/encoding-utils-v2";
 import { encodeV3 } from "../utils/encoding-utils-v3";
 import { getFallbackTheme } from "../utils/theme-utils";
 import {
+  latestEncoder,
   QUERY_PARAM_MESSAGE_KEY_V1,
   QUERY_PARAM_MESSAGE_KEY_V2,
   QUERY_PARAM_MESSAGE_KEY_V3,
-  latestEncoder,
 } from "../utils/url-utils";
 
 type DeepPartial<T> = {

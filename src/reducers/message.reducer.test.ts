@@ -3,9 +3,9 @@ import type { Message } from "../types/Message";
 import type { ThemeName } from "../types/ThemeName";
 import { defaultLanguage } from "../utils/language-utils";
 import {
+  getEmptyState,
   MessageAction,
   MessageActionType,
-  getEmptyState,
   messageReducer,
 } from "./message.reducer";
 

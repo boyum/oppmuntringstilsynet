@@ -1,14 +1,15 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
   "files": {
-    "ignore": [
-      "**/.next/**",
-      "**/.vercel/**",
-      "**/coverage/**",
-      "**/coverage-e2e/**",
-      "**/coverage-unit/**",
-      "**/node_modules/**",
-      "**/package-lock.json/**"
+    "includes": [
+      "**",
+      "!**/.next/**",
+      "!**/.vercel/**",
+      "!**/coverage/**",
+      "!**/coverage-e2e/**",
+      "!**/coverage-unit/**",
+      "!**/node_modules/**",
+      "!**/package-lock.json/**"
     ]
   },
   "formatter": {
@@ -20,7 +21,7 @@
     "lineWidth": 80,
     "attributePosition": "auto"
   },
-  "organizeImports": { "enabled": true },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
@@ -29,7 +30,6 @@
         "noAccessKey": "error",
         "noAriaUnsupportedElements": "error",
         "noAutofocus": "error",
-        "noBlankTarget": "error",
         "noDistractingElements": "error",
         "noHeaderScope": "error",
         "noInteractiveElementToNoninteractiveRole": "error",
@@ -61,7 +61,6 @@
       "complexity": {
         "noBannedTypes": "error",
         "noExtraBooleanCast": "error",
-        "noMultipleSpacesInRegularExpressionLiterals": "error",
         "noUselessCatch": "error",
         "noUselessConstructor": "error",
         "noUselessFragments": "error",
@@ -71,9 +70,12 @@
         "noUselessTernary": "error",
         "noUselessTypeConstraint": "error",
         "noVoid": "error",
-        "noWith": "error",
         "useLiteralKeys": "off",
-        "useRegexLiterals": "error"
+        "useRegexLiterals": "error",
+        "noAdjacentSpacesInRegex": "error",
+        "noArguments": "error",
+        "noCommaOperator": "error",
+        "useNumericLiterals": "error"
       },
       "correctness": {
         "noChildrenProp": "error",
@@ -86,7 +88,6 @@
         "noInnerDeclarations": "error",
         "noInvalidConstructorSuper": "error",
         "noInvalidUseBeforeDeclaration": "error",
-        "noNewSymbol": "error",
         "noNodejsModules": "off",
         "noNonoctalDecimalEscape": "error",
         "noPrecisionLoss": "error",
@@ -102,91 +103,90 @@
         "noUnusedPrivateClassMembers": "off",
         "noUnusedVariables": "error",
         "noVoidElementsWithChildren": "error",
-        "useArrayLiterals": "off",
         "useIsNan": "error",
         "useJsxKeyInIterable": "off",
         "useValidForDirection": "error",
-        "useYield": "error"
+        "useYield": "error",
+        "noInvalidBuiltinInstantiation": "error",
+        "useValidTypeof": "error"
       },
       "security": {
         "noDangerouslySetInnerHtml": "warn",
         "noDangerouslySetInnerHtmlWithChildren": "error",
-        "noGlobalEval": "error"
+        "noGlobalEval": "error",
+        "noBlankTarget": "error"
       },
       "style": {
-        "noArguments": "error",
-        "noCommaOperator": "error",
         "noNamespace": "error",
         "noNegationElse": "off",
         "noParameterAssign": "error",
         "noRestrictedGlobals": {
           "level": "error",
           "options": {
-            "deniedGlobals": [
-              "isFinite",
-              "isNaN",
-              "addEventListener",
-              "blur",
-              "close",
-              "closed",
-              "confirm",
-              "defaultStatus",
-              "defaultstatus",
-              "event",
-              "external",
-              "find",
-              "focus",
-              "frameElement",
-              "frames",
-              "history",
-              "innerHeight",
-              "innerWidth",
-              "length",
-              "location",
-              "locationbar",
-              "menubar",
-              "moveBy",
-              "moveTo",
-              "name",
-              "onblur",
-              "onerror",
-              "onfocus",
-              "onload",
-              "onresize",
-              "onunload",
-              "open",
-              "opener",
-              "opera",
-              "outerHeight",
-              "outerWidth",
-              "pageXOffset",
-              "pageYOffset",
-              "parent",
-              "print",
-              "removeEventListener",
-              "resizeBy",
-              "resizeTo",
-              "screen",
-              "screenLeft",
-              "screenTop",
-              "screenX",
-              "screenY",
-              "scroll",
-              "scrollbars",
-              "scrollBy",
-              "scrollTo",
-              "scrollX",
-              "scrollY",
-              "self",
-              "status",
-              "statusbar",
-              "stop",
-              "toolbar",
-              "top"
-            ]
+            "deniedGlobals": {
+              "isFinite": "TODO: Add a custom message here.",
+              "isNaN": "TODO: Add a custom message here.",
+              "addEventListener": "TODO: Add a custom message here.",
+              "blur": "TODO: Add a custom message here.",
+              "close": "TODO: Add a custom message here.",
+              "closed": "TODO: Add a custom message here.",
+              "confirm": "TODO: Add a custom message here.",
+              "defaultStatus": "TODO: Add a custom message here.",
+              "defaultstatus": "TODO: Add a custom message here.",
+              "event": "TODO: Add a custom message here.",
+              "external": "TODO: Add a custom message here.",
+              "find": "TODO: Add a custom message here.",
+              "focus": "TODO: Add a custom message here.",
+              "frameElement": "TODO: Add a custom message here.",
+              "frames": "TODO: Add a custom message here.",
+              "history": "TODO: Add a custom message here.",
+              "innerHeight": "TODO: Add a custom message here.",
+              "innerWidth": "TODO: Add a custom message here.",
+              "length": "TODO: Add a custom message here.",
+              "location": "TODO: Add a custom message here.",
+              "locationbar": "TODO: Add a custom message here.",
+              "menubar": "TODO: Add a custom message here.",
+              "moveBy": "TODO: Add a custom message here.",
+              "moveTo": "TODO: Add a custom message here.",
+              "name": "TODO: Add a custom message here.",
+              "onblur": "TODO: Add a custom message here.",
+              "onerror": "TODO: Add a custom message here.",
+              "onfocus": "TODO: Add a custom message here.",
+              "onload": "TODO: Add a custom message here.",
+              "onresize": "TODO: Add a custom message here.",
+              "onunload": "TODO: Add a custom message here.",
+              "open": "TODO: Add a custom message here.",
+              "opener": "TODO: Add a custom message here.",
+              "opera": "TODO: Add a custom message here.",
+              "outerHeight": "TODO: Add a custom message here.",
+              "outerWidth": "TODO: Add a custom message here.",
+              "pageXOffset": "TODO: Add a custom message here.",
+              "pageYOffset": "TODO: Add a custom message here.",
+              "parent": "TODO: Add a custom message here.",
+              "print": "TODO: Add a custom message here.",
+              "removeEventListener": "TODO: Add a custom message here.",
+              "resizeBy": "TODO: Add a custom message here.",
+              "resizeTo": "TODO: Add a custom message here.",
+              "screen": "TODO: Add a custom message here.",
+              "screenLeft": "TODO: Add a custom message here.",
+              "screenTop": "TODO: Add a custom message here.",
+              "screenX": "TODO: Add a custom message here.",
+              "screenY": "TODO: Add a custom message here.",
+              "scroll": "TODO: Add a custom message here.",
+              "scrollbars": "TODO: Add a custom message here.",
+              "scrollBy": "TODO: Add a custom message here.",
+              "scrollTo": "TODO: Add a custom message here.",
+              "scrollX": "TODO: Add a custom message here.",
+              "scrollY": "TODO: Add a custom message here.",
+              "self": "TODO: Add a custom message here.",
+              "status": "TODO: Add a custom message here.",
+              "statusbar": "TODO: Add a custom message here.",
+              "stop": "TODO: Add a custom message here.",
+              "toolbar": "TODO: Add a custom message here.",
+              "top": "TODO: Add a custom message here."
+            }
           }
         },
-        "noVar": "error",
         "useAsConstAssertion": "error",
         "useBlockStatements": "off",
         "useCollapsedElseIf": "error",
@@ -194,10 +194,10 @@
         "useDefaultParameterLast": "error",
         "useExponentiationOperator": "error",
         "useFragmentSyntax": "error",
-        "useNumericLiterals": "error",
         "useShorthandAssign": "error",
         "useSingleVarDeclarator": "error",
-        "useTemplate": "error"
+        "useTemplate": "error",
+        "useArrayLiterals": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "error",
@@ -233,7 +233,8 @@
         "useAwait": "off",
         "useDefaultSwitchClauseLast": "error",
         "useGetterReturn": "error",
-        "useValidTypeof": "error"
+        "noWith": "error",
+        "noVar": "error"
       }
     }
   },
@@ -252,22 +253,20 @@
   },
   "overrides": [
     {
-      "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "linter": {
         "rules": {
           "correctness": {
             "noConstAssign": "off",
             "noGlobalObjectCalls": "off",
             "noInvalidConstructorSuper": "off",
-            "noNewSymbol": "off",
             "noSetterReturn": "off",
             "noUndeclaredVariables": "off",
             "noUnreachable": "off",
-            "noUnreachableSuper": "off"
+            "noUnreachableSuper": "off",
+            "noInvalidBuiltinInstantiation": "off"
           },
           "style": {
-            "noArguments": "error",
-            "noVar": "error",
             "useConst": "error"
           },
           "suspicious": {
@@ -278,7 +277,11 @@
             "noImportAssign": "off",
             "noRedeclare": "off",
             "noUnsafeNegation": "off",
-            "useGetterReturn": "off"
+            "useGetterReturn": "off",
+            "noVar": "error"
+          },
+          "complexity": {
+            "noArguments": "error"
           }
         }
       }
