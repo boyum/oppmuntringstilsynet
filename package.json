@@ -55,7 +55,7 @@
     "jest-config": "^30.0.4",
     "jest-css-modules": "^2.1.0",
     "jest-css-modules-transform": "^4.4.2",
-    "jest-environment-jsdom": "^30.0.0",
+    "jest-environment-jsdom": "^30.0.5",
     "jest-puppeteer": "^11.0.0",
     "next-router-mock": "^1.0.2",
     "puppeteer": "^24.11.1",
