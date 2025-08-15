@@ -13,8 +13,8 @@ import { MessageContext } from "../contexts/MessageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { Language } from "../enums/Language";
 import {
-  MessageAction,
   getEmptyState,
+  MessageAction,
   messageReducer,
 } from "../reducers/message.reducer";
 import styles from "../styles/Home.module.scss";

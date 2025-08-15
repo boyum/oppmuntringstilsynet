@@ -2,11 +2,11 @@ import { Language } from "../enums/Language";
 import { Message } from "../types/Message";
 import { encodeV3 } from "./encoding-utils-v3";
 import {
+  getEncodedAndDecodedMessage,
   LATEST_QUERY_PARAM_MESSAGE_KEY,
   QUERY_PARAM_MESSAGE_KEY_V1,
   QUERY_PARAM_MESSAGE_KEY_V2,
   QUERY_PARAM_MESSAGE_KEY_V3,
-  getEncodedAndDecodedMessage,
 } from "./url-utils";
 
 describe(getEncodedAndDecodedMessage, () => {

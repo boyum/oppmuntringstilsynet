@@ -1,7 +1,7 @@
-import { Dispatch, createContext } from "react";
+import { createContext, Dispatch } from "react";
 import {
-  type MessageActionType,
   getEmptyState,
+  type MessageActionType,
 } from "../reducers/message.reducer";
 import { Message } from "../types/Message";
 
