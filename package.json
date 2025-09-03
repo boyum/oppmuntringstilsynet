@@ -50,7 +50,7 @@
     "@types/node": "^22.9.0",
     "@types/react": "18.3.12",
     "@types/react-dom": "^18.3.1",
-    "fast-check": "^4.1.1",
+    "fast-check": "^4.3.0",
     "jest": "^30.0.1",
     "jest-config": "^30.0.4",
     "jest-css-modules": "^2.1.0",
