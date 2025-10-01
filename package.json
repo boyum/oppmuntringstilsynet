@@ -63,7 +63,7 @@
     "sass": "^1.89.2",
     "start-server-and-test": "^2.0.13",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "@types/react": "18.3.12"
