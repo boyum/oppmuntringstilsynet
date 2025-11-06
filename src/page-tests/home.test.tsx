@@ -7,6 +7,7 @@ import { getEmptyState } from "../reducers/message.reducer";
 import type { Message } from "../types/Message";
 import { encodeV2 } from "../utils/encoding-utils-v2";
 import { encodeV3 } from "../utils/encoding-utils-v3";
+import { encodeV4 } from "../utils/encoding-utils-v4";
 import { getHomeServerProps } from "../utils/server-props";
 import { getFallbackTheme } from "../utils/theme-utils";
 import {
@@ -360,6 +361,7 @@ describe(Home.name, () => {
       };
 
       const encodedMessageV3 = encodeV3(messageFromUrl);
+      const encodedMessageV4 = encodeV4(messageFromUrl);
 
       const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V3}=${encodedMessageV3}`;
       const host = "host";
@@ -379,7 +381,7 @@ describe(Home.name, () => {
 
       expect(serverProps).toEqual<typeof serverProps>({
         initialMessage: messageFromUrl,
-        encodedMessage: encodedMessageV3,
+        encodedMessage: encodedMessageV4,
         resolvedUrl,
         deployUrl: `https://${host}`,
         preferredLanguage: Language.NorskBokmal,
@@ -403,7 +405,7 @@ describe(Home.name, () => {
       expect(serverProps.encodedMessage).toBeNull();
     });
 
-    it("should convert an encoded V1 message to V3", () => {
+    it("should convert an encoded V1 message to V4", () => {
       const messageFromUrl: Message = {
         date: "1st of January",
         message: "Hi, tester!",
@@ -415,8 +417,7 @@ describe(Home.name, () => {
 
       const encodedMessageV1 =
         "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEmqBB1oQAZRxQBzFKUaUdAOQdDAAdmHAEUAF8gA";
-      const encodedMessageV3 =
-        "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOATDgAw4DsQA";
+      const encodedMessageV4 = encodeV4(messageFromUrl);
 
       const serverProps = getHomeServerProps({
         searchParams: new URLSearchParams(
@@ -431,10 +432,10 @@ describe(Home.name, () => {
       });
 
       expect(serverProps.initialMessage).toEqual(messageFromUrl);
-      expect(serverProps.encodedMessage).toBe(encodedMessageV3);
+      expect(serverProps.encodedMessage).toBe(encodedMessageV4);
     });
 
-    it("should convert an encoded V2 message to V3", () => {
+    it("should convert an encoded V2 message to V4", () => {
       const messageFromUrl: Message = {
         date: "1st of January",
         message: "Hi, tester!",
@@ -445,7 +446,7 @@ describe(Home.name, () => {
       };
 
       const encodedMessageV2 = encodeV2(messageFromUrl);
-      const encodedMessageV3 = encodeV3(messageFromUrl);
+      const encodedMessageV4 = encodeV4(messageFromUrl);
 
       const serverProps = getHomeServerProps({
         searchParams: new URLSearchParams(
@@ -460,7 +461,7 @@ describe(Home.name, () => {
       });
 
       expect(serverProps.initialMessage).toEqual(messageFromUrl);
-      expect(serverProps.encodedMessage).toBe(encodedMessageV3);
+      expect(serverProps.encodedMessage).toBe(encodedMessageV4);
     });
 
     it("should return the first message if there are multiple V1 messages", () => {

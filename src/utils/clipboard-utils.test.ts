@@ -1,6 +1,7 @@
 import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { copyToClipboard, createMessageUrl } from "./clipboard-utils";
+import { encodeV4 } from "./encoding-utils-v4";
 import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
 
 describe(copyToClipboard.name, () => {
@@ -27,7 +28,7 @@ describe(createMessageUrl.name, () => {
       themeName: "winter",
     };
 
-    const encodedMessage = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
+    const encodedMessage = encodeV4(message);
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(message, currentPath);
@@ -47,7 +48,7 @@ describe(createMessageUrl.name, () => {
       themeName: "winter",
     };
 
-    const encodedMessage = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
+    const encodedMessage = encodeV4(message);
     const currentPath = "https://example.com";
 
     const url = createMessageUrl(
