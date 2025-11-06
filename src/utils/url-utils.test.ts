@@ -1,12 +1,13 @@
 import { Language } from "../enums/Language";
 import { Message } from "../types/Message";
-import { encodeV3 } from "./encoding-utils-v3";
+import { encodeV4 } from "./encoding-utils-v4";
 import {
   getEncodedAndDecodedMessage,
   LATEST_QUERY_PARAM_MESSAGE_KEY,
   QUERY_PARAM_MESSAGE_KEY_V1,
   QUERY_PARAM_MESSAGE_KEY_V2,
   QUERY_PARAM_MESSAGE_KEY_V3,
+  QUERY_PARAM_MESSAGE_KEY_V4,
 } from "./url-utils";
 
 describe(getEncodedAndDecodedMessage, () => {
@@ -20,15 +21,16 @@ describe(getEncodedAndDecodedMessage, () => {
       themeName: "winter",
     };
 
-    const encodedMessage = encodeV3(message);
+    const encodedMessageV3 = "CYQwLgpgPgthDO8QHNoDsRygJigZigFYg";
+    const encodedMessageV4 = encodeV4(message);
 
     const queryParams = new URLSearchParams();
-    queryParams.set(QUERY_PARAM_MESSAGE_KEY_V3, encodedMessage);
+    queryParams.set(QUERY_PARAM_MESSAGE_KEY_V3, encodedMessageV3);
 
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
 
-    expect(actualEncodedMessage).toBe(encodedMessage);
+    expect(actualEncodedMessage).toBe(encodedMessageV4);
     expect(actualDecodedMessage).toEqual(message);
   });
 
@@ -44,7 +46,7 @@ describe(getEncodedAndDecodedMessage, () => {
 
     const encodedMessageV2 =
       "CYQwLgpgPgthDO8QHNoDsRygUTcgNgJbwAWUA7oWpAE5Rg0Cu0Dz9TEQA";
-    const encodedMessageV3 = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
+    const encodedMessageV4 = encodeV4(message);
 
     const queryParams = new URLSearchParams();
     queryParams.set(QUERY_PARAM_MESSAGE_KEY_V2, encodedMessageV2);
@@ -52,7 +54,7 @@ describe(getEncodedAndDecodedMessage, () => {
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
 
-    expect(actualEncodedMessage).toBe(encodedMessageV3);
+    expect(actualEncodedMessage).toBe(encodedMessageV4);
     expect(actualDecodedMessage).toEqual(message);
   });
 
@@ -68,7 +70,7 @@ describe(getEncodedAndDecodedMessage, () => {
 
     const encodedMessageV1 =
       "N4IgJghgLgpiBc5pwDQgLYwM5YgczkUx31RADsJMEKqyBjACxnoGssEBtKAJwFcYKXgKH8YAXTQAbCOTx9SNAKJypASyyMQaKM0wA5OjQDua8rB4gAvkA";
-    const encodedMessageV3 = "CYQwLgpgPgthDO8QHNoDsRygJigZigHYg";
+    const encodedMessageV4 = encodeV4(message);
 
     const queryParams = new URLSearchParams();
     queryParams.set(QUERY_PARAM_MESSAGE_KEY_V1, encodedMessageV1);
@@ -76,7 +78,7 @@ describe(getEncodedAndDecodedMessage, () => {
     const [actualEncodedMessage, actualDecodedMessage] =
       getEncodedAndDecodedMessage(queryParams);
 
-    expect(actualEncodedMessage).toBe(encodedMessageV3);
+    expect(actualEncodedMessage).toBe(encodedMessageV4);
     expect(actualDecodedMessage).toEqual(message);
   });
 
