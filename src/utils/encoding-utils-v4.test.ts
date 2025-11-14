@@ -69,7 +69,9 @@ describe("Message encoder/decoder", () => {
       const actualMessage = decodeV4(encodedMessage);
 
       // May return null or garbage data, but shouldn't crash
-      expect(actualMessage === null || typeof actualMessage === "object").toBe(true);
+      expect(actualMessage === null || typeof actualMessage === "object").toBe(
+        true,
+      );
 
       console.error = consoleError;
     });
