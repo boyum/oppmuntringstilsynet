@@ -22,7 +22,7 @@ import type { Message } from "../types/Message";
 import { Theme } from "../types/Theme";
 import { ThemeName } from "../types/ThemeName";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
-import { renderHtmlHead } from "../utils/html-head-utils";
+import { HtmlHead } from "../utils/html-head-utils";
 import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
 import { share } from "../utils/share-utils";
 import {
@@ -131,12 +131,6 @@ const Home: FC<Props> = ({
     });
   };
 
-  const headData = renderHtmlHead(
-    language,
-    `${deployUrl}${resolvedUrl}`,
-    encodedMessage,
-    deployUrl,
-  );
   const disableForm = !!initialMessage;
 
   return (
@@ -144,7 +138,12 @@ const Home: FC<Props> = ({
       <ThemeContext.Provider value={[theme, handleThemeChange]}>
         <LanguageContext.Provider value={[language, setLanguage]}>
           <Head>
-            {headData}
+            <HtmlHead
+              language={language}
+              ogUrl={`${deployUrl}${resolvedUrl}`}
+              encodedMessage={encodedMessage}
+              deployUrl={deployUrl}
+            />
 
             {/* By inserting a `body` element in `Head`, we can add properties to the body */}
             <body data-theme={theme.name} />
