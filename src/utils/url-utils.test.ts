@@ -11,6 +11,28 @@ import {
 } from "./url-utils";
 
 describe(getEncodedAndDecodedMessage, () => {
+  it("should return the encoded and decoded message if message V4 (p) is set", () => {
+    const message: Message = {
+      date: "date",
+      message: "message",
+      name: "name",
+      checks: [true, false, true],
+      language: Language.English,
+      themeName: "winter",
+    };
+
+    const encodedMessageV4 = encodeV4(message);
+
+    const queryParams = new URLSearchParams();
+    queryParams.set(QUERY_PARAM_MESSAGE_KEY_V4, encodedMessageV4);
+
+    const [actualEncodedMessage, actualDecodedMessage] =
+      getEncodedAndDecodedMessage(queryParams);
+
+    expect(actualEncodedMessage).toBe(encodedMessageV4);
+    expect(actualDecodedMessage).toEqual(message);
+  });
+
   it("should return the encoded and decoded message if message V3 (o) is set", () => {
     const message: Message = {
       date: "date",
