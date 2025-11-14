@@ -219,9 +219,27 @@ const deployUrl = process.env["DEPLOY_URL"] ?? localUrl;
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  const { req, resolvedUrl } = context;
+  const { req } = context;
 
-  const queryParams = getQueryParams(resolvedUrl);
+  const resolvedUrlFromContext: string =
+    context.resolvedUrl ??
+    (() => {
+      const reqUrl = (req as unknown as { url?: string })?.url;
+
+      if (typeof reqUrl === "string") {
+        try {
+          const u = new URL(reqUrl);
+
+          return u.pathname + u.search;
+        } catch {
+          return reqUrl;
+        }
+      }
+
+      return "/";
+    })();
+
+  const queryParams = getQueryParams(resolvedUrlFromContext);
   const [encodedMessage, decodedMessage] =
     getEncodedAndDecodedMessage(queryParams);
 
@@ -250,7 +268,7 @@ export async function getServerSideProps(
     props: {
       encodedMessage,
       initialMessage: decodedMessage,
-      resolvedUrl,
+      resolvedUrl: resolvedUrlFromContext,
       deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
       preferredLanguage,
       preferredTheme,
