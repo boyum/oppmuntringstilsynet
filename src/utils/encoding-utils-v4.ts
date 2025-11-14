@@ -187,7 +187,14 @@ export function decodeV4(encodedObj: string): Message | null {
     decoded.split("|");
 
   // Validate that we have at least the minimum required fields
-  if (!date && !message && !name && !languageIndex && !themeIndex && !checksAsDecimal) {
+  if (
+    !date &&
+    !message &&
+    !name &&
+    !languageIndex &&
+    !themeIndex &&
+    !checksAsDecimal
+  ) {
     console.error(`Invalid decoded data structure`);
     return null;
   }
