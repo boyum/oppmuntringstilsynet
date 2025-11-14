@@ -1,6 +1,6 @@
 /**
  * Example integration of V4 encoding with backward compatibility
- * 
+ *
  * This file demonstrates how to integrate V4 encoding while maintaining
  * support for existing V3, V2, and V1 encoded URLs.
  */
@@ -13,7 +13,7 @@ import { decodeMessageV4, encodeV4 } from "./encoding-utils-v4";
 
 /**
  * Encode a message using the latest V4 format
- * 
+ *
  * V4 provides 15-18% shorter URLs compared to V3
  */
 export function encodeMessage(message: Message): string {
@@ -22,7 +22,7 @@ export function encodeMessage(message: Message): string {
 
 /**
  * Decode a message, trying V4 first, then falling back to older versions
- * 
+ *
  * This ensures backward compatibility with existing URLs
  */
 export function decodeMessage(encodedMessage: string): Message | null {
@@ -56,7 +56,7 @@ export function decodeMessage(encodedMessage: string): Message | null {
 
 /**
  * Alternative approach: Try all decoders in sequence
- * 
+ *
  * This is simpler but slightly less efficient as it doesn't
  * do format detection first
  */

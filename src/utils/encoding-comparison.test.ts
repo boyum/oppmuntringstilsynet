@@ -19,7 +19,9 @@ describe("V3 vs V4 Encoding Comparison", () => {
 
     console.log(`V3 length: ${v3Encoded.length} chars`);
     console.log(`V4 length: ${v4Encoded.length} chars`);
-    console.log(`Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`);
+    console.log(
+      `Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`,
+    );
 
     expect(v4Encoded.length).toBeLessThan(v3Encoded.length);
   });
@@ -40,7 +42,9 @@ describe("V3 vs V4 Encoding Comparison", () => {
 
     console.log(`V3 length: ${v3Encoded.length} chars`);
     console.log(`V4 length: ${v4Encoded.length} chars`);
-    console.log(`Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`);
+    console.log(
+      `Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`,
+    );
 
     expect(v4Encoded.length).toBeLessThan(v3Encoded.length);
   });
@@ -61,7 +65,9 @@ describe("V3 vs V4 Encoding Comparison", () => {
 
     console.log(`V3 length: ${v3Encoded.length} chars`);
     console.log(`V4 length: ${v4Encoded.length} chars`);
-    console.log(`Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`);
+    console.log(
+      `Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`,
+    );
 
     expect(v4Encoded.length).toBeLessThan(v3Encoded.length);
   });
@@ -81,7 +87,9 @@ describe("V3 vs V4 Encoding Comparison", () => {
 
     console.log(`V3 length: ${v3Encoded.length} chars`);
     console.log(`V4 length: ${v4Encoded.length} chars`);
-    console.log(`Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`);
+    console.log(
+      `Savings: ${v3Encoded.length - v4Encoded.length} chars (${Math.round((1 - v4Encoded.length / v3Encoded.length) * 100)}%)`,
+    );
 
     expect(v4Encoded.length).toBeLessThan(v3Encoded.length);
   });
