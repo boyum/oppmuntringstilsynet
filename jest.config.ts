@@ -1,6 +1,6 @@
 import type { Config } from "@jest/types";
 import { defaults } from "jest-config";
-import nextJest from "next/jest";
+import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({
   dir: "./",

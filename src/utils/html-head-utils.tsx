@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import type { Language } from "../enums/Language";
 import { getTranslations } from "./translations-utils";
 import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "./url-utils";
@@ -24,12 +23,17 @@ export function getDefaultHtmlHeadData(language: Language) {
   };
 }
 
-export function renderHtmlHead(
-  language: Language,
-  ogUrl: string,
-  encodedMessage: string | null,
-  deployUrl: string,
-): ReactNode {
+export function HtmlHead({
+  language,
+  ogUrl,
+  encodedMessage,
+  deployUrl,
+}: {
+  language: Language;
+  ogUrl: string;
+  encodedMessage: string | null;
+  deployUrl: string;
+}) {
   const { title, description, ogTitle, ogDescription } =
     getDefaultHtmlHeadData(language);
 
