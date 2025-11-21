@@ -1,9 +1,8 @@
-import { act } from "@testing-library/react";
-import { createRoot } from "react-dom/client";
+import { render } from "@testing-library/react";
 import { Language } from "../enums/Language";
 import { languages } from "../models/languages";
 import { TranslationsNb } from "../types/Translations.nb";
-import { getDefaultHtmlHeadData, renderHtmlHead } from "./html-head-utils";
+import { getDefaultHtmlHeadData, HtmlHead } from "./html-head-utils";
 
 describe(getDefaultHtmlHeadData.name, () => {
   it("should return html head data corresponding to the current language", () => {
@@ -22,7 +21,7 @@ describe(getDefaultHtmlHeadData.name, () => {
   });
 });
 
-describe(renderHtmlHead.name, () => {
+describe(HtmlHead, () => {
   it("should render meta tags", () => {
     const language = Language.NorskBokmal;
     const ogUrl = "url";
@@ -34,25 +33,28 @@ describe(renderHtmlHead.name, () => {
     const description = languages[language].translations.pageDescription;
     const ogDescription = languages[language].translations.pageDescription;
 
-    const container = document.createElement("div");
+    render(
+      <HtmlHead
+        language={language}
+        ogUrl={ogUrl}
+        encodedMessage={encodedMessage}
+        deployUrl={deployUrl}
+      />,
+    );
 
-    act(() => {
-      createRoot(container).render(
-        renderHtmlHead(language, ogUrl, encodedMessage, deployUrl),
-      );
-    });
-
-    const titleElement = container.querySelector("title");
-    const metaDescriptionElement = container.querySelector(
+    const titleElement = document.head.querySelector("title");
+    const metaDescriptionElement = document.head.querySelector(
       "meta[name=description]",
     );
-    const metaOgTitleElement = container.querySelector(
+    const metaOgTitleElement = document.head.querySelector(
       `meta[property="og:title"]`,
     );
-    const metaOgDescriptionElement = container.querySelector(
+    const metaOgDescriptionElement = document.head.querySelector(
       `meta[property="og:description"]`,
     );
-    const metaOgUrlElement = container.querySelector(`meta[property="og:url"]`);
+    const metaOgUrlElement = document.head.querySelector(
+      `meta[property="og:url"]`,
+    );
 
     expect(titleElement?.innerHTML).toBe(title);
     expect(metaDescriptionElement?.getAttribute("content")).toBe(description);

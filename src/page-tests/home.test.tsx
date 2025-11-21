@@ -9,6 +9,7 @@ import { getEmptyState } from "../reducers/message.reducer";
 import type { Message } from "../types/Message";
 import { encodeV2 } from "../utils/encoding-utils-v2";
 import { encodeV3 } from "../utils/encoding-utils-v3";
+import { encodeV4 } from "../utils/encoding-utils-v4";
 import { getFallbackTheme } from "../utils/theme-utils";
 import {
   latestEncoder,
@@ -469,8 +470,7 @@ describe(Home.name, () => {
 
         const encodedMessageV1 =
           "N4IgNghgdg5grhGBTEAuEBRWYCWBnACxABoQBjApMgazzQG0AXAJziWJbY9aQF1SAJhEYp0ARjyMABAHsAZlIBS0BMwCeJEAFskePIlEgAEjmJSRkpMwCEmqBB1oQAZRxQBzFKUaUdAOQdDAAdmHAEUAF8gA";
-        const encodedMessageV3 =
-          "IwZwLgBA9gZhBSBDAdgV0QJwJ4B8ASAlgDQRgCm4ZGAhDgMoHIAmGZOATDgAw4DsQA";
+        const encodedMessageV4 = encodeV4(messageFromUrl);
 
         const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V1}=${encodedMessageV1}`;
         const host = "host";
@@ -490,8 +490,8 @@ describe(Home.name, () => {
 
         expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
           initialMessage: messageFromUrl,
-          // Should use encoded message v2 even though v1 is provided
-          encodedMessage: encodedMessageV3,
+          // Should use encoded message v4 even though v1 is provided
+          encodedMessage: encodedMessageV4,
           resolvedUrl,
           deployUrl: `//${host}`,
           preferredLanguage: Language.NorskBokmal,
@@ -637,7 +637,7 @@ describe(Home.name, () => {
       };
 
       const encodedMessageV2 = encodeV2(messageFromUrl);
-      const encodedMessageV3 = encodeV3(messageFromUrl);
+      const encodedMessageV4 = encodeV4(messageFromUrl);
 
       const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V2}=${encodedMessageV2}`;
       const host = "host";
@@ -657,7 +657,7 @@ describe(Home.name, () => {
 
       expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
         initialMessage: messageFromUrl,
-        encodedMessage: encodedMessageV3,
+        encodedMessage: encodedMessageV4,
         resolvedUrl,
         deployUrl: `//${host}`,
         preferredLanguage: Language.NorskBokmal,
@@ -808,6 +808,7 @@ describe(Home.name, () => {
       };
 
       const encodedMessageV3 = encodeV3(messageFromUrl);
+      const encodedMessageV4 = encodeV4(messageFromUrl);
 
       const resolvedUrl = `resolvedUrl?${QUERY_PARAM_MESSAGE_KEY_V3}=${encodedMessageV3}`;
       const host = "host";
@@ -827,7 +828,7 @@ describe(Home.name, () => {
 
       expect(serverSideProps.props).toEqual<typeof serverSideProps.props>({
         initialMessage: messageFromUrl,
-        encodedMessage: encodedMessageV3,
+        encodedMessage: encodedMessageV4,
         resolvedUrl,
         deployUrl: `//${host}`,
         preferredLanguage: Language.NorskBokmal,
