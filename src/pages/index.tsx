@@ -22,7 +22,7 @@ import type { Message } from "../types/Message";
 import { Theme } from "../types/Theme";
 import { ThemeName } from "../types/ThemeName";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
-import { renderHtmlHead } from "../utils/html-head-utils";
+import { HtmlHead } from "../utils/html-head-utils";
 import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
 import { share } from "../utils/share-utils";
 import {
@@ -131,12 +131,6 @@ const Home: FC<Props> = ({
     });
   };
 
-  const headData = renderHtmlHead(
-    language,
-    `${deployUrl}${resolvedUrl}`,
-    encodedMessage,
-    deployUrl,
-  );
   const disableForm = !!initialMessage;
 
   return (
@@ -144,7 +138,12 @@ const Home: FC<Props> = ({
       <ThemeContext.Provider value={[theme, handleThemeChange]}>
         <LanguageContext.Provider value={[language, setLanguage]}>
           <Head>
-            {headData}
+            <HtmlHead
+              language={language}
+              ogUrl={`${deployUrl}${resolvedUrl}`}
+              encodedMessage={encodedMessage}
+              deployUrl={deployUrl}
+            />
 
             {/* By inserting a `body` element in `Head`, we can add properties to the body */}
             <body data-theme={theme.name} />
@@ -220,9 +219,27 @@ const deployUrl = process.env["DEPLOY_URL"] ?? localUrl;
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  const { req, resolvedUrl } = context;
+  const { req } = context;
 
-  const queryParams = getQueryParams(resolvedUrl);
+  const resolvedUrlFromContext: string =
+    context.resolvedUrl ??
+    (() => {
+      const reqUrl = (req as unknown as { url?: string })?.url;
+
+      if (typeof reqUrl === "string") {
+        try {
+          const u = new URL(reqUrl);
+
+          return u.pathname + u.search;
+        } catch {
+          return reqUrl;
+        }
+      }
+
+      return "/";
+    })();
+
+  const queryParams = getQueryParams(resolvedUrlFromContext);
   const [encodedMessage, decodedMessage] =
     getEncodedAndDecodedMessage(queryParams);
 
@@ -251,7 +268,7 @@ export async function getServerSideProps(
     props: {
       encodedMessage,
       initialMessage: decodedMessage,
-      resolvedUrl,
+      resolvedUrl: resolvedUrlFromContext,
       deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
       preferredLanguage,
       preferredTheme,
