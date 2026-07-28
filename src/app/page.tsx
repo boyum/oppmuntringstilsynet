@@ -15,6 +15,8 @@ type PageProps = {
     | Record<string, string | string[] | undefined>;
 };
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const params = await searchParams;
   const resolvedUrl = getResolvedUrl(params);
