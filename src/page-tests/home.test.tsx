@@ -1,14 +1,14 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
-import type { NextIncomingMessage } from "next/dist/server/request-meta";
+import Home from "../components/HomePage/HomePage";
 import { Language } from "../enums/Language";
 import { languages } from "../models/languages";
-import Home, { getServerSideProps } from "../pages";
 import { getEmptyState } from "../reducers/message.reducer";
 import type { Message } from "../types/Message";
 import { encodeV2 } from "../utils/encoding-utils-v2";
 import { encodeV3 } from "../utils/encoding-utils-v3";
+import { getHomePageProps } from "../utils/home-page-props-utils";
 import { getFallbackTheme } from "../utils/theme-utils";
 import {
   latestEncoder,
@@ -22,7 +22,27 @@ type DeepPartial<T> = {
 };
 
 expect.extend(toHaveNoViolations);
-jest.mock("next/router", () => require("next-router-mock"));
+jest.mock("next/navigation", () => require("next-router-mock/navigation"));
+
+const getServerSideProps = async (
+  context: GetServerSidePropsContext,
+): Promise<{ props: React.ComponentProps<typeof Home> }> => {
+  const { req, resolvedUrl } = context;
+  const { cookies, headers } = req;
+
+  return {
+    props: getHomePageProps({
+      resolvedUrl,
+      host: headers.host,
+      acceptLanguage: headers["accept-language"],
+      userAgent: headers["user-agent"],
+      languageCookie: cookies?.["language"] as string | undefined,
+      themeCookie: cookies?.["theme"] as
+        | React.ComponentProps<typeof Home>["preferredTheme"]["name"]
+        | undefined,
+    }),
+  };
+};
 
 describe(Home.name, () => {
   it("should render without accessibility errors when message is null", async () => {
