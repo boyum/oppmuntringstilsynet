@@ -11,7 +11,7 @@ import { ThemePicker } from "../components/ThemePicker/ThemePicker";
 import { LanguageContext } from "../contexts/LanguageContext";
 import { MessageContext } from "../contexts/MessageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
-import type { Language } from "../enums/Language";
+import { Language } from "../enums/Language";
 import {
   getEmptyState,
   MessageAction,
@@ -220,13 +220,24 @@ const deployUrl = process.env["DEPLOY_URL"] ?? localUrl;
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
-  const { req } = context;
+  const { req, resolvedUrl } = context;
 
-  if (!req.url) {
-    throw new Error("Request URL is undefined");
+  if (!resolvedUrl) {
+    console.error("Request URL is undefined");
+    return {
+      props: {
+        encodedMessage: null,
+        initialMessage: null,
+        resolvedUrl: "",
+        deployUrl,
+        preferredLanguage: Language.NorskBokmal,
+        preferredTheme: getFallbackTheme(),
+        isIosOrAndroid: false,
+      },
+    };
   }
 
-  const queryParams = getQueryParams(req.url);
+  const queryParams = getQueryParams(resolvedUrl);
   const [encodedMessage, decodedMessage] =
     getEncodedAndDecodedMessage(queryParams);
 
@@ -255,7 +266,7 @@ export async function getServerSideProps(
     props: {
       encodedMessage,
       initialMessage: decodedMessage,
-      resolvedUrl: req.url,
+      resolvedUrl,
       deployUrl: hostHeader ? `//${hostHeader}` : deployUrl,
       preferredLanguage,
       preferredTheme,
