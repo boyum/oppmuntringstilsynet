@@ -1,7 +1,7 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import type { GetServerSidePropsContext } from "next";
-import { NextIncomingMessage } from "next/dist/server/request-meta";
+import type { NextIncomingMessage } from "next/dist/server/request-meta";
 import { Language } from "../enums/Language";
 import { languages } from "../models/languages";
 import Home, { getServerSideProps } from "../pages";

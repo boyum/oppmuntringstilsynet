@@ -5,7 +5,7 @@ import { defaultLanguage } from "../utils/language-utils";
 import {
   getEmptyState,
   MessageAction,
-  MessageActionType,
+  type MessageActionType,
   messageReducer,
 } from "./message.reducer";
 

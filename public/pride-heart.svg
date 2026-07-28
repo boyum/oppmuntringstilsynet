@@ -5,6 +5,7 @@
   width="200"
   height="200"
 >
+  <title>Heart in rainbow colors</title>
   <defs>
     <linearGradient id="rainbow-gradient" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(-5)">
       <stop stop-color="hsl(0, 100%, 55%)" offset="14.2857142857%" />

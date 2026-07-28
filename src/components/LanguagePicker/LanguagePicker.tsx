@@ -1,4 +1,4 @@
-import { Language } from "../../enums/Language";
+import type { Language } from "../../enums/Language";
 import { useLanguage } from "../../hooks/useLanguage";
 import { languages } from "../../models/languages";
 import { storeLanguageInCookie } from "../../utils/language-utils";
@@ -47,6 +47,7 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({
             : translations.openLanguagePicker}
         </span>
 
+        {/** biome-ignore lint/a11y/noSvgWithoutTitle: The icon is only a visual thing. The alt text lies above. */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

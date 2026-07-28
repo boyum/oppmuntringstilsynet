@@ -1,4 +1,4 @@
-import { Language } from "../../enums/Language";
+import type { Language } from "../../enums/Language";
 import { languages } from "../../models/languages";
 import styles from "./LanguagePickerLanguage.module.scss";
 
