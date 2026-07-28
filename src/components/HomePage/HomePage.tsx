@@ -2,11 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useReducer, useRef, useState } from "react";
-import { Buttons } from "../Buttons/Buttons";
-import { Footer } from "../Footer/Footer";
-import { Form } from "../Form/Form";
-import { LanguagePicker } from "../LanguagePicker/LanguagePicker";
-import { ThemePicker } from "../ThemePicker/ThemePicker";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { MessageContext } from "../../contexts/MessageContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -21,10 +16,15 @@ import type { Message } from "../../types/Message";
 import type { Theme } from "../../types/Theme";
 import { encodeAndCopyMessage } from "../../utils/clipboard-utils";
 import { getDefaultHtmlHeadData } from "../../utils/html-head-utils";
-import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "../../utils/url-utils";
+import { share } from "../../utils/share-utils";
 import { getTheme, setPageThemeStyles } from "../../utils/theme-utils";
 import { getTranslations } from "../../utils/translations-utils";
-import { share } from "../../utils/share-utils";
+import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "../../utils/url-utils";
+import { Buttons } from "../Buttons/Buttons";
+import { Footer } from "../Footer/Footer";
+import { Form } from "../Form/Form";
+import { LanguagePicker } from "../LanguagePicker/LanguagePicker";
+import { ThemePicker } from "../ThemePicker/ThemePicker";
 
 const getInitialTheme = (
   message: Message | null,
@@ -96,11 +96,7 @@ function syncHead(
     ogDescription,
   );
   setMetaTag('meta[property="og:url"]', { property: "og:url" }, ogUrl);
-  setMetaTag(
-    'meta[property="og:image"]',
-    { property: "og:image" },
-    ogImageUrl,
-  );
+  setMetaTag('meta[property="og:image"]', { property: "og:image" }, ogImageUrl);
   setMetaTag(
     'meta[property="og:image:width"]',
     { property: "og:image:width" },
@@ -228,7 +224,9 @@ const HomePage: FC<HomePageProps> = ({
           <main className={styles["main"]}>
             <div className={styles["container"]}>
               <div className={styles["container-header"]}>
-                <h1 className={styles["heading"]}>{translations.formHeading}</h1>
+                <h1 className={styles["heading"]}>
+                  {translations.formHeading}
+                </h1>
               </div>
 
               <Form isDisabled={disableForm} />
