@@ -11,5 +11,4 @@ export default {
   sassOptions: {
     silenceDeprecations: ["legacy-js-api"],
   },
-  cacheComponents: true,
 } satisfies NextConfig;
