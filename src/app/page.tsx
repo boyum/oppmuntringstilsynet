@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import HomePage from "../components/HomePage/HomePage";
-import { getDefaultHtmlHeadData } from "../utils/html-head-utils";
 import {
   getHomePageProps,
   getResolvedUrl,
 } from "../utils/home-page-props-utils";
+import { getDefaultHtmlHeadData } from "../utils/html-head-utils";
 import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "../utils/url-utils";
 
 type PageProps = {
@@ -17,7 +16,9 @@ type PageProps = {
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams,
+}: PageProps): Promise<Metadata> {
   const params = await searchParams;
   const resolvedUrl = getResolvedUrl(params);
   const headerStore = await headers();
@@ -37,8 +38,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       | undefined,
   });
 
-  const { title, description, ogTitle, ogDescription } =
-    getDefaultHtmlHeadData(props.preferredLanguage);
+  const { title, description, ogTitle, ogDescription } = getDefaultHtmlHeadData(
+    props.preferredLanguage,
+  );
 
   const ogImageUrl = `${props.deployUrl}/api/og-image${
     props.encodedMessage
@@ -75,8 +77,11 @@ export default async function Home({ searchParams }: PageProps) {
   const headerStore = await headers();
   const cookieStore = await cookies();
 
-  const { host, "accept-language": acceptLanguage, "user-agent": userAgent } =
-    Object.fromEntries(headerStore.entries());
+  const {
+    host,
+    "accept-language": acceptLanguage,
+    "user-agent": userAgent,
+  } = Object.fromEntries(headerStore.entries());
 
   const props = getHomePageProps({
     resolvedUrl,

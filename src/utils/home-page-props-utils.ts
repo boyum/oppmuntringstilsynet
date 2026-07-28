@@ -3,9 +3,9 @@ import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import type { Theme } from "../types/Theme";
 import type { ThemeName } from "../types/ThemeName";
-import { getEncodedAndDecodedMessage } from "./url-utils";
 import { getFirstAcceptedLanguage, isLanguage } from "./language-utils";
 import { getFallbackTheme, getTheme } from "./theme-utils";
+import { getEncodedAndDecodedMessage } from "./url-utils";
 
 const localUrl = "http://localhost:3000";
 const defaultDeployUrl = process.env["DEPLOY_URL"] ?? localUrl;
@@ -61,9 +61,7 @@ export function getResolvedUrl(
   return renderedQuery ? `/?${renderedQuery}` : "/";
 }
 
-export function getHomePageProps(
-  input: HomePagePropsInput,
-): HomeResolvedProps {
+export function getHomePageProps(input: HomePagePropsInput): HomeResolvedProps {
   const {
     resolvedUrl,
     host,
@@ -87,7 +85,8 @@ export function getHomePageProps(
   }
 
   const queryParams = getQueryParams(resolvedUrl);
-  const [encodedMessage, decodedMessage] = getEncodedAndDecodedMessage(queryParams);
+  const [encodedMessage, decodedMessage] =
+    getEncodedAndDecodedMessage(queryParams);
 
   const acceptedLanguages = getAcceptedLanguages(acceptLanguage ?? "");
   const preferredLanguage = isLanguage(languageCookie)

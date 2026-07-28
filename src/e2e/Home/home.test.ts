@@ -338,7 +338,9 @@ describe("Home", () => {
 
     const allCookies = await page.cookies();
 
-    const languageCookie = allCookies.find(cookie => cookie.name === "language");
+    const languageCookie = allCookies.find(
+      cookie => cookie.name === "language",
+    );
     const themeCookie = allCookies.find(cookie => cookie.name === "theme");
 
     expect(languageCookie?.value).toBe("English");
