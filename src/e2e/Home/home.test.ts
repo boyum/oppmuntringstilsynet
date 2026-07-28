@@ -328,6 +328,49 @@ describe("Home", () => {
     expect(oldTitle).toBe(expectedOldTitle);
     expect(newTitle).toBe(expectedNewTitle);
   });
+
+  it("should set theme and language cookies when changed", async () => {
+    await page.click("#language-picker-button");
+    await page.click("#language-en");
+
+    await page.click("#theme-picker-button");
+    await page.click("#theme-winter");
+
+    const allCookies = await page.cookies();
+
+    const languageCookie = allCookies.find(
+      cookie => cookie.name === "language",
+    );
+    const themeCookie = allCookies.find(cookie => cookie.name === "theme");
+
+    expect(languageCookie?.value).toBe("English");
+    expect(themeCookie?.value).toBe("winter");
+  });
+
+  it("should read theme and language cookies on next load", async () => {
+    await page.setCookie({
+      name: "language",
+      value: "English",
+      url: deployUrl,
+    });
+
+    await page.setCookie({
+      name: "theme",
+      value: "winter",
+      url: deployUrl,
+    });
+
+    await page.goto(deployUrl);
+
+    // Await one render cycle
+    await sleep(100);
+
+    const title = await getTitle(page);
+    const bodyTheme = await page.evaluate(() => document.body.dataset["theme"]);
+
+    expect(title).toBe(languages.English.translations.pageTitle);
+    expect(bodyTheme).toBe("winter");
+  });
 });
 
 async function sleep(ms: number) {
