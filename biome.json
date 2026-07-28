@@ -1,15 +1,15 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
   "files": {
     "includes": [
       "**",
-      "!**/.next/**",
-      "!**/.vercel/**",
-      "!**/coverage/**",
-      "!**/coverage-e2e/**",
-      "!**/coverage-unit/**",
-      "!**/node_modules/**",
-      "!**/package-lock.json/**"
+      "!**/.next",
+      "!**/.vercel",
+      "!**/coverage",
+      "!**/coverage-e2e",
+      "!**/coverage-unit",
+      "!**/node_modules",
+      "!**/package-lock.json"
     ]
   },
   "formatter": {
@@ -25,7 +25,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
+      "preset": "recommended",
       "a11y": {
         "noAccessKey": "error",
         "noAriaUnsupportedElements": "error",

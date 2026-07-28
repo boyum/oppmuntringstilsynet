@@ -32,8 +32,9 @@ const OgImage = (request: NextRequest) => {
 
   const preferredLanguage = getFirstAcceptedLanguage(acceptedLanguages);
 
-  let translations;
-  let title;
+  let translations: ReturnType<typeof getTranslations>;
+  let title: string;
+
   if (message) {
     translations = getTranslations(
       message.language ?? preferredLanguage ?? defaultLanguage,

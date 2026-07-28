@@ -1,4 +1,4 @@
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 import { createMessageUrl } from "./clipboard-utils";
 import { getTranslations } from "./translations-utils";
 

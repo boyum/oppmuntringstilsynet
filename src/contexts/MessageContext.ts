@@ -1,9 +1,9 @@
-import { createContext, Dispatch } from "react";
+import { createContext, type Dispatch } from "react";
 import {
   getEmptyState,
   type MessageActionType,
 } from "../reducers/message.reducer";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 
 const defaultState: [Message, Dispatch<MessageActionType>] = [
   getEmptyState(),

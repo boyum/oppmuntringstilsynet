@@ -6,6 +6,7 @@
   width="600"
   height="600"
 >
+  <title>Hearts in rainbow colors</title>
   <style>
     [href="#heart"] {
       opacity: 0.7;
