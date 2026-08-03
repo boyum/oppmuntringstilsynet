@@ -75,12 +75,12 @@ describe("Home", () => {
 
   it("should show a share button if the operating system is iOS or Android", async () => {
     await page.evaluateOnNewDocument(() => {
-      // @ts-ignore
+      // @ts-expect-error
       window["isNavigatorShareCalled"] = false;
       window.navigator.share = async data => {
-        // @ts-ignore
+        // @ts-expect-error
         window["isNavigatorShareCalled"] = true;
-        // @ts-ignore
+        // @ts-expect-error
         window["shareData"] = data;
       };
     });
@@ -106,7 +106,7 @@ describe("Home", () => {
     await shareButton.click();
 
     const isNavigatorShareCalled = await page.evaluate(
-      // @ts-ignore
+      // @ts-expect-error
       () => window["isNavigatorShareCalled"],
     );
     expect(isNavigatorShareCalled).toBeTruthy();

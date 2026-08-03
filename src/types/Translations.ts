@@ -1,3 +1,3 @@
-import { TranslationsNb } from "./Translations.nb";
+import type { TranslationsNb } from "./Translations.nb";
 
 export type Translations = typeof TranslationsNb;

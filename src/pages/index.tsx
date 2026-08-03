@@ -19,8 +19,8 @@ import {
 } from "../reducers/message.reducer";
 import styles from "../styles/Home.module.scss";
 import type { Message } from "../types/Message";
-import { Theme } from "../types/Theme";
-import { ThemeName } from "../types/ThemeName";
+import type { Theme } from "../types/Theme";
+import type { ThemeName } from "../types/ThemeName";
 import { encodeAndCopyMessage } from "../utils/clipboard-utils";
 import { renderHtmlHead } from "../utils/html-head-utils";
 import { getFirstAcceptedLanguage, isLanguage } from "../utils/language-utils";
@@ -221,6 +221,21 @@ export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<{ props: Props }> {
   const { req, resolvedUrl } = context;
+
+  if (!resolvedUrl) {
+    console.error("Request URL is undefined");
+    return {
+      props: {
+        encodedMessage: null,
+        initialMessage: null,
+        resolvedUrl: "",
+        deployUrl,
+        preferredLanguage: Language.NorskBokmal,
+        preferredTheme: getFallbackTheme(),
+        isIosOrAndroid: false,
+      },
+    };
+  }
 
   const queryParams = getQueryParams(resolvedUrl);
   const [encodedMessage, decodedMessage] =

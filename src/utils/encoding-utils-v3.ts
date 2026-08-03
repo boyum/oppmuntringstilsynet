@@ -2,7 +2,7 @@ import LZString from "lz-string";
 import { Language } from "../enums/Language";
 import type { Checks } from "../types/Checks";
 import type { Message } from "../types/Message";
-import { ThemeName } from "../types/ThemeName";
+import type { ThemeName } from "../types/ThemeName";
 import { themes } from "../types/Themes";
 import { defaultLanguage } from "./language-utils";
 import { getFallbackTheme } from "./theme-utils";

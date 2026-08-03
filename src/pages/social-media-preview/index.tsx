@@ -52,8 +52,7 @@ const SocialMediaPreview: React.FC<SocialMediaPreviewProps> = ({
     }
 
     setPageThemeStyles(activeTheme);
-    setTheme(activeTheme);
-  }, [message, setTheme, theme]);
+  }, [message, theme]);
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>

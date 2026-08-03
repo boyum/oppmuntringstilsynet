@@ -1,4 +1,4 @@
-import { NextConfig } from "next";
+import type { NextConfig } from "next";
 
 export default {
   reactStrictMode: true,
@@ -11,4 +11,5 @@ export default {
   sassOptions: {
     silenceDeprecations: ["legacy-js-api"],
   },
+  cacheComponents: true,
 } satisfies NextConfig;

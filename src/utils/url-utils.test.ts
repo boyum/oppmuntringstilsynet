@@ -1,5 +1,5 @@
 import { Language } from "../enums/Language";
-import { Message } from "../types/Message";
+import type { Message } from "../types/Message";
 import { encodeV3 } from "./encoding-utils-v3";
 import {
   getEncodedAndDecodedMessage,

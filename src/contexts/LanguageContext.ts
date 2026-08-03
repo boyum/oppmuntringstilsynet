@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Language } from "../enums/Language";
+import type { Language } from "../enums/Language";
 import { defaultLanguage } from "../utils/language-utils";
 
 const defaultState: [Language, (language: Language) => void] = [
