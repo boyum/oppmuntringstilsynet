@@ -24,9 +24,6 @@ body {
   background-position: var(--global-background-position, 50% 50%);
   background-repeat: var(--global-background-repeat, no-repeat);
   background-size: var(--global-background-size, cover);
-}
-
-#__next {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
