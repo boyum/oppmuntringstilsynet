@@ -1,3 +1,5 @@
+/// <reference types="jest-environment-puppeteer" />
+
 import { AxePuppeteer } from "@axe-core/puppeteer";
 import type { Page } from "puppeteer";
 import { languages } from "../../models/languages";

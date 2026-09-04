@@ -23,6 +23,10 @@ describe(Buttons.name, () => {
             onCopy={() => {
               // Intentionally empty
             }}
+            onShare={() => {
+              // Intentionally empty
+            }}
+            isIosOrAndroid={false}
           />
         </main>
       </LanguageContext.Provider>,

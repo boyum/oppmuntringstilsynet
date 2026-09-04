@@ -1,26 +1,17 @@
 import { ImageResponse } from "@vercel/og";
 import parser from "accept-language-parser";
 import type { NextRequest } from "next/server";
-import type { Language } from "../../enums/Language";
-import type { Message } from "../../types/Message";
-import { randomArrayValue } from "../../utils/array-utils";
+import { randomArrayValue } from "../../../utils/array-utils";
 import {
   defaultLanguage,
   getFirstAcceptedLanguage,
-} from "../../utils/language-utils";
-import { getTranslations } from "../../utils/translations-utils";
-import { getEncodedAndDecodedMessage } from "../../utils/url-utils";
+} from "../../../utils/language-utils";
+import { getTranslations } from "../../../utils/translations-utils";
+import { getEncodedAndDecodedMessage } from "../../../utils/url-utils";
 
-export type SocialMediaPreviewProps = {
-  message: Message | null;
-  preferredLanguage: Language;
-};
+export const runtime = "nodejs";
 
-export const config = {
-  runtime: "edge",
-};
-
-const OgImage = (request: NextRequest) => {
+export function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
   const [, message] = getEncodedAndDecodedMessage(searchParams);
@@ -89,6 +80,4 @@ const OgImage = (request: NextRequest) => {
       height: 630,
     },
   );
-};
-
-export default OgImage;
+}
