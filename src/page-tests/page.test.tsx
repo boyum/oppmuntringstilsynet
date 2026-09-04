@@ -4,8 +4,12 @@ import { cookies, headers } from "next/headers";
 import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { encodeV3 } from "../utils/encoding-utils-v3";
+import { encodeV4 } from "../utils/encoding-utils-v4";
 import { getTranslations } from "../utils/translations-utils";
-import { QUERY_PARAM_MESSAGE_KEY_V3 } from "../utils/url-utils";
+import {
+  QUERY_PARAM_MESSAGE_KEY_V3,
+  QUERY_PARAM_MESSAGE_KEY_V4,
+} from "../utils/url-utils";
 
 jest.mock("next/navigation", () => require("next-router-mock/navigation"));
 jest.mock("next/headers", () => ({
@@ -162,17 +166,17 @@ describe(generateMetadata.name, () => {
       language: Language.English,
       themeName: "pride",
     };
-    const encodedMessage = encodeV3(message);
+    const encodedMessageV4 = encodeV4(message);
 
     const metadata = await generateMetadata({
       searchParams: Promise.resolve({
-        [QUERY_PARAM_MESSAGE_KEY_V3]: encodedMessage,
+        [QUERY_PARAM_MESSAGE_KEY_V4]: encodedMessageV4,
       }),
     });
 
     expect(metadata.openGraph?.images).toEqual([
       {
-        url: `https://example.com/api/og-image?${QUERY_PARAM_MESSAGE_KEY_V3}=${encodedMessage}`,
+        url: `https://example.com/api/og-image?${QUERY_PARAM_MESSAGE_KEY_V4}=${encodedMessageV4}`,
         width: 1200,
         height: 627,
         alt: getTranslations(Language.English).pageOgTitle,
