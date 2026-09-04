@@ -27,28 +27,23 @@ describe(getLanguage, () => {
     expect(actualLanguage).toEqual(expectedLanguage);
   });
 
-  it("should return null if the locale code is not supported", () => {
-    const consoleError = console.error;
-    console.error = () => undefined;
-
+  it("should only return a language if the locale code starts with a supported code", () => {
     const testResult = fc.assert(
       fc.property(fc.string(), localeCode => {
-        const expectedLanguage: Language | null = null;
+        const languagePrefix = localeCode.slice(0, 2);
+
+        const expectedLanguage = (Object.entries(languages).find(
+          ([, language]) =>
+            (language.codes as ReadonlyArray<LocaleCode>).includes(
+              languagePrefix as LocaleCode,
+            ),
+        )?.[0] ?? null) as Language | null;
+
         const actualLanguage = getLanguage(localeCode);
-
-        const isSupportedCode = Object.values(languages)
-          .flatMap(language => language.codes)
-          .includes(localeCode.trim() as LocaleCode);
-
-        if (isSupportedCode) {
-          return true;
-        }
 
         return actualLanguage === expectedLanguage;
       }),
     );
-
-    console.error = consoleError;
 
     return testResult;
   });
