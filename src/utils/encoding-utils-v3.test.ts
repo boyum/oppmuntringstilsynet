@@ -31,6 +31,17 @@ describe("Message encoder/decoder", () => {
       expect(actualMessage).toBe(expectedMessage);
     });
 
+    it("should return null from decodeMessage if the message cannot be decoded", () => {
+      const consoleError = console.error;
+      console.error = () => undefined;
+
+      const actualMessage = decodeMessageV3("!");
+
+      expect(actualMessage).toBeNull();
+
+      console.error = consoleError;
+    });
+
     it("should return null if an empty encoded string is provided (decode)", () => {
       const expectedMessage: Message | null = null;
 
