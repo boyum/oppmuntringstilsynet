@@ -3,9 +3,12 @@
 import { AxePuppeteer } from "@axe-core/puppeteer";
 import type { Page } from "puppeteer";
 import { languages } from "../../models/languages";
+import { getEmptyState } from "../../reducers/message.reducer";
 import type { LocaleCode } from "../../types/LocaleCode";
+import type { Message } from "../../types/Message";
 import { themes } from "../../types/Themes";
 import { TranslationsEn } from "../../types/Translations.en";
+import { encodeV4 } from "../../utils/encoding-utils-v4";
 import { getFirstAcceptedLanguage } from "../../utils/language-utils";
 import { getTranslations } from "../../utils/translations-utils";
 import { LATEST_QUERY_PARAM_MESSAGE_KEY } from "../../utils/url-utils";
@@ -24,6 +27,16 @@ describe("Home", () => {
   afterEach(async () => {
     await page.close();
   });
+
+  const message: Message = {
+    ...getEmptyState(),
+    date: "date",
+    message: "message",
+    checks: [true, true, true],
+    name: "name",
+  };
+  const encodedMessage = encodeV4(message);
+  const encodedMessageUrl = `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=${encodedMessage}`;
 
   Object.entries(languages).forEach(([languageName, languageRecord]) => {
     it(`should be titled ${languageRecord.translations.pageTitle} when the Accept-Language is ${languageName}`, async () => {
@@ -70,9 +83,7 @@ describe("Home", () => {
     const copiedText = await page.evaluate(() =>
       navigator.clipboard.readText(),
     );
-    expect(copiedText).toBe(
-      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
-    );
+    expect(copiedText).toBe(encodedMessageUrl);
   });
 
   it("should show a share button if the operating system is iOS or Android", async () => {
@@ -130,15 +141,11 @@ describe("Home", () => {
     const copiedText = await page.evaluate(() =>
       navigator.clipboard.readText(),
     );
-    expect(copiedText).toBe(
-      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
-    );
+    expect(copiedText).toBe(encodedMessageUrl);
   });
 
   it("should open a new card with the parsed message's parameters", async () => {
-    await page.goto(
-      `${deployUrl}/?${LATEST_QUERY_PARAM_MESSAGE_KEY}=CYQwLgpgPgthDO8QHNoDsRygBh1A7EA`,
-    );
+    await page.goto(encodedMessageUrl);
 
     const dateText = await page.evaluate(
       () => document.querySelector<HTMLInputElement>("#date-field")?.value,
