@@ -1,7 +1,19 @@
+import pako from "pako";
 import { Language } from "../enums/Language";
 import type { Message } from "../types/Message";
 import { decodeMessageV4, decodeV4, encodeV4 } from "./encoding-utils-v4";
+import { defaultLanguage } from "./language-utils";
 import { getFallbackTheme } from "./theme-utils";
+
+const toUrlSafeBase64 = (data: Uint8Array): string =>
+  Buffer.from(data)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+
+const encodeRawCompressed = (value: string): string =>
+  toUrlSafeBase64(pako.deflateRaw(value));
 
 describe("Message encoder/decoder", () => {
   describe("V4", () => {
@@ -28,6 +40,20 @@ describe("Message encoder/decoder", () => {
       const actualMessage = decodeMessageV4(encodedMessage);
 
       expect(actualMessage).toBe(expectedMessage);
+    });
+
+    it("should return null from decodeMessage if the message cannot be decoded", () => {
+      const consoleError = console.error;
+      console.error = jest.fn();
+
+      const actualMessage = decodeMessageV4(encodeRawCompressed(""));
+
+      expect(actualMessage).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        expect.stringMatching(/^Invalid encoded object /),
+      );
+
+      console.error = consoleError;
     });
 
     it("should return null if an empty encoded string is provided (decode)", () => {
@@ -73,6 +99,96 @@ describe("Message encoder/decoder", () => {
         true,
       );
 
+      console.error = consoleError;
+    });
+
+    it("should encode and decode in a browser environment (without Buffer)", () => {
+      const message: Message = {
+        date: "2025-11-06",
+        message: "Hei! 🎉 æ ø å",
+        name: "Kari",
+        checks: [true, false, true],
+        language: Language.English,
+        themeName: "winter",
+      };
+
+      const globalWithBuffer = globalThis as {
+        Buffer?: typeof Buffer | undefined;
+      };
+      const originalBuffer = globalWithBuffer.Buffer;
+
+      try {
+        globalWithBuffer.Buffer = undefined;
+
+        const encodedMessage = encodeV4(message);
+        const actualMessage = decodeV4(encodedMessage);
+
+        expect(actualMessage).toEqual(message);
+      } finally {
+        globalWithBuffer.Buffer = originalBuffer;
+      }
+    });
+
+    it("should fill default values when the encoded message is missing fields", () => {
+      const encodedMessage = encodeRawCompressed("date|message");
+      const actualMessage = decodeV4(encodedMessage);
+
+      expect(actualMessage).toEqual({
+        date: "date",
+        message: "message",
+        name: "",
+        language: defaultLanguage,
+        themeName: getFallbackTheme().name,
+        checks: [false, false, false],
+      });
+    });
+
+    it("should return null if the decoded payload is empty", () => {
+      const consoleError = console.error;
+      console.error = jest.fn();
+
+      const encodedMessage = encodeRawCompressed("");
+      const actualMessage = decodeV4(encodedMessage);
+
+      expect(actualMessage).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        expect.stringMatching(/^Invalid encoded object /),
+      );
+
+      console.error = consoleError;
+    });
+
+    it("should return null if the decoded payload has no message fields", () => {
+      const consoleError = console.error;
+      console.error = jest.fn();
+
+      const encodedMessage = encodeRawCompressed("|");
+      const actualMessage = decodeV4(encodedMessage);
+
+      expect(actualMessage).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        "Invalid decoded data structure",
+      );
+
+      console.error = consoleError;
+    });
+
+    it("should return null and log the error when decompression fails", () => {
+      const consoleError = console.error;
+      console.error = jest.fn();
+      const inflateRawSpy = jest
+        .spyOn(pako, "inflateRaw")
+        .mockImplementationOnce(() => {
+          throw new Error("boom");
+        });
+
+      const encodedMessage = encodeRawCompressed("date|message");
+      const actualMessage = decodeV4(encodedMessage);
+
+      expect(actualMessage).toBeNull();
+      expect(console.error).toHaveBeenCalledWith("boom");
+
+      inflateRawSpy.mockRestore();
       console.error = consoleError;
     });
 
