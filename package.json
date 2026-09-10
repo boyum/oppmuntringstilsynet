@@ -51,7 +51,7 @@
     "@types/pako": "^2.0.4",
     "@types/react": "19.2.18",
     "@types/react-dom": "^19.2.7",
-    "fast-check": "^4.5.3",
+    "fast-check": "^4.9.0",
     "jest": "^30.5.1",
     "jest-config": "^30.5.1",
     "jest-css-modules": "^2.1.0",
