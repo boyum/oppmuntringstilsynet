@@ -31,7 +31,7 @@
     "lz-string": "^1.5.0",
     "next": "16.3.5",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.3.0"
   },
   "devDependencies": {
     "@axe-core/puppeteer": "^4.13.0",
@@ -50,7 +50,7 @@
     "@types/node": "^24.13.3",
     "@types/pako": "^2.0.4",
     "@types/react": "19.2.18",
-    "@types/react-dom": "^19.2.7",
+    "@types/react-dom": "^19.3.0",
     "fast-check": "^4.10.0",
     "jest": "^30.5.1",
     "jest-config": "^30.5.1",
